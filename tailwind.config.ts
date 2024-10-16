@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        commingSoon: ["var(--font-coming-soon)"],
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
