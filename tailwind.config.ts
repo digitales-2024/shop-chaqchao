@@ -8,9 +8,16 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        commingSoon: ["var(--font-coming-soon)"],
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        "chaqchao-primary": "#70320C",
+        "chaqchao-secondary": "#D78428",
+        "chaqchao-gray": "#7E8A97",
+        "chaqchao-white": "#FAFAFA",
       },
     },
   },

@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: "ComingSoon";
+  src:
+    url("/fonts/ComingSoon.woff2") format("woff2"),
+    url("/fonts/ComingSoon.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+  --font-family-sans: "ComingSoon", sans-serif;
+}
