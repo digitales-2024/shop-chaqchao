@@ -15,7 +15,7 @@ const baseQueryWithReauth: BaseQueryFn = async (args, api, extraOptions) => {
   if (result.error && (result.error as FetchBaseQueryError).status === 401) {
     // Intentamos obtener un nuevo access_token usando el refresh_token
     const refreshResult = await baseQuery(
-      { url: "/auth/refresh-token", method: "POST" },
+      { url: "/auth/client/refresh-token", method: "POST" },
       api,
       extraOptions,
     );
@@ -25,7 +25,7 @@ const baseQueryWithReauth: BaseQueryFn = async (args, api, extraOptions) => {
     } else {
       // Si no se pudo refrescar el token (refresh token expirado), llamamos al endpoint de logout
       await baseQuery(
-        { url: "/auth/logout", method: "POST" },
+        { url: "/auth/client/logout", method: "POST" },
         api,
         extraOptions,
       );
