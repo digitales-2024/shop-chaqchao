@@ -1,3 +1,17 @@
+import { Featured } from "@/components/home/Featured";
+import { Hero } from "@/components/home/Hero";
+import { Recommend } from "@/components/home/Recommend";
+import { Workshops } from "@/components/home/Workshops";
+
 export default function Home() {
-  return <div>hola</div>;
+  return (
+    <div>
+      <Hero />
+      <div className="container mx-auto">
+        <Workshops />
+        <Recommend />
+        <Featured />
+      </div>
+    </div>
+  );
 }
