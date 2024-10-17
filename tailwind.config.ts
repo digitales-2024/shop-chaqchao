@@ -11,6 +11,7 @@ const config: Config = {
     extend: {
       fontFamily: {
         commingSoon: ["var(--font-coming-soon)"],
+        nunito: ["var(--font-nunito-variable)"],
       },
       colors: {
         background: "hsl(var(--background))",

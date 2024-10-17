@@ -13,6 +13,7 @@
 
 :root {
   --font-family-sans: "ComingSoon", sans-serif;
+  --font-nunito-variable: "Nunito Variable", sans-serif;
 }
 
 @layer base {
