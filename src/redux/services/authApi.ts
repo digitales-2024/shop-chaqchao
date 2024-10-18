@@ -30,7 +30,14 @@ export const authApi = createApi({
       },
       invalidatesTags: ["Auth Client"],
     }),
+    googleLogin: build.query<void, void>({
+      query: () => ({
+        url: "/auth/client/google/login",
+        method: "POST",
+        credentials: "include",
+      }),
+    }),
   }),
 });
 
-export const { useLoginMutation } = authApi;
+export const { useLoginMutation, useGoogleLoginQuery } = authApi;
