@@ -19,7 +19,7 @@ import {
 
 export default function SignInPage() {
   const [showPassword, setShowPassword] = useState(false);
-  const { onLogin, isLoading } = useLogin();
+  const { onLogin, googleLogin, isLoading } = useLogin();
 
   // Initialize the form with default values
   const form = useForm<Credentials>({
@@ -32,13 +32,6 @@ export default function SignInPage() {
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
-  };
-
-  const handleLogin = () => {
-    // Redirigir al endpoint del backend para iniciar sesión con Google
-    window.location.assign(
-      "http://localhost:4000/api/v1/auth/client/google/login",
-    ); // Ajusta el puerto o dominio según sea necesario
   };
 
   return (
@@ -141,7 +134,8 @@ export default function SignInPage() {
         {/* Google Sign In Button */}
         <Button
           className="flex w-full items-center justify-center rounded-lg border py-2 hover:shadow-md"
-          onClick={handleLogin}
+          onClick={googleLogin}
+          disabled={isLoading}
         >
           Continuar con Google
         </Button>
