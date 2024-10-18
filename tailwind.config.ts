@@ -16,10 +16,6 @@ const config: Config = {
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        "chaqchao-primary": "hsl(var(--primary))",
-        "chaqchao-secondary": "#D78428",
-        "chaqchao-gray": "#7E8A97",
-        "chaqchao-white": "#FAFAFA",
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
@@ -35,6 +31,9 @@ const config: Config = {
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
+        },
+        terciary: {
+          DEFAULT: "hsl(var(--terciary))",
         },
         muted: {
           DEFAULT: "hsl(var(--muted))",
