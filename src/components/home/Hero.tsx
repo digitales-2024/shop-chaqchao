@@ -32,7 +32,7 @@ const carouselItems: CarouselItem[] = [
 
 export const Hero = () => {
   return (
-    <section className="relative mx-auto flex w-full items-center justify-center">
+    <section className="relative mx-auto flex w-full items-start justify-center">
       <Carousel
         className="relative w-full p-0"
         plugins={[
@@ -65,12 +65,14 @@ export const Hero = () => {
         <CarouselPrevious className="absolute left-4 border-terciary bg-terciary/20 text-terciary hover:bg-terciary/80 hover:text-white" />
         <CarouselNext className="absolute right-4 border-terciary bg-terciary/20 text-terciary hover:bg-terciary/80 hover:text-white" />
       </Carousel>
-      <Link
-        href="/workshops"
-        className="absolute inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md bg-primary px-6 py-4 text-2xl font-medium text-primary-foreground ring-offset-background transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0"
-      >
-        Ver nuestros productos
-      </Link>
+      <div className="container pointer-events-none absolute mx-auto flex h-full items-end justify-start py-20">
+        <Link
+          href="/workshops"
+          className="pointer-events-auto inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md bg-primary px-6 py-4 text-2xl font-medium text-primary-foreground ring-offset-background transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0"
+        >
+          Ver nuestros productos
+        </Link>
+      </div>
     </section>
   );
 };
