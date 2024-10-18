@@ -25,7 +25,7 @@ const baseQueryWithReauth: BaseQueryFn = async (args, api, extraOptions) => {
     } else {
       // Si no se pudo refrescar el token (refresh token expirado), llamamos al endpoint de logout
       await baseQuery(
-        { url: "/auth/client/logout", method: "POST" },
+        { url: "/auth/client/logout", method: "GET" },
         api,
         extraOptions,
       );
