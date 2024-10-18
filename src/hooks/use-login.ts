@@ -49,7 +49,7 @@ export const useLogin = () => {
     if (isSuccess && data) {
       router.replace("/");
     }
-  }, [data, isSuccess]);
+  }, [data, isSuccess, router]);
 
   return { onLogin, isLoading, error };
 };
