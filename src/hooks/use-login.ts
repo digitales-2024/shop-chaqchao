@@ -45,11 +45,33 @@ export const useLogin = () => {
     });
   };
 
+  const googleLogin = () => {
+    const width = 500;
+    const height = 600;
+    const left = window.screen.width / 2 - width / 2;
+    const top = window.screen.height / 2 - height / 2;
+
+    const googleAuthWindow = window.open(
+      process.env.NEXT_PUBLIC_BACKEND_URL_GOOGLE_LOGIN,
+      "_blank",
+      `width=${width},height=${height},top=${top},left=${left}`,
+    );
+
+    // Verificar si la ventana se ha cerrado
+    const checkWindowClosed = setInterval(() => {
+      if (googleAuthWindow && googleAuthWindow.closed) {
+        clearInterval(checkWindowClosed);
+        // Después de que la ventana se cierra, recargar la página
+        window.location.reload();
+      }
+    }, 500);
+  };
+
   useEffect(() => {
     if (isSuccess && data) {
       router.replace("/");
     }
   }, [data, isSuccess, router]);
 
-  return { onLogin, isLoading, error };
+  return { onLogin, googleLogin, isLoading, error };
 };
