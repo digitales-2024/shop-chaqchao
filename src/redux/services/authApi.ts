@@ -37,7 +37,16 @@ export const authApi = createApi({
         credentials: "include",
       }),
     }),
+    logout: build.mutation<{ message: string; statusCode: number }, void>({
+      query: () => ({
+        url: "/auth/client/logout",
+        method: "GET",
+        credentials: "include",
+      }),
+      invalidatesTags: ["Auth Client"],
+    }),
   }),
 });
 
-export const { useLoginMutation, useGoogleLoginQuery } = authApi;
+export const { useLoginMutation, useGoogleLoginQuery, useLogoutMutation } =
+  authApi;
