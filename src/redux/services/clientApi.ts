@@ -3,7 +3,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 
 import baseQueryWithReauth from "./baseQuery";
 
-export const adminApi = createApi({
+export const clientApi = createApi({
   reducerPath: "clientProfileApi",
   baseQuery: baseQueryWithReauth,
   tagTypes: ["Auth Client"],
@@ -19,4 +19,4 @@ export const adminApi = createApi({
   }),
 });
 
-export const { useProfileQuery } = adminApi;
+export const { useProfileQuery } = clientApi;

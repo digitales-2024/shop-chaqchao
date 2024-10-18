@@ -1,11 +1,11 @@
 import { ClientLogin } from "@/types";
 import { createApi } from "@reduxjs/toolkit/query/react";
 
-import { adminApi } from "./adminApi";
 import baseQueryWithReauth from "./baseQuery";
+import { clientApi } from "./clientApi";
 
 export const authApi = createApi({
-  reducerPath: "authApi",
+  reducerPath: "authClientApi",
   baseQuery: baseQueryWithReauth,
   tagTypes: ["Auth Client"],
   endpoints: (build) => ({
@@ -20,7 +20,7 @@ export const authApi = createApi({
         try {
           await queryFulfilled;
           dispatch(
-            adminApi.endpoints.profile.initiate(undefined, {
+            clientApi.endpoints.profile.initiate(undefined, {
               forceRefetch: true,
             }),
           );
