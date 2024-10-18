@@ -5,7 +5,7 @@ import { Workshops } from "@/components/home/Workshops";
 
 export default function Home() {
   return (
-    <div>
+    <div className="flex flex-col gap-6">
       <Hero />
       <div className="container mx-auto">
         <Workshops />
