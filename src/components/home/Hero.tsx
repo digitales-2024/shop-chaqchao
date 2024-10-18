@@ -1,130 +1,76 @@
 "use client";
-import ChaqchaoHeroWebp2 from "@/assets/images/chaqchao-hero-2.webp";
-import ChaqchaoHeroWebp from "@/assets/images/chaqchao-hero.webp";
-import { AnimatePresence, motion } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import ChaqchaoHero01 from "@/assets/images/chaqchao-hero-01.webp";
+import ChaqchaoHero02 from "@/assets/images/chaqchao-hero-02.webp";
+import Autoplay from "embla-carousel-autoplay";
+import Fade from "embla-carousel-fade";
+import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
 
-import { cn } from "@/lib/utils";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "../ui/carousel";
 
-import { Button } from "../ui/button";
+interface CarouselItem {
+  title: string;
+  image: StaticImageData;
+}
 
-const chocolates = [
+const carouselItems: CarouselItem[] = [
   {
-    id: 1,
-    image: ChaqchaoHeroWebp,
+    title: "Workshop 1",
+    image: ChaqchaoHero01,
   },
   {
-    id: 2,
-    image: ChaqchaoHeroWebp2,
+    title: "Workshop 2",
+    image: ChaqchaoHero02,
   },
 ];
 
 export const Hero = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const nextSlide = useCallback(() => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % chocolates.length);
-  }, []);
-
-  const prevSlide = useCallback(() => {
-    setCurrentIndex(
-      (prevIndex) => (prevIndex - 1 + chocolates.length) % chocolates.length,
-    );
-  }, []);
-
-  useEffect(() => {
-    let intervalId: NodeJS.Timeout | null = null;
-    intervalId = setInterval(() => {
-      nextSlide();
-    }, 10000); // Cambiar la diapositiva cada 10 segundos
-
-    return () => {
-      if (intervalId) clearInterval(intervalId);
-    };
-  }, [nextSlide]);
-
   return (
-    <section className="relative mx-auto w-full overflow-hidden bg-secondary">
-      <div className="relative h-[40rem]">
-        <AnimatePresence initial={false} custom={currentIndex}>
-          <motion.img
-            key={currentIndex}
-            src={chocolates[currentIndex].image.src}
-            alt="Chaqchao Chocolate Factory"
-            className="absolute h-full w-full object-cover"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-          />
-          <motion.div
-            className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-white to-transparent p-6 pb-32"
-            initial={{ y: 50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.5 }}
-          >
-            <div className="container mx-auto">
-              <Link
-                href="/"
-                className="rounded-lg bg-primary px-10 py-2 text-3xl text-white hover:bg-primary/90"
-              >
-                <h2 className="inline-flex">Comprar ahora</h2>
-              </Link>
-            </div>
-          </motion.div>
-        </AnimatePresence>
-      </div>
-      <div className="absolute left-4 top-1/2 -translate-y-1/2 transform">
-        <div className="relative">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={prevSlide}
-            className="relative z-10 rounded-full border border-primary text-primary hover:bg-primary/60 hover:text-white"
-            aria-label="Chocolate anterior"
-          >
-            <ChevronLeft className="h-4 w-4" />
-          </Button>
-          <div className="absolute inset-0 -left-1 -top-1 z-0 size-10 rounded-full bg-primary/10 backdrop-blur-lg" />
-        </div>
-      </div>
-      <div className="absolute right-4 top-1/2 -translate-y-1/2 transform">
-        <div className="relative">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={nextSlide}
-            className="relative z-10 rounded-full border border-primary text-primary hover:bg-primary/60 hover:text-white"
-            aria-label="Siguiente chocolate"
-          >
-            <ChevronRight className="h-4 w-4" />
-          </Button>
-          <div className="absolute inset-0 -right-1 -top-1 z-0 size-10 rounded-full bg-primary/10 backdrop-blur-lg" />
-        </div>
-      </div>
-      <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 transform space-x-2">
-        {chocolates.map((_, index) => (
-          <div
-            key={index}
-            className={cn(
-              "flex size-fit items-center justify-center rounded-full p-[2px]",
-              {
-                "border border-primary/20": index === currentIndex,
-              },
-            )}
-          >
-            <Button
-              onClick={() => setCurrentIndex(index)}
-              className={`m-0 size-2 rounded-full p-0 ${
-                index === currentIndex ? "bg-primary" : "bg-primary/20"
-              }`}
-              aria-label={`Ir a la portada ${index + 1}`}
-            />
-          </div>
-        ))}
-      </div>
+    <section className="relative mx-auto flex w-full items-center justify-center">
+      <Carousel
+        className="relative w-full p-0"
+        plugins={[
+          Autoplay({
+            delay: 10000,
+          }),
+          Fade(),
+        ]}
+        opts={{
+          loop: true,
+        }}
+      >
+        <CarouselContent className="h-[35rem] p-0">
+          {carouselItems.map((item, index) => (
+            <CarouselItem key={index} className="bg-secondary">
+              <div className="relative h-full">
+                <Image
+                  src={item.image.src}
+                  alt={item.title}
+                  fill
+                  className="h-full w-full object-cover"
+                  priority={index === 0}
+                  quality={100}
+                />
+                <div className="absolute h-full w-full select-none bg-gradient-to-t from-white to-transparent to-20%" />
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious className="absolute left-4 border-terciary bg-terciary/20 text-terciary hover:bg-terciary/80 hover:text-white" />
+        <CarouselNext className="absolute right-4 border-terciary bg-terciary/20 text-terciary hover:bg-terciary/80 hover:text-white" />
+      </Carousel>
+      <Link
+        href="/workshops"
+        className="absolute inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md bg-primary px-6 py-4 text-2xl font-medium text-primary-foreground ring-offset-background transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0"
+      >
+        Ver nuestros productos
+      </Link>
     </section>
   );
 };
