@@ -40,8 +40,8 @@ export const useRegister = () => {
       });
 
     toast.promise(promise(), {
-      loading: "Creando y Enviando correo...",
-      success: "Usuario creado y envío exitoso.",
+      loading: "Creando usuario...",
+      success: "Usuario creado con exitoso.",
       error: (error) => {
         return error.message;
       },
