@@ -1,3 +1,10 @@
+import ProfileComponent from "@/components/ProfileComponent";
+
 export default function Home() {
-  return <div>hola</div>;
+  return (
+    <div>
+      <div>hola</div>
+      <ProfileComponent />
+    </div>
+  );
 }

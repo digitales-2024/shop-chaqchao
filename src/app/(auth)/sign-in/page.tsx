@@ -4,6 +4,7 @@ import { authSchema } from "@/schemas/authSchema";
 import { Credentials } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { EyeIcon, EyeOff } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -142,17 +143,20 @@ export default function SignInPage() {
 
         {/* Register Link */}
         <p className="mt-4 text-center text-sm">
-          <a href="/register" className="ml-1 text-[#5a2d0c] hover:underline">
+          <Link
+            href="/register"
+            className="ml-1 text-[#5a2d0c] hover:underline"
+          >
             ¿No tienes cuenta? Regístrate aquí
-          </a>
+          </Link>
         </p>
 
         {/* Terms and Privacy */}
         <p className="mt-4 text-center text-xs text-gray-500">
           Al dar en ingresar, declaro que acepto los
-          <a href="/terms" className="ml-1 text-[#5a2d0c] hover:underline">
+          <Link href="/terms" className="ml-1 text-[#5a2d0c] hover:underline">
             Términos y Políticas de Privacidad
-          </a>
+          </Link>
         </p>
       </div>
     </div>

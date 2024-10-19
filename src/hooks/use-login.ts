@@ -52,7 +52,7 @@ export const useLogin = () => {
     const top = window.screen.height / 2 - height / 2;
 
     const googleAuthWindow = window.open(
-      process.env.NEXT_PUBLIC_BACKEND_URL_GOOGLE_LOGIN,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/client/google/login`,
       "_blank",
       `width=${width},height=${height},top=${top},left=${left}`,
     );
