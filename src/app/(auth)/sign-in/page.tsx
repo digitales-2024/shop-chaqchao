@@ -154,9 +154,9 @@ export default function SignInPage() {
         {/* Terms and Privacy */}
         <p className="mt-4 text-center text-xs text-gray-500">
           Al dar en ingresar, declaro que acepto los
-          <a href="/terms" className="ml-1 text-[#5a2d0c] hover:underline">
+          <Link href="/terms" className="ml-1 text-[#5a2d0c] hover:underline">
             Términos y Políticas de Privacidad
-          </a>
+          </Link>
         </p>
       </div>
     </div>
