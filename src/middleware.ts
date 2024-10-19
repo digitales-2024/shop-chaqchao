@@ -4,7 +4,12 @@ import type { NextRequest } from "next/server";
 import { getToken } from "./lib/jwt/getToken";
 import { redirectToLogin } from "./lib/jwt/redirectToLogin";
 
-const routesNotRequiringAuth = ["/sign-in", "/register", "/terms"];
+const routesNotRequiringAuth = [
+  "/sign-in",
+  "/register",
+  "/terms",
+  "/forgot-password",
+];
 
 export async function middleware(request: NextRequest) {
   // Extraer la cookie llamada 'client_access_token'
