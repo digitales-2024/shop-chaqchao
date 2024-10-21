@@ -1,9 +1,8 @@
 import { Product } from "@/types";
-import { ShoppingCart } from "lucide-react";
 import Image from "next/image";
 
-import { Button } from "../ui/button";
 import { Card, CardContent, CardFooter } from "../ui/card";
+import { AddToCartButton } from "./AddToCartButton";
 
 interface CartItemProps {
   product: Product;
@@ -35,13 +34,7 @@ export const CartItem = ({ product }: CartItemProps) => {
         </div>
       </CardContent>
       <CardFooter className="flex h-full w-full items-center justify-center">
-        <Button
-          variant="outline"
-          className="group/add rounded-xl border-secondary text-secondary transition-colors duration-500 hover:bg-secondary hover:text-white"
-        >
-          <ShoppingCart className="size-6 transition-transform duration-500 group-hover/add:scale-150" />
-          Agregar al carrito
-        </Button>
+        <AddToCartButton />
       </CardFooter>
     </Card>
   );
