@@ -1,4 +1,5 @@
 "use client";
+import { useForgotPassword } from "@/hooks/use-forgot-password";
 import {
   forgotPasswordSchema,
   ForgotPasswordSchema,
@@ -30,6 +31,8 @@ import { Input } from "@/components/ui/input";
 export default function ForgotPasswordPage() {
   const [message, setMessage] = useState("");
 
+  const { onForgotPassword, isSucessForgotPassword } = useForgotPassword();
+
   const form = useForm<ForgotPasswordSchema>({
     resolver: zodResolver(forgotPasswordSchema),
     defaultValues: {
@@ -38,12 +41,13 @@ export default function ForgotPasswordPage() {
   });
 
   function onSubmit(values: ForgotPasswordSchema) {
-    // Aquí iría la lógica para enviar la solicitud de recuperación de contraseña
-    console.log(values);
-    setMessage(
-      "Se ha enviado un correo con instrucciones para recuperar tu contraseña.",
-    );
-    form.reset();
+    onForgotPassword(values);
+    if (isSucessForgotPassword) {
+      setMessage(
+        "Se ha enviado un correo con instrucciones para recuperar tu contraseña.",
+      );
+      form.reset();
+    }
   }
 
   return (
