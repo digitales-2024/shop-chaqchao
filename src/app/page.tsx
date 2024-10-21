@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <div className="flex flex-col gap-6">
       <Hero />
-      <div className="container mx-auto space-y-20">
+      <div className="container mx-auto my-20 space-y-20">
         <Workshops />
         <Recommend />
         <Featured />
