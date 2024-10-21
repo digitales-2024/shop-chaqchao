@@ -11,8 +11,13 @@ interface RecommendHeaderProps {
 const RecommendHeader: React.FC<RecommendHeaderProps> = ({ children }) => {
   return (
     <section className="flex flex-col gap-20">
-      <h2 className="text-center text-3xl font-semibold">
-        Recomendados para ti
+      <h2 className="mb-10 text-center text-3xl font-semibold">
+        <span className="text-balance">
+          Explora nuestros productos recomendados
+        </span>
+        <p className="text-lg text-secondary">
+          Nuestras opciones variadas de chocolates cremas, lipbalm entre otros.
+        </p>
       </h2>
       <div className="flex gap-6">{children}</div>
     </section>
