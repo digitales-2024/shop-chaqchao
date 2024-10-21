@@ -4,6 +4,8 @@ import localFont from "next/font/local";
 
 import "@fontsource-variable/nunito";
 import "./globals.css";
+import { Toaster } from "sonner";
+
 import { LayoutShop } from "@/components/templates/LayoutShop";
 
 const geistSans = localFont({
@@ -33,6 +35,7 @@ export default function RootLayout({
       <body
         className={`${comingSoon.variable} ${geistSans.variable} font-nunito antialiased`}
       >
+        <Toaster />
         <Providers>
           <LayoutShop>{children}</LayoutShop>
         </Providers>

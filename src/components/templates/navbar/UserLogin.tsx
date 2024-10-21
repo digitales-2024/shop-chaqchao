@@ -1,3 +1,4 @@
+import { useLogout } from "@/hooks/use-logout";
 import { CreditCard, LogOut, NotebookPen, User } from "lucide-react";
 import Link from "next/link";
 
@@ -15,6 +16,7 @@ import {
 
 export const UserLogin = () => {
   const isAuthenticated = false;
+  const { signOut } = useLogout();
   if (isAuthenticated) {
     return (
       <Link
@@ -56,7 +58,7 @@ export const UserLogin = () => {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={signOut}>
           <LogOut className="mr-2 h-4 w-4" />
           <span>Cerrar sesión</span>
         </DropdownMenuItem>
