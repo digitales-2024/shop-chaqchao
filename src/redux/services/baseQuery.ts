@@ -3,7 +3,7 @@ import {
   fetchBaseQuery,
   FetchBaseQueryError,
 } from "@reduxjs/toolkit/query/react";
-
+import Cookies from "js-cookie";
 const baseQuery: BaseQueryFn = fetchBaseQuery({
   baseUrl: process.env.NEXT_PUBLIC_BACKEND_URL,
   credentials: "include", // Enviar cookies HttpOnly en cada solicitud
@@ -11,8 +11,13 @@ const baseQuery: BaseQueryFn = fetchBaseQuery({
 
 const baseQueryWithReauth: BaseQueryFn = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
+  const token = Cookies.get("client_refresh_token");
   // Si obtenemos un 401 Unauthorized, intentamos refrescar el token
-  if (result.error && (result.error as FetchBaseQueryError).status === 401) {
+  if (
+    result.error &&
+    (result.error as FetchBaseQueryError).status === 401 &&
+    token
+  ) {
     // Intentamos obtener un nuevo access_token usando el refresh_token
     const refreshResult = await baseQuery(
       { url: "/auth/client/refresh-token", method: "POST" },
@@ -29,7 +34,6 @@ const baseQueryWithReauth: BaseQueryFn = async (args, api, extraOptions) => {
         api,
         extraOptions,
       );
-
       window.location.href = "/sign-in";
     }
   }
