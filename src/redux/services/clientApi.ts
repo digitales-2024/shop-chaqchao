@@ -1,4 +1,5 @@
-import { ClientData } from "@/types";
+import { ForgotPasswordSchema } from "@/schemas/forgotPassword";
+import { ClientData, ResetPassword } from "@/types";
 import { createApi } from "@reduxjs/toolkit/query/react";
 
 import baseQueryWithReauth from "./baseQuery";
@@ -16,7 +17,28 @@ export const clientApi = createApi({
 
       providesTags: ["Auth Client"],
     }),
+    forgotPassword: build.mutation<ForgotPasswordSchema, ForgotPasswordSchema>({
+      query: (data) => ({
+        url: "/auth/client/forgot-password",
+        method: "POST",
+        credentials: "include",
+        body: data,
+      }),
+    }),
+    resetPassword: build.mutation<void, ResetPassword>({
+      query: ({ token, ...data }) => ({
+        url: "/auth/client/reset-password",
+        method: "POST",
+        credentials: "include",
+        params: { token },
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const { useProfileQuery } = clientApi;
+export const {
+  useProfileQuery,
+  useForgotPasswordMutation,
+  useResetPasswordMutation,
+} = clientApi;
