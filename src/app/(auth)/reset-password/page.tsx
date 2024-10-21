@@ -15,7 +15,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -36,9 +35,7 @@ export default function ResetPasswordPage() {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
   const [isExpired, setIsExpired] = useState(false);
-  const [timeRemaining, setTimeRemaining] = useState<number | null>(null);
   const [validToken, setValidToken] = useState(false);
-  const [message, setMessage] = useState("");
 
   const { onResetPassword, isSuccessResetPassword, isLoadingResetPassword } =
     useResetPassword();
@@ -70,11 +67,10 @@ export default function ResetPasswordPage() {
             setIsExpired(true);
           } else {
             setValidToken(true);
+
+            // Configurar un temporizador para cambiar el estado cuando el token expire
             if (expirationTime) {
               const timeLeft = expirationTime - currentTime;
-              setTimeRemaining(timeLeft);
-
-              // Configurar un temporizador para cambiar el estado cuando el token expire
               const timeoutId = setTimeout(() => {
                 setIsExpired(true);
                 setValidToken(false);
@@ -93,7 +89,6 @@ export default function ResetPasswordPage() {
 
   useEffect(() => {
     if (isSuccessResetPassword) {
-      setMessage("Tu contraseña ha sido restablecida exitosamente.");
       form.reset();
     }
   }, [isSuccessResetPassword, form]);
@@ -104,7 +99,6 @@ export default function ResetPasswordPage() {
     return (
       <div>
         <p>Your token has expired. Please request a new password reset link.</p>
-        {/* Aquí un botón para solicitar un nuevo token */}
       </div>
     );
   }
@@ -161,12 +155,6 @@ export default function ResetPasswordPage() {
           </form>
         </Form>
       </CardContent>
-      <CardFooter>
-        {message && <p className="text-sm text-green-600">{message}</p>}
-        {timeRemaining && (
-          <p>Token expires in {Math.floor(timeRemaining / 60)} minutes</p>
-        )}
-      </CardFooter>
     </Card>
   );
 }
