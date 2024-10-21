@@ -10,7 +10,7 @@ interface CartItemProps {
 }
 export const CartItem = ({ product }: CartItemProps) => {
   return (
-    <Card className="group/product grid h-auto w-60 grid-rows-[1fr_60px] border border-secondary/10 shadow-none transition-all duration-500 hover:shadow-md">
+    <Card className="group/product h-aut bg-transparento grid w-60 grid-rows-[1fr_60px] border border-secondary/10 shadow-none transition-all duration-500 hover:bg-white hover:shadow-sm">
       <CardContent className="flex flex-col items-center justify-center gap-4 px-2 py-10">
         <div className="h-20">
           <Image
@@ -30,7 +30,7 @@ export const CartItem = ({ product }: CartItemProps) => {
             {product.name}
           </h2>
           <p className="font-commingSoon text-3xl font-semibold">
-            S/.{product.price}
+            S/ {product.price}
           </p>
         </div>
       </CardContent>
