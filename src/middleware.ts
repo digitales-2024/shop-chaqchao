@@ -4,6 +4,9 @@ import type { NextRequest } from "next/server";
 import { getToken } from "./lib/jwt/getToken";
 import { redirectToLogin } from "./lib/jwt/redirectToLogin";
 
+// Rutas que requieren autenticación
+const protectedRoutes = ["/profile"];
+
 // Rutas de autenticación (accesibles solo por usuarios no autenticados)
 const authRoutes = [
   "/sign-in",
@@ -11,9 +14,6 @@ const authRoutes = [
   "/forgot-password",
   "/reset-password",
 ];
-
-// Rutas que requieren autenticación
-const protectedRoutes = ["/profile"];
 
 export async function middleware(request: NextRequest) {
   const token = getToken(request);
@@ -47,7 +47,7 @@ export async function middleware(request: NextRequest) {
       // Redirigir al login si intenta acceder a rutas protegidas
       return redirectToLogin(request);
     }
-    // Permitir acceso a rutas públicas y de autenticación
+    // Permitir acceso a rutas públicas, incluyendo "/"
     return NextResponse.next();
   }
 }
