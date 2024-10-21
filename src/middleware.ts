@@ -4,7 +4,13 @@ import type { NextRequest } from "next/server";
 import { getToken } from "./lib/jwt/getToken";
 import { redirectToLogin } from "./lib/jwt/redirectToLogin";
 
-const routesNotRequiringAuth = ["/sign-in", "/register", "/terms"];
+const routesNotRequiringAuth = [
+  "/sign-in",
+  "/register",
+  "/terms",
+  "/forgot-password",
+  "/reset-password",
+];
 
 export async function middleware(request: NextRequest) {
   // Extraer la cookie llamada 'client_access_token'
@@ -12,13 +18,11 @@ export async function middleware(request: NextRequest) {
 
   // Si no hay token y la ruta requiere autenticación, redirigir a login
   if (!token && !routesNotRequiringAuth.includes(request.nextUrl.pathname)) {
-    console.log("token prueba", token);
     return redirectToLogin(request);
   }
 
   // Si hay token y el usuario intenta acceder a una ruta pública, redirigir a la página de inicio
   if (token && routesNotRequiringAuth.includes(request.nextUrl.pathname)) {
-    console.log("token prueba 2", token);
     return NextResponse.redirect(new URL("/", request.url));
   }
 

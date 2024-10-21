@@ -10,7 +10,13 @@ interface LayoutShopProps {
 }
 
 // Arreglo con las rutas que no necesitan autorización
-const noAuthRoutes = ["/sign-in", "/register", "/forgot-password"];
+const noAuthRoutes = [
+  "/sign-in",
+  "/register",
+  "/forgot-password",
+  "/terms",
+  "/reset-password",
+];
 
 export function LayoutShop({ children }: LayoutShopProps) {
   const pathname = usePathname();

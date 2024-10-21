@@ -110,12 +110,12 @@ export default function SignInPage() {
               </label>
             </div>
             <p className="text-sm">
-              <a
+              <Link
                 href="/forgot-password"
                 className="ml-1 text-[#5a2d0c] hover:underline"
               >
                 ¿Olvidaste tu contraseña?
-              </a>
+              </Link>
             </p>
           </div>
 
