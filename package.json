@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
+    "@fontsource-variable/nunito": "^5.1.0",
     "@radix-ui/react-avatar": "^1.1.1",
     "@radix-ui/react-checkbox": "^1.1.2",
     "@radix-ui/react-dialog": "^1.1.2",
@@ -33,6 +34,9 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
+    "embla-carousel-autoplay": "^8.3.0",
+    "embla-carousel-fade": "^8.3.0",
+    "embla-carousel-react": "^8.3.0",
     "framer-motion": "^11.11.9",
     "js-cookie": "^3.0.5",
     "jwt-decode": "^4.0.0",

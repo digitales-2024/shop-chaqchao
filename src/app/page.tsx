@@ -1,10 +1,17 @@
-import ProfileComponent from "@/components/ProfileComponent";
+import { Featured } from "@/components/home/Featured";
+import { Hero } from "@/components/home/Hero";
+import { Recommend } from "@/components/home/Recommend";
+import { Workshops } from "@/components/home/Workshops";
 
 export default function Home() {
   return (
-    <div>
-      <div>hola</div>
-      <ProfileComponent />
+    <div className="flex flex-col gap-6">
+      <Hero />
+      <div className="container mx-auto my-20 space-y-20">
+        <Workshops />
+        <Recommend />
+        <Featured />
+      </div>
     </div>
   );
 }

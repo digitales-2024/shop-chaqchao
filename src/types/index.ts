@@ -12,3 +12,4 @@ export type { ForgotPassword } from "./forgotPassword";
 export type { ResetPassword } from "./resetPassword";
 
 export type { CustomErrorData, ErrorFormData } from "./error";
+export type { Category, Product } from "./catalog";
