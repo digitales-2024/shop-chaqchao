@@ -17,7 +17,6 @@ import {
 
 export const UserLogin = () => {
   const { client } = useAuth();
-
   const { signOut } = useLogout();
   if (!client) {
     return (
@@ -33,12 +32,15 @@ export const UserLogin = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="focus-visible:ring-transparent">
+        <Button
+          variant="ghost"
+          className="h-16 rounded-full border-2 border-secondary/20 pl-2 pr-4 capitalize focus-visible:ring-transparent"
+        >
           <Avatar>
             <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
-          Nombre
+          {client.name.split(" ")[0]}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end">
