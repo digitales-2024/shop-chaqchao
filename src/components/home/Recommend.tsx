@@ -3,6 +3,7 @@ import { useCatalog } from "@/hooks/use-catalog";
 
 import { CartItem } from "../cart/CartItem";
 import { CartSkeleton } from "../cart/CartSkeleton";
+import { BusinessSchedule } from "../common/Schedule";
 
 interface RecommendHeaderProps {
   children: React.ReactNode;
@@ -11,14 +12,18 @@ interface RecommendHeaderProps {
 const RecommendHeader: React.FC<RecommendHeaderProps> = ({ children }) => {
   return (
     <section className="flex flex-col gap-20">
-      <h2 className="mb-10 text-center text-3xl font-semibold">
-        <span className="text-balance">
-          Explora nuestros productos recomendados
-        </span>
-        <p className="text-lg text-secondary">
-          Nuestras opciones variadas de chocolates cremas, lipbalm entre otros.
-        </p>
-      </h2>
+      <div className="flex flex-col items-center">
+        <BusinessSchedule />
+        <h2 className="mb-10 text-center text-3xl font-semibold">
+          <span className="text-balance">
+            Explora nuestros productos recomendados
+          </span>
+          <p className="text-lg text-secondary">
+            Nuestras opciones variadas de chocolates, cremas, lipbalm, entre
+            otros.
+          </p>
+        </h2>
+      </div>
       <div className="flex gap-6">{children}</div>
     </section>
   );
