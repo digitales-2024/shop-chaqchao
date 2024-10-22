@@ -1,3 +1,4 @@
+import { useAuth } from "@/hooks/use-auth";
 import { useLogout } from "@/hooks/use-logout";
 import { CreditCard, LogOut, NotebookPen, User } from "lucide-react";
 import Link from "next/link";
@@ -15,13 +16,14 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 export const UserLogin = () => {
-  const isAuthenticated = false;
+  const { client } = useAuth();
+
   const { signOut } = useLogout();
-  if (isAuthenticated) {
+  if (!client) {
     return (
       <Link
         href="/login"
-        className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md px-4 text-sm font-medium ring-offset-background transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0"
+        className="inline-flex h-16 items-center justify-center whitespace-nowrap rounded-full bg-secondary px-10 text-xl text-white transition-colors duration-300 hover:bg-secondary/90"
       >
         Iniciar sesión
       </Link>
