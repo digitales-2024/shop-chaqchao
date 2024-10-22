@@ -1,9 +1,8 @@
+import "@fontsource-variable/lexend-deca";
+import "./globals.css";
 import { Providers } from "@/redux/providers";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-
-import "@fontsource-variable/nunito";
-import "./globals.css";
 import { Toaster } from "sonner";
 
 import { LayoutShop } from "@/components/templates/LayoutShop";
@@ -33,7 +32,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${comingSoon.variable} ${geistSans.variable} font-nunito antialiased`}
+        className={`${comingSoon.variable} ${geistSans.variable} font-lexend-deca antialiased`}
       >
         <Toaster />
         <Providers>

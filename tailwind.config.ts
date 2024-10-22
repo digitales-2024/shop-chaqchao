@@ -11,7 +11,7 @@ const config: Config = {
     extend: {
       fontFamily: {
         commingSoon: ["var(--font-coming-soon)"],
-        nunito: ["var(--font-nunito-variable)"],
+        "lexend-deca": ["var(--font-lexend-deca-variable)"],
       },
       colors: {
         background: "hsl(var(--background))",
