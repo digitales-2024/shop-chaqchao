@@ -13,11 +13,15 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-type Props = {
-  defaultValue: string;
-};
+import { cn } from "@/lib/utils";
 
-export function LanguageSelector({ defaultValue }: Props) {
+// la interface del selector se extiende de div
+interface Props {
+  defaultValue: Locale;
+  className?: string;
+}
+
+export function LanguageSelector({ defaultValue, ...props }: Props) {
   const [isPending, startTransition] = useTransition();
 
   function onChange(value: string) {
@@ -28,8 +32,18 @@ export function LanguageSelector({ defaultValue }: Props) {
   }
 
   return (
-    <Select value={defaultValue} onValueChange={onChange} disabled={isPending}>
-      <SelectTrigger className="w-28 border-none bg-transparent focus:bg-background focus:ring-0 focus:ring-offset-0">
+    <Select
+      value={defaultValue}
+      onValueChange={onChange}
+      disabled={isPending}
+      {...props}
+    >
+      <SelectTrigger
+        className={cn(
+          "w-28 border-none bg-transparent focus:bg-background focus:ring-0 focus:ring-offset-0",
+          props.className,
+        )}
+      >
         <Globe />
         <SelectValue placeholder="Selecciona un idioma" />
       </SelectTrigger>
