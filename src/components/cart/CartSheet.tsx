@@ -1,3 +1,4 @@
+"use client";
 import { ShoppingBag } from "lucide-react";
 
 import {
@@ -17,14 +18,14 @@ export function CartSheet() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <div className="group/cart relative flex size-16 shrink-0 cursor-pointer items-center justify-center rounded-full border-2 border-secondary/20 bg-transparent text-secondary">
+        <div className="group/cart relative flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full hover:bg-background">
           <span className="sr-only">Abrir carrito de pedidos</span>
-          <ShoppingBag className="h-28 flex-shrink-0 transition-transform duration-300 group-hover/cart:animate-tada" />
+          <ShoppingBag className="flex-shrink-0 transition-transform duration-300 group-hover/cart:animate-tada" />
           <Badge
             variant="default"
-            className="absolute -right-2 top-0 flex size-6 items-center justify-center p-2"
+            className="absolute -bottom-0 -right-1 flex size-4 items-center justify-center p-2 text-[10px]"
           >
-            1
+            20
           </Badge>
         </div>
       </SheetTrigger>
