@@ -1,6 +1,7 @@
 "use client";
 
 import { useCategory } from "@/hooks/use-category";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import * as React from "react";
 
@@ -19,12 +20,14 @@ import { cn } from "@/lib/utils";
 export function MenuList() {
   const { dataCategories, isLoadingCategories } = useCategory();
 
+  const t = useTranslations("navbar");
+
   return (
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
           <NavigationMenuTrigger disabled={isLoadingCategories}>
-            Productos
+            {t("products")}
           </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
@@ -43,7 +46,7 @@ export function MenuList() {
         <NavigationMenuItem>
           <Link href="/class" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Clases
+              {t("classes")}
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
