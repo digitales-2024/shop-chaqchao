@@ -1,11 +1,10 @@
 "use client";
-import { useAuth } from "@/hooks/use-auth";
 import { useLogout } from "@/hooks/use-logout";
 import { useProfile } from "@/hooks/use-profile";
-import { CreditCard, LogOut, NotebookPen, User } from "lucide-react";
+import { getFirstLetter } from "@/utils/getFirstLetter";
+import { CreditCard, LogOut, NotebookPen, User, UserRound } from "lucide-react";
 import Link from "next/link";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -16,69 +15,58 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Skeleton } from "@/components/ui/skeleton";
 
 export const UserLogin = () => {
-  const { client } = useAuth();
   const { signOut } = useLogout();
-
-  const { isLoading } = useProfile();
-
-  if (isLoading) {
-    return (
-      <Skeleton className="inline-flex h-16 w-32 items-center justify-center whitespace-nowrap rounded-full px-10 text-lg text-white" />
-    );
-  }
-
-  if (!client) {
+  const { clienteData, isLoading } = useProfile();
+  if (isLoading || !clienteData) {
     return (
       <Link
-        href="/login"
-        className="inline-flex h-16 items-center justify-center whitespace-nowrap rounded-full bg-secondary px-10 text-lg text-white transition-colors duration-300 hover:bg-secondary/90"
+        href="/sign-in"
+        className="inline-flex size-10 shrink-0 items-center justify-center rounded-full transition-all duration-300 hover:scale-105 hover:bg-background"
       >
-        Iniciar sesión
+        <UserRound className="shrink-0" />
       </Link>
     );
   }
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button
-          variant="ghost"
-          className="h-16 rounded-full border-2 border-secondary/20 pl-2 pr-4 text-lg capitalize focus-visible:ring-transparent"
-        >
-          <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-          {client.name.split(" ")[0]}
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56" align="end">
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <DropdownMenuItem>
-            <User className="mr-2 h-4 w-4" />
-            <span>Perfil</span>
+    <div className="inline-flex gap-2">
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button
+            variant="ghost"
+            className="relative size-10 rounded-full bg-background text-lg capitalize ring-0 ring-offset-0 transition-all duration-300 hover:scale-105 focus:ring-0 focus:ring-offset-0 focus-visible:border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+          >
+            <span className="absolute right-0 top-0 size-2 rounded-full bg-emerald-500" />
+            {getFirstLetter(clienteData.name)}
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="w-56" align="end">
+          <DropdownMenuLabel>My Account</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuGroup>
+            <DropdownMenuItem>
+              <User className="mr-2 h-4 w-4" />
+              <span>Perfil</span>
+            </DropdownMenuItem>
+            <DropdownMenuItem className="relative">
+              <CreditCard className="mr-2 h-4 w-4" />
+              <span>Pedidos</span>
+              <span className="absolute right-0 size-2 rounded-full bg-emerald-500" />
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <NotebookPen className="mr-2 h-4 w-4" />
+              <span>Reservas</span>
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem onClick={signOut}>
+            <LogOut className="mr-2 h-4 w-4" />
+            <span>Cerrar sesión</span>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <CreditCard className="mr-2 h-4 w-4" />
-            <span>Pedidos</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <NotebookPen className="mr-2 h-4 w-4" />
-            <span>Reservas</span>
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-        <DropdownMenuSeparator />
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={signOut}>
-          <LogOut className="mr-2 h-4 w-4" />
-          <span>Cerrar sesión</span>
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
   );
 };
