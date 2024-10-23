@@ -1,9 +1,9 @@
 "use client";
 import { useAuth } from "@/hooks/use-auth";
 import { useLogout } from "@/hooks/use-logout";
+import { useProfile } from "@/hooks/use-profile";
 import { CreditCard, LogOut, NotebookPen, User } from "lucide-react";
 import Link from "next/link";
-import { useMemo } from "react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -22,14 +22,11 @@ export const UserLogin = () => {
   const { client } = useAuth();
   const { signOut } = useLogout();
 
-  const isLoading = useMemo(() => {
-    if (!client) return true;
-    return false;
-  }, [client]);
+  const { isLoading } = useProfile();
 
   if (isLoading) {
     return (
-      <Skeleton className="inline-flex h-16 w-32 items-center justify-center whitespace-nowrap rounded-full px-10 text-lg text-white transition-colors duration-300 hover:bg-secondary/90" />
+      <Skeleton className="inline-flex h-16 w-32 items-center justify-center whitespace-nowrap rounded-full px-10 text-lg text-white" />
     );
   }
 
