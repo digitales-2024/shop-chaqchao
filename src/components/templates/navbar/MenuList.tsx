@@ -11,6 +11,7 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 
 import { cn } from "@/lib/utils";
@@ -20,32 +21,28 @@ export function MenuList() {
 
   return (
     <NavigationMenu>
-      <NavigationMenuList className="inline-flex gap-4 hover:bg-transparent">
-        <NavigationMenuItem className="hover:bg-transparent">
-          <NavigationMenuTrigger
-            className="bg-transparent text-xl font-semibold text-secondary transition-all duration-300 open:bg-transparent hover:scale-105 hover:bg-transparent hover:text-secondary"
-            disabled={isLoadingCategories || !dataCategories}
-          >
+      <NavigationMenuList>
+        <NavigationMenuItem>
+          <NavigationMenuTrigger disabled={isLoadingCategories}>
             Productos
           </NavigationMenuTrigger>
           <NavigationMenuContent>
             <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-              {dataCategories &&
-                dataCategories.map((category) => (
-                  <ListItem
-                    key={category.id}
-                    title={category.name}
-                    href={category.name}
-                  >
-                    {category.description}
-                  </ListItem>
-                ))}
+              {dataCategories?.map((component) => (
+                <ListItem
+                  key={component.id}
+                  title={component.name}
+                  href={component.name}
+                >
+                  {component.description}
+                </ListItem>
+              ))}
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
-        <NavigationMenuItem className="transition-all duration-300 hover:scale-105">
-          <Link href="/docs" legacyBehavior passHref>
-            <NavigationMenuLink className="bg-transparent text-xl font-semibold text-secondary">
+        <NavigationMenuItem>
+          <Link href="/class" legacyBehavior passHref>
+            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
               Clases
             </NavigationMenuLink>
           </Link>
