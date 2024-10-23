@@ -95,13 +95,13 @@ export function SearchBar() {
         onClick={toggleSearch}
         aria-label="Buscar"
         className={cn(
-          "relative z-10 flex size-16 cursor-pointer items-center justify-center rounded-full border-2 border-secondary/20 bg-transparent text-secondary transition-colors duration-300",
+          "relative z-10 flex size-10 cursor-pointer items-center justify-center rounded-full transition-colors duration-300 hover:scale-105 hover:bg-background",
           {
-            "bg-secondary text-white": isSearchVisible,
+            "bg-background hover:bg-background": isSearchVisible,
           },
         )}
       >
-        <Search className="h-28" />
+        <Search />
       </div>
     </div>
   );
