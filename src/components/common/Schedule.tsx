@@ -1,66 +1,64 @@
 import { socket } from "@/socket/socket";
 import { useEffect, useState } from "react";
 
+import { StaticMessage } from "./StaticMessage";
+
+const messages = [
+  {
+    highlight: "Lo siento, el local se encuentra cerrado.",
+    message: " ¡Regrese pronto!",
+  },
+  {
+    highlight: "Nos encontramos fuera del horario de atención.",
+    message: " lo esperamos mañana.",
+  },
+  {
+    highlight: "Gracias por visitarnos.",
+    message: " Mañana podra realizar sus compras.",
+  },
+];
+
 const BusinessSchedule: React.FC = () => {
-  const [businessStates, setBusinessStates] = useState<{
-    [key: string]: boolean;
-  }>({});
+  const [currentMessage, setCurrentMessage] = useState<{
+    highlight: string;
+    message: string;
+  } | null>(null);
 
   useEffect(() => {
-    // Escuchar el evento de estado de negocio actualizado
     socket.on("connect", () => {
-      console.log("Conectado al WebSocket!"); // Mensaje al conectar
+      console.log("Conectado al WebSocket!");
     });
 
     socket.on(
       "business-schedule-updated",
       (data: { businessId: string; isOpen: boolean }) => {
-        setBusinessStates((prev) => ({
-          ...prev,
-          [data.businessId]: data.isOpen,
-        }));
-        console.log(`Business ID: ${data.businessId}, isOpen: ${data.isOpen}`);
+        console.log(
+          `Received update for business ${data.businessId}: isOpen = ${data.isOpen}`,
+        );
+
+        if (!data.isOpen) {
+          // Seleccionar un mensaje aleatorio al cerrar
+          const randomMessage =
+            messages[Math.floor(Math.random() * messages.length)];
+          setCurrentMessage(randomMessage);
+        } else {
+          setCurrentMessage(null); // Limpiar el mensaje si el negocio está abierto
+        }
       },
     );
 
     socket.on("disconnect", () => {
-      console.log("Desconectado del WebSocket"); // Mensaje al desconectar
+      console.log("Desconectado del WebSocket");
     });
 
     return () => {
       socket.off("business-schedule-updated");
-      socket.off("connect");
-      socket.off("disconnect");
     };
   }, []);
 
   return (
     <div className="flex flex-col gap-4">
-      {Object.entries(businessStates).map(([businessId, isOpen]) => (
-        <div
-          key={businessId}
-          className={`rounded-lg border p-4 shadow-md ${isOpen ? "border-green-500 bg-green-100" : "border-red-500 bg-red-100"}`}
-        >
-          <div
-            className={`flex items-center ${isOpen ? "text-green-600" : "text-red-600"}`}
-          >
-            <span className="mr-2">
-              {isOpen ? (
-                <span role="img" aria-label="open" className="text-2xl">
-                  🟢
-                </span> // Ícono para "abierto"
-              ) : (
-                <span role="img" aria-label="closed" className="text-2xl">
-                  🔴
-                </span> // Ícono para "cerrado"
-              )}
-            </span>
-            <span className="font-medium">
-              El negocio está {isOpen ? "abierto" : "cerrado"}.
-            </span>
-          </div>
-        </div>
-      ))}
+      {currentMessage && <StaticMessage {...currentMessage} />}
     </div>
   );
 };
