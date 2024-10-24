@@ -139,7 +139,7 @@ export default function AuthCards() {
                 </div>
 
                 <Button
-                  className="mb-4 w-full rounded-lg bg-secondary py-2 text-white hover:bg-[#4a2409]"
+                  className="mb-4 w-full rounded-lg bg-secondary py-2 text-white hover:bg-secondary"
                   disabled={isLoading}
                 >
                   {isLoading ? "Cargando..." : "INGRESAR"}
