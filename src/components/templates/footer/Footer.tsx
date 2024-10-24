@@ -86,6 +86,7 @@ export function Footer() {
                       {cloneElement(socialMedia.icon, {
                         className: "size-6",
                       })}
+                      <span className="sr-only">{`chaqchao - ${socialMedia.label}`}</span>
                     </a>
                   </TooltipTrigger>
                   <TooltipContent>
