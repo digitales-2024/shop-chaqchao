@@ -26,7 +26,10 @@ export function MenuList() {
     <NavigationMenu>
       <NavigationMenuList>
         <NavigationMenuItem>
-          <NavigationMenuTrigger disabled={isLoadingCategories}>
+          <NavigationMenuTrigger
+            disabled={isLoadingCategories}
+            className="bg-transparent transition-all duration-300 hover:scale-105 hover:bg-transparent focus:bg-transparent"
+          >
             {t("products")}
           </NavigationMenuTrigger>
           <NavigationMenuContent>
@@ -44,8 +47,15 @@ export function MenuList() {
           </NavigationMenuContent>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <Link href="/class" legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+          <Link
+            href="/class"
+            legacyBehavior
+            passHref
+            className="bg-transparent"
+          >
+            <NavigationMenuLink
+              className={`${navigationMenuTriggerStyle()} bg-transparent transition-all duration-300 hover:scale-105 hover:bg-transparent focus:bg-transparent`}
+            >
               {t("classes")}
             </NavigationMenuLink>
           </Link>
