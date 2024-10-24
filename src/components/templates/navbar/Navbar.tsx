@@ -17,7 +17,7 @@ import { UserLogin } from "./UserLogin";
 export function Navbar() {
   const locale = useLocale();
 
-  const isDesktop = useMediaQuery("(min-width: 640px)");
+  const isDesktop = useMediaQuery("(min-width: 800px)");
   if (isDesktop) {
     return (
       <nav className="fixed z-50 flex w-full items-center justify-between bg-white p-4 lg:px-6">
