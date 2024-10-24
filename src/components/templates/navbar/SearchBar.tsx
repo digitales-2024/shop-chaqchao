@@ -5,6 +5,7 @@ import { Search, X } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 import { cn } from "@/lib/utils";
 
@@ -66,7 +67,12 @@ export function SearchBar() {
         })}
       >
         <form onSubmit={handleSubmit} className="relative">
+          <Label htmlFor="search" className="sr-only">
+            Buscar productos
+          </Label>
           <Input
+            aria-label="Buscar productos"
+            alt="Buscar productos"
             ref={inputRef}
             type="text"
             value={busqueda}
