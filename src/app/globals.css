@@ -13,12 +13,12 @@
 
 :root {
   --font-family-sans: "ComingSoon", sans-serif;
-  --font-nunito-variable: "Nunito Variable", sans-serif;
+  --font-lexend-deca-variable: "Lexend Deca Variable", sans-serif;
 }
 
 @layer base {
   :root {
-    --background: 15 40% 98%;
+    --background: 0 0% 225%;
     --foreground: 240 10% 3.9%;
     --card: 0 0% 100%;
     --card-foreground: 240 10% 3.9%;

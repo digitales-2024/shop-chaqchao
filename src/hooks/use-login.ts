@@ -5,9 +5,12 @@ import { useEffect } from "react";
 import { SubmitHandler } from "react-hook-form";
 import { toast } from "sonner";
 
+import { useAuth } from "./use-auth";
+
 export const useLogin = () => {
   const [login, { data, isSuccess, isLoading, error }] = useLoginMutation();
   const router = useRouter();
+  const { setClient } = useAuth();
 
   const onLogin: SubmitHandler<Credentials> = async (credentials) => {
     const promise = () =>
@@ -31,6 +34,9 @@ export const useLogin = () => {
             );
           }
           resolve(result);
+          if (result.data) {
+            setClient(result.data);
+          }
         } catch (error) {
           reject(error);
         }

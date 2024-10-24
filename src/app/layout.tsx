@@ -1,9 +1,10 @@
+import "@fontsource-variable/lexend-deca";
+import "./globals.css";
 import { Providers } from "@/redux/providers";
 import type { Metadata } from "next";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages } from "next-intl/server";
 import localFont from "next/font/local";
-
-import "@fontsource-variable/nunito";
-import "./globals.css";
 import { Toaster } from "sonner";
 
 import { LayoutShop } from "@/components/templates/LayoutShop";
@@ -25,20 +26,25 @@ export const metadata: Metadata = {
   description: "Somos una tienda que ofrece el mejor chocolate del mundo.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
+  // side is the easiest way to get started
+  const messages = await getMessages();
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body
-        className={`${comingSoon.variable} ${geistSans.variable} font-nunito antialiased`}
+        className={`${comingSoon.variable} ${geistSans.variable} font-lexend-deca antialiased`}
       >
-        <Toaster />
-        <Providers>
-          <LayoutShop>{children}</LayoutShop>
-        </Providers>
+        <NextIntlClientProvider messages={messages}>
+          <Toaster />
+          <Providers>
+            <LayoutShop>{children}</LayoutShop>
+          </Providers>
+        </NextIntlClientProvider>
       </body>
     </html>
   );
