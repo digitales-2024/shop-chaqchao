@@ -11,7 +11,7 @@ import { CartSheet } from "@/components/cart/CartSheet";
 import { LanguageSelector } from "./LanguageSelector";
 import { MenuList } from "./MenuList";
 import { SearchBar } from "./SearchBar";
-import { SheetMenu } from "./SheetMenu";
+import { SheetMenuMobil } from "./SheetMenuMobil";
 import { UserLogin } from "./UserLogin";
 
 export function Navbar() {
@@ -61,7 +61,7 @@ export function Navbar() {
         <div className="flex items-center justify-end gap-6">
           <CartSheet />
           <UserLogin />
-          <SheetMenu />
+          <SheetMenuMobil />
         </div>
       </div>
     </nav>
