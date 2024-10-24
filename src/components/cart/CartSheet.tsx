@@ -1,7 +1,6 @@
-import { ShoppingCart } from "lucide-react";
+"use client";
+import { ShoppingBag } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 import {
   Sheet,
   SheetClose,
@@ -14,30 +13,22 @@ import {
 } from "@/components/ui/sheet";
 
 import { Badge } from "../ui/badge";
-import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 export function CartSheet() {
   return (
     <Sheet>
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <SheetTrigger asChild>
-            <Button variant="ghost" size="icon" className="relative">
-              <span className="sr-only">Abrir carrito de pedidos</span>
-              <ShoppingCart />
-              <Badge
-                variant="default"
-                className="absolute -right-2 top-0 flex size-4 items-center justify-center p-2"
-              >
-                1
-              </Badge>
-            </Button>
-          </SheetTrigger>
-        </TooltipTrigger>
-        <TooltipContent>
-          <Label>Carrito</Label>
-        </TooltipContent>
-      </Tooltip>
+      <SheetTrigger asChild>
+        <div className="group/cart relative flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full hover:bg-background">
+          <span className="sr-only">Abrir carrito de pedidos</span>
+          <ShoppingBag className="flex-shrink-0 transition-transform duration-300 group-hover/cart:animate-tada" />
+          <Badge
+            variant="default"
+            className="absolute -bottom-0 -right-1 flex size-4 items-center justify-center p-2 text-[10px]"
+          >
+            20
+          </Badge>
+        </div>
+      </SheetTrigger>
       <SheetContent>
         <SheetHeader>
           <SheetTitle>Carrito</SheetTitle>

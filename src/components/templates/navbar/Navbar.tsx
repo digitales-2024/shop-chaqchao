@@ -1,51 +1,67 @@
+"use client";
 import { ChaqchaoCharacter } from "@/assets/images/ChaqchaoCharacter";
 import { ChaqchaoName } from "@/assets/images/ChaqchaoName";
+import { useMediaQuery } from "@/hooks/use-media-query";
+import { Locale } from "@/i18n/config";
+import { useLocale } from "next-intl";
 import Link from "next/link";
-import { Suspense } from "react";
 
 import { CartSheet } from "@/components/cart/CartSheet";
 
+import { LanguageSelector } from "./LanguageSelector";
+import { MenuList } from "./MenuList";
 import { SearchBar } from "./SearchBar";
+import { SheetMenuMobil } from "./SheetMenuMobil";
 import { UserLogin } from "./UserLogin";
 
-export async function Navbar() {
+export function Navbar() {
+  const locale = useLocale();
+
+  const isDesktop = useMediaQuery("(min-width: 800px)");
+  if (isDesktop) {
+    return (
+      <nav className="fixed z-50 flex w-full items-center justify-between bg-white p-4 lg:px-6">
+        <div className="container mx-auto grid w-full grid-cols-3 items-center justify-center">
+          <div className="flex w-full">
+            <Link
+              href="/"
+              prefetch={true}
+              className="mr-2 flex w-full items-center justify-center md:w-auto lg:mr-6"
+            >
+              <ChaqchaoCharacter className="h-24" />
+              <ChaqchaoName className="w-48" />
+            </Link>
+          </div>
+          <div className="inline-flex justify-center">
+            <MenuList />
+          </div>
+          <div className="flex items-center justify-end gap-6">
+            <SearchBar />
+            <CartSheet />
+            <UserLogin />
+            <LanguageSelector defaultValue={locale as Locale} />
+          </div>
+        </div>
+      </nav>
+    );
+  }
+
   return (
-    <nav className="relative flex items-center justify-between p-4 lg:px-6">
-      <div className="block flex-none md:hidden">
-        <Suspense fallback={null}>{/* <MobileMenu menu={menu} /> */}</Suspense>
-      </div>
-      <div className="grid w-full grid-cols-3 items-center justify-center">
+    <nav className="fixed z-50 flex w-full items-center justify-between bg-white p-4 lg:px-6">
+      <div className="container mx-auto grid w-full grid-cols-[auto_1fr] items-center justify-center">
         <div className="flex w-full">
           <Link
             href="/"
             prefetch={true}
             className="mr-2 flex w-full items-center justify-center md:w-auto lg:mr-6"
           >
-            <ChaqchaoCharacter className="h-24" />
-            <ChaqchaoName className="w-48" />
+            <ChaqchaoCharacter className="h-10" />
           </Link>
-          {/* {menu.length ? (
-            <ul className="hidden gap-6 text-sm md:flex md:items-center">
-              {menu.map((item: Menu) => (
-                <li key={item.title}>
-                  <Link
-                    href={item.path}
-                    prefetch={true}
-                    className="text-neutral-500 underline-offset-4 hover:text-black hover:underline dark:text-neutral-400 dark:hover:text-neutral-300"
-                  >
-                    {item.title}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          ) : null} */}
         </div>
-        <div className="flex justify-center">
-          <SearchBar />
-        </div>
-        <div className="flex justify-end gap-4">
-          <UserLogin />
+        <div className="flex items-center justify-end gap-6">
           <CartSheet />
+          <UserLogin />
+          <SheetMenuMobil />
         </div>
       </div>
     </nav>
