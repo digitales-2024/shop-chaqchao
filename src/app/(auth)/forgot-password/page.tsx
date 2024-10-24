@@ -5,7 +5,6 @@ import {
   ForgotPasswordSchema,
 } from "@/schemas/forgotPassword";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { Button } from "@/components/ui/button";
@@ -27,10 +26,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import Link from "next/link";
 
 export default function ForgotPasswordPage() {
-  const [message, setMessage] = useState("");
-
   const { onForgotPassword, isSucessForgotPassword } = useForgotPassword();
 
   const form = useForm<ForgotPasswordSchema>({
@@ -43,16 +41,13 @@ export default function ForgotPasswordPage() {
   function onSubmit(values: ForgotPasswordSchema) {
     onForgotPassword(values);
     if (isSucessForgotPassword) {
-      setMessage(
-        "Se ha enviado un correo con instrucciones para recuperar tu contraseña.",
-      );
       form.reset();
     }
   }
 
   return (
     <div className="grid h-screen grid-cols-1 items-center justify-items-center">
-      <Card className="w-2/4">
+      <Card className="max-w-[35rem]">
         <CardHeader>
           <CardTitle>Recuperar Contraseña</CardTitle>
           <CardDescription>
@@ -84,7 +79,11 @@ export default function ForgotPasswordPage() {
           </Form>
         </CardContent>
         <CardFooter>
-          {message && <p className="text-sm text-green-600">{message}</p>}
+          <p className="text-center text-base">
+            <Link href="/sign-in" className="text-secondary hover:underline">
+              Inicia Sesión
+            </Link>
+          </p>
         </CardFooter>
       </Card>
     </div>
