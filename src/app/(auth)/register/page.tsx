@@ -24,8 +24,17 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { PhoneInput } from "@/components/ui/phone-input";
+import { GoogleIcon } from "@/assets/icons";
+import { Card, CardContent } from "@/components/ui/card";
+import DatePickerWithYearNavigation from "@/components/ui/year-selector";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Badge } from "@/components/ui/badge";
 
-export default function RegisterPage() {
+export default function AuthComponent() {
   const { googleLogin } = useLogin();
   const { onCreateClient } = useRegister();
 
@@ -42,7 +51,6 @@ export default function RegisterPage() {
     },
   });
 
-  // Función para manejar el envío del formulario
   function onSubmit(input: CreateClientsSchema) {
     const { name, firstName, ...filteredInput } = input;
     const combinedName = `${name} ${firstName}`;
@@ -56,166 +64,200 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="flex h-screen items-center justify-center">
-      <div className="rounded-lg bg-white p-8 shadow-lg">
-        <h1 className="mb-4 text-center text-xl font-bold">REGISTRARSE</h1>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="grid grid-cols-2 gap-4">
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Primer Nombre</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Primer Nombre"
-                        {...field}
-                        className="rounded border p-2"
-                        required
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="firstName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Primer Apellido</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Primer Apellido"
-                        {...field}
-                        className="rounded border p-2"
-                        required
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="my-4">
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Correo Electrónico</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="email"
-                        placeholder="Correo Electrónico"
-                        {...field}
-                        className="w-full rounded border p-2"
-                        required
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="my-4">
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Contraseña</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="password"
-                        placeholder="Contraseña"
-                        {...field}
-                        className="w-full rounded border p-2"
-                        required
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <FormField
-                control={form.control}
-                name="phone"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Celular</FormLabel>
-                    <FormControl>
-                      <PhoneInput defaultCountry="PE" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="birthDate"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Fecha de Nacimiento</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="date"
-                        {...field}
-                        className="rounded border p-2"
-                        required
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="my-4">
-              <FormField
-                control={form.control}
-                name="terms"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Checkbox
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                      />
-                    </FormControl>
-                    <FormLabel className="ml-2">
-                      Declaro que acepto los{" "}
-                      <Link href="/terms" className="text-blue-600">
-                        Términos y Políticas de Privacidad
-                      </Link>
-                    </FormLabel>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <div className="flex justify-center">
-              <Button
-                type="submit"
-                className="mb-4 w-full rounded-lg bg-[#5a2d0c] py-2 text-white hover:bg-[#4a2409]"
+    <div className="grid h-screen grid-cols-1 bg-gray-100 md:grid-cols-2">
+      {/* Formulario */}
+      <div className="flex h-full items-center justify-center p-8">
+        <Card>
+          <CardContent>
+            <h2 className="mb-6 pt-6 text-center text-xl font-bold text-secondary">
+              REGISTRARSE
+            </h2>
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-4"
               >
-                REGISTRARSE
-              </Button>
-            </div>
-          </form>
-        </Form>
-        <div className="my-4 text-center">O</div>
-        <div className="flex justify-center">
-          <Button
-            className="flex w-full items-center justify-center rounded-lg border py-2 hover:shadow-md"
-            onClick={googleLogin}
-          >
-            Continuar con Google
+                <div className="grid grid-cols-2 gap-4">
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="font-bold">
+                          Nombre <span className="text-rose-500">*</span>
+                        </FormLabel>
+                        <FormControl>
+                          <Input placeholder="Ingrese su nombre" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="firstName"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="font-bold">
+                          Apellidos <span className="text-rose-500">*</span>
+                        </FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="Ingrese sus apellidos"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="font-bold">
+                        Correo Electrónico{" "}
+                        <span className="text-rose-500">*</span>
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          type="email"
+                          autoComplete="off"
+                          placeholder="Ingrese su correo electrónico"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="font-bold">
+                        Contraseña <span className="text-rose-500">*</span>
+                        <Tooltip>
+                          <TooltipTrigger>
+                            <Badge className="border-xl rounded-md bg-transparent text-slate-500 hover:scale-105 hover:bg-transparent">
+                              ?
+                            </Badge>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            La contraseña debe tener al menos una mayúscula, una
+                            minúscula y un número.
+                          </TooltipContent>
+                        </Tooltip>
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          type="password"
+                          autoComplete="off"
+                          placeholder="Ingrese su contraseña"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                  <FormField
+                    control={form.control}
+                    name="phone"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="font-bold">
+                          Celular <span className="text-rose-500">*</span>
+                        </FormLabel>
+                        <FormControl>
+                          <PhoneInput defaultCountry="PE" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="birthDate"
+                    render={({}) => (
+                      <FormItem>
+                        <FormLabel className="font-bold">
+                          Fecha de cumpleaños
+                        </FormLabel>
+                        <FormControl className="flex">
+                          <DatePickerWithYearNavigation />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <FormField
+                  control={form.control}
+                  name="terms"
+                  render={({ field }) => (
+                    <FormItem className="flex items-start space-x-2">
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                      <div className="space-y-1 leading-none">
+                        <FormLabel>
+                          Declaro que acepto los{" "}
+                          <Link
+                            href="/terms"
+                            className="text-[#5a2d0c] hover:underline"
+                          >
+                            Términos y Políticas de Privacidad
+                          </Link>
+                        </FormLabel>
+                      </div>
+                    </FormItem>
+                  )}
+                />
+                <Button
+                  type="submit"
+                  className="w-full bg-[#5a2d0c] text-white hover:bg-secondary"
+                >
+                  REGISTRARSE
+                </Button>
+              </form>
+            </Form>
+            <div className="my-4 text-center">O</div>
+            <Button
+              variant="outline"
+              className="flex w-full items-center justify-center"
+              onClick={googleLogin}
+            >
+              <GoogleIcon />
+              Continuar con Google
+            </Button>
+            <p className="mt-4 text-center text-sm">
+              <Link href="/sign-in" className="text-[#5a2d0c] hover:underline">
+                ¿Ya tienes cuenta? Ingresa aquí
+              </Link>
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Mensaje "Hola, Amigo" se oculta en pantallas pequeñas */}
+      <div className="hidden h-full bg-secondary text-white md:flex md:flex-col md:items-center md:justify-center">
+        <h2 className="mb-4 text-3xl font-bold">¡Hola, Amigo!</h2>
+        <p className="mb-8">
+          Ingresa tus datos personales y comienza tu viaje con nosotros
+        </p>
+        <Link href="/sign-in">
+          <Button className="rounded-full border border-white bg-transparent px-10 py-2 font-semibold text-white hover:bg-white hover:text-[#5a2d0c]">
+            INGRESAR
           </Button>
-        </div>
+        </Link>
       </div>
     </div>
   );
