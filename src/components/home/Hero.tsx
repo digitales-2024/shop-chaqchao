@@ -35,7 +35,7 @@ export const Hero = () => {
   };
 
   return (
-    <section className="relative mx-auto flex w-full items-start justify-center">
+    <section className="relative mx-auto flex w-full items-start justify-center bg-primary-foreground">
       <div className="container grid h-full w-full grid-cols-2 justify-center">
         <motion.div
           initial="hidden"
