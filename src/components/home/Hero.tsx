@@ -20,7 +20,6 @@ interface CarouselItem {
   image: StaticImageData;
 }
 
-// Import images de manera dinámica para que sean cargadas por el servidor en producción y no en el cliente (SSR)
 const carouselItems: CarouselItem[] = [
   { image: Product01 },
   { image: Product02 },
