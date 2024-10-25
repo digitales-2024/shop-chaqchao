@@ -35,8 +35,8 @@ export const Hero = () => {
   };
 
   return (
-    <section className="relative mx-auto flex w-full items-start justify-center bg-primary-foreground">
-      <div className="container grid h-full w-full grid-cols-2 justify-center">
+    <section className="relative mx-auto flex w-full items-start justify-center bg-primary-foreground p-10">
+      <div className="container grid h-full w-full grid-cols-1 justify-center sm:grid-cols-2">
         <motion.div
           initial="hidden"
           animate="show"
@@ -55,7 +55,7 @@ export const Hero = () => {
             className="font-display text-center text-4xl font-bold tracking-[-0.02em] drop-shadow-sm md:text-7xl md:leading-[5rem]"
             variants={FADE_DOWN_ANIMATION_VARIANTS}
           >
-            <ChaqchaoName className="h-56" />
+            <ChaqchaoName className="h-32 sm:h-56" />
           </motion.h1>
           <motion.p
             className="mt-6 text-balance text-center md:text-2xl"
@@ -87,17 +87,17 @@ export const Hero = () => {
           >
             <Link
               href="/"
-              className="group/see inline-flex items-center justify-center gap-2 rounded-full bg-primary/90 py-2 pl-8 pr-3 text-xl text-white transition-all duration-300 hover:scale-105 hover:bg-primary"
+              className="group/see text-md inline-flex items-center justify-center gap-2 rounded-full bg-primary/90 py-2 pl-8 pr-3 text-white transition-all duration-300 hover:scale-105 hover:bg-primary sm:text-xl"
             >
               <span className="truncate">Explora nuestros productos</span>
               <CircleArrowRight
-                className="size-16 -rotate-45 transition-all duration-300 group-hover/see:rotate-0"
+                className="size-10 -rotate-45 transition-all duration-300 group-hover/see:rotate-0 sm:size-16"
                 strokeWidth={0.5}
               />
             </Link>
           </motion.div>
         </motion.div>
-        <div className="relative flex aspect-square shrink-0 items-center justify-center overflow-hidden rounded-full bg-primary/10">
+        <div className="relative hidden aspect-square shrink-0 items-center justify-center overflow-hidden rounded-full bg-primary/10 sm:flex">
           <Image
             src={BgHero}
             alt="chaqchao"
@@ -124,13 +124,14 @@ export const Hero = () => {
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5, ease: "easeInOut" }}
+                  className="relative h-full w-full"
                 >
                   <Image
                     src={item.image.src}
                     alt="chaqchao"
-                    height={600}
-                    width={600}
-                    className="relative z-10 mx-auto bg-transparent object-cover object-center"
+                    width={500}
+                    height={500}
+                    className="relative z-10 mx-auto size-[calc(100%_-_10rem)] bg-transparent object-cover object-center"
                     priority={index === 0}
                     quality={100}
                   />
