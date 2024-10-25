@@ -26,16 +26,12 @@ const BusinessSchedule: React.FC = () => {
 
   useEffect(() => {
     socket.on("connect", () => {
-      console.log("Conectado al WebSocket!");
+      console.log("Conectado al WebSocket");
     });
 
     socket.on(
       "business-schedule-updated",
       (data: { businessId: string; isOpen: boolean }) => {
-        console.log(
-          `Received update for business ${data.businessId}: isOpen = ${data.isOpen}`,
-        );
-
         if (!data.isOpen) {
           // Seleccionar un mensaje aleatorio al cerrar
           const randomMessage =
