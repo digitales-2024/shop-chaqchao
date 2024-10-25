@@ -10,7 +10,6 @@ import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, CircleArrowRight } from "lucide-react";
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
 import { Autoplay, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -29,84 +28,58 @@ const carouselItems: CarouselItem[] = [
   { image: Product05 },
 ];
 
-function useIntersectionObserver(
-  ref: React.RefObject<HTMLElement>,
-  options: IntersectionObserverInit = {},
-) {
-  const [isIntersecting, setIsIntersecting] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      setIsIntersecting(entry.isIntersecting);
-    }, options);
-
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [ref, options]);
-
-  return isIntersecting;
-}
-
 export const Hero = () => {
-  const textRef = useRef<HTMLDivElement>(null);
-  const buttonRef = useRef<HTMLDivElement>(null);
-
-  const isTextVisible = useIntersectionObserver(textRef, { threshold: 0.5 });
-  const isButtonVisible = useIntersectionObserver(buttonRef, {
-    threshold: 0.5,
-  });
+  const FADE_DOWN_ANIMATION_VARIANTS = {
+    hidden: { opacity: 0, y: -10 },
+    show: { opacity: 1, y: 0, transition: { type: "spring" } },
+  };
 
   return (
     <section className="relative mx-auto flex w-full items-start justify-center">
-      <div className="container grid h-full w-full grid-cols-2">
-        <div className="mx-auto h-full">
-          <motion.div
-            ref={textRef}
-            className="flex h-full w-full flex-col items-center justify-center gap-20"
-            initial={{ opacity: 0, y: 50 }}
-            animate={isTextVisible ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+      <div className="container grid h-full w-full grid-cols-2 justify-center">
+        <motion.div
+          initial="hidden"
+          animate="show"
+          viewport={{ once: true }}
+          variants={{
+            hidden: {},
+            show: {
+              transition: {
+                staggerChildren: 0.15,
+              },
+            },
+          }}
+          className="flex h-full flex-col items-center justify-center space-y-20"
+        >
+          <motion.h1
+            className="font-display text-center text-4xl font-bold tracking-[-0.02em] drop-shadow-sm md:text-7xl md:leading-[5rem]"
+            variants={FADE_DOWN_ANIMATION_VARIANTS}
           >
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={isTextVisible ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.2 }}
+            <ChaqchaoName className="h-56" />
+          </motion.h1>
+          <motion.p
+            className="mt-6 text-balance text-center md:text-2xl"
+            variants={FADE_DOWN_ANIMATION_VARIANTS}
+          >
+            Descubre nuestros chocolates artesanales, hecho con amor y los
+            mejores ingredientes.
+          </motion.p>
+          <motion.div
+            className="mx-auto mt-6 flex items-center justify-center space-x-5"
+            variants={FADE_DOWN_ANIMATION_VARIANTS}
+          >
+            <Link
+              href="/"
+              className="group/see inline-flex items-center justify-center gap-2 rounded-full bg-primary/90 py-2 pl-8 pr-3 text-xl text-white transition-all duration-300 hover:scale-105 hover:bg-primary"
             >
-              <ChaqchaoName className="h-56" />
-            </motion.h1>
-            <motion.p
-              className="w-full text-balance text-center text-xl font-light"
-              initial={{ opacity: 0, y: 20 }}
-              animate={isTextVisible ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.4 }}
-            >
-              Descubre nuestros chocolates artesanales, hecho con amor y los
-              mejores ingredientes.
-            </motion.p>
-            <motion.div
-              ref={buttonRef}
-              initial={{ opacity: 0, y: 20 }}
-              animate={isButtonVisible ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.6 }}
-            >
-              <Link
-                href="/"
-                className="group/see inline-flex items-center justify-center gap-2 rounded-full bg-primary/90 py-2 pl-8 pr-3 text-xl text-white transition-all duration-300 hover:scale-105 hover:bg-primary"
-              >
-                <span className="truncate">Explora nuestros productos</span>
-                <CircleArrowRight
-                  className="size-16 -rotate-45 transition-all duration-300 group-hover/see:rotate-0"
-                  strokeWidth={0.5}
-                />
-              </Link>
-            </motion.div>
+              <span className="truncate">Explora nuestros productos</span>
+              <CircleArrowRight
+                className="size-16 -rotate-45 transition-all duration-300 group-hover/see:rotate-0"
+                strokeWidth={0.5}
+              />
+            </Link>
           </motion.div>
-        </div>
+        </motion.div>
         <div className="relative flex aspect-square shrink-0 items-center justify-center overflow-hidden rounded-full bg-primary/10">
           <Image
             src={BgHero}
