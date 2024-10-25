@@ -1,36 +1,32 @@
 "use client";
-import ChaqchaoHero01 from "@/assets/images/chaqchao-hero-01.webp";
-import ChaqchaoHero02 from "@/assets/images/chaqchao-hero-02.webp";
+import BgHero from "@/assets/images/bg_hero.webp";
 import { ChaqchaoName } from "@/assets/images/ChaqchaoName";
-import Autoplay from "embla-carousel-autoplay";
-import Fade from "embla-carousel-fade";
+import Product01 from "@/assets/images/product_01.webp";
+import Product02 from "@/assets/images/product_02.webp";
+import Product03 from "@/assets/images/product_03.webp";
+import Product04 from "@/assets/images/product_04.webp";
+import Product05 from "@/assets/images/product_05.webp";
 import { motion } from "framer-motion";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { Autoplay, Navigation } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "../ui/carousel";
+import "swiper/css";
 
 interface CarouselItem {
-  title: string;
   image: StaticImageData;
 }
 
+// Import images de manera dinámica para que sean cargadas por el servidor en producción y no en el cliente (SSR)
 const carouselItems: CarouselItem[] = [
-  {
-    title: "Workshop 1",
-    image: ChaqchaoHero01,
-  },
-  {
-    title: "Workshop 2",
-    image: ChaqchaoHero02,
-  },
+  { image: Product01 },
+  { image: Product02 },
+  { image: Product03 },
+  { image: Product04 },
+  { image: Product05 },
 ];
 
 function useIntersectionObserver(
@@ -67,49 +63,16 @@ export const Hero = () => {
 
   return (
     <section className="relative mx-auto flex w-full items-start justify-center">
-      <Carousel
-        className="relative w-full p-0"
-        plugins={[
-          Autoplay({
-            delay: 10000,
-          }),
-          Fade(),
-        ]}
-        opts={{
-          loop: true,
-        }}
-      >
-        <CarouselContent className="h-[45rem] p-0">
-          {carouselItems.map((item, index) => (
-            <CarouselItem key={index} className="bg-white">
-              <div className="relative h-full">
-                <Image
-                  src={item.image.src}
-                  alt={item.title}
-                  fill
-                  className="h-full w-full object-cover"
-                  priority={index === 0}
-                  quality={100}
-                />
-                <div className="absolute h-full w-1/2 bg-gradient-to-l from-transparent to-white shadow-sm [clip-path:_polygon(0_0%,_100%_0%,_80%_100%,_0%_100%)]"></div>
-              </div>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPrevious className="absolute left-4 size-12 border-secondary bg-transparent text-secondary transition-all duration-300 hover:scale-105 hover:bg-secondary/40 hover:text-white" />
-        <CarouselNext className="absolute right-4 size-12 border-secondary bg-transparent text-secondary transition-all duration-300 hover:scale-105 hover:bg-secondary/40 hover:text-white" />
-      </Carousel>
-      <div className="pointer-events-none absolute h-full w-full">
-        <div className="container pointer-events-none mx-auto grid h-full grid-cols-2">
+      <div className="container grid h-full w-full grid-cols-2">
+        <div className="mx-auto grid h-full grid-cols-2">
           <motion.div
             ref={textRef}
-            className="pointer-events-none mx-auto flex h-full flex-col justify-center gap-4"
+            className="flex h-full flex-col justify-center gap-10"
             initial={{ opacity: 0, y: 50 }}
             animate={isTextVisible ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <motion.h1
-              className="mb-4 text-4xl font-bold text-secondary md:text-6xl"
               initial={{ opacity: 0, y: 20 }}
               animate={isTextVisible ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.2 }}
@@ -117,7 +80,7 @@ export const Hero = () => {
               <ChaqchaoName className="h-40" />
             </motion.h1>
             <motion.p
-              className="mb-6 text-balance text-xl"
+              className="text-balance text-lg font-light"
               initial={{ opacity: 0, y: 20 }}
               animate={isTextVisible ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.4 }}
@@ -139,6 +102,56 @@ export const Hero = () => {
               </Link>
             </motion.div>
           </motion.div>
+        </div>
+        <div className="relative flex aspect-square shrink-0 items-center justify-center overflow-hidden rounded-full bg-primary/10">
+          <Image
+            src={BgHero}
+            alt="chaqchao"
+            fill
+            className="object-cover opacity-10"
+            priority
+          />
+          <Swiper
+            spaceBetween={50}
+            slidesPerView={1}
+            loop={true}
+            className="relative z-10 flex flex-col items-center justify-center"
+            autoplay={{ delay: 5000 }}
+            navigation={{
+              nextEl: ".swiper-button-next",
+              prevEl: ".swiper-button-prev",
+            }}
+            modules={[Navigation, Autoplay]}
+            speed={1000}
+          >
+            {carouselItems.map((item, index) => (
+              <SwiperSlide key={index} zoom={true} className="bg-transparent">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, ease: "easeInOut" }}
+                >
+                  <Image
+                    src={item.image.src}
+                    alt="chaqchao"
+                    height={600}
+                    width={600}
+                    className="relative z-10 mx-auto bg-transparent object-cover object-center"
+                    priority={index === 0}
+                    quality={100}
+                  />
+                </motion.div>
+              </SwiperSlide>
+            ))}
+            <div className="inline-flex w-full select-none justify-center gap-4 p-2">
+              <div className="swiper-button-prev flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-secondary text-secondary hover:scale-105">
+                <ChevronLeft size={24} />
+              </div>
+              <div className="swiper-button-next flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-secondary text-secondary hover:scale-105">
+                <ChevronRight size={24} />
+              </div>
+            </div>
+          </Swiper>
         </div>
       </div>
     </section>
