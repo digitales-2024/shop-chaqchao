@@ -17,7 +17,7 @@ import { cn } from "@/lib/utils";
 
 export const Workshops = () => {
   return (
-    <section className="container mx-auto flex flex-col gap-16 py-12">
+    <section className="container mx-auto flex flex-col gap-16 py-20">
       <header className="flex flex-row items-center justify-center">
         <h2 className="text-center text-3xl font-semibold">
           ¿Qué estás buscando hoy?
