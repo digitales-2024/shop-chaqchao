@@ -78,7 +78,15 @@ export function Navbar() {
   }
 
   return (
-    <nav className="fixed z-50 flex w-full items-center justify-between bg-white p-4 lg:px-6">
+    <nav
+      className={cn(
+        "sticky top-0 z-50 flex w-full items-center justify-between p-4 backdrop-blur-sm transition-all duration-300 lg:px-6",
+        {
+          "bg-white": navBackground,
+          "bg-primary-foreground": !navBackground,
+        },
+      )}
+    >
       <div className="container mx-auto grid w-full grid-cols-[auto_1fr] items-center justify-center">
         <div className="flex w-full">
           <Link
