@@ -41,11 +41,7 @@ export function Navbar() {
     return (
       <nav
         className={cn(
-          "fixed z-50 flex w-full items-center justify-between p-4 transition-all duration-300 lg:px-6",
-          {
-            "bg-white/60 backdrop-blur-sm": !navBackground,
-            "bg-white": navBackground,
-          },
+          "sticky top-0 z-50 flex w-full items-center justify-between bg-white/60 p-4 backdrop-blur-sm transition-all duration-300 lg:px-6",
         )}
       >
         <div className="container mx-auto grid w-full grid-cols-3 items-center justify-center">
