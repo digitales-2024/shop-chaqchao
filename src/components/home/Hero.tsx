@@ -7,7 +7,7 @@ import Product03 from "@/assets/images/product_03.webp";
 import Product04 from "@/assets/images/product_04.webp";
 import Product05 from "@/assets/images/product_05.webp";
 import { motion } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, CircleArrowRight } from "lucide-react";
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
@@ -64,10 +64,10 @@ export const Hero = () => {
   return (
     <section className="relative mx-auto flex w-full items-start justify-center">
       <div className="container grid h-full w-full grid-cols-2">
-        <div className="mx-auto grid h-full grid-cols-2">
+        <div className="mx-auto h-full">
           <motion.div
             ref={textRef}
-            className="flex h-full flex-col justify-center gap-10"
+            className="flex h-full w-full flex-col items-center justify-center gap-20"
             initial={{ opacity: 0, y: 50 }}
             animate={isTextVisible ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, ease: "easeOut" }}
@@ -77,10 +77,10 @@ export const Hero = () => {
               animate={isTextVisible ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              <ChaqchaoName className="h-40" />
+              <ChaqchaoName className="h-56" />
             </motion.h1>
             <motion.p
-              className="text-balance text-lg font-light"
+              className="w-full text-balance text-center text-xl font-light"
               initial={{ opacity: 0, y: 20 }}
               animate={isTextVisible ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.4 }}
@@ -96,9 +96,13 @@ export const Hero = () => {
             >
               <Link
                 href="/"
-                className="transform rounded-full bg-primary px-8 py-4 text-lg text-white transition-all duration-300 hover:scale-105 hover:bg-secondary"
+                className="group/see inline-flex items-center justify-center gap-2 rounded-full bg-primary/90 py-2 pl-8 pr-3 text-xl text-white transition-all duration-300 hover:scale-105 hover:bg-primary"
               >
-                Explora nuestros productos
+                <span className="truncate">Explora nuestros productos</span>
+                <CircleArrowRight
+                  className="size-16 -rotate-45 transition-all duration-300 group-hover/see:rotate-0"
+                  strokeWidth={0.5}
+                />
               </Link>
             </motion.div>
           </motion.div>
