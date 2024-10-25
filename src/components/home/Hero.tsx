@@ -14,6 +14,7 @@ import { Autoplay, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
+import { SeparateSection } from "../common/SeparateSection";
 
 interface CarouselItem {
   image: StaticImageData;
@@ -35,7 +36,7 @@ export const Hero = () => {
   };
 
   return (
-    <section className="relative mx-auto flex w-full items-start justify-center bg-primary-foreground p-10">
+    <section className="relative mx-auto flex w-full flex-col items-start justify-center bg-primary-foreground p-10">
       <div className="container grid h-full w-full grid-cols-1 justify-center sm:grid-cols-2">
         <motion.div
           initial="hidden"
@@ -149,6 +150,7 @@ export const Hero = () => {
           </Swiper>
         </div>
       </div>
+      <SeparateSection className="absolute left-0 top-full text-primary-foreground" />
     </section>
   );
 };
