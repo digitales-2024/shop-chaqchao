@@ -61,8 +61,25 @@ export const Hero = () => {
             className="mt-6 text-balance text-center md:text-2xl"
             variants={FADE_DOWN_ANIMATION_VARIANTS}
           >
-            Descubre nuestros chocolates artesanales, hecho con amor y los
-            mejores ingredientes.
+            Descubre nuestros{" "}
+            <span className="relative inline-flex text-primary">
+              <span>chocolates artesanales</span>
+              <motion.svg
+                fill="none"
+                viewBox="0 0 645 25"
+                className="absolute -bottom-[6px] left-0 w-full stroke-2"
+              >
+                <motion.path
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                  strokeDasharray="0 1"
+                  stroke="currentColor"
+                  d="M.5 16C127.5-1 239.4-.67 358 3c108.5 3.36 191.5 9.5 286.5 21.5"
+                />
+              </motion.svg>
+            </span>
+            , hecho con amor y los mejores ingredientes.
           </motion.p>
           <motion.div
             className="mx-auto mt-6 flex items-center justify-center space-x-5"
