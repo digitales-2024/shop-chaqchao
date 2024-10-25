@@ -10,7 +10,7 @@ interface FeaturedHeaderProps {
 
 const FeaturedHeader: React.FC<FeaturedHeaderProps> = ({ children }) => {
   return (
-    <section className="flex flex-col gap-20">
+    <section className="container mx-auto flex flex-col gap-20 py-40">
       <h2 className="flex flex-col gap-2 text-center text-3xl font-semibold">
         <span className="text-balance">
           Productos especiales de{" "}
