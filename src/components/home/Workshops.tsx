@@ -15,13 +15,17 @@ import {
 
 import { cn } from "@/lib/utils";
 
+import { LineTitle } from "../common/LineTitle";
+
 export const Workshops = () => {
   return (
     <section className="container mx-auto flex flex-col gap-16 py-20">
-      <header className="flex flex-row items-center justify-center">
-        <h2 className="text-center text-3xl font-semibold">
+      <header className="grid grid-cols-1 items-center justify-center gap-x-2 sm:grid-cols-3">
+        <LineTitle className="hidden text-primary sm:flex" />
+        <h2 className="text-balance text-center text-3xl font-semibold">
           ¿Qué estás buscando hoy?
         </h2>
+        <LineTitle className="hidden rotate-180 text-primary sm:flex" />
       </header>
       <WorkshopCarousel />
     </section>
