@@ -35,8 +35,8 @@ export const Hero = () => {
   };
 
   return (
-    <section className="relative mx-auto flex w-full flex-col items-start justify-center bg-primary-foreground p-10">
-      <div className="container grid h-full w-full grid-cols-1 justify-center sm:grid-cols-2">
+    <section className="relative flex w-full flex-col items-start justify-center bg-primary-foreground p-10">
+      <div className="container mx-auto grid h-full w-full grid-cols-1 justify-center sm:grid-cols-2">
         <motion.div
           initial="hidden"
           animate="show"
