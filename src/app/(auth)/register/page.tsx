@@ -46,7 +46,7 @@ export default function AuthComponent() {
       email: "",
       password: "",
       phone: "",
-      birthDate: "",
+      birthDate: new Date(),
       terms: false,
     },
   });
@@ -59,6 +59,7 @@ export default function AuthComponent() {
       name: combinedName,
     };
     startTransition(async () => {
+      console.log(apiInput.birthDate);
       await onCreateClient(apiInput);
     });
   }
@@ -254,7 +255,7 @@ export default function AuthComponent() {
           Ingresa tus datos personales y comienza tu viaje con nosotros
         </p>
         <Link href="/sign-in">
-          <Button className="rounded-full border border-white bg-transparent px-10 py-2 font-semibold text-white hover:bg-white hover:text-secondary">
+          <Button className="rounded-full border border-white bg-transparent px-10 py-2 font-semibold text-white hover:bg-white hover:text-[#5a2d0c]">
             INGRESAR
           </Button>
         </Link>
