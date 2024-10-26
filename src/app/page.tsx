@@ -5,13 +5,11 @@ import { Workshops } from "@/components/home/Workshops";
 
 export default function Home() {
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-20">
       <Hero />
-      <div className="container mx-auto my-20 space-y-20">
-        <Workshops />
-        <Recommend />
-        <Featured />
-      </div>
+      <Workshops />
+      <Recommend />
+      <Featured />
     </div>
   );
 }

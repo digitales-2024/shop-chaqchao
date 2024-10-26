@@ -2,5 +2,26 @@
   "navbar": {
     "products": "Products",
     "classes": "Class"
+  },
+  "hero": {
+    "textfirst": "Discover our",
+    "textresalt": "handmade chocolates",
+    "textsecond": ", made with the best ingredients.",
+    "button": "Explore our products"
+  },
+  "workshops": {
+    "title": "What are you looking for today?"
+  },
+  "recommendations": {
+    "title": "Explore our recommended products",
+    "subtitle": "Our varied options of chocolates, creams, lipbalm, among others."
+  },
+  "features": {
+    "title": "Special products of",
+    "subtitle": "Check out our special products you can get!"
+  },
+  "footer": {
+    "title": "Store information",
+    "copyrigth": "All rights reserved"
   }
 }

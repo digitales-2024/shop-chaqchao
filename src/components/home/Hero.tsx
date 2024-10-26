@@ -8,18 +8,19 @@ import Product04 from "@/assets/images/product_04.webp";
 import Product05 from "@/assets/images/product_05.webp";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, CircleArrowRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 import { Autoplay, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
+import { SeparateSection } from "../common/SeparateSection";
 
 interface CarouselItem {
   image: StaticImageData;
 }
 
-// Import images de manera dinámica para que sean cargadas por el servidor en producción y no en el cliente (SSR)
 const carouselItems: CarouselItem[] = [
   { image: Product01 },
   { image: Product02 },
@@ -34,9 +35,11 @@ export const Hero = () => {
     show: { opacity: 1, y: 0, transition: { type: "spring" } },
   };
 
+  const t = useTranslations("hero");
+
   return (
-    <section className="relative mx-auto flex w-full items-start justify-center bg-primary-foreground p-10">
-      <div className="container grid h-full w-full grid-cols-1 justify-center sm:grid-cols-2">
+    <section className="relative flex w-full flex-col items-start justify-center bg-primary-foreground p-10">
+      <div className="container mx-auto grid h-full w-full grid-cols-1 justify-center sm:grid-cols-2">
         <motion.div
           initial="hidden"
           animate="show"
@@ -61,9 +64,9 @@ export const Hero = () => {
             className="mt-6 text-balance text-center md:text-2xl"
             variants={FADE_DOWN_ANIMATION_VARIANTS}
           >
-            Descubre nuestros{" "}
+            {t("textfirst")}{" "}
             <span className="relative inline-flex text-primary">
-              <span>chocolates artesanales</span>
+              <span>{t("textresalt")}</span>
               <motion.svg
                 fill="none"
                 viewBox="0 0 645 25"
@@ -79,7 +82,7 @@ export const Hero = () => {
                 />
               </motion.svg>
             </span>
-            , hecho con amor y los mejores ingredientes.
+            {t("textsecond")}
           </motion.p>
           <motion.div
             className="mx-auto mt-6 flex items-center justify-center space-x-5"
@@ -89,7 +92,7 @@ export const Hero = () => {
               href="/"
               className="group/see text-md inline-flex items-center justify-center gap-2 rounded-full bg-primary/90 py-2 pl-8 pr-3 text-white transition-all duration-300 hover:scale-105 hover:bg-primary sm:text-xl"
             >
-              <span className="truncate">Explora nuestros productos</span>
+              <span className="truncate">{t("button")}</span>
               <CircleArrowRight
                 className="size-10 -rotate-45 transition-all duration-300 group-hover/see:rotate-0 sm:size-16"
                 strokeWidth={0.5}
@@ -149,6 +152,7 @@ export const Hero = () => {
           </Swiper>
         </div>
       </div>
+      <SeparateSection className="absolute left-0 top-full text-primary-foreground" />
     </section>
   );
 };
