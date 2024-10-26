@@ -2,6 +2,7 @@ import { Facebook, Instagram, TripAdvisor } from "@/assets/icons";
 import { ChaqchaoLogo } from "@/assets/images/ChaqchaoLogo";
 import { LibroReclamaciones } from "@/assets/images/LibroReclamaciones";
 import { Mail, MapPin, Phone } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { cloneElement } from "react";
 
@@ -56,13 +57,15 @@ const SOCIAL_MEDIA: SocialMedia[] = [
 ];
 
 export function Footer() {
+  const t = useTranslations("footer");
+
   return (
     <div className="flex flex-col gap-y-10 bg-slate-50 p-10 text-center">
       <div className="grid grid-cols-1 items-center justify-items-center gap-y-10 sm:grid-cols-2">
         <ChaqchaoLogo className="size-40" />
         <div className="flex justify-end">
           <div className="flex w-fit flex-col gap-2">
-            <p className="font-commingSoon text-lg">Información de la tienda</p>
+            <p className="font-commingSoon text-lg">{t("title")}</p>
             <div className="mb-4 flex flex-col items-start gap-2">
               {INFO.map((info, index) => (
                 <div
@@ -101,7 +104,7 @@ export function Footer() {
       <p>
         © {new Date().getFullYear()}
         <span className="px-2 font-commingSoon">CHAQCHAO CHOCOLATES</span>
-        E.I.R.L. / 20558285550 - Todos los Derechos Reservados
+        E.I.R.L. / 20558285550 - {t("copyrigth")}
       </p>
       <div className="inline-flex w-full justify-end">
         <Link href="">

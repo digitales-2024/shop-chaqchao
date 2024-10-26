@@ -2,6 +2,7 @@
 import ChaqchaoWorkshop01 from "@/assets/images/workshop_01.webp";
 import ChaqchaoWorkshop02 from "@/assets/images/workshop_02.webp";
 import ChaqchaoWorkshop03 from "@/assets/images/workshop_03.webp";
+import { useTranslations } from "next-intl";
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -18,12 +19,13 @@ import { cn } from "@/lib/utils";
 import { LineTitle } from "../common/LineTitle";
 
 export const Workshops = () => {
+  const t = useTranslations("workshops");
   return (
     <section className="container mx-auto flex flex-col gap-16 py-20">
       <header className="grid grid-cols-1 items-center justify-center gap-x-2 sm:grid-cols-3">
         <LineTitle className="hidden text-primary sm:flex" />
         <h2 className="text-balance text-center text-3xl font-semibold">
-          ¿Qué estás buscando hoy?
+          {t("title")}
         </h2>
         <LineTitle className="hidden rotate-180 text-primary sm:flex" />
       </header>
