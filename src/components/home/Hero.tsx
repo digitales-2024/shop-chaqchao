@@ -1,144 +1,152 @@
 "use client";
-import ChaqchaoHero01 from "@/assets/images/chaqchao-hero-01.webp";
-import ChaqchaoHero02 from "@/assets/images/chaqchao-hero-02.webp";
+import BgHero from "@/assets/images/bg_hero.webp";
 import { ChaqchaoName } from "@/assets/images/ChaqchaoName";
-import Autoplay from "embla-carousel-autoplay";
-import Fade from "embla-carousel-fade";
+import Product01 from "@/assets/images/product_01.webp";
+import Product02 from "@/assets/images/product_02.webp";
+import Product03 from "@/assets/images/product_03.webp";
+import Product04 from "@/assets/images/product_04.webp";
+import Product05 from "@/assets/images/product_05.webp";
 import { motion } from "framer-motion";
+import { ChevronLeft, ChevronRight, CircleArrowRight } from "lucide-react";
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { Autoplay, Navigation } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "../ui/carousel";
+import "swiper/css";
 
 interface CarouselItem {
-  title: string;
   image: StaticImageData;
 }
 
+// Import images de manera dinámica para que sean cargadas por el servidor en producción y no en el cliente (SSR)
 const carouselItems: CarouselItem[] = [
-  {
-    title: "Workshop 1",
-    image: ChaqchaoHero01,
-  },
-  {
-    title: "Workshop 2",
-    image: ChaqchaoHero02,
-  },
+  { image: Product01 },
+  { image: Product02 },
+  { image: Product03 },
+  { image: Product04 },
+  { image: Product05 },
 ];
 
-function useIntersectionObserver(
-  ref: React.RefObject<HTMLElement>,
-  options: IntersectionObserverInit = {},
-) {
-  const [isIntersecting, setIsIntersecting] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      setIsIntersecting(entry.isIntersecting);
-    }, options);
-
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [ref, options]);
-
-  return isIntersecting;
-}
-
 export const Hero = () => {
-  const textRef = useRef<HTMLDivElement>(null);
-  const buttonRef = useRef<HTMLDivElement>(null);
-
-  const isTextVisible = useIntersectionObserver(textRef, { threshold: 0.5 });
-  const isButtonVisible = useIntersectionObserver(buttonRef, {
-    threshold: 0.5,
-  });
+  const FADE_DOWN_ANIMATION_VARIANTS = {
+    hidden: { opacity: 0, y: -10 },
+    show: { opacity: 1, y: 0, transition: { type: "spring" } },
+  };
 
   return (
-    <section className="relative mx-auto flex w-full items-start justify-center">
-      <Carousel
-        className="relative w-full p-0"
-        plugins={[
-          Autoplay({
-            delay: 10000,
-          }),
-          Fade(),
-        ]}
-        opts={{
-          loop: true,
-        }}
-      >
-        <CarouselContent className="h-[45rem] p-0">
-          {carouselItems.map((item, index) => (
-            <CarouselItem key={index} className="bg-white">
-              <div className="relative h-full">
-                <Image
-                  src={item.image.src}
-                  alt={item.title}
-                  fill
-                  className="h-full w-full object-cover"
-                  priority={index === 0}
-                  quality={100}
-                />
-                <div className="absolute h-full w-1/2 bg-gradient-to-l from-transparent to-white shadow-sm [clip-path:_polygon(0_0%,_100%_0%,_80%_100%,_0%_100%)]"></div>
-              </div>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPrevious className="absolute left-4 size-12 border-secondary bg-transparent text-secondary transition-all duration-300 hover:scale-105 hover:bg-secondary/40 hover:text-white" />
-        <CarouselNext className="absolute right-4 size-12 border-secondary bg-transparent text-secondary transition-all duration-300 hover:scale-105 hover:bg-secondary/40 hover:text-white" />
-      </Carousel>
-      <div className="pointer-events-none absolute h-full w-full">
-        <div className="container pointer-events-none mx-auto grid h-full grid-cols-2">
-          <motion.div
-            ref={textRef}
-            className="pointer-events-none mx-auto flex h-full flex-col justify-center gap-4"
-            initial={{ opacity: 0, y: 50 }}
-            animate={isTextVisible ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+    <section className="relative mx-auto flex w-full items-start justify-center bg-primary-foreground p-10">
+      <div className="container grid h-full w-full grid-cols-1 justify-center sm:grid-cols-2">
+        <motion.div
+          initial="hidden"
+          animate="show"
+          viewport={{ once: true }}
+          variants={{
+            hidden: {},
+            show: {
+              transition: {
+                staggerChildren: 0.15,
+              },
+            },
+          }}
+          className="flex h-full flex-col items-center justify-center space-y-20"
+        >
+          <motion.h1
+            className="font-display text-center text-4xl font-bold tracking-[-0.02em] drop-shadow-sm md:text-7xl md:leading-[5rem]"
+            variants={FADE_DOWN_ANIMATION_VARIANTS}
           >
-            <motion.h1
-              className="mb-4 text-4xl font-bold text-secondary md:text-6xl"
-              initial={{ opacity: 0, y: 20 }}
-              animate={isTextVisible ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <ChaqchaoName className="h-40" />
-            </motion.h1>
-            <motion.p
-              className="mb-6 text-balance text-xl"
-              initial={{ opacity: 0, y: 20 }}
-              animate={isTextVisible ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.4 }}
-            >
-              Descubre nuestros chocolates artesanales, hecho con amor y los
-              mejores ingredientes.
-            </motion.p>
-            <motion.div
-              ref={buttonRef}
-              initial={{ opacity: 0, y: 20 }}
-              animate={isButtonVisible ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.6 }}
-            >
-              <Link
-                href="/"
-                className="transform rounded-full bg-primary px-8 py-4 text-lg text-white transition-all duration-300 hover:scale-105 hover:bg-secondary"
+            <ChaqchaoName className="h-32 sm:h-56" />
+          </motion.h1>
+          <motion.p
+            className="mt-6 text-balance text-center md:text-2xl"
+            variants={FADE_DOWN_ANIMATION_VARIANTS}
+          >
+            Descubre nuestros{" "}
+            <span className="relative inline-flex text-primary">
+              <span>chocolates artesanales</span>
+              <motion.svg
+                fill="none"
+                viewBox="0 0 645 25"
+                className="absolute -bottom-[6px] left-0 w-full stroke-2"
               >
-                Explora nuestros productos
-              </Link>
-            </motion.div>
+                <motion.path
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                  strokeDasharray="0 1"
+                  stroke="currentColor"
+                  d="M.5 16C127.5-1 239.4-.67 358 3c108.5 3.36 191.5 9.5 286.5 21.5"
+                />
+              </motion.svg>
+            </span>
+            , hecho con amor y los mejores ingredientes.
+          </motion.p>
+          <motion.div
+            className="mx-auto mt-6 flex items-center justify-center space-x-5"
+            variants={FADE_DOWN_ANIMATION_VARIANTS}
+          >
+            <Link
+              href="/"
+              className="group/see text-md inline-flex items-center justify-center gap-2 rounded-full bg-primary/90 py-2 pl-8 pr-3 text-white transition-all duration-300 hover:scale-105 hover:bg-primary sm:text-xl"
+            >
+              <span className="truncate">Explora nuestros productos</span>
+              <CircleArrowRight
+                className="size-10 -rotate-45 transition-all duration-300 group-hover/see:rotate-0 sm:size-16"
+                strokeWidth={0.5}
+              />
+            </Link>
           </motion.div>
+        </motion.div>
+        <div className="relative hidden aspect-square shrink-0 items-center justify-center overflow-hidden rounded-full bg-primary/10 sm:flex">
+          <Image
+            src={BgHero}
+            alt="chaqchao"
+            fill
+            className="object-cover opacity-10"
+            priority
+          />
+          <Swiper
+            spaceBetween={50}
+            slidesPerView={1}
+            loop={true}
+            className="relative z-10 flex flex-col items-center justify-center"
+            autoplay={{ delay: 5000 }}
+            navigation={{
+              nextEl: ".swiper-button-next",
+              prevEl: ".swiper-button-prev",
+            }}
+            modules={[Navigation, Autoplay]}
+            speed={1000}
+          >
+            {carouselItems.map((item, index) => (
+              <SwiperSlide key={index} zoom={true} className="bg-transparent">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, ease: "easeInOut" }}
+                  className="relative h-full w-full"
+                >
+                  <Image
+                    src={item.image.src}
+                    alt="chaqchao"
+                    width={500}
+                    height={500}
+                    className="relative z-10 mx-auto size-[calc(100%_-_10rem)] bg-transparent object-cover object-center"
+                    priority={index === 0}
+                    quality={100}
+                  />
+                </motion.div>
+              </SwiperSlide>
+            ))}
+            <div className="inline-flex w-full select-none justify-center gap-4 p-2">
+              <div className="swiper-button-prev flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-secondary text-secondary hover:scale-105">
+                <ChevronLeft size={24} />
+              </div>
+              <div className="swiper-button-next flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-secondary text-secondary hover:scale-105">
+                <ChevronRight size={24} />
+              </div>
+            </div>
+          </Swiper>
         </div>
       </div>
     </section>

@@ -11,7 +11,7 @@ const config: Config = {
     extend: {
       fontFamily: {
         commingSoon: ["var(--font-coming-soon)"],
-        "lexend-deca": ["var(--font-lexend-deca-variable)"],
+        comfortaa: ["var(--font-comfortaa-variable)"],
       },
       colors: {
         background: "hsl(var(--background))",

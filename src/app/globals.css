@@ -13,7 +13,7 @@
 
 :root {
   --font-family-sans: "ComingSoon", sans-serif;
-  --font-lexend-deca-variable: "Lexend Deca Variable", sans-serif;
+  --font-comfortaa-variable: "Comfortaa Variable", system-ui;
 }
 
 @layer base {
@@ -25,7 +25,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
     --primary: 32 90% 53%;
-    --primary-foreground: 0 0% 98%;
+    --primary-foreground: 18 100% 98%;
     --secondary: 23 79% 27%;
     --secondary-foreground: 240 5.9% 10%;
     --terciary: 186 96% 18%;

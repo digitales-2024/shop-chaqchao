@@ -1,4 +1,4 @@
-import "@fontsource-variable/lexend-deca";
+import "@fontsource-variable/comfortaa";
 import "./globals.css";
 import { Providers } from "@/redux/providers";
 import type { Metadata } from "next";
@@ -37,7 +37,7 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <body
-        className={`${comingSoon.variable} ${geistSans.variable} font-lexend-deca antialiased`}
+        className={`${comingSoon.variable} ${geistSans.variable} font-comfortaa antialiased`}
       >
         <NextIntlClientProvider messages={messages}>
           <Toaster />
