@@ -4,6 +4,7 @@ import { Providers } from "@/redux/providers";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
+import { ViewTransitions } from "next-view-transitions";
 import localFont from "next/font/local";
 import { Toaster } from "sonner";
 
@@ -35,17 +36,19 @@ export default async function RootLayout({
   // side is the easiest way to get started
   const messages = await getMessages();
   return (
-    <html lang={locale}>
-      <body
-        className={`${comingSoon.variable} ${geistSans.variable} font-comfortaa antialiased`}
-      >
-        <NextIntlClientProvider messages={messages}>
-          <Toaster />
-          <Providers>
-            <LayoutShop>{children}</LayoutShop>
-          </Providers>
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <ViewTransitions>
+      <html lang={locale}>
+        <body
+          className={`${comingSoon.variable} ${geistSans.variable} font-comfortaa antialiased`}
+        >
+          <NextIntlClientProvider messages={messages}>
+            <Toaster />
+            <Providers>
+              <LayoutShop>{children}</LayoutShop>
+            </Providers>
+          </NextIntlClientProvider>
+        </body>
+      </html>
+    </ViewTransitions>
   );
 }
