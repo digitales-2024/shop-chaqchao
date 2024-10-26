@@ -20,7 +20,9 @@ const FeaturedHeader: React.FC<FeaturedHeaderProps> = ({ children }) => {
           ¡Vea nuestros productos especiales que puede obtener!
         </p>
       </h2>
-      <div className="flex gap-6">{children}</div>
+      <div className="grid gap-20 [grid-template-columns:_repeat(auto-fit,_minmax(300px,_1fr))]">
+        {children}
+      </div>
     </section>
   );
 };

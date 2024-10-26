@@ -26,7 +26,9 @@ const RecommendHeader: React.FC<RecommendHeaderProps> = ({ children }) => {
             </p>
           </h2>
         </div>
-        <div className="flex gap-6">{children}</div>
+        <div className="grid gap-y-40 [grid-template-columns:_repeat(auto-fit,_minmax(300px,_1fr))]">
+          {children}
+        </div>
       </div>
       <SeparateSection className="absolute bottom-full left-0 rotate-180 text-primary-foreground" />
       <SeparateSection className="absolute left-0 top-full text-primary-foreground" />
