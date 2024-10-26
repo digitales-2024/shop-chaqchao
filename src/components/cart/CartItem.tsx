@@ -20,7 +20,7 @@ export const CartItem = ({ product }: CartItemProps) => {
         <CardContent className="flex flex-col items-center justify-center gap-4 px-2 py-10">
           <div className="h-20">
             <Image
-              className="demo w-48 -translate-y-28 rounded object-cover transition-all duration-500 group-hover/product:scale-105"
+              className="w-48 -translate-y-28 rounded object-cover transition-all duration-500 group-hover/product:scale-105"
               src={product.image}
               alt={product.name}
               width={200}
@@ -29,7 +29,7 @@ export const CartItem = ({ product }: CartItemProps) => {
             />
           </div>
           <div className="grid h-full grid-rows-[auto_1fr_30px] gap-4 text-center">
-            <h2 className="text-balance text-center text-xs font-semibold capitalize text-secondary/50">
+            <h2 className="text-balance text-center text-xs font-semibold capitalize text-secondary/50 [view-transition-name:_'product-name']">
               {product.category.name}
             </h2>
             <h2 className="text-balance text-center text-lg font-bold capitalize">
