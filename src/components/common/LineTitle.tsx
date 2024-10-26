@@ -17,8 +17,10 @@ export const LineTitle = (props: LineTitleProps) => {
           initial={{ scale: 0, rotate: 45 }}
           transition={{ duration: 0.5 }}
           animate={{ scale: 1, rotate: 45 }}
-          className="aspect-square size-4 shrink-0 rotate-45 border border-current"
-        ></motion.div>
+          className="aspect-square size-4 shrink-0 rotate-45 border border-current p-[2px]"
+        >
+          <div className="size-full bg-current"></div>
+        </motion.div>
       </div>
     </div>
   );
