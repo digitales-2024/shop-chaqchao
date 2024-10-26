@@ -27,7 +27,7 @@ const FeaturedHeader: React.FC<FeaturedHeaderProps> = ({ children }) => {
         </h2>
         <LineTitle className="hidden rotate-180 text-primary sm:flex" />
       </div>
-      <div className="grid gap-20 [grid-template-columns:_repeat(auto-fit,_minmax(300px,_1fr))]">
+      <div className="grid justify-items-center gap-20 [grid-template-columns:_repeat(auto-fit,_minmax(300px,_1fr))]">
         {children}
       </div>
     </section>
