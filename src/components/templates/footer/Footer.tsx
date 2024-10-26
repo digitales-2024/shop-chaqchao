@@ -57,17 +57,17 @@ const SOCIAL_MEDIA: SocialMedia[] = [
 
 export function Footer() {
   return (
-    <div className="flex flex-col bg-slate-50 p-10 text-center">
-      <div className="ju grid grid-cols-2 items-center">
+    <div className="flex flex-col gap-y-10 bg-slate-50 p-10 text-center">
+      <div className="grid grid-cols-1 items-center justify-items-center gap-y-10 sm:grid-cols-2">
         <ChaqchaoLogo className="size-40" />
         <div className="flex justify-end">
           <div className="flex w-fit flex-col gap-2">
             <p className="font-commingSoon text-lg">Información de la tienda</p>
-            <div className="mb-4 flex flex-col gap-2">
+            <div className="mb-4 flex flex-col items-start gap-2">
               {INFO.map((info, index) => (
                 <div
                   key={index}
-                  className="group/info inline-flex items-center gap-3"
+                  className="group/info inline-flex gap-3 text-start text-sm font-bold"
                 >
                   {cloneElement(info.icon, {
                     size: 20,
