@@ -12,8 +12,8 @@ interface FeaturedHeaderProps {
 const FeaturedHeader: React.FC<FeaturedHeaderProps> = ({ children }) => {
   return (
     <section className="container mx-auto flex flex-col gap-20 py-40">
-      <div className="grid items-center gap-6 sm:grid-cols-[1fr_auto_1fr]">
-        <LineTitle className="w-full text-primary" />
+      <div className="grid grid-cols-1 items-center gap-6 sm:grid-cols-[1fr_auto_1fr]">
+        <LineTitle className="hidden text-primary sm:flex" />
         <h2 className="flex-col gap-2 text-center text-3xl font-semibold">
           <span className="text-balance">
             Productos especiales de{" "}
@@ -25,7 +25,7 @@ const FeaturedHeader: React.FC<FeaturedHeaderProps> = ({ children }) => {
             ¡Vea nuestros productos especiales que puede obtener!
           </p>
         </h2>
-        <LineTitle className="w-full rotate-180 text-primary" />
+        <LineTitle className="hidden rotate-180 text-primary sm:flex" />
       </div>
       <div className="grid gap-20 [grid-template-columns:_repeat(auto-fit,_minmax(300px,_1fr))]">
         {children}
