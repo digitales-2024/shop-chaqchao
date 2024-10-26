@@ -3,6 +3,7 @@ import { useCatalog } from "@/hooks/use-catalog";
 
 import { CartSkeleton } from "../cart/CartSkeleton";
 import { MerchItem } from "../cart/MerchItem";
+import { LineTitle } from "../common/LineTitle";
 
 interface FeaturedHeaderProps {
   children: React.ReactNode;
@@ -11,15 +12,21 @@ interface FeaturedHeaderProps {
 const FeaturedHeader: React.FC<FeaturedHeaderProps> = ({ children }) => {
   return (
     <section className="container mx-auto flex flex-col gap-20 py-40">
-      <h2 className="flex flex-col gap-2 text-center text-3xl font-semibold">
-        <span className="text-balance">
-          Productos especiales de{" "}
-          <span className="font-black uppercase text-secondary">chaqchao</span>
-        </span>
-        <p className="text-balance text-lg">
-          ¡Vea nuestros productos especiales que puede obtener!
-        </p>
-      </h2>
+      <div className="grid items-center gap-6 sm:grid-cols-[1fr_auto_1fr]">
+        <LineTitle className="w-full text-primary" />
+        <h2 className="flex-col gap-2 text-center text-3xl font-semibold">
+          <span className="text-balance">
+            Productos especiales de{" "}
+            <span className="font-black uppercase text-secondary">
+              chaqchao
+            </span>
+          </span>
+          <p className="text-balance text-lg">
+            ¡Vea nuestros productos especiales que puede obtener!
+          </p>
+        </h2>
+        <LineTitle className="w-full rotate-180 text-primary" />
+      </div>
       <div className="grid gap-20 [grid-template-columns:_repeat(auto-fit,_minmax(300px,_1fr))]">
         {children}
       </div>
