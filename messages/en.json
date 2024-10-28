@@ -23,5 +23,15 @@
   "footer": {
     "title": "Store information",
     "copyrigth": "All rights reserved"
+  },
+  "categories": {
+    "title": "All our products",
+    "description": "Choose from our variety of products and enjoy the best quality.",
+    "filters": {
+      "categories": "Categories",
+      "price": "Price",
+      "preciseInput": "Enter precise",
+      "clearFilters": "Clear filters"
+    }
   }
 }

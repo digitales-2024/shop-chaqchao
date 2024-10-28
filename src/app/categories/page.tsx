@@ -2,6 +2,7 @@
 import { useCatalog } from "@/hooks/use-catalog";
 import { motion, AnimatePresence } from "framer-motion";
 import { Filter } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { CartItem } from "@/components/cart/CartItem";
@@ -11,6 +12,7 @@ import {
 } from "@/components/categories/FilterableProductList";
 import { LineTitle } from "@/components/common/LineTitle";
 import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 const MotionCard = motion(CartItem);
@@ -23,9 +25,11 @@ export default function PageCategories() {
     filters,
   });
 
+  const t = useTranslations("categories");
+
   return (
     <div className="container mx-auto min-h-screen px-4 py-8">
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-6 flex flex-col items-start sm:flex-row">
         <div className="mb-10 flex w-full flex-col gap-2">
           <motion.h1
             className="py-5 font-nunito text-6xl font-black"
@@ -33,15 +37,14 @@ export default function PageCategories() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            Todos nuestros productos
+            {t("title")}
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            Elija entre nuestra amplia variedad de productos y disfrute de la
-            mejor calidad.
+            {t("description")}
           </motion.p>
           <LineTitle className="w-full rotate-180 text-primary" />
         </div>
@@ -55,12 +58,14 @@ export default function PageCategories() {
             </motion.div>
           </SheetTrigger>
           <SheetContent side="left" className="w-[300px] sm:w-[400px]">
-            <div className="mt-8">
-              <FilterableProductList
-                filters={filters}
-                setFilters={setFilters}
-              />
-            </div>
+            <ScrollArea className="h-screen px-2">
+              <div className="">
+                <FilterableProductList
+                  filters={filters}
+                  setFilters={setFilters}
+                />
+              </div>
+            </ScrollArea>
           </SheetContent>
         </Sheet>
       </div>

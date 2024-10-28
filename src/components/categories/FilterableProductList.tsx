@@ -2,6 +2,7 @@
 import { useCategory } from "@/hooks/use-category";
 import { AnimatePresence, motion } from "framer-motion";
 import { Settings2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import {
@@ -39,6 +40,8 @@ export const FilterableProductList = ({
   setFilters,
   filters,
 }: FilterableProductListProps) => {
+  const t = useTranslations("categories");
+
   const handleFilterChange = (name: string, value: string | number) => {
     setFilters((prev) => ({
       ...prev,
@@ -143,7 +146,7 @@ export const FilterableProductList = ({
       >
         <AccordionItem value="item-1">
           <AccordionTrigger className="font-nunito text-lg font-extrabold">
-            Categorías
+            {t("filters.categories")}
           </AccordionTrigger>
           <AccordionContent>
             <motion.div
@@ -185,7 +188,7 @@ export const FilterableProductList = ({
         </AccordionItem>
         <AccordionItem value="item-2">
           <AccordionTrigger className="font-nunito text-lg font-extrabold">
-            Precio
+            {t("filters.price")}
           </AccordionTrigger>
           <AccordionContent>
             <motion.div
@@ -269,7 +272,7 @@ export const FilterableProductList = ({
               </AnimatePresence>
               <div className="flex items-center justify-end space-x-2">
                 <Label htmlFor="price-range-toggle" className="text-xs">
-                  Entrada Precisa
+                  {t("filters.preciseInput")}
                 </Label>
                 <Switch
                   id="price-range-toggle"
@@ -295,7 +298,7 @@ export const FilterableProductList = ({
             disabled={Object.keys(filters).length < 1}
           >
             <Settings2 />
-            Limpiar filtros
+            {t("filters.clearFilters")}
           </Button>
         </motion.div>
       )}

@@ -23,5 +23,15 @@
   "footer": {
     "title": "Información de la tienda",
     "copyrigth": "Todos los derechos reservados"
+  },
+  "categories": {
+    "title": "Todos nuestro productos",
+    "description": "Elija entre nuestra variedad de productos y disfrute de la mejor calidad.",
+    "filters": {
+      "categories": "Categorías",
+      "price": "Precio",
+      "preciseInput": "Entrada precisa",
+      "clearFilters": "Limpiar filtros"
+    }
   }
 }
