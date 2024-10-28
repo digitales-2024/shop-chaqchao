@@ -14,6 +14,7 @@
 :root {
   --font-family-sans: "ComingSoon", sans-serif;
   --font-comfortaa-variable: "Comfortaa Variable", system-ui;
+  --font-nunito-variable: "Nunito Variable", sans-serif;
 }
 
 @layer base {
