@@ -1,6 +1,8 @@
 import { Product } from "@/types";
 import { createApi } from "@reduxjs/toolkit/query/react";
 
+import { Filters } from "@/components/categories/FilterableProductList";
+
 import baseQueryWithReauth from "./baseQuery";
 
 export const catalogApi = createApi({
@@ -16,10 +18,17 @@ export const catalogApi = createApi({
       query: () => "/catalog/recommend",
       providesTags: ["Catalog"],
     }),
+
+    getProductsFilters: build.query<Product[], { filters: Filters }>({
+      query: ({ filters }) =>
+        `/catalog/products?${new URLSearchParams(filters as string)}`,
+      providesTags: ["Catalog"],
+    }),
   }),
 });
 
 export const {
   useGetProductsRecommendQuery,
   useGetProductsRecommendByClientQuery,
+  useGetProductsFiltersQuery,
 } = catalogApi;
