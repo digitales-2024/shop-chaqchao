@@ -42,7 +42,6 @@ export const FilterableProductList = ({
   const [openAccordionItems, setOpenAccordionItems] = useState<string[]>([
     "item-1",
     "item-2",
-    "item-3",
   ]);
   if (isLoadingCategories) return null;
 
@@ -58,7 +57,9 @@ export const FilterableProductList = ({
       className="w-full"
     >
       <AccordionItem value="item-1">
-        <AccordionTrigger>Categorías</AccordionTrigger>
+        <AccordionTrigger className="font-nunito text-lg font-extrabold">
+          Categorías
+        </AccordionTrigger>
         <AccordionContent>
           <motion.div
             initial={{ opacity: 0 }}
@@ -92,22 +93,26 @@ export const FilterableProductList = ({
           </motion.div>
         </AccordionContent>
       </AccordionItem>
-      <AccordionItem value="item-3">
-        <AccordionTrigger>Precio</AccordionTrigger>
+      <AccordionItem value="item-2">
+        <AccordionTrigger className="font-nunito text-lg font-extrabold">
+          Precio
+        </AccordionTrigger>
         <AccordionContent>
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
+            className="py-5"
           >
             <Slider
               min={0}
-              max={5}
+              max={100}
               step={0.5}
+              className="text-primary"
               value={
                 filters.priceMin === undefined || filters.priceMax === undefined
-                  ? [0, 5]
+                  ? [0, 100]
                   : [filters.priceMin, filters.priceMax]
               }
               onValueChange={(value) => {
@@ -117,15 +122,15 @@ export const FilterableProductList = ({
             />
             <div className="mt-2 flex justify-between text-sm">
               <span>
-                $
+                S/.
                 {filters.priceMin === undefined
                   ? 0
                   : filters.priceMin.toFixed(2)}
               </span>
               <span>
-                $
+                S/.
                 {filters.priceMax === undefined
-                  ? 5
+                  ? 100
                   : filters.priceMax.toFixed(2)}
               </span>
             </div>
