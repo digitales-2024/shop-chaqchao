@@ -70,7 +70,7 @@ export default function PageCategories() {
         </aside>
         <main className="flex-1">
           <motion.div
-            className="grid gap-6 gap-y-32 sm:grid-cols-2 lg:grid-cols-3"
+            className="grid gap-6 gap-y-16 sm:grid-cols-2 lg:grid-cols-3"
             initial="hidden"
             animate="visible"
             variants={{
