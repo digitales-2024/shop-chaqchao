@@ -95,7 +95,12 @@ export const FilterableProductList = ({
                           : () => handleFilterChange("categoryName", category)
                       }
                     />
-                    <Label htmlFor={`category-${category}`}>{category}</Label>
+                    <Label
+                      htmlFor={`category-${category}`}
+                      className="capitalize"
+                    >
+                      {category}
+                    </Label>
                   </motion.div>
                 ),
               )}
@@ -157,7 +162,6 @@ export const FilterableProductList = ({
           className="mt-10 inline-flex w-full justify-end"
         >
           <Button
-            variant="ghost"
             onClick={handleClearFilters}
             className="inline-flex items-center justify-center gap-2"
             disabled={Object.keys(filters).length < 1}
