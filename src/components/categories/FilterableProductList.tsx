@@ -1,6 +1,6 @@
 "use client";
 import { useCategory } from "@/hooks/use-category";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { Settings2 } from "lucide-react";
 import { useState } from "react";
 
@@ -13,8 +13,10 @@ import {
 
 import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
+import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Slider } from "../ui/slider";
+import { Switch } from "../ui/switch";
 
 export interface Filters {
   name?: string;
@@ -22,6 +24,11 @@ export interface Filters {
   priceMin?: number;
   categoryName?: string;
 }
+
+const PRICES = {
+  min: 0,
+  max: 300,
+};
 
 interface FilterableProductListProps {
   setFilters: React.Dispatch<React.SetStateAction<Filters>>;
@@ -46,11 +53,78 @@ export const FilterableProductList = ({
     "item-2",
   ]);
 
-  const [editPrice, setEditPrice] = useState<boolean>(false);
+  const [isPreciseInput, setIsPreciseInput] = useState(false);
 
+  const handlePreciseInputToggle = (checked: boolean) => {
+    setIsPreciseInput(checked);
+    handleFilterChange("priceMin", PRICES.min);
+    handleFilterChange("priceMax", PRICES.max);
+  };
   // Limpiar filtros
   const handleClearFilters = () => {
     setFilters({});
+  };
+
+  const handleMinPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value.replace(/[^0-9]/g, "");
+
+    // Elimina ceros iniciales
+    if (value.startsWith("0")) {
+      value = value.replace(/^0+/, "");
+    }
+
+    // Si el valor es una cadena vacía, actualiza el estado sin hacer validaciones numéricas
+    if (value === "") {
+      handleFilterChange("priceMin", "");
+      return;
+    }
+
+    // Convierte a número y aplica validaciones de rango
+    const numericValue = parseInt(value, 10);
+    if (!isNaN(numericValue)) {
+      if (numericValue < PRICES.min) {
+        value = PRICES.min.toString();
+      } else if (numericValue > PRICES.max) {
+        value = PRICES.max.toString();
+      }
+    }
+
+    handleFilterChange("priceMin", value);
+
+    // Si el precio máximo es menor que el nuevo mínimo, ajusta el máximo
+    if (
+      filters.priceMax !== undefined &&
+      parseInt(filters.priceMax.toString(), 10) < parseInt(value, 10)
+    ) {
+      handleFilterChange("priceMax", value);
+    }
+  };
+
+  const handleMaxPriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value.replace(/[^0-9]/g, "");
+
+    // Elimina ceros iniciales
+    if (value.startsWith("0")) {
+      value = value.replace(/^0+/, "");
+    }
+
+    // Si el valor es una cadena vacía, actualiza el estado sin hacer validaciones numéricas
+    if (value === "") {
+      handleFilterChange("priceMax", "");
+      return;
+    }
+
+    // Convierte a número y aplica validaciones de rango y relación con priceMin
+    const numericValue = parseInt(value, 10);
+    if (!isNaN(numericValue)) {
+      if (numericValue < PRICES.min) {
+        value = PRICES.min.toString();
+      } else if (numericValue > PRICES.max) {
+        value = PRICES.max.toString();
+      }
+    }
+
+    handleFilterChange("priceMax", value);
   };
 
   if (isLoadingCategories) return null;
@@ -119,42 +193,90 @@ export const FilterableProductList = ({
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="py-5"
+              className="flex flex-col gap-6 px-2 py-5"
             >
-              <Slider
-                min={0}
-                max={100}
-                step={0.5}
-                className="text-primary"
-                value={
-                  filters.priceMin === undefined ||
-                  filters.priceMax === undefined
-                    ? [0, 100]
-                    : [filters.priceMin, filters.priceMax]
-                }
-                onValueChange={(value) => {
-                  handleFilterChange("priceMin", value[0]);
-                  handleFilterChange("priceMax", value[1]);
-                }}
-              />
-              <div
-                className="mt-2 flex justify-between text-sm"
-                onClick={() => setEditPrice(!editPrice)}
-              >
-                <span>
-                  S/.
-                  {filters.priceMin === undefined
-                    ? 0
-                    : filters.priceMin.toFixed(2)}
-                </span>
-                <span>
-                  S/.
-                  {filters.priceMax === undefined
-                    ? 100
-                    : filters.priceMax.toFixed(2)}
-                </span>
+              {" "}
+              <AnimatePresence mode="wait">
+                {isPreciseInput ? (
+                  <motion.div
+                    key="precise-input"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.2 }}
+                    className="flex items-center space-x-2"
+                  >
+                    <div className="relative">
+                      S/.
+                      <Input
+                        type="text"
+                        className="pl-7"
+                        value={filters.priceMin}
+                        onChange={handleMinPriceChange}
+                      />
+                    </div>
+                    <span>-</span>
+                    <div className="relative">
+                      S/.
+                      <Input
+                        type="text"
+                        className="pl-7"
+                        value={filters.priceMax}
+                        onChange={handleMaxPriceChange}
+                      />
+                    </div>
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="slider"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 10 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Slider
+                      min={0}
+                      max={100}
+                      step={0.5}
+                      className="text-primary"
+                      value={
+                        filters.priceMin === undefined ||
+                        filters.priceMax === undefined
+                          ? [PRICES.min, PRICES.max]
+                          : [filters.priceMin, filters.priceMax]
+                      }
+                      onValueChange={(value) => {
+                        handleFilterChange("priceMin", value[0]);
+                        handleFilterChange("priceMax", value[1]);
+                      }}
+                    />
+                    <div className="mt-2 flex justify-between text-sm">
+                      <span>
+                        S/.
+                        {filters.priceMin === undefined
+                          ? PRICES.min
+                          : filters.priceMin.toFixed(2)}
+                      </span>
+                      <span>
+                        S/.
+                        {filters.priceMax === undefined
+                          ? PRICES.max
+                          : filters.priceMax.toFixed(2)}
+                      </span>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+              <div className="flex items-center justify-end space-x-2">
+                <Label htmlFor="price-range-toggle" className="text-xs">
+                  Entrada Precisa
+                </Label>
+                <Switch
+                  id="price-range-toggle"
+                  checked={isPreciseInput}
+                  onCheckedChange={handlePreciseInputToggle}
+                />
               </div>
-              <div className="mt-2 flex items-center justify-between"></div>
             </motion.div>
           </AccordionContent>
         </AccordionItem>
