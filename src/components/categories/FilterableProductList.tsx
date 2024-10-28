@@ -1,6 +1,7 @@
 "use client";
 import { useCategory } from "@/hooks/use-category";
 import { motion } from "framer-motion";
+import { Settings2 } from "lucide-react";
 import { useState } from "react";
 
 import {
@@ -10,6 +11,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
+import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
 import { Label } from "../ui/label";
 import { Slider } from "../ui/slider";
@@ -43,6 +45,12 @@ export const FilterableProductList = ({
     "item-1",
     "item-2",
   ]);
+
+  // Limpiar filtros
+  const handleClearFilters = () => {
+    setFilters({});
+  };
+
   if (isLoadingCategories) return null;
 
   if (isErrorCategories) return <div>Error</div>;
@@ -50,93 +58,115 @@ export const FilterableProductList = ({
   if (!dataCategories) return null;
 
   return (
-    <Accordion
-      type="multiple"
-      value={openAccordionItems}
-      onValueChange={setOpenAccordionItems}
-      className="w-full"
-    >
-      <AccordionItem value="item-1">
-        <AccordionTrigger className="font-nunito text-lg font-extrabold">
-          Categorías
-        </AccordionTrigger>
-        <AccordionContent>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="space-y-4"
+    <>
+      <Accordion
+        type="multiple"
+        value={openAccordionItems}
+        onValueChange={setOpenAccordionItems}
+        className="w-full"
+      >
+        <AccordionItem value="item-1">
+          <AccordionTrigger className="font-nunito text-lg font-extrabold">
+            Categorías
+          </AccordionTrigger>
+          <AccordionContent>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="space-y-4"
+            >
+              {Array.from(new Set(dataCategories.map((p) => p.name))).map(
+                (category) => (
+                  <motion.div
+                    key={category}
+                    className="mb-2 flex items-center space-x-2"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <Checkbox
+                      id={`category-${category}`}
+                      checked={filters.categoryName === category}
+                      onCheckedChange={
+                        filters.categoryName === category
+                          ? () => handleFilterChange("categoryName", "")
+                          : () => handleFilterChange("categoryName", category)
+                      }
+                    />
+                    <Label htmlFor={`category-${category}`}>{category}</Label>
+                  </motion.div>
+                ),
+              )}
+            </motion.div>
+          </AccordionContent>
+        </AccordionItem>
+        <AccordionItem value="item-2">
+          <AccordionTrigger className="font-nunito text-lg font-extrabold">
+            Precio
+          </AccordionTrigger>
+          <AccordionContent>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="py-5"
+            >
+              <Slider
+                min={0}
+                max={100}
+                step={0.5}
+                className="text-primary"
+                value={
+                  filters.priceMin === undefined ||
+                  filters.priceMax === undefined
+                    ? [0, 100]
+                    : [filters.priceMin, filters.priceMax]
+                }
+                onValueChange={(value) => {
+                  handleFilterChange("priceMin", value[0]);
+                  handleFilterChange("priceMax", value[1]);
+                }}
+              />
+              <div className="mt-2 flex justify-between text-sm">
+                <span>
+                  S/.
+                  {filters.priceMin === undefined
+                    ? 0
+                    : filters.priceMin.toFixed(2)}
+                </span>
+                <span>
+                  S/.
+                  {filters.priceMax === undefined
+                    ? 100
+                    : filters.priceMax.toFixed(2)}
+                </span>
+              </div>
+            </motion.div>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+      {Object.keys(filters).length < 1 ? null : (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}
+          className="mt-10 inline-flex w-full justify-end"
+        >
+          <Button
+            variant="ghost"
+            onClick={handleClearFilters}
+            className="inline-flex items-center justify-center gap-2"
+            disabled={Object.keys(filters).length < 1}
           >
-            {Array.from(new Set(dataCategories.map((p) => p.name))).map(
-              (category) => (
-                <motion.div
-                  key={category}
-                  className="mb-2 flex items-center space-x-2"
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <Checkbox
-                    id={`category-${category}`}
-                    checked={filters.categoryName === category}
-                    onCheckedChange={
-                      filters.categoryName === category
-                        ? () => handleFilterChange("categoryName", "")
-                        : () => handleFilterChange("categoryName", category)
-                    }
-                  />
-                  <Label htmlFor={`category-${category}`}>{category}</Label>
-                </motion.div>
-              ),
-            )}
-          </motion.div>
-        </AccordionContent>
-      </AccordionItem>
-      <AccordionItem value="item-2">
-        <AccordionTrigger className="font-nunito text-lg font-extrabold">
-          Precio
-        </AccordionTrigger>
-        <AccordionContent>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="py-5"
-          >
-            <Slider
-              min={0}
-              max={100}
-              step={0.5}
-              className="text-primary"
-              value={
-                filters.priceMin === undefined || filters.priceMax === undefined
-                  ? [0, 100]
-                  : [filters.priceMin, filters.priceMax]
-              }
-              onValueChange={(value) => {
-                handleFilterChange("priceMin", value[0]);
-                handleFilterChange("priceMax", value[1]);
-              }}
-            />
-            <div className="mt-2 flex justify-between text-sm">
-              <span>
-                S/.
-                {filters.priceMin === undefined
-                  ? 0
-                  : filters.priceMin.toFixed(2)}
-              </span>
-              <span>
-                S/.
-                {filters.priceMax === undefined
-                  ? 100
-                  : filters.priceMax.toFixed(2)}
-              </span>
-            </div>
-          </motion.div>
-        </AccordionContent>
-      </AccordionItem>
-    </Accordion>
+            <Settings2 />
+            Limpiar filtros
+          </Button>
+        </motion.div>
+      )}
+    </>
   );
 };
