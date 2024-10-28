@@ -46,6 +46,8 @@ export const FilterableProductList = ({
     "item-2",
   ]);
 
+  const [editPrice, setEditPrice] = useState<boolean>(false);
+
   // Limpiar filtros
   const handleClearFilters = () => {
     setFilters({});
@@ -135,7 +137,10 @@ export const FilterableProductList = ({
                   handleFilterChange("priceMax", value[1]);
                 }}
               />
-              <div className="mt-2 flex justify-between text-sm">
+              <div
+                className="mt-2 flex justify-between text-sm"
+                onClick={() => setEditPrice(!editPrice)}
+              >
                 <span>
                   S/.
                   {filters.priceMin === undefined
@@ -149,6 +154,7 @@ export const FilterableProductList = ({
                     : filters.priceMax.toFixed(2)}
                 </span>
               </div>
+              <div className="mt-2 flex items-center justify-between"></div>
             </motion.div>
           </AccordionContent>
         </AccordionItem>
