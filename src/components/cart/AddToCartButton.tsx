@@ -41,7 +41,10 @@ export function AddToCartButton() {
 
   return (
     <Button
-      onClick={handleAddToCart}
+      onClick={(e) => {
+        e.stopPropagation();
+        handleAddToCart();
+      }}
       variant="outline"
       disabled={isLoading || isAdded}
       className={cn(
