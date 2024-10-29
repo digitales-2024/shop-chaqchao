@@ -2,7 +2,7 @@ import { useGetCategoriesQuery } from "@/redux/services/categoryApi";
 
 export const useCategory = () => {
   const {
-    data: dataCagories,
+    data: dataCategories,
     isLoading: isLoadingCategories,
     isError: isErrorCategories,
     isSuccess: isSuccessCategories,
@@ -10,7 +10,7 @@ export const useCategory = () => {
   } = useGetCategoriesQuery();
 
   return {
-    dataCagories,
+    dataCategories,
     isLoadingCategories,
     isErrorCategories,
     isSuccessCategories,

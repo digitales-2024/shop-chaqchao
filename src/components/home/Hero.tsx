@@ -1,78 +1,158 @@
 "use client";
-import ChaqchaoHero01 from "@/assets/images/chaqchao-hero-01.webp";
-import ChaqchaoHero02 from "@/assets/images/chaqchao-hero-02.webp";
-import Autoplay from "embla-carousel-autoplay";
-import Fade from "embla-carousel-fade";
+import BgHero from "@/assets/images/bg_hero.webp";
+import { ChaqchaoName } from "@/assets/images/ChaqchaoName";
+import Product01 from "@/assets/images/product_01.webp";
+import Product02 from "@/assets/images/product_02.webp";
+import Product03 from "@/assets/images/product_03.webp";
+import Product04 from "@/assets/images/product_04.webp";
+import Product05 from "@/assets/images/product_05.webp";
+import { motion } from "framer-motion";
+import { ChevronLeft, ChevronRight, CircleArrowRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
+import { Autoplay, Navigation } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "../ui/carousel";
+import "swiper/css";
+import { SeparateSection } from "../common/SeparateSection";
 
 interface CarouselItem {
-  title: string;
   image: StaticImageData;
 }
 
 const carouselItems: CarouselItem[] = [
-  {
-    title: "Workshop 1",
-    image: ChaqchaoHero01,
-  },
-  {
-    title: "Workshop 2",
-    image: ChaqchaoHero02,
-  },
+  { image: Product01 },
+  { image: Product02 },
+  { image: Product03 },
+  { image: Product04 },
+  { image: Product05 },
 ];
 
 export const Hero = () => {
+  const FADE_DOWN_ANIMATION_VARIANTS = {
+    hidden: { opacity: 0, y: -10 },
+    show: { opacity: 1, y: 0, transition: { type: "spring" } },
+  };
+
+  const t = useTranslations("hero");
+
   return (
-    <section className="relative mx-auto flex w-full items-start justify-center">
-      <Carousel
-        className="relative w-full p-0"
-        plugins={[
-          Autoplay({
-            delay: 10000,
-          }),
-          Fade(),
-        ]}
-        opts={{
-          loop: true,
-        }}
-      >
-        <CarouselContent className="h-[35rem] p-0">
-          {carouselItems.map((item, index) => (
-            <CarouselItem key={index} className="bg-secondary">
-              <div className="relative h-full">
-                <Image
-                  src={item.image.src}
-                  alt={item.title}
-                  fill
-                  className="h-full w-full object-cover"
-                  priority={index === 0}
-                  quality={100}
-                />
-                <div className="absolute h-full w-full select-none bg-gradient-to-t from-white to-transparent to-20%" />
-              </div>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPrevious className="absolute left-4 border-terciary bg-terciary/20 text-terciary hover:bg-terciary/80 hover:text-white" />
-        <CarouselNext className="absolute right-4 border-terciary bg-terciary/20 text-terciary hover:bg-terciary/80 hover:text-white" />
-      </Carousel>
-      <div className="container pointer-events-none absolute mx-auto flex h-full items-end justify-start py-20">
-        <Link
-          href="/workshops"
-          className="pointer-events-auto inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md bg-primary px-6 py-4 text-2xl font-medium text-primary-foreground ring-offset-background transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0"
+    <section className="relative flex w-full flex-col items-start justify-center bg-primary-foreground p-10">
+      <div className="container mx-auto grid h-full w-full grid-cols-1 justify-center sm:grid-cols-2">
+        <motion.div
+          initial="hidden"
+          animate="show"
+          viewport={{ once: true }}
+          variants={{
+            hidden: {},
+            show: {
+              transition: {
+                staggerChildren: 0.15,
+              },
+            },
+          }}
+          className="flex h-full flex-col items-center justify-center space-y-20"
         >
-          Ver nuestros productos
-        </Link>
+          <motion.h1
+            className="font-display text-center text-4xl font-bold tracking-[-0.02em] drop-shadow-sm md:text-7xl md:leading-[5rem]"
+            variants={FADE_DOWN_ANIMATION_VARIANTS}
+          >
+            <ChaqchaoName className="h-32 sm:h-56" />
+          </motion.h1>
+          <motion.p
+            className="mt-6 text-balance text-center md:text-2xl"
+            variants={FADE_DOWN_ANIMATION_VARIANTS}
+          >
+            {t("textfirst")}{" "}
+            <span className="relative inline-flex text-primary">
+              <span>{t("textresalt")}</span>
+              <motion.svg
+                fill="none"
+                viewBox="0 0 645 25"
+                className="absolute -bottom-[6px] left-0 w-full stroke-2"
+              >
+                <motion.path
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ duration: 0.5, delay: 0.5 }}
+                  strokeDasharray="0 1"
+                  stroke="currentColor"
+                  d="M.5 16C127.5-1 239.4-.67 358 3c108.5 3.36 191.5 9.5 286.5 21.5"
+                />
+              </motion.svg>
+            </span>
+            {t("textsecond")}
+          </motion.p>
+          <motion.div
+            className="mx-auto mt-6 flex items-center justify-center space-x-5"
+            variants={FADE_DOWN_ANIMATION_VARIANTS}
+          >
+            <Link
+              href="/"
+              className="group/see text-md inline-flex items-center justify-center gap-2 rounded-full bg-primary/90 py-2 pl-8 pr-3 text-white transition-all duration-300 hover:scale-105 hover:bg-primary sm:text-xl"
+            >
+              <span className="truncate">{t("button")}</span>
+              <CircleArrowRight
+                className="size-10 -rotate-45 transition-all duration-300 group-hover/see:rotate-0 sm:size-16"
+                strokeWidth={0.5}
+              />
+            </Link>
+          </motion.div>
+        </motion.div>
+        <div className="relative hidden aspect-square shrink-0 items-center justify-center overflow-hidden rounded-full bg-primary/10 sm:flex">
+          <Image
+            src={BgHero}
+            alt="chaqchao"
+            fill
+            className="object-cover opacity-10"
+            priority
+          />
+          <Swiper
+            spaceBetween={50}
+            slidesPerView={1}
+            loop={true}
+            className="relative z-10 flex flex-col items-center justify-center"
+            autoplay={{ delay: 5000 }}
+            navigation={{
+              nextEl: ".swiper-button-next",
+              prevEl: ".swiper-button-prev",
+            }}
+            modules={[Navigation, Autoplay]}
+            speed={1000}
+          >
+            {carouselItems.map((item, index) => (
+              <SwiperSlide key={index} zoom={true} className="bg-transparent">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5, ease: "easeInOut" }}
+                  className="relative h-full w-full"
+                >
+                  <Image
+                    src={item.image.src}
+                    alt="chaqchao"
+                    width={500}
+                    height={500}
+                    className="relative z-10 mx-auto size-[calc(100%_-_10rem)] bg-transparent object-cover object-center"
+                    priority={index === 0}
+                    quality={100}
+                  />
+                </motion.div>
+              </SwiperSlide>
+            ))}
+            <div className="inline-flex w-full select-none justify-center gap-4 p-2">
+              <div className="swiper-button-prev flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-secondary text-secondary hover:scale-105">
+                <ChevronLeft size={24} />
+              </div>
+              <div className="swiper-button-next flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-secondary text-secondary hover:scale-105">
+                <ChevronRight size={24} />
+              </div>
+            </div>
+          </Swiper>
+        </div>
       </div>
+      <SeparateSection className="absolute left-0 top-full text-primary-foreground" />
     </section>
   );
 };

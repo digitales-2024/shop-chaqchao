@@ -1,25 +1,36 @@
 "use client";
 import { useCatalog } from "@/hooks/use-catalog";
+import { useTranslations } from "next-intl";
 
 import { CartItem } from "../cart/CartItem";
 import { CartSkeleton } from "../cart/CartSkeleton";
+import { LineTitle } from "../common/LineTitle";
+import { SeparateSection } from "../common/SeparateSection";
 
 interface RecommendHeaderProps {
   children: React.ReactNode;
 }
 
 const RecommendHeader: React.FC<RecommendHeaderProps> = ({ children }) => {
+  const t = useTranslations("recommendations");
+
   return (
-    <section className="flex flex-col gap-20">
-      <h2 className="mb-10 text-center text-3xl font-semibold">
-        <span className="text-balance">
-          Explora nuestros productos recomendados
-        </span>
-        <p className="text-lg text-secondary">
-          Nuestras opciones variadas de chocolates cremas, lipbalm entre otros.
-        </p>
-      </h2>
-      <div className="flex gap-6">{children}</div>
+    <section className="relative flex w-full flex-col bg-primary-foreground py-40">
+      <div className="container mx-auto flex w-full flex-col gap-40">
+        <div className="grid grid-cols-1 items-center gap-6 sm:grid-cols-[1fr_auto_1fr]">
+          <LineTitle className="hidden text-primary sm:flex" />
+          <h2 className="mb-10 text-center text-3xl font-semibold">
+            <span className="text-balance">{t("title")}</span>
+            <p className="text-lg text-secondary">{t("subtitle")}</p>
+          </h2>
+          <LineTitle className="hidden rotate-180 text-primary sm:flex" />
+        </div>
+        <div className="grid justify-items-center gap-y-40 [grid-template-columns:_repeat(auto-fit,_minmax(300px,_1fr))]">
+          {children}
+        </div>
+      </div>
+      <SeparateSection className="absolute bottom-full left-0 rotate-180 text-primary-foreground" />
+      <SeparateSection className="absolute left-0 top-full text-primary-foreground" />
     </section>
   );
 };

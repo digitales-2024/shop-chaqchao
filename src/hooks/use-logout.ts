@@ -4,8 +4,11 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { toast } from "sonner";
 
+import { useAuth } from "./use-auth";
+
 export const useLogout = () => {
   const [logout, { data, isLoading, error, isSuccess }] = useLogoutMutation();
+  const { clearClient } = useAuth();
 
   const signOut = async () => {
     const promise = () =>
@@ -29,6 +32,7 @@ export const useLogout = () => {
             );
           }
           resolve(result);
+          clearClient();
         } catch (error) {
           reject(error);
         }

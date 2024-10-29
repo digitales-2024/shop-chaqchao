@@ -1,0 +1,27 @@
+{
+  "navbar": {
+    "products": "Productos",
+    "classes": "Clases"
+  },
+  "hero": {
+    "textfirst": "Descubre nuestros",
+    "textresalt": "chocolates artesanales",
+    "textsecond": ", hecho con los mejores ingredientes.",
+    "button": "Explora nuestros productos"
+  },
+  "workshops": {
+    "title": "¿Qué estás buscando hoy?"
+  },
+  "recommendations": {
+    "title": "Explora nuestros productos recomendados",
+    "subtitle": " Nuestras opciones variadas de chocolates, cremas, lipbalm, entre otros."
+  },
+  "features": {
+    "title": "Productos especiales de",
+    "subtitle": "¡Vea nuestros productos especiales que puede obtener!"
+  },
+  "footer": {
+    "title": "Información de la tienda",
+    "copyrigth": "Todos los derechos reservados"
+  }
+}
