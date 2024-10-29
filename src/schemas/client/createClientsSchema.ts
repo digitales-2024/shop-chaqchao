@@ -22,7 +22,9 @@ export const clientSchema = z.object({
       message:
         "La contraseña debe tener al menos una mayúscula, una minúscula y un número",
     }),
-  birthDate: z.string().optional(),
+  birthDate: z.date({
+    required_error: "Ingrese la fecha de nacimiento",
+  }),
   terms: z.boolean().refine((val) => val === true, {
     message: "Debe aceptar los términos y condiciones",
   }),

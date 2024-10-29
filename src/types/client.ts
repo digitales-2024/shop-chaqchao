@@ -14,7 +14,7 @@ export type ClientPayload = {
   name: string;
   email: string;
   phone: string;
-  birthDate: string;
+  birthDate: Date;
   isGoogleAuth: boolean;
   lastLogin: string;
   isActive: boolean;
@@ -24,5 +24,5 @@ export type ClientDataUpdate = {
   id: string;
   name: string;
   phone: string;
-  birthDate: string;
+  birthDate: Date;
 };

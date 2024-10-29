@@ -46,7 +46,7 @@ export default function AuthComponent() {
       email: "",
       password: "",
       phone: "",
-      birthDate: "",
+      birthDate: new Date(),
       terms: false,
     },
   });
@@ -59,6 +59,7 @@ export default function AuthComponent() {
       name: combinedName,
     };
     startTransition(async () => {
+      console.log(apiInput.birthDate);
       await onCreateClient(apiInput);
     });
   }

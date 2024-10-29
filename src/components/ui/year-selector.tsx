@@ -9,7 +9,6 @@ import {
   ChevronRight,
 } from "lucide-react";
 
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -25,12 +24,17 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+import { cn } from "@/lib/utils";
+
 export default function DatePickerWithYearNavigation({
+  selectedDate,
+  onChange,
   className,
 }: {
+  selectedDate: Date | undefined;
+  onChange: (date: Date | undefined) => void;
   className?: string;
 }) {
-  const [date, setDate] = React.useState<Date>();
   const [calendarDate, setCalendarDate] = React.useState<Date>(new Date());
 
   const years = Array.from({ length: 201 }, (_, i) => 1900 + i);
@@ -72,13 +76,13 @@ export default function DatePickerWithYearNavigation({
           variant={"outline"}
           className={cn(
             "flex w-[260px] justify-start text-left font-normal",
-            !date && "text-muted-foreground",
+            !selectedDate && "text-muted-foreground",
             className,
           )}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
-          {date ? (
-            format(date, "PPP", { locale: es })
+          {selectedDate ? (
+            format(selectedDate, "PPP", { locale: es })
           ) : (
             <span>Selecciona una fecha</span>
           )}
@@ -140,8 +144,8 @@ export default function DatePickerWithYearNavigation({
         </div>
         <Calendar
           mode="single"
-          selected={date}
-          onSelect={setDate}
+          selected={selectedDate}
+          onSelect={onChange} // Cambiado para pasar el onChange del prop
           month={calendarDate}
           onMonthChange={setCalendarDate}
           initialFocus

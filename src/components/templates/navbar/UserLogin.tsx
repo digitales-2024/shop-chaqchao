@@ -49,7 +49,7 @@ export const UserLogin = () => {
           <DropdownMenuGroup>
             <DropdownMenuItem>
               <User className="mr-2 h-4 w-4" />
-              <span>Perfil</span>
+              <Link href="/profile">Perfil</Link>
             </DropdownMenuItem>
             <DropdownMenuItem className="relative">
               <CreditCard className="mr-2 h-4 w-4" />
