@@ -44,7 +44,7 @@ export const CartItem = React.forwardRef<HTMLDivElement, CartItemProps>(
                     <Image
                       className="aspect-square w-48 shrink-0 rounded object-cover transition-all duration-500 group-hover/product:scale-105"
                       src={product.image}
-                      alt={product.name}
+                      alt={`chaqchao ${product.name}`}
                       width={200}
                       height={50}
                       quality={100}
@@ -57,10 +57,10 @@ export const CartItem = React.forwardRef<HTMLDivElement, CartItemProps>(
                 </AnimatePresence>
               </Dialog>
               <div className="grid h-full grid-rows-[auto_1fr_30px] gap-4 text-center">
-                <h2 className="text-balance text-center text-xs font-semibold capitalize text-secondary/50 [view-transition-name:_'product-name']">
+                <p className="text-balance text-center text-sm font-bold capitalize text-terciary [view-transition-name:_'product-name']">
                   {product.category.name}
-                </h2>
-                <h2 className="text-balance text-center text-lg font-bold capitalize">
+                </p>
+                <h2 className="truncate text-balance text-center font-nunito text-2xl font-bold capitalize">
                   {product.name}
                 </h2>
                 <p className="font-commingSoon text-3xl font-semibold">
@@ -76,8 +76,9 @@ export const CartItem = React.forwardRef<HTMLDivElement, CartItemProps>(
                     whileTap={{ scale: 0.9 }}
                     className="rounded-full bg-gray-200 p-1"
                     onClick={decrementQuantity}
+                    aria-label="Decrement quantity"
                   >
-                    <Minus className="h-4 w-4 text-gray-600" />
+                    <Minus className="h-4 w-4" />
                   </motion.button>
                   <motion.span
                     key={quantity}
@@ -90,10 +91,11 @@ export const CartItem = React.forwardRef<HTMLDivElement, CartItemProps>(
                   <motion.button
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
+                    aria-label="Increment quantity"
                     className="rounded-full bg-gray-200 p-1"
                     onClick={incrementQuantity}
                   >
-                    <Plus className="h-4 w-4 text-gray-600" />
+                    <Plus className="h-4 w-4" />
                   </motion.button>
                 </div>
               </div>
