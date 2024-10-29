@@ -168,6 +168,7 @@ export const FilterableProductList = ({
                     <Checkbox
                       id={`category-${category}`}
                       checked={filters.categoryName === category}
+                      aria-label={category}
                       onCheckedChange={
                         filters.categoryName === category
                           ? () => handleFilterChange("categoryName", "")
@@ -212,6 +213,7 @@ export const FilterableProductList = ({
                     <div className="relative">
                       S/.
                       <Input
+                        aria-label="Precio mínimo"
                         type="text"
                         className="pl-7"
                         value={filters.priceMin}
@@ -222,6 +224,7 @@ export const FilterableProductList = ({
                     <div className="relative">
                       S/.
                       <Input
+                        aria-label="Precio máximo"
                         type="text"
                         className="pl-7"
                         value={filters.priceMax}
@@ -275,6 +278,7 @@ export const FilterableProductList = ({
                   {t("filters.preciseInput")}
                 </Label>
                 <Switch
+                  aria-label="Toggle precise input"
                   id="price-range-toggle"
                   checked={isPreciseInput}
                   onCheckedChange={handlePreciseInputToggle}
