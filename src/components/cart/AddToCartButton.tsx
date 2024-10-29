@@ -2,13 +2,18 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingCart, Check } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 
 import { cn } from "@/lib/utils";
 
-export function AddToCartButton() {
+interface AddToCartButtonProps {
+  quantity: number;
+}
+
+export function AddToCartButton({ quantity }: AddToCartButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [isAdded, setIsAdded] = useState(false);
 
@@ -39,18 +44,16 @@ export function AddToCartButton() {
     }
   };
 
+  const t = useTranslations("cartItem");
+
   return (
     <Button
-      onClick={(e) => {
-        e.stopPropagation();
-        handleAddToCart();
-      }}
-      variant="outline"
+      onClick={handleAddToCart}
       disabled={isLoading || isAdded}
       className={cn(
-        "relative w-48 overflow-hidden border-secondary transition-colors duration-300 hover:bg-secondary hover:text-white",
+        "relative w-full overflow-hidden transition-colors duration-300",
         {
-          "border-primary bg-primary": isAdded,
+          "border-none bg-green-600": isAdded,
         },
       )}
     >
@@ -64,6 +67,7 @@ export function AddToCartButton() {
             className="absolute inset-0 flex items-center justify-center"
           >
             <ShoppingCart className="h-5 w-5 animate-bounce" />
+            Añadiendo al carrito...
           </motion.div>
         )}
         {isAdded && (
@@ -75,6 +79,7 @@ export function AddToCartButton() {
             className="absolute inset-0 flex items-center justify-center text-white"
           >
             <Check className="h-5 w-5" />
+            Añadido
           </motion.div>
         )}
         {!isLoading && !isAdded && (
@@ -86,7 +91,7 @@ export function AddToCartButton() {
             className="flex items-center justify-center"
           >
             <ShoppingCart className="mr-2 h-5 w-5" />
-            Añadir al carrito
+            {t("addToCart")} ({quantity})
           </motion.div>
         )}
       </AnimatePresence>

@@ -36,6 +36,7 @@
   },
   "cartItem": {
     "detail": "Detalle del producto",
-    "addToCart": "Agregar al carrito"
+    "addToCart": "Agregar al carrito",
+    "quantity": "Cantidad"
   }
 }
