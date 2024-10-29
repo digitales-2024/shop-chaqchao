@@ -41,7 +41,7 @@ export const ProductDialog = ({ product }: ProductDialogProps) => {
           >
             <Image
               src={product.image}
-              alt={product.name}
+              alt={`producto ${product.name}`}
               width={400}
               height={400}
               className="object-cover"
@@ -52,7 +52,7 @@ export const ProductDialog = ({ product }: ProductDialogProps) => {
               <DialogTitle className="font-nunito text-4xl font-black capitalize">
                 {product.name}
               </DialogTitle>
-              <DialogDescription className="text-sm capitalize text-primary">
+              <DialogDescription className="text-sm font-bold capitalize text-terciary">
                 {product.category.name}
               </DialogDescription>
             </DialogHeader>
@@ -83,6 +83,7 @@ export const ProductDialog = ({ product }: ProductDialogProps) => {
                   value={quantity}
                   onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
                   className="w-20 text-center"
+                  aria-label="Cantidad"
                 />
                 <Button
                   variant="outline"
@@ -94,7 +95,7 @@ export const ProductDialog = ({ product }: ProductDialogProps) => {
                 </Button>
               </div>
               <div className="flex space-x-4">
-                <Button className="flex-1 bg-primary text-white transition-colors duration-300 hover:bg-primary/80">
+                <Button className="flex-1 bg-primary text-black transition-colors duration-300 hover:bg-primary/80">
                   <ShoppingBag className="mr-2 h-4 w-4" /> {t("addToCart")}
                 </Button>
               </div>
@@ -105,9 +106,9 @@ export const ProductDialog = ({ product }: ProductDialogProps) => {
               transition={{ delay: 0.4 }}
               className="space-y-4"
             >
-              <h4 className="font-nunito font-semibold text-gray-800">
+              <h3 className="font-nunito font-semibold text-gray-800">
                 {t("detail")}
-              </h4>
+              </h3>
               <p className="text-sm text-gray-600">{product.description}</p>
             </motion.div>
             <motion.div
