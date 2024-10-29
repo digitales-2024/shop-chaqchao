@@ -23,7 +23,7 @@ export function CartSheet() {
           <ShoppingBag className="flex-shrink-0 transition-transform duration-300 group-hover/cart:animate-tada" />
           <Badge
             variant="default"
-            className="absolute -bottom-0 -right-1 flex size-4 items-center justify-center p-2 text-[10px]"
+            className="absolute -bottom-0 right-0 flex size-5 items-center justify-center p-2 text-xs text-black"
           >
             20
           </Badge>
