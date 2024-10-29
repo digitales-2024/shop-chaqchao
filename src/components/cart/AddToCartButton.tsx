@@ -50,8 +50,9 @@ export function AddToCartButton({ quantity }: AddToCartButtonProps) {
     <Button
       onClick={handleAddToCart}
       disabled={isLoading || isAdded}
+      variant="outline"
       className={cn(
-        "relative w-full overflow-hidden transition-colors duration-300",
+        "relative w-full overflow-hidden text-black transition-colors duration-300",
         {
           "border-none bg-green-600": isAdded,
         },
