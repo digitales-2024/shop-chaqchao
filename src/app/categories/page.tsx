@@ -53,7 +53,7 @@ export default function PageCategories() {
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button variant="outline" className="lg:hidden">
                 <Filter className="mr-2 h-4 w-4" />
-                Filtros
+                {t("filters.button")}
               </Button>
             </motion.div>
           </SheetTrigger>
