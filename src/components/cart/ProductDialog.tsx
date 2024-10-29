@@ -1,6 +1,7 @@
 import { Product } from "@/types";
 import { motion } from "framer-motion";
 import { Minus, Plus, ShoppingBag } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -25,6 +26,8 @@ export const ProductDialog = ({ product }: ProductDialogProps) => {
   const incrementQuantity = () => setQuantity((prev) => prev + 1);
   const decrementQuantity = () =>
     setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
+
+  const t = useTranslations("cartItem");
 
   return (
     <DialogContent className="max-h-[90vh] overflow-hidden border sm:max-w-[90vw] md:max-w-[80vw] lg:max-w-[1000px]">
@@ -92,7 +95,7 @@ export const ProductDialog = ({ product }: ProductDialogProps) => {
               </div>
               <div className="flex space-x-4">
                 <Button className="flex-1 bg-primary text-white transition-colors duration-300 hover:bg-primary/80">
-                  <ShoppingBag className="mr-2 h-4 w-4" /> Agregar al carrito
+                  <ShoppingBag className="mr-2 h-4 w-4" /> {t("addToCart")}
                 </Button>
               </div>
             </motion.div>
@@ -103,7 +106,7 @@ export const ProductDialog = ({ product }: ProductDialogProps) => {
               className="space-y-4"
             >
               <h4 className="font-nunito font-semibold text-gray-800">
-                Detalles del producto
+                {t("detail")}
               </h4>
               <p className="text-sm text-gray-600">{product.description}</p>
             </motion.div>

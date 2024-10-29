@@ -33,5 +33,9 @@
       "preciseInput": "Entrada precisa",
       "clearFilters": "Limpiar filtros"
     }
+  },
+  "cartItem": {
+    "detail": "Detalle del producto",
+    "addToCart": "Agregar al carrito"
   }
 }
