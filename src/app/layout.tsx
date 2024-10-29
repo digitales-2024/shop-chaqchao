@@ -1,7 +1,6 @@
 import { Providers } from "@/redux/providers";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-
 import "@fontsource-variable/nunito";
 import "./globals.css";
 import { Toaster } from "sonner";
@@ -20,6 +19,12 @@ const comingSoon = localFont({
   weight: "100 900",
 });
 
+const comfortaaRegular = localFont({
+  src: "./fonts/ComfortaaRegular.woff2",
+  variable: "--font-comfortaa-regular",
+  weight: "400",
+});
+
 export const metadata: Metadata = {
   title: "Chaqchao Chocolate Factory",
   description: "Somos una tienda que ofrece el mejor chocolate del mundo.",
@@ -33,7 +38,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${comingSoon.variable} ${geistSans.variable} font-nunito antialiased`}
+        className={`${comingSoon.variable} ${comfortaaRegular.variable} ${geistSans.variable} font-nunito antialiased`}
       >
         <Toaster />
         <Providers>
