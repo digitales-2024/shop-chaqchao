@@ -16,12 +16,12 @@ export const ChaqchaoLogo = (props: SVGProps<SVGSVGElement>) => (
     </defs>
     <g id="Capa_1-2" data-name="Capa_1">
       <ellipse
+        fill={props.fill || "none"}
         cx={148.34}
         cy={147.79}
         rx={144.34}
         ry={143.79}
         style={{
-          fill: "none",
           stroke: "#291713",
           strokeMiterlimit: 10,
           strokeWidth: 8,
