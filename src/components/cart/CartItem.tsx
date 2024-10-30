@@ -1,13 +1,13 @@
 "use client";
 import { Product } from "@/types";
 import { AnimatePresence } from "framer-motion";
-import { ShoppingBag } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
 
 import { Button } from "../ui/button";
 import { Card, CardContent, CardFooter } from "../ui/card";
 import { Dialog, DialogTrigger } from "../ui/dialog";
+import { AddToCartButton } from "./AddToCartButton";
 import { ProductDialog } from "./ProductDialog";
 interface CartItemProps {
   product: Product;
@@ -24,6 +24,7 @@ export const CartItem = React.forwardRef<HTMLDivElement, CartItemProps>(
             <Button
               onClick={() => setIsDialogOpen(true)}
               className="m-0 h-[40rem] w-[22rem] overflow-hidden rounded-3xl border border-secondary/10 bg-transparent p-0 transition-all duration-300 hover:bg-transparent hover:shadow-md"
+              disabled={!product.isAvailable}
             >
               <Card className="group/product bg-transparento grid h-full w-full grid-rows-[1fr_200px] border-none p-2 shadow-none transition-all duration-500 hover:bg-white hover:shadow-sm">
                 <CardContent className="flex h-full w-full flex-col items-center justify-start gap-4 p-0">
@@ -49,9 +50,7 @@ export const CartItem = React.forwardRef<HTMLDivElement, CartItemProps>(
                     <p className="font-commingSoon text-3xl font-semibold">
                       S/. {product.price}
                     </p>
-                    <div className="inline-flex size-14 items-center justify-center rounded-full bg-primary">
-                      <ShoppingBag className="w-20 transition-all duration-300 group-hover/product:scale-150" />
-                    </div>
+                    <AddToCartButton product={product} />
                   </div>
                 </CardFooter>
               </Card>
