@@ -1,12 +1,16 @@
 "use client";
 
 import { GoogleIcon } from "@/assets/icons";
+import { ChaqchaoLogo } from "@/assets/images/ChaqchaoLogo";
+import Bg from "@/assets/images/login/singin.webp";
 import { useLogin } from "@/hooks/use-login";
 import { authSchema } from "@/schemas/authSchema";
 import { Credentials } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { motion } from "framer-motion";
 import { EyeIcon, EyeOff } from "lucide-react";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
+import Image from "next/image";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -39,19 +43,38 @@ export default function AuthCards() {
   };
 
   return (
-    <div className="grid h-screen grid-cols-1 bg-gray-100 md:grid-cols-2">
+    <div className="grid h-screen grid-cols-1 p-2 md:grid-cols-2">
       {/* Mensaje a la izquierda (oculto en pantallas pequeñas) */}
-      <div className="hidden h-full bg-secondary text-white md:flex md:flex-col md:items-center md:justify-center">
-        <h2 className="mb-4 text-3xl font-bold">Bienvenido de vuelta</h2>
-        <p className="mb-8 text-center">
-          Para mantenerte conectado con nosotros, inicia sesión con tu
-          información personal
-        </p>
-        <Link href="/register">
-          <Button className="rounded-full border border-white bg-transparent px-10 py-2 font-semibold text-white hover:bg-white hover:text-[#5a2d0c]">
-            REGISTRARSE
-          </Button>
-        </Link>
+      <div className="relative hidden h-full items-start justify-start overflow-hidden rounded-3xl bg-secondary p-6 [view-transition-name:_signin] md:flex">
+        <Image
+          src={Bg}
+          alt="chaqchao factory"
+          fill
+          className="absolute inset-0 z-[-1] object-cover object-center opacity-50"
+        />
+        <div className="inline-flex w-full items-center justify-between">
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+          >
+            <Link href="/">
+              <ChaqchaoLogo className="w-32" fill="white" />
+            </Link>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+          >
+            <Link
+              href="/register"
+              className="rounded-full border border-white bg-transparent px-10 py-2 font-semibold text-white transition-colors duration-300 hover:bg-white hover:text-secondary"
+            >
+              REGISTRARSE
+            </Link>
+          </motion.div>
+        </div>
       </div>
 
       {/* Formulario a la derecha */}
