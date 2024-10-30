@@ -1,5 +1,3 @@
-// /app/layout.tsx
-
 import "@fontsource-variable/comfortaa";
 import "@fontsource-variable/nunito";
 import "./globals.css";
