@@ -22,7 +22,7 @@ export const ChaqchaoLogo = (props: SVGProps<SVGSVGElement>) => (
         rx={144.34}
         ry={143.79}
         style={{
-          stroke: "#291713",
+          stroke: "#0b4f5f",
           strokeMiterlimit: 10,
           strokeWidth: 8,
         }}
