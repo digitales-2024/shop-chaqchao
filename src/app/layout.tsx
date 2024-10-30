@@ -13,8 +13,6 @@ import "@fontsource-variable/nunito";
 import "./globals.css";
 import { Toaster } from "sonner";
 
-import { LayoutShop } from "@/components/templates/LayoutShop";
-
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -47,9 +45,7 @@ export default async function RootLayout({
         >
           <NextIntlClientProvider messages={messages}>
             <Toaster />
-            <Providers>
-              <LayoutShop>{children}</LayoutShop>
-            </Providers>
+            <Providers>{children}</Providers>
           </NextIntlClientProvider>
         </body>
       </html>
