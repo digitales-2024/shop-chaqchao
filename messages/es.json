@@ -42,6 +42,7 @@
   "cartItem": {
     "detail": "Detalle del producto",
     "addToCart": "Agregar al carrito",
-    "quantity": "Cantidad"
+    "quantity": "Cantidad",
+    "outOfStock": "Producto Agotado"
   }
 }
