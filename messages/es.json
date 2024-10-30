@@ -44,5 +44,39 @@
     "addToCart": "Agregar al carrito",
     "quantity": "Cantidad",
     "outOfStock": "Producto Agotado"
+  },
+  "login": {
+    "title": "Hola",
+    "subtitle": "Bienvenido de nuevo a",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "button": "Iniciar sesión",
+    "google": "Iniciar sesión con Google",
+    "register": "¿No tienes una cuenta?",
+    "registerButton": "Regístrate",
+    "forgot": "¿Olvidaste tu contraseña?",
+    "terms": "Al iniciar sesión, declaro que estoy de acuerdo con los",
+    "termsLink": "Términos y Políticas de Privacidad"
+  },
+  "register": {
+    "title": "Bienvenido",
+    "subtitle": "Registrate y sé parte de",
+    "name": "Nombre",
+    "placeholderName": "Ingrese su nombre",
+    "lastName": "Apellido",
+    "placeholderLast": "Ingrese sus apellidos",
+    "email": "Correo electrónico",
+    "placeholderEmail": "Ingrese su correo electrónico",
+    "password": "Contraseña",
+    "placeholderPassword": "Ingrese su contraseña",
+    "phone": "Celular",
+    "birthdate": "Fecha de nacimiento",
+    "placeholderBirthDate": "Seleccione su fecha de nacimiento",
+    "button": "Registrarse",
+    "google": "Registrarse con Google",
+    "login": "¿Ya tienes una cuenta?",
+    "loginButton": "Iniciar sesión",
+    "terms": "Declaro que estoy de acuerdo con los",
+    "termsLink": "Términos y Políticas de Privacidad"
   }
 }
