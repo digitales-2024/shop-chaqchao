@@ -1,17 +1,13 @@
 "use client";
 import { Product } from "@/types";
 import { AnimatePresence } from "framer-motion";
-import { motion } from "framer-motion";
-import { Minus, Plus } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { ShoppingBag } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
 
 import { Button } from "../ui/button";
 import { Card, CardContent, CardFooter } from "../ui/card";
 import { Dialog, DialogTrigger } from "../ui/dialog";
-import { Separator } from "../ui/separator";
-import { AddToCartButton } from "./AddToCartButton";
 import { ProductDialog } from "./ProductDialog";
 interface CartItemProps {
   product: Product;
@@ -19,92 +15,53 @@ interface CartItemProps {
 
 export const CartItem = React.forwardRef<HTMLDivElement, CartItemProps>(
   ({ product }, ref) => {
-    const t = useTranslations("cartItem");
     const [isDialogOpen, setIsDialogOpen] = useState(false);
-
-    const [quantity, setQuantity] = useState(1);
-
-    const incrementQuantity = () =>
-      setQuantity((prev) => Math.min(prev + 1, 10));
-    const decrementQuantity = () =>
-      setQuantity((prev) => Math.max(prev - 1, 1));
 
     return (
       <div ref={ref} className="h-fit">
-        <div className="m-0 aspect-[9/16] h-[37rem] bg-transparent p-0 hover:bg-transparent">
-          <Card className="group/product bg-transparento grid h-full w-72 grid-rows-[1fr_60px] border border-secondary/10 shadow-none transition-all duration-500 hover:bg-white hover:shadow-sm">
-            <CardContent className="flex flex-col items-center justify-center gap-4 px-2 pt-2">
-              <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-                <DialogTrigger asChild>
-                  <Button
-                    onClick={() => setIsDialogOpen(true)}
-                    variant="outline"
-                    className="mx-auto inline-flex h-full w-full items-center justify-center rounded-md border-none bg-primary-foreground py-4 transition-colors duration-300 hover:bg-primary/30"
-                  >
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <DialogTrigger asChild>
+            <Button
+              onClick={() => setIsDialogOpen(true)}
+              className="m-0 h-[40rem] w-[22rem] overflow-hidden rounded-3xl border border-secondary/10 bg-transparent p-0 transition-all duration-300 hover:bg-transparent hover:shadow-md"
+            >
+              <Card className="group/product bg-transparento grid h-full w-full grid-rows-[1fr_200px] border-none p-2 shadow-none transition-all duration-500 hover:bg-white hover:shadow-sm">
+                <CardContent className="flex h-full w-full flex-col items-center justify-start gap-4 p-0">
+                  <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-2xl bg-primary-foreground p-10">
                     <Image
-                      className="aspect-square w-48 shrink-0 rounded object-cover transition-all duration-500 group-hover/product:scale-105"
+                      className="rounded object-cover transition-all duration-500 group-hover/product:scale-105"
                       src={product.image}
                       alt={`chaqchao ${product.name}`}
-                      width={200}
-                      height={50}
+                      width={400}
+                      height={400}
                       quality={100}
                     />
-                  </Button>
-                </DialogTrigger>
+                    <p className="absolute left-5 top-5 rounded-xl bg-white px-3 py-1 text-center text-sm font-bold capitalize text-terciary">
+                      {product.category.name}
+                    </p>
+                  </div>
+                </CardContent>
+                <CardFooter className="grid h-full w-full grid-rows-[2fr_1fr] justify-items-start gap-4">
+                  <h2 className="truncate text-balance text-start font-nunito text-2xl font-bold capitalize">
+                    {product.name}
+                  </h2>
+                  <div className="flex w-full flex-row justify-between">
+                    <p className="font-commingSoon text-3xl font-semibold">
+                      S/. {product.price}
+                    </p>
+                    <div className="inline-flex size-14 items-center justify-center rounded-full bg-primary">
+                      <ShoppingBag className="w-20 transition-all duration-300 group-hover/product:scale-150" />
+                    </div>
+                  </div>
+                </CardFooter>
+              </Card>
+            </Button>
+          </DialogTrigger>
 
-                <AnimatePresence>
-                  <ProductDialog product={product} />
-                </AnimatePresence>
-              </Dialog>
-              <div className="grid h-full grid-rows-[auto_1fr_30px] gap-4 text-center">
-                <p className="text-balance text-center text-sm font-bold capitalize text-terciary [view-transition-name:_'product-name']">
-                  {product.category.name}
-                </p>
-                <h2 className="truncate text-balance text-center font-nunito text-2xl font-bold capitalize">
-                  {product.name}
-                </h2>
-                <p className="font-commingSoon text-3xl font-semibold">
-                  S/ {product.price}
-                </p>
-              </div>
-              <Separator className="my-4" />
-              <div className="mb-4 flex w-full items-center justify-between px-4">
-                <span className="font-medium">{t("quantity")}:</span>
-                <div className="flex items-center space-x-2">
-                  <motion.button
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    className="rounded-full bg-gray-200 p-1"
-                    onClick={decrementQuantity}
-                    aria-label="Decrement quantity"
-                  >
-                    <Minus className="h-4 w-4" />
-                  </motion.button>
-                  <motion.span
-                    key={quantity}
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="w-8 text-center text-lg font-semibold"
-                  >
-                    {quantity}
-                  </motion.span>
-                  <motion.button
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    aria-label="Increment quantity"
-                    className="rounded-full bg-gray-200 p-1"
-                    onClick={incrementQuantity}
-                  >
-                    <Plus className="h-4 w-4" />
-                  </motion.button>
-                </div>
-              </div>
-            </CardContent>
-            <CardFooter className="flex w-full flex-col items-center justify-center">
-              <AddToCartButton quantity={quantity} />
-            </CardFooter>
-          </Card>
-        </div>
+          <AnimatePresence>
+            <ProductDialog product={product} />
+          </AnimatePresence>
+        </Dialog>
       </div>
     );
   },
