@@ -5,21 +5,23 @@ import { authApi } from "./services/authApi";
 import { catalogApi } from "./services/catalogApi";
 import { categoryApi } from "./services/categoryApi";
 import { clientApi } from "./services/clientApi";
+import { orderApi } from "./services/orderApi";
 
 export const store = configureStore({
   reducer: {
     [authApi.reducerPath]: authApi.reducer,
     [clientApi.reducerPath]: clientApi.reducer,
-
     [categoryApi.reducerPath]: categoryApi.reducer,
     [catalogApi.reducerPath]: catalogApi.reducer,
+    [orderApi.reducerPath]: orderApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({})
       .concat(authApi.middleware)
       .concat(clientApi.middleware)
       .concat(categoryApi.middleware)
-      .concat(catalogApi.middleware),
+      .concat(catalogApi.middleware)
+      .concat(orderApi.middleware),
 });
 
 setupListeners(store.dispatch);
