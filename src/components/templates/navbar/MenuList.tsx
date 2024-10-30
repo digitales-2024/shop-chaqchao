@@ -28,7 +28,7 @@ export function MenuList() {
         <NavigationMenuItem>
           <NavigationMenuTrigger
             disabled={isLoadingCategories}
-            className="bg-transparent transition-all duration-300 hover:scale-105 hover:bg-transparent focus:bg-transparent"
+            className="bg-transparent font-bold transition-all duration-300 hover:scale-105 hover:bg-transparent focus:bg-transparent"
           >
             {t("products")}
           </NavigationMenuTrigger>
@@ -56,7 +56,7 @@ export function MenuList() {
             <NavigationMenuLink
               className={`${navigationMenuTriggerStyle()} bg-transparent transition-all duration-300 hover:scale-105 hover:bg-transparent focus:bg-transparent`}
             >
-              {t("classes")}
+              <span className="font-bold">{t("classes")}</span>
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>

@@ -11,7 +11,8 @@ const config: Config = {
     extend: {
       fontFamily: {
         commingSoon: ["var(--font-coming-soon)"],
-        comfortaa: ["var(--font-comfortaa-variable)"],
+        nunito: ["var(--font-nunito-variable)"],
+        comfortaa: ["var(--font-comfortaa-regular)"],
       },
       colors: {
         background: "hsl(var(--background))",

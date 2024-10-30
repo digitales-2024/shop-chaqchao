@@ -18,6 +18,7 @@
     ]
   },
   "dependencies": {
+    "@fontsource-variable/nunito": "^5.1.0",
     "@fontsource-variable/comfortaa": "^5.1.0",
     "@hookform/resolvers": "^3.9.0",
     "@radix-ui/react-avatar": "^1.1.1",
