@@ -13,16 +13,15 @@
 
 @font-face {
   font-family: "ComfortaRegular";
-  src:
-    url("/fonts/ComfortaaRegular.woff2") format("woff2");
+  src: url("/fonts/ComfortaaRegular.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
 }
 
 :root {
   --font-family-sans: "ComingSoon", sans-serif;
+  --font-comfortaa-variable: "Comfortaa Variable", system-ui;
   --font-nunito-variable: "Nunito Variable", sans-serif;
-  --font-comfortaa-regular: "ComfortaRegular", sans-serif;
 }
 
 @layer base {

@@ -23,5 +23,26 @@
   "footer": {
     "title": "Información de la tienda",
     "copyrigth": "Todos los derechos reservados"
+  },
+  "categories": {
+    "title": "Todos nuestro productos",
+    "description": "Elija entre nuestra variedad de productos y disfrute de la mejor calidad.",
+    "filters": {
+      "button": "Filtros",
+      "categories": "Categorías",
+      "price": "Precio",
+      "preciseInput": "Entrada precisa",
+      "clearFilters": "Limpiar filtros"
+    },
+    "metadata": {
+      "title": "Categorías de productos",
+      "description": "Elija entre nuestra variedad de productos y disfrute de la mejor calidad."
+    }
+  },
+  "cartItem": {
+    "detail": "Detalle del producto",
+    "addToCart": "Agregar al carrito",
+    "quantity": "Cantidad",
+    "outOfStock": "Producto Agotado"
   }
 }

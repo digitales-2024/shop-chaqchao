@@ -1,41 +1,70 @@
+"use client";
 import { Product } from "@/types";
+import { AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import React, { useState } from "react";
 
+import { Button } from "../ui/button";
 import { Card, CardContent, CardFooter } from "../ui/card";
+import { Dialog, DialogTrigger } from "../ui/dialog";
 import { AddToCartButton } from "./AddToCartButton";
-
+import { OutStock } from "./OutStock";
+import { ProductDialog } from "./ProductDialog";
 interface CartItemProps {
   product: Product;
 }
-export const CartItem = ({ product }: CartItemProps) => {
-  return (
-    <Card className="group/product bg-transparento grid h-auto w-72 grid-rows-[1fr_60px] border border-secondary/10 shadow-none transition-all duration-500 hover:bg-white hover:shadow-sm">
-      <CardContent className="flex flex-col items-center justify-center gap-4 px-2 py-10">
-        <div className="h-20">
-          <Image
-            className="w-48 -translate-y-28 rounded object-cover transition-all duration-500 group-hover/product:scale-105"
-            src={product.image}
-            alt={product.name}
-            width={200}
-            height={50}
-            quality={100}
-          />
-        </div>
-        <div className="grid h-full grid-rows-[auto_1fr_30px] gap-4 text-center">
-          <h2 className="text-balance text-center text-xs font-semibold capitalize text-secondary/50">
-            {product.category.name}
-          </h2>
-          <h2 className="text-balance text-center text-lg font-bold capitalize">
-            {product.name}
-          </h2>
-          <p className="font-commingSoon text-3xl font-semibold">
-            S/ {product.price}
-          </p>
-        </div>
-      </CardContent>
-      <CardFooter className="flex h-full w-full items-center justify-center">
-        <AddToCartButton />
-      </CardFooter>
-    </Card>
-  );
-};
+
+export const CartItem = React.forwardRef<HTMLDivElement, CartItemProps>(
+  ({ product }, ref) => {
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+    return (
+      <div ref={ref} className="h-fit">
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <DialogTrigger asChild>
+            <Button
+              onClick={() => setIsDialogOpen(true)}
+              className="m-0 h-[40rem] w-[22rem] overflow-hidden rounded-3xl border border-secondary/10 bg-transparent p-0 transition-all duration-300 hover:bg-transparent hover:shadow-md"
+              disabled={!product.isAvailable}
+            >
+              <Card className="group/product bg-transparento grid h-full w-full grid-rows-[1fr_200px] border-none p-2 shadow-none transition-all duration-500 hover:bg-white hover:shadow-sm">
+                <CardContent className="flex h-full w-full flex-col items-center justify-start gap-4 p-0">
+                  <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-2xl bg-primary-foreground p-10">
+                    <Image
+                      className="rounded object-cover transition-all duration-500 group-hover/product:scale-105"
+                      src={product.image}
+                      alt={`chaqchao ${product.name}`}
+                      width={400}
+                      height={400}
+                      quality={100}
+                    />
+                    <p className="absolute left-5 top-5 rounded-xl bg-white px-3 py-1 text-center text-sm font-bold capitalize text-terciary">
+                      {product.category.name}
+                    </p>
+                    {!product.isAvailable && <OutStock />}
+                  </div>
+                </CardContent>
+                <CardFooter className="grid h-full w-full grid-rows-[2fr_1fr] justify-items-start gap-4">
+                  <h2 className="truncate text-balance text-start font-nunito text-2xl font-bold capitalize">
+                    {product.name}
+                  </h2>
+                  <div className="flex w-full flex-row justify-between">
+                    <p className="font-commingSoon text-3xl font-semibold">
+                      S/. {product.price}
+                    </p>
+                    <AddToCartButton product={product} />
+                  </div>
+                </CardFooter>
+              </Card>
+            </Button>
+          </DialogTrigger>
+
+          <AnimatePresence>
+            <ProductDialog product={product} />
+          </AnimatePresence>
+        </Dialog>
+      </div>
+    );
+  },
+);
+CartItem.displayName = "CartItem";
