@@ -9,7 +9,7 @@ interface CartItemProps {
 }
 export const CartItem = ({ product }: CartItemProps) => {
   return (
-    <Card className="group/product bg-transparento grid h-auto w-60 grid-rows-[1fr_60px] border border-secondary/10 shadow-none transition-all duration-500 hover:bg-white hover:shadow-sm">
+    <Card className="group/product bg-transparento grid h-auto w-72 grid-rows-[1fr_60px] border border-secondary/10 shadow-none transition-all duration-500 hover:bg-white hover:shadow-sm">
       <CardContent className="flex flex-col items-center justify-center gap-4 px-2 py-10">
         <div className="h-20">
           <Image
