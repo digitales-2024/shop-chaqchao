@@ -6,6 +6,7 @@ import {
 } from "@/schemas/forgotPassword";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -26,7 +27,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import Link from "next/link";
 
 export default function ForgotPasswordPage() {
   const { onForgotPassword, isSucessForgotPassword } = useForgotPassword();

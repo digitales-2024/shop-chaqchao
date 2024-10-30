@@ -15,9 +15,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useContext } from "react";
+import { OrderUpdateContext } from "@/contexts/OrderUpdateContext";
 
 export const UserLogin = () => {
   const { signOut } = useLogout();
+  const { hasOrderUpdates } = useContext(OrderUpdateContext);
   const { clienteData, isLoading } = useProfile();
   if (isLoading || !clienteData) {
     return (
@@ -39,7 +42,9 @@ export const UserLogin = () => {
             variant="ghost"
             className="relative size-10 rounded-full bg-background text-lg capitalize ring-0 ring-offset-0 transition-all duration-300 hover:scale-105 focus:ring-0 focus:ring-offset-0 focus-visible:border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
           >
-            <span className="absolute right-0 top-0 size-2 rounded-full bg-emerald-500" />
+            {hasOrderUpdates && (
+              <span className="absolute right-0 top-0 size-2 rounded-full bg-emerald-500" />
+            )}
             {getFirstLetter(clienteData.name)}
           </Button>
         </DropdownMenuTrigger>
@@ -49,12 +54,14 @@ export const UserLogin = () => {
           <DropdownMenuGroup>
             <DropdownMenuItem>
               <User className="mr-2 h-4 w-4" />
-              <span>Perfil</span>
+              <Link href="/profile">Perfil</Link>
             </DropdownMenuItem>
             <DropdownMenuItem className="relative">
               <CreditCard className="mr-2 h-4 w-4" />
-              <span>Pedidos</span>
-              <span className="absolute right-0 size-2 rounded-full bg-emerald-500" />
+              <Link href="/orders">Pedidos</Link>
+              {hasOrderUpdates && (
+                <span className="absolute right-3 top-3 size-2 items-center rounded-full bg-emerald-500" />
+              )}
             </DropdownMenuItem>
             <DropdownMenuItem>
               <NotebookPen className="mr-2 h-4 w-4" />

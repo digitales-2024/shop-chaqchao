@@ -1,3 +1,5 @@
+// /app/layout.tsx
+
 import "@fontsource-variable/comfortaa";
 import "@fontsource-variable/nunito";
 import "./globals.css";
@@ -7,6 +9,8 @@ import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 import { ViewTransitions } from "next-view-transitions";
 import localFont from "next/font/local";
+import "@fontsource-variable/nunito";
+import "./globals.css";
 import { Toaster } from "sonner";
 
 import { LayoutShop } from "@/components/templates/LayoutShop";
@@ -34,7 +38,6 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const locale = await getLocale();
-  // side is the easiest way to get started
   const messages = await getMessages();
   return (
     <ViewTransitions>

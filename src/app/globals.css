@@ -11,6 +11,13 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "ComfortaRegular";
+  src: url("/fonts/ComfortaaRegular.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root {
   --font-family-sans: "ComingSoon", sans-serif;
   --font-comfortaa-variable: "Comfortaa Variable", system-ui;
