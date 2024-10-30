@@ -8,6 +8,7 @@ import { Button } from "../ui/button";
 import { Card, CardContent, CardFooter } from "../ui/card";
 import { Dialog, DialogTrigger } from "../ui/dialog";
 import { AddToCartButton } from "./AddToCartButton";
+import { OutStock } from "./OutStock";
 import { ProductDialog } from "./ProductDialog";
 interface CartItemProps {
   product: Product;
@@ -40,6 +41,7 @@ export const CartItem = React.forwardRef<HTMLDivElement, CartItemProps>(
                     <p className="absolute left-5 top-5 rounded-xl bg-white px-3 py-1 text-center text-sm font-bold capitalize text-terciary">
                       {product.category.name}
                     </p>
+                    {!product.isAvailable && <OutStock />}
                   </div>
                 </CardContent>
                 <CardFooter className="grid h-full w-full grid-rows-[2fr_1fr] justify-items-start gap-4">
