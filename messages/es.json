@@ -33,6 +33,10 @@
       "price": "Precio",
       "preciseInput": "Entrada precisa",
       "clearFilters": "Limpiar filtros"
+    },
+    "metadata": {
+      "title": "Categorías de productos",
+      "description": "Elija entre nuestra variedad de productos y disfrute de la mejor calidad."
     }
   },
   "cartItem": {

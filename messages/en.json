@@ -33,6 +33,10 @@
       "price": "Price",
       "preciseInput": "Enter precise",
       "clearFilters": "Clear filters"
+    },
+    "metadata": {
+      "title": "Product categories",
+      "description": "Choose from our variety of products and enjoy the best quality."
     }
   },
   "cartItem": {
