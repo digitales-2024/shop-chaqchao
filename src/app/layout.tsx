@@ -7,7 +7,6 @@ import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 import { ViewTransitions } from "next-view-transitions";
 import localFont from "next/font/local";
-import "@fontsource-variable/nunito";
 import "./globals.css";
 import { Toaster } from "sonner";
 

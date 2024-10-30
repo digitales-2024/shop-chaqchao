@@ -12,7 +12,7 @@ const config: Config = {
       fontFamily: {
         commingSoon: ["var(--font-coming-soon)"],
         nunito: ["var(--font-nunito-variable)"],
-        comfortaa: ["var(--font-comfortaa-regular)"],
+        comfortaa: ["var(--font-comfortaa-variable)"],
       },
       colors: {
         background: "hsl(var(--background))",
