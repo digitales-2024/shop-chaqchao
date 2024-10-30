@@ -1,3 +1,5 @@
+// /app/layout.tsx
+
 import "@fontsource-variable/comfortaa";
 import "./globals.css";
 import { Providers } from "@/redux/providers";
@@ -10,6 +12,7 @@ import "./globals.css";
 import { Toaster } from "sonner";
 
 import { LayoutShop } from "@/components/templates/LayoutShop";
+import { OrderUpdateProvider } from "@/contexts/OrderUpdateContext"; // Importa el proveedor
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -40,7 +43,6 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const locale = await getLocale();
-  // side is the easiest way to get started
   const messages = await getMessages();
   return (
     <html lang={locale}>
@@ -49,9 +51,11 @@ export default async function RootLayout({
       >
         <NextIntlClientProvider messages={messages}>
           <Toaster />
-          <Providers>
-            <LayoutShop>{children}</LayoutShop>
-          </Providers>
+          <OrderUpdateProvider>
+            <Providers>
+              <LayoutShop>{children}</LayoutShop>
+            </Providers>
+          </OrderUpdateProvider>
         </NextIntlClientProvider>
       </body>
     </html>
