@@ -1,8 +1,8 @@
 "use client";
 
+import { Product } from "@/types";
 import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingCart, Check } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -10,12 +10,13 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 interface AddToCartButtonProps {
-  quantity: number;
+  product: Product;
 }
 
-export function AddToCartButton({ quantity }: AddToCartButtonProps) {
+export function AddToCartButton({ product }: AddToCartButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [isAdded, setIsAdded] = useState(false);
+  const [cart, setCart] = useState<Product[]>([]);
 
   const handleAddToCart = async () => {
     if (isLoading || isAdded) return;
@@ -26,6 +27,7 @@ export function AddToCartButton({ quantity }: AddToCartButtonProps) {
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
       setIsAdded(true);
+      setCart([...cart, product]);
       // toast({
       //   title: "Producto añadido",
       //   description: "El artículo se ha añadido a tu carrito.",
@@ -44,15 +46,16 @@ export function AddToCartButton({ quantity }: AddToCartButtonProps) {
     }
   };
 
-  const t = useTranslations("cartItem");
-
   return (
     <Button
-      onClick={handleAddToCart}
+      onClick={(e) => {
+        e.stopPropagation();
+        handleAddToCart();
+      }}
       disabled={isLoading || isAdded}
-      variant="outline"
+      size="icon"
       className={cn(
-        "relative w-full overflow-hidden text-black transition-colors duration-300",
+        "relative inline-flex size-14 items-center justify-center overflow-hidden rounded-full text-black transition-colors duration-300",
         {
           "border-none bg-green-600": isAdded,
         },
@@ -65,10 +68,9 @@ export function AddToCartButton({ quantity }: AddToCartButtonProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute inset-0 flex items-center justify-center"
+            className="absolute flex items-center justify-center"
           >
             <ShoppingCart className="h-5 w-5 animate-bounce" />
-            Añadiendo al carrito...
           </motion.div>
         )}
         {isAdded && (
@@ -80,7 +82,6 @@ export function AddToCartButton({ quantity }: AddToCartButtonProps) {
             className="absolute inset-0 flex items-center justify-center text-white"
           >
             <Check className="h-5 w-5" />
-            Añadido
           </motion.div>
         )}
         {!isLoading && !isAdded && (
@@ -91,8 +92,7 @@ export function AddToCartButton({ quantity }: AddToCartButtonProps) {
             exit={{ opacity: 0 }}
             className="flex items-center justify-center"
           >
-            <ShoppingCart className="mr-2 h-5 w-5" />
-            {t("addToCart")} ({quantity})
+            <ShoppingCart className="h-5 w-5" />
           </motion.div>
         )}
       </AnimatePresence>
