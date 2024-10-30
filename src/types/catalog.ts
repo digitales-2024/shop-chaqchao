@@ -10,6 +10,9 @@ export interface Product {
   description: string;
   price: number;
   image: string;
+  isActive: boolean;
+  isAvailable: boolean;
+  isRestricted: boolean;
   category: Category;
   variations: [];
 }
