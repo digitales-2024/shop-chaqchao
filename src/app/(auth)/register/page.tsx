@@ -7,9 +7,9 @@ import { useLogin } from "@/hooks/use-login";
 import { useRegister } from "@/hooks/use-register";
 import { Locale } from "@/i18n/config";
 import {
-  clientSchema,
   CreateClientsSchema,
   CreateClientInputSchema,
+  ClientSchema,
 } from "@/schemas/client/createClientsSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
@@ -38,6 +38,7 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
 import { Input } from "@/components/ui/input";
+import { InputPassword } from "@/components/ui/input-password";
 import { PhoneInput } from "@/components/ui/phone-input";
 import { Separator } from "@/components/ui/separator";
 import DatePickerWithYearNavigation from "@/components/ui/year-selector";
@@ -47,17 +48,18 @@ export default function AuthComponent() {
   const { onCreateClient } = useRegister();
 
   const form = useForm<CreateClientsSchema>({
-    resolver: zodResolver(clientSchema),
+    resolver: zodResolver(ClientSchema()),
     defaultValues: {
       name: "",
       firstName: "",
       email: "",
       password: "",
       phone: "",
-      birthDate: new Date(),
+      birthDate: undefined,
       terms: false,
     },
   });
+  console.log("🚀 ~ AuthComponent ~ form:", form.watch());
 
   function onSubmit(input: CreateClientsSchema) {
     const { name, firstName, ...filteredInput } = input;
@@ -136,7 +138,7 @@ export default function AuthComponent() {
                           </FormLabel>
                           <FormControl>
                             <Input
-                              placeholder={t("placeholderLastName")}
+                              placeholder={t("placeholderLast")}
                               {...field}
                             />
                           </FormControl>
@@ -206,9 +208,7 @@ export default function AuthComponent() {
                             </HoverCard>
                           </FormLabel>
                           <FormControl>
-                            <Input
-                              type="password"
-                              autoComplete="off"
+                            <InputPassword
                               placeholder={t("placeholderPassword")}
                               {...field}
                             />
@@ -249,7 +249,8 @@ export default function AuthComponent() {
                             </FormLabel>
                             <FormControl className="flex">
                               <DatePickerWithYearNavigation
-                                {...field}
+                                selectedDate={field.value}
+                                onDateChange={field.onChange}
                                 className="w-full font-nunito"
                               />
                             </FormControl>
@@ -272,11 +273,11 @@ export default function AuthComponent() {
                           <FormControl>
                             <div className="inline-flex items-center space-x-2">
                               <Checkbox
-                                id="check-terms"
+                                id="terms"
                                 checked={field.value}
                                 onCheckedChange={field.onChange}
                               />
-                              <label htmlFor="check-terms">
+                              <label htmlFor="terms">
                                 {t("terms")}{" "}
                                 <Link
                                   href="/terms"
@@ -287,6 +288,7 @@ export default function AuthComponent() {
                               </label>
                             </div>
                           </FormControl>
+                          <FormMessage />
                         </FormItem>
                       )}
                     />
