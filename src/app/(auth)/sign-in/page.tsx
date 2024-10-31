@@ -5,15 +5,13 @@ import { ChaqchaoLogo } from "@/assets/images/ChaqchaoLogo";
 import Bg from "@/assets/images/login/singin.webp";
 import { useLogin } from "@/hooks/use-login";
 import { Locale } from "@/i18n/config";
-import { authSchema } from "@/schemas/authSchema";
+import { AuthSchema } from "@/schemas/authSchema";
 import { Credentials } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
-import { EyeIcon, EyeOff } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "next-view-transitions";
 import Image from "next/image";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { LanguageSelector } from "@/components/templates/navbar/LanguageSelector";
@@ -28,23 +26,19 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { InputPassword } from "@/components/ui/input-password";
 import { Separator } from "@/components/ui/separator";
 
 export default function AuthCards() {
-  const [showPassword, setShowPassword] = useState(false);
   const { onLogin, googleLogin, isLoading } = useLogin();
 
   const form = useForm<Credentials>({
-    resolver: zodResolver(authSchema),
+    resolver: zodResolver(AuthSchema()),
     defaultValues: {
       email: "",
       password: "",
     },
   });
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
 
   const locale = useLocale();
 
@@ -151,26 +145,10 @@ export default function AuthCards() {
                           <FormControl>
                             <div className="relative mb-4">
                               <div className="relative">
-                                <Input
-                                  id="password"
-                                  type={showPassword ? "text" : "password"}
-                                  placeholder="*********"
+                                <InputPassword
+                                  placeholder="********"
                                   {...field}
-                                  className="focus:outline-none focus:ring-0 focus:ring-offset-0"
                                 />
-                                {showPassword ? (
-                                  <EyeOff
-                                    className="absolute right-3 top-1/2 -translate-y-1/2 transform cursor-pointer text-slate-500"
-                                    onClick={togglePasswordVisibility}
-                                    size={20}
-                                  />
-                                ) : (
-                                  <EyeIcon
-                                    className="absolute right-3 top-1/2 -translate-y-1/2 transform cursor-pointer text-slate-500"
-                                    onClick={togglePasswordVisibility}
-                                    size={20}
-                                  />
-                                )}
                               </div>
                             </div>
                           </FormControl>
