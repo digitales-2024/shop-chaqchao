@@ -38,9 +38,17 @@ export default function DatePickerWithYearNavigation({
   onDateChange,
 }: DatePickerWithYearNavigationProps) {
   const [date, setDate] = React.useState<Date | undefined>(selectedDate);
+
   const [calendarDate, setCalendarDate] = React.useState<Date>(
     selectedDate || new Date(),
   );
+
+  React.useEffect(() => {
+    if (selectedDate) {
+      setDate(selectedDate);
+      setCalendarDate(selectedDate);
+    }
+  }, [selectedDate]);
 
   const years = Array.from({ length: 201 }, (_, i) => 1900 + i);
   const months = [
@@ -87,7 +95,7 @@ export default function DatePickerWithYearNavigation({
         <Button
           variant={"outline"}
           className={cn(
-            "w-[280px] justify-start text-left font-normal",
+            "flex w-[280px] justify-start text-left font-normal",
             !date && "text-muted-foreground",
             className,
           )}
