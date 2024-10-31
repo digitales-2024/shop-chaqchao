@@ -98,5 +98,27 @@
     "phone": { "required": "Ingrese un número de celular válido" },
     "birthdate": { "required": "Ingrese una fecha de nacimiento válida" },
     "terms": { "required": "Debe aceptar los términos y condiciones" }
+  },
+  "profile": {
+    "profile": "Perfil",
+    "orders": "Pedidos",
+    "class": "Clases",
+    "signout": "Cerrar sesión",
+    "title": "Mi perfil",
+    "subtitle": "Administra tu información personal",
+    "name": "Nombre",
+    "lastName": "Apellido",
+    "email": "Correo electrónico",
+    "phone": "Celular",
+    "birthdate": "Fecha de nacimiento",
+    "button": "Guardar cambios",
+    "password": "Contraseña",
+    "newPassword": "Nueva contraseña",
+    "confirmPassword": "Confirmar contraseña",
+    "changePassword": "Cambiar contraseña",
+    "delete": "Eliminar cuenta",
+    "deleteText": "¿Estás seguro de que deseas eliminar tu cuenta?",
+    "deleteButton": "Eliminar cuenta",
+    "cancel": "Cancelar"
   }
 }

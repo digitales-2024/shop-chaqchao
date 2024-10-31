@@ -104,5 +104,18 @@
     "terms": {
       "required": "You must accept the terms and conditions"
     }
+  },
+  "profile": {
+    "profile": "Profile",
+    "orders": "Orders",
+    "class": "Classes",
+    "signout": "Sign out",
+    "title": "My profile",
+    "subtitle": "Manage your personal information",
+    "name": "Name",
+    "lastName": "Last name",
+    "email": "Email",
+    "phone": "Phone",
+    "birthdate": "Birthdate"
   }
 }
