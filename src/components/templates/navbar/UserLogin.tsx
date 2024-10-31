@@ -23,8 +23,8 @@ export const UserLogin = () => {
   const t = useTranslations("profile");
   const { signOut } = useLogout();
   const hasOrderUpdates = useContext(OrderUpdateContext);
-  const { clienteData, isLoading } = useProfile();
-  if (isLoading || !clienteData) {
+  const { clientData, isLoading } = useProfile();
+  if (isLoading || !clientData) {
     return (
       <Link
         href="/sign-in"
@@ -47,28 +47,28 @@ export const UserLogin = () => {
             {hasOrderUpdates && (
               <span className="absolute right-0 top-0 size-2 rounded-full bg-emerald-500" />
             )}
-            {getFirstLetter(clienteData.name)}
+            {getFirstLetter(clientData.name)}
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56" align="end">
           <DropdownMenuLabel className="flex flex-col gap-1">
             <span className="truncate font-nunito text-lg font-bold capitalize">
-              {clienteData.name}
+              {clientData.name}
             </span>
             <span className="font-nunito text-xs text-slate-500">
-              {clienteData.email}
+              {clientData.email}
             </span>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
             <DropdownMenuItem asChild>
-              <Link href="/profile" className="cursor-pointer">
+              <Link href="/account" className="cursor-pointer">
                 <User className="mr-2 h-4 w-4" />
                 {t("profile")}
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href="/orders" className="relative cursor-pointer">
+              <Link href="/account/orders" className="relative cursor-pointer">
                 <CreditCard className="mr-2 h-4 w-4" />
                 {t("orders")}
                 {hasOrderUpdates && (
@@ -77,7 +77,7 @@ export const UserLogin = () => {
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href="/classes" className="cursor-pointer">
+              <Link href="/account/classes" className="cursor-pointer">
                 <NotebookPen className="mr-2 h-4 w-4" />
                 <span>{t("class")}</span>
               </Link>
