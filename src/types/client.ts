@@ -24,5 +24,5 @@ export type ClientDataUpdate = {
   id: string;
   name: string;
   phone: string;
-  birthDate: Date;
+  birthDate: Date | null | undefined;
 };
