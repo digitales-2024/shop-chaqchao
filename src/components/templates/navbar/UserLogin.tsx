@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 export const UserLogin = () => {
-  const t = useTranslations("profile");
+  const t = useTranslations("account");
   const { signOut } = useLogout();
   const hasOrderUpdates = useContext(OrderUpdateContext);
   const { clientData, isLoading } = useProfile();
@@ -64,13 +64,13 @@ export const UserLogin = () => {
             <DropdownMenuItem asChild>
               <Link href="/account" className="cursor-pointer">
                 <User className="mr-2 h-4 w-4" />
-                {t("profile")}
+                {t("profile.profile")}
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
               <Link href="/account/orders" className="relative cursor-pointer">
                 <CreditCard className="mr-2 h-4 w-4" />
-                {t("orders")}
+                {t("orders.title")}
                 {hasOrderUpdates && (
                   <span className="absolute right-3 top-3 size-2 items-center rounded-full bg-emerald-500" />
                 )}
@@ -79,7 +79,7 @@ export const UserLogin = () => {
             <DropdownMenuItem asChild>
               <Link href="/account/classes" className="cursor-pointer">
                 <NotebookPen className="mr-2 h-4 w-4" />
-                <span>{t("class")}</span>
+                <span>{t("classes.title")}</span>
               </Link>
             </DropdownMenuItem>
           </DropdownMenuGroup>
