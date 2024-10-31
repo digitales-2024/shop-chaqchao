@@ -1,5 +1,6 @@
 "use client";
 
+import { Locale } from "@/i18n/config";
 import { addYears, format, subYears } from "date-fns";
 import { es } from "date-fns/locale";
 import {
@@ -30,12 +31,14 @@ interface DatePickerWithYearNavigationProps {
   className?: string;
   selectedDate?: Date;
   onDateChange?: (date: Date) => void;
+  lang?: Locale;
 }
 
 export default function DatePickerWithYearNavigation({
   className,
   selectedDate,
   onDateChange,
+  lang,
 }: DatePickerWithYearNavigationProps) {
   const [date, setDate] = React.useState<Date | undefined>(selectedDate);
 
@@ -66,6 +69,21 @@ export default function DatePickerWithYearNavigation({
     "Diciembre",
   ];
 
+  const monthsEn = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
   const handleYearChange = (year: string) => {
     setCalendarDate((prevDate) => {
       const newDate = new Date(prevDate);
@@ -77,7 +95,9 @@ export default function DatePickerWithYearNavigation({
   const handleMonthChange = (month: string) => {
     setCalendarDate((prevDate) => {
       const newDate = new Date(prevDate);
-      newDate.setMonth(months.indexOf(month));
+      newDate.setMonth(
+        lang === "es" ? months.indexOf(month) : monthsEn.indexOf(month),
+      );
       return newDate;
     });
   };
