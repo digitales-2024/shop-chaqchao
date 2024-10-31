@@ -6,6 +6,7 @@ import {
 } from "@/schemas/client/updateClientSchema";
 import { ClientDataUpdate } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
@@ -24,6 +25,7 @@ import { PhoneInput } from "../ui/phone-input";
 import DatePickerWithYearNavigation from "../ui/year-selector";
 
 export function ProfileForm() {
+  const t = useTranslations("account.profile");
   const { clientData, onUpdateClient } = useClients();
   const form = useForm<UpdateClientsSchema>({
     resolver: zodResolver(updateClientsSchema),
@@ -34,8 +36,6 @@ export function ProfileForm() {
     },
     mode: "onChange",
   });
-  console.log("🚀 ~ ProfileForm ~ form:", form.watch());
-
   useEffect(() => {
     if (clientData) {
       form.reset({
@@ -57,14 +57,11 @@ export function ProfileForm() {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="font-bold">Nombre</FormLabel>
+              <FormLabel className="font-bold">{t("name")}</FormLabel>
               <FormControl>
-                <Input placeholder="Ingrese su nombre" {...field} />
+                <Input {...field} />
               </FormControl>
-              <FormDescription>
-                Este es el nombre que se mostrará en su perfil y en correos
-                electrónicos.
-              </FormDescription>
+              <FormDescription>{t("nameDescription")}</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -74,14 +71,11 @@ export function ProfileForm() {
           name="phone"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Phone</FormLabel>
+              <FormLabel>{t("phone")}</FormLabel>
               <FormControl>
                 <PhoneInput {...field} />
               </FormControl>
-              <FormDescription>
-                Usaremos este número para mantenerlo actualizado sobre sus
-                pedidos.
-              </FormDescription>
+              <FormDescription>{t("phoneDescription")}</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -91,21 +85,18 @@ export function ProfileForm() {
           name="birthDate"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Birth Date</FormLabel>
+              <FormLabel>{t("birthdate")}</FormLabel>
               <FormControl>
                 <DatePickerWithYearNavigation
                   selectedDate={field.value}
                   onDateChange={field.onChange}
                 />
               </FormControl>
-              <FormDescription>
-                Usamos esto para mostrarle contenido relevante.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button>ACTUALIZAR PERFIL</Button>
+        <Button>{t("button")}</Button>
       </form>
     </Form>
   );
