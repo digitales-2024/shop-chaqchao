@@ -106,8 +106,6 @@
     "signout": "Cerrar sesión",
     "profile": {
       "profile": "Perfil",
-      "orders": "Pedidos",
-      "class": "Clases",
       "title": "Mi perfil",
       "subtitle": "Administra tu información personal",
       "name": "Nombre",
@@ -116,10 +114,6 @@
       "phone": "Celular",
       "birthdate": "Fecha de nacimiento",
       "button": "Guardar cambios",
-      "password": "Contraseña",
-      "newPassword": "Nueva contraseña",
-      "confirmPassword": "Confirmar contraseña",
-      "changePassword": "Cambiar contraseña",
       "delete": "Eliminar cuenta",
       "deleteText": "¿Estás seguro de que deseas eliminar tu cuenta?",
       "deleteButton": "Eliminar cuenta"

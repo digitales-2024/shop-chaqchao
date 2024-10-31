@@ -112,12 +112,17 @@
     "signout": "Sign out",
     "profile": {
       "profile": "Profile",
+      "title": "My profile",
+      "subtitle": " Update your personal information",
       "name": "Name",
       "lastName": "Last name",
       "email": "Email",
       "phone": "Phone",
       "birthdate": "Birthdate",
-      "button": "Save changes"
+      "button": "Save changes",
+      "delete": "Delete account",
+      "deleteText": "Are you sure you want to delete your account?",
+      "deleteButton": "Delete account"
     },
     "orders": {
       "title": "My orders",
