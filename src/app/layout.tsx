@@ -1,4 +1,5 @@
 import "@fontsource-variable/comfortaa";
+import "@fontsource-variable/nunito";
 import "./globals.css";
 import { Providers } from "@/redux/providers";
 import type { Metadata } from "next";
@@ -37,7 +38,7 @@ export default async function RootLayout({
     <ViewTransitions>
       <html lang={locale}>
         <body
-          className={`${comingSoon.variable} ${geistSans.variable} font-comfortaa antialiased`}
+          className={`${comingSoon.variable} ${geistSans.variable} font-nunito antialiased`}
         >
           <NextIntlClientProvider messages={messages}>
             <Toaster />
