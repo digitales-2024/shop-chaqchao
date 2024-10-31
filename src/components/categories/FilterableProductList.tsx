@@ -1,4 +1,5 @@
 "use client";
+
 import { useCategory } from "@/hooks/use-category";
 import { AnimatePresence, motion } from "framer-motion";
 import { Settings2 } from "lucide-react";
@@ -21,8 +22,8 @@ import { Switch } from "../ui/switch";
 
 export interface Filters {
   name?: string;
-  priceMax?: number;
-  priceMin?: number;
+  priceMax?: number | string;
+  priceMin?: number | string;
   categoryName?: string;
 }
 
@@ -138,6 +139,20 @@ export const FilterableProductList = ({
 
   return (
     <>
+      {/* Filtro por Nombre */}
+      <Label htmlFor="search" className="font-nunito text-lg font-extrabold">
+        {t("filters.name")}
+      </Label>
+      <Input
+        alt="Buscar productos"
+        type="text"
+        placeholder="Buscar productos ..."
+        className="m-2"
+        value={filters.name || ""}
+        onChange={(e) => handleFilterChange("name", e.target.value)}
+      />
+
+      {/* Filtros por Categoría y Precio */}
       <Accordion
         type="multiple"
         value={openAccordionItems}
@@ -199,7 +214,6 @@ export const FilterableProductList = ({
               transition={{ duration: 0.3 }}
               className="flex flex-col gap-6 px-2 py-5"
             >
-              {" "}
               <AnimatePresence mode="wait">
                 {isPreciseInput ? (
                   <motion.div
@@ -241,15 +255,15 @@ export const FilterableProductList = ({
                     transition={{ duration: 0.2 }}
                   >
                     <Slider
-                      min={0}
-                      max={100}
+                      min={PRICES.min}
+                      max={PRICES.max}
                       step={0.5}
                       className="text-primary"
                       value={
                         filters.priceMin === undefined ||
                         filters.priceMax === undefined
                           ? [PRICES.min, PRICES.max]
-                          : [filters.priceMin, filters.priceMax]
+                          : [Number(filters.priceMin), Number(filters.priceMax)]
                       }
                       onValueChange={(value) => {
                         handleFilterChange("priceMin", value[0]);
@@ -258,16 +272,10 @@ export const FilterableProductList = ({
                     />
                     <div className="mt-2 flex justify-between text-sm">
                       <span>
-                        S/.
-                        {filters.priceMin === undefined
-                          ? PRICES.min
-                          : filters.priceMin.toFixed(2)}
+                        S/. {Number(filters.priceMin || PRICES.min).toFixed(2)}
                       </span>
                       <span>
-                        S/.
-                        {filters.priceMax === undefined
-                          ? PRICES.max
-                          : filters.priceMax.toFixed(2)}
+                        S/. {Number(filters.priceMax || PRICES.max).toFixed(2)}
                       </span>
                     </div>
                   </motion.div>
@@ -288,6 +296,8 @@ export const FilterableProductList = ({
           </AccordionContent>
         </AccordionItem>
       </Accordion>
+
+      {/* Botón para Limpiar Filtros */}
       {Object.keys(filters).length < 1 ? null : (
         <motion.div
           initial={{ opacity: 0 }}
