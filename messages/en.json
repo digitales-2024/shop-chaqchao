@@ -106,17 +106,36 @@
       "required": "You must accept the terms and conditions"
     }
   },
-  "profile": {
-    "profile": "Profile",
-    "orders": "Orders",
-    "class": "Classes",
-    "signout": "Sign out",
-    "title": "My profile",
+  "account": {
+    "title": "My account",
     "subtitle": "Manage your personal information",
-    "name": "Name",
-    "lastName": "Last name",
-    "email": "Email",
-    "phone": "Phone",
-    "birthdate": "Birthdate"
+    "signout": "Sign out",
+    "profile": {
+      "profile": "Profile",
+      "name": "Name",
+      "lastName": "Last name",
+      "email": "Email",
+      "phone": "Phone",
+      "birthdate": "Birthdate",
+      "button": "Save changes"
+    },
+    "orders": {
+      "title": "My orders",
+      "subtitle": "Check the status of your orders",
+      "order": "Order",
+      "date": "Date",
+      "status": "Status",
+      "detail": "Detail",
+      "empty": "You don't have any orders"
+    },
+    "classes": {
+      "title": "My classes",
+      "subtitle": "Check the status of your classes",
+      "class": "Class",
+      "date": "Date",
+      "status": "Status",
+      "detail": "Detail",
+      "empty": "You don't have any classes"
+    }
   }
 }

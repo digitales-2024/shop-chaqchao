@@ -100,26 +100,48 @@
     "birthdate": { "required": "Ingrese una fecha de nacimiento válida" },
     "terms": { "required": "Debe aceptar los términos y condiciones" }
   },
-  "profile": {
-    "profile": "Perfil",
-    "orders": "Pedidos",
-    "class": "Clases",
-    "signout": "Cerrar sesión",
-    "title": "Mi perfil",
+  "account": {
+    "title": "Mi cuenta",
     "subtitle": "Administra tu información personal",
-    "name": "Nombre",
-    "lastName": "Apellido",
-    "email": "Correo electrónico",
-    "phone": "Celular",
-    "birthdate": "Fecha de nacimiento",
-    "button": "Guardar cambios",
-    "password": "Contraseña",
-    "newPassword": "Nueva contraseña",
-    "confirmPassword": "Confirmar contraseña",
-    "changePassword": "Cambiar contraseña",
-    "delete": "Eliminar cuenta",
-    "deleteText": "¿Estás seguro de que deseas eliminar tu cuenta?",
-    "deleteButton": "Eliminar cuenta",
-    "cancel": "Cancelar"
+    "signout": "Cerrar sesión",
+    "profile": {
+      "profile": "Perfil",
+      "orders": "Pedidos",
+      "class": "Clases",
+      "title": "Mi perfil",
+      "subtitle": "Administra tu información personal",
+      "name": "Nombre",
+      "lastName": "Apellido",
+      "email": "Correo electrónico",
+      "phone": "Celular",
+      "birthdate": "Fecha de nacimiento",
+      "button": "Guardar cambios",
+      "password": "Contraseña",
+      "newPassword": "Nueva contraseña",
+      "confirmPassword": "Confirmar contraseña",
+      "changePassword": "Cambiar contraseña",
+      "delete": "Eliminar cuenta",
+      "deleteText": "¿Estás seguro de que deseas eliminar tu cuenta?",
+      "deleteButton": "Eliminar cuenta"
+    },
+    "orders": {
+      "title": "Mis pedidos",
+      "subtitle": "Revisa el estado de tus pedidos",
+      "order": "Pedido",
+      "date": "Fecha",
+      "status": "Estado",
+      "total": "Total",
+      "detail": "Detalle",
+      "empty": "No tienes pedidos realizados"
+    },
+    "classes": {
+      "title": "Mis clases",
+      "subtitle": "Revisa las clases que has tomado",
+      "class": "Clase",
+      "date": "Fecha",
+      "status": "Estado",
+      "detail": "Detalle",
+      "empty": "No tienes clases tomadas"
+    }
   }
 }
