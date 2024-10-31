@@ -1,18 +1,28 @@
 "use client";
 
+import { GoogleIcon } from "@/assets/icons";
+import { ChaqchaoLogo } from "@/assets/images/ChaqchaoLogo";
+import Bg from "@/assets/images/login/singin.webp";
 import { useLogin } from "@/hooks/use-login";
 import { useRegister } from "@/hooks/use-register";
+import { Locale } from "@/i18n/config";
 import {
-  clientSchema,
   CreateClientsSchema,
   CreateClientInputSchema,
+  ClientSchema,
 } from "@/schemas/client/createClientsSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
+import { motion } from "framer-motion";
+import { useLocale, useTranslations } from "next-intl";
+import { Link } from "next-view-transitions";
+import Image from "next/image";
 import React, { startTransition } from "react";
 import { useForm } from "react-hook-form";
 
+import { LanguageSelector } from "@/components/templates/navbar/LanguageSelector";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
@@ -22,34 +32,34 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { PhoneInput } from "@/components/ui/phone-input";
-import { GoogleIcon } from "@/assets/icons";
-import { Card, CardContent } from "@/components/ui/card";
-import DatePickerWithYearNavigation from "@/components/ui/year-selector";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { Badge } from "@/components/ui/badge";
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
+import { Input } from "@/components/ui/input";
+import { InputPassword } from "@/components/ui/input-password";
+import { PhoneInput } from "@/components/ui/phone-input";
+import { Separator } from "@/components/ui/separator";
+import DatePickerWithYearNavigation from "@/components/ui/year-selector";
 
 export default function AuthComponent() {
   const { googleLogin } = useLogin();
   const { onCreateClient } = useRegister();
 
   const form = useForm<CreateClientsSchema>({
-    resolver: zodResolver(clientSchema),
+    resolver: zodResolver(ClientSchema()),
     defaultValues: {
       name: "",
       firstName: "",
       email: "",
       password: "",
       phone: "",
-      birthDate: new Date(),
+      birthDate: undefined,
       terms: false,
     },
   });
+  console.log("🚀 ~ AuthComponent ~ form:", form.watch());
 
   function onSubmit(input: CreateClientsSchema) {
     const { name, firstName, ...filteredInput } = input;
@@ -63,201 +73,319 @@ export default function AuthComponent() {
     });
   }
 
+  const locale = useLocale();
+
+  const t = useTranslations("register");
+
   return (
-    <div className="grid h-screen grid-cols-1 bg-gray-100 md:grid-cols-2">
+    <div className="grid h-screen grid-cols-1 p-2 font-nunito md:grid-cols-2">
       {/* Formulario */}
-      <div className="flex h-full items-center justify-center p-8">
-        <Card>
-          <CardContent>
-            <h2 className="mb-6 pt-6 text-center text-xl font-bold text-secondary">
-              REGISTRARSE
-            </h2>
-            <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-4"
+      <div className="flex flex-col items-end justify-end p-0 sm:p-10">
+        <LanguageSelector defaultValue={locale as Locale} />
+        <div className="flex h-full w-full items-center justify-center">
+          <Card className="w-full max-w-[35rem] border-none shadow-none">
+            <CardHeader className="mb-10 text-center">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.1 }}
+                className="mb-6 text-center text-3xl font-bold"
               >
-                <div className="grid grid-cols-2 gap-4">
-                  <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="font-bold">
-                          Nombre <span className="text-rose-500">*</span>
-                        </FormLabel>
-                        <FormControl>
-                          <Input placeholder="Ingrese su nombre" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="firstName"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="font-bold">
-                          Apellidos <span className="text-rose-500">*</span>
-                        </FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder="Ingrese sus apellidos"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="font-bold">
-                        Correo Electrónico{" "}
-                        <span className="text-rose-500">*</span>
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          type="email"
-                          autoComplete="off"
-                          placeholder="Ingrese su correo electrónico"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="font-bold">
-                        Contraseña <span className="text-rose-500">*</span>
-                        <Tooltip>
-                          <TooltipTrigger>
-                            <Badge className="border-xl rounded-md bg-transparent text-slate-500 hover:scale-105 hover:bg-transparent">
-                              ?
-                            </Badge>
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            La contraseña debe tener al menos una mayúscula, una
-                            minúscula y un número.
-                          </TooltipContent>
-                        </Tooltip>
-                      </FormLabel>
-                      <FormControl>
-                        <Input
-                          type="password"
-                          autoComplete="off"
-                          placeholder="Ingrese su contraseña"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  <FormField
-                    control={form.control}
-                    name="phone"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="font-bold">
-                          Celular <span className="text-rose-500">*</span>
-                        </FormLabel>
-                        <FormControl>
-                          <PhoneInput defaultCountry="PE" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="birthDate"
-                    render={({}) => (
-                      <FormItem>
-                        <FormLabel className="font-bold">
-                          Fecha de cumpleaños
-                        </FormLabel>
-                        <FormControl className="flex">
-                          <DatePickerWithYearNavigation />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <FormField
-                  control={form.control}
-                  name="terms"
-                  render={({ field }) => (
-                    <FormItem className="flex items-start space-x-2">
-                      <FormControl>
-                        <Checkbox
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                      </FormControl>
-                      <div className="space-y-1 leading-none">
-                        <FormLabel>
-                          Declaro que acepto los{" "}
-                          <Link
-                            href="/terms"
-                            className="text-[#5a2d0c] hover:underline"
-                          >
-                            Términos y Políticas de Privacidad
-                          </Link>
-                        </FormLabel>
-                      </div>
-                    </FormItem>
-                  )}
-                />
-                <Button
-                  type="submit"
-                  className="w-full bg-[#5a2d0c] text-white hover:bg-secondary"
+                <p className="text-5xl font-bold">{t("title")}</p>
+                <span className="inline-flex justify-center gap-1 text-2xl">
+                  {t("subtitle")} <h1 className="text-primary"> Chaqchao</h1>
+                </span>
+              </motion.div>
+            </CardHeader>
+            <CardContent className="flex flex-col gap-3">
+              <Form {...form}>
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="space-y-4"
                 >
-                  REGISTRARSE
+                  <motion.div
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.1 }}
+                    className="grid grid-cols-2 gap-4"
+                  >
+                    <FormField
+                      control={form.control}
+                      name="name"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="font-bold">
+                            {t("name")} <span className="text-rose-500">*</span>
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder={t("placeholderName")}
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="firstName"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="font-bold">
+                            {t("lastName")}{" "}
+                            <span className="text-rose-500">*</span>
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              placeholder={t("placeholderLast")}
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, x: -50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.1 }}
+                  >
+                    <FormField
+                      control={form.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="font-bold">
+                            {t("email")}{" "}
+                            <span className="text-rose-500">*</span>
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              type="email"
+                              autoComplete="off"
+                              placeholder={t("placeholderEmail")}
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.1 }}
+                  >
+                    <FormField
+                      control={form.control}
+                      name="password"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="inline-flex items-center justify-center gap-2 font-bold">
+                            {t("password")}{" "}
+                            <span className="text-rose-500">*</span>
+                            <HoverCard>
+                              <HoverCardTrigger>
+                                <Badge
+                                  className="aspect-square cursor-help rounded-full"
+                                  variant="outline"
+                                >
+                                  ?
+                                </Badge>
+                              </HoverCardTrigger>
+                              <HoverCardContent className="font-normal">
+                                La contraseña debe tener al menos una{" "}
+                                <span className="font-bold uppercase">
+                                  mayúscula
+                                </span>
+                                , una{" "}
+                                <span className="font-bold">minúscula</span> y
+                                un <span className="font-bold">número</span>.
+                              </HoverCardContent>
+                            </HoverCard>
+                          </FormLabel>
+                          <FormControl>
+                            <InputPassword
+                              placeholder={t("placeholderPassword")}
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, x: -50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.1 }}
+                  >
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                      <FormField
+                        control={form.control}
+                        name="phone"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="font-bold">
+                              Celular <span className="text-rose-500">*</span>
+                            </FormLabel>
+                            <FormControl>
+                              <PhoneInput defaultCountry="PE" {...field} />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="birthDate"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="font-bold">
+                              Fecha de cumpleaños
+                            </FormLabel>
+                            <FormControl className="flex">
+                              <DatePickerWithYearNavigation
+                                selectedDate={field.value}
+                                onDateChange={field.onChange}
+                                className="w-full font-nunito"
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, x: -50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.1 }}
+                  >
+                    <FormField
+                      control={form.control}
+                      name="terms"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <div className="inline-flex items-center space-x-2">
+                              <Checkbox
+                                id="terms"
+                                checked={field.value}
+                                onCheckedChange={field.onChange}
+                              />
+                              <label htmlFor="terms">
+                                {t("terms")}{" "}
+                                <Link
+                                  href="/terms"
+                                  className="font-bold hover:text-primary"
+                                >
+                                  {t("termsLink")}
+                                </Link>
+                              </label>
+                            </div>
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 }}
+                  >
+                    <Button className="w-full rounded-full py-6 text-lg text-white transition duration-300 hover:scale-105">
+                      {t("button")}
+                    </Button>
+                  </motion.div>
+                </form>
+              </Form>
+              <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+                className="inline-flex items-center justify-center gap-4 text-center"
+              >
+                <Separator
+                  orientation="horizontal"
+                  className="w-16 opacity-45"
+                />
+                O
+                <Separator
+                  orientation="horizontal"
+                  className="w-16 opacity-45"
+                />
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+              >
+                <Button
+                  variant="outline"
+                  className="flex w-full items-center justify-center rounded-lg border bg-white py-6"
+                  onClick={googleLogin}
+                >
+                  <GoogleIcon />
+                  {t("google")}
                 </Button>
-              </form>
-            </Form>
-            <div className="my-4 text-center">O</div>
-            <Button
-              variant="outline"
-              className="flex w-full items-center justify-center"
-              onClick={googleLogin}
-            >
-              <GoogleIcon />
-              Continuar con Google
-            </Button>
-            <p className="mt-4 text-center text-sm">
-              <Link href="/sign-in" className="text-[#5a2d0c] hover:underline">
-                ¿Ya tienes cuenta? Ingresa aquí
-              </Link>
-            </p>
-          </CardContent>
-        </Card>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+              >
+                <p className="mt-4 text-center text-sm">
+                  <span>{t("login")}</span>
+                  <Link
+                    href="/sign-in"
+                    className="ml-1 font-bold hover:text-primary"
+                  >
+                    {t("loginButton")}
+                  </Link>
+                </p>
+              </motion.div>
+            </CardContent>
+          </Card>
+        </div>
       </div>
 
       {/* Mensaje "Hola, Amigo" se oculta en pantallas pequeñas */}
-      <div className="hidden h-full bg-secondary text-white md:flex md:flex-col md:items-center md:justify-center">
-        <h2 className="mb-4 text-3xl font-bold">¡Hola, Amigo!</h2>
-        <p className="mb-8">
-          Ingresa tus datos personales y comienza tu viaje con nosotros
-        </p>
-        <Link href="/sign-in">
-          <Button className="rounded-full border border-white bg-transparent px-10 py-2 font-semibold text-white hover:bg-white hover:text-[#5a2d0c]">
-            INGRESAR
-          </Button>
-        </Link>
+      <div className="relative hidden h-full items-start overflow-hidden rounded-3xl bg-secondary p-6 text-white [view-transition-name:_signin] md:flex">
+        <Image
+          src={Bg}
+          alt="chaqchao factory"
+          fill
+          className="absolute inset-0 z-[-1] object-cover object-center opacity-50"
+        />
+        <div className="inline-flex w-full items-center justify-between">
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+          >
+            <Link
+              href="/sign-in"
+              className="rounded-full border border-white bg-transparent px-10 py-2 font-semibold text-white transition-colors duration-300 hover:bg-white hover:text-secondary"
+            >
+              {t("loginButton")}
+            </Link>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+          >
+            <Link href="/">
+              <ChaqchaoLogo className="w-32" fill="white" />
+            </Link>
+          </motion.div>
+        </div>
       </div>
     </div>
   );

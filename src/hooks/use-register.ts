@@ -41,7 +41,7 @@ export const useRegister = () => {
 
     toast.promise(promise(), {
       loading: "Creando usuario...",
-      success: "Usuario creado con exitoso.",
+      success: "Usuario creado con éxito.",
       error: (error) => {
         return error.message;
       },

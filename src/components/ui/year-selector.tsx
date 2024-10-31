@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import { addYears, format, subYears } from "date-fns";
 import { es } from "date-fns/locale";
 import {
@@ -8,6 +7,7 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
+import * as React from "react";
 
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -26,16 +26,21 @@ import {
 
 import { cn } from "@/lib/utils";
 
-export default function DatePickerWithYearNavigation({
-  selectedDate,
-  onChange,
-  className,
-}: {
-  selectedDate: Date | undefined;
-  onChange: (date: Date | undefined) => void;
+interface DatePickerWithYearNavigationProps {
   className?: string;
-}) {
-  const [calendarDate, setCalendarDate] = React.useState<Date>(new Date());
+  selectedDate?: Date;
+  onDateChange?: (date: Date) => void;
+}
+
+export default function DatePickerWithYearNavigation({
+  className,
+  selectedDate,
+  onDateChange,
+}: DatePickerWithYearNavigationProps) {
+  const [date, setDate] = React.useState<Date | undefined>(selectedDate);
+  const [calendarDate, setCalendarDate] = React.useState<Date>(
+    selectedDate || new Date(),
+  );
 
   const years = Array.from({ length: 201 }, (_, i) => 1900 + i);
   const months = [
@@ -69,20 +74,27 @@ export default function DatePickerWithYearNavigation({
     });
   };
 
+  const handleDateSelect = (selected: Date | undefined) => {
+    setDate(selected);
+    if (selected && onDateChange) {
+      onDateChange(selected);
+    }
+  };
+
   return (
     <Popover>
       <PopoverTrigger asChild>
         <Button
           variant={"outline"}
           className={cn(
-            "flex w-[260px] justify-start text-left font-normal",
-            !selectedDate && "text-muted-foreground",
+            "w-[280px] justify-start text-left font-normal",
+            !date && "text-muted-foreground",
             className,
           )}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
-          {selectedDate ? (
-            format(selectedDate, "PPP", { locale: es })
+          {date ? (
+            format(date, "PPP", { locale: es })
           ) : (
             <span>Selecciona una fecha</span>
           )}
@@ -143,9 +155,8 @@ export default function DatePickerWithYearNavigation({
           </Button>
         </div>
         <Calendar
-          mode="single"
-          selected={selectedDate}
-          onSelect={onChange} // Cambiado para pasar el onChange del prop
+          selected={date}
+          onSelect={handleDateSelect}
           month={calendarDate}
           onMonthChange={setCalendarDate}
           initialFocus

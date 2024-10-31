@@ -45,5 +45,78 @@
     "addToCart": "Add to cart",
     "quantity": "Quantity",
     "outOfStock": "Out of stock"
+  },
+  "login": {
+    "title": "Hello",
+    "subtitle": "Welcome back to",
+    "email": "Email",
+    "password": "Password",
+    "button": "Log in",
+    "google": "Log in with Google",
+    "register": "Don't have an account?",
+    "registerButton": "Sign up",
+    "forgot": "Forgot your password?",
+    "terms": "By logging in, I declare that I agree with the",
+    "termsLink": "Terms and Privacy Policy"
+  },
+  "register": {
+    "title": "Welcome",
+    "subtitle": "Sign up to",
+    "name": "Name",
+    "placeholderName": "Enter your name",
+    "lastName": "Last name",
+    "placeholderLast": "Enter your last name",
+    "email": "Email",
+    "placeholderEmail": "Enter your email",
+    "password": "Password",
+    "placeholderPassword": "Enter your password",
+    "phone": "Phone",
+    "birthdate": "Birthdate",
+    "placeholderBirthDate": "Select your birthdate",
+    "button": "Sign up",
+    "google": "Sign up with Google",
+    "login": "Already have an account?",
+    "loginButton": "Log in",
+    "terms": "I declare that I agree with the",
+    "termsLink": "Terms and Privacy Policy"
+  },
+  "errors": {
+    "name": {
+      "minlength": "Name is required"
+    },
+    "lastName": {
+      "minlength": "Last name is required"
+    },
+    "email": {
+      "email": "Email must be a valid email address",
+      "minlength": "Email is required"
+    },
+    "password": {
+      "password": "Password must be a valid password",
+      "minlength": "Password must be at least 6 characters long",
+      "regex": "Password must contain at least one uppercase letter, one lowercase letter, and one number"
+    },
+    "phone": {
+      "required": "Phone is required"
+    },
+    "birthdate": {
+      "required": "Birthdate is required"
+    },
+    "terms": {
+      "required": "You must accept the terms and conditions"
+    }
+  },
+  "profile": {
+    "profile": "Profile",
+    "orders": "Orders",
+    "class": "Classes",
+    "signout": "Sign out",
+    "title": "My profile",
+    "subtitle": "Manage your personal information",
+    "name": "Name",
+    "lastName": "Last name",
+    "email": "Email",
+    "phone": "Phone",
+    "birthdate": "Birthdate"
   }
 }
