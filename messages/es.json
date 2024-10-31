@@ -78,5 +78,25 @@
     "loginButton": "Iniciar sesión",
     "terms": "Declaro que estoy de acuerdo con los",
     "termsLink": "Términos y Políticas de Privacidad"
+  },
+  "errors": {
+    "name": {
+      "minlength": "El nombre es obligatorio"
+    },
+    "lastName": {
+      "minlength": "El apellido es obligatorio"
+    },
+    "email": {
+      "email": "Ingrese un correo electrónico válido",
+      "minlength": "El correo electrónico es obligatorio"
+    },
+    "password": {
+      "password": "Ingrese una contraseña válida",
+      "minlength": "La contraseña debe tener al menos 6 caracteres",
+      "regex": "La contraseña debe tener al menos una letra mayúscula, una letra minúscula y un número"
+    },
+    "phone": { "required": "Ingrese un número de celular válido" },
+    "birthdate": { "required": "Ingrese una fecha de nacimiento válida" },
+    "terms": { "required": "Debe aceptar los términos y condiciones" }
   }
 }
