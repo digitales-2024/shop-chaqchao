@@ -91,6 +91,7 @@
       "minlength": "Email is required"
     },
     "password": {
+      "password": "Password must be a valid password",
       "minlength": "Password must be at least 6 characters long",
       "regex": "Password must contain at least one uppercase letter, one lowercase letter, and one number"
     },
