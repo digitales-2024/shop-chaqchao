@@ -1,20 +1,16 @@
 // /app/layout.tsx
 
 import "@fontsource-variable/comfortaa";
-import "@fontsource-variable/nunito";
 import "./globals.css";
 import { Providers } from "@/redux/providers";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
-import { ViewTransitions } from "next-view-transitions";
 import localFont from "next/font/local";
-import "@fontsource-variable/nunito";
-import "./globals.css";
 import { Toaster } from "sonner";
 
 import { LayoutShop } from "@/components/templates/LayoutShop";
-
+import { OrderUpdateProvider } from "@/contexts/OrderUpdateContext";
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -40,19 +36,21 @@ export default async function RootLayout({
   const locale = await getLocale();
   const messages = await getMessages();
   return (
-    <ViewTransitions>
-      <html lang={locale}>
-        <body
-          className={`${comingSoon.variable} ${geistSans.variable} font-comfortaa antialiased`}
-        >
-          <NextIntlClientProvider messages={messages}>
-            <Toaster />
+    <html lang={locale}>
+      <body
+        className={`${comingSoon.variable} ${geistSans.variable} font-comfortaa antialiased`}
+      >
+        <NextIntlClientProvider messages={messages}>
+          <Toaster />
+          <OrderUpdateProvider>
+            {" "}
+            {/* Envuelve con el proveedor */}
             <Providers>
               <LayoutShop>{children}</LayoutShop>
             </Providers>
-          </NextIntlClientProvider>
-        </body>
-      </html>
-    </ViewTransitions>
+          </OrderUpdateProvider>
+        </NextIntlClientProvider>
+      </body>
+    </html>
   );
 }
