@@ -1,103 +1,31 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
-import { Search, X } from "lucide-react";
-import { useState, useRef, useEffect } from "react";
-
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Search } from "lucide-react";
+import { useState, useRef } from "react";
+import { useRouter } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 
 export function SearchBar() {
-  const [isSearchVisible, setIsSearchVisible] = useState(false);
-  const [busqueda, setBusqueda] = useState("");
+  const [isSearchVisible] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
 
+  // Función para redirigir a /products
+  const redirectToProducts = () => {
+    router.push("/categories");
+  };
+
+  // Función para manejar clic en el ícono de búsqueda
   const toggleSearch = () => {
-    setIsSearchVisible(!isSearchVisible);
     if (!isSearchVisible) {
-      setBusqueda("");
+      redirectToProducts();
     }
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // Aquí puedes manejar la lógica de búsqueda
-    console.log("Búsqueda realizada");
-  };
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        searchRef.current &&
-        !searchRef.current.contains(event.target as Node)
-      ) {
-        setIsSearchVisible(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (isSearchVisible && inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [isSearchVisible]);
-
-  const handleClear = () => {
-    setBusqueda("");
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-    setIsSearchVisible(false);
   };
 
   return (
     <div ref={searchRef} className="relative flex items-center gap-2">
-      <div
-        className={cn("transition-all duration-300 ease-in-out", {
-          "w-0 opacity-0": !isSearchVisible,
-          "w-80 opacity-100": isSearchVisible,
-        })}
-      >
-        <form onSubmit={handleSubmit} className="relative">
-          <Label htmlFor="search" className="sr-only">
-            Buscar productos
-          </Label>
-          <Input
-            aria-label="Buscar productos"
-            alt="Buscar productos"
-            ref={inputRef}
-            type="text"
-            value={busqueda}
-            placeholder="Buscar productos ..."
-            onChange={(e) => setBusqueda(e.target.value)}
-            className={`border-none transition-all duration-300 ease-in-out ${isSearchVisible ? "w-full opacity-100" : "w-0 opacity-0"} focus:ring-none rounded-full focus:outline-none focus-visible:ring-transparent`}
-          />
-          <AnimatePresence>
-            {busqueda && (
-              <motion.button
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                transition={{ duration: 0.2 }}
-                onClick={handleClear}
-                className="absolute right-3 top-3 transform"
-                aria-label="Limpiar búsqueda"
-              >
-                <X className="h-5 w-5 text-secondary/50 hover:text-secondary" />
-              </motion.button>
-            )}
-          </AnimatePresence>
-        </form>
-      </div>
-      <div
+      <button
         onClick={toggleSearch}
         aria-label="Buscar"
         className={cn(
@@ -108,7 +36,7 @@ export function SearchBar() {
         )}
       >
         <Search />
-      </div>
+      </button>
     </div>
   );
 }

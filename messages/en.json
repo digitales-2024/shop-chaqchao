@@ -28,6 +28,7 @@
     "title": "All our products",
     "description": "Choose from our variety of products and enjoy the best quality.",
     "filters": {
+      "name": "Name",
       "button": "Filters",
       "categories": "Categories",
       "price": "Price",

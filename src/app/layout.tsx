@@ -1,5 +1,4 @@
 import "@fontsource-variable/comfortaa";
-import "@fontsource-variable/nunito";
 import "./globals.css";
 import { Providers } from "@/redux/providers";
 import type { Metadata } from "next";
