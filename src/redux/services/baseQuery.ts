@@ -11,12 +11,12 @@ const baseQuery: BaseQueryFn = fetchBaseQuery({
 
 const baseQueryWithReauth: BaseQueryFn = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
-  const token = Cookies.get("client_refresh_token");
-  // Si obtenemos un 401 Unauthorized, intentamos refrescar el token
+  const logged = Cookies.get("client_logged_in");
+  // Si obtenemos un 401 Unauthorized, intentamos refrescar el logged
   if (
     result.error &&
     (result.error as FetchBaseQueryError).status === 401 &&
-    token
+    logged
   ) {
     // Intentamos obtener un nuevo access_token usando el refresh_token
     const refreshResult = await baseQuery(
