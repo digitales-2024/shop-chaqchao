@@ -139,19 +139,6 @@ export const FilterableProductList = ({
 
   return (
     <>
-      {/* Filtro por Nombre */}
-      <Label htmlFor="search" className="font-nunito text-lg font-extrabold">
-        {t("filters.name")}
-      </Label>
-      <Input
-        alt="Buscar productos"
-        type="text"
-        placeholder="Buscar productos ..."
-        className="m-2"
-        value={filters.name || ""}
-        onChange={(e) => handleFilterChange("name", e.target.value)}
-      />
-
       {/* Filtros por Categoría y Precio */}
       <Accordion
         type="multiple"
