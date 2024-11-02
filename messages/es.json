@@ -27,6 +27,7 @@
   "categories": {
     "title": "Todos nuestro productos",
     "description": "Elija entre nuestra variedad de productos y disfrute de la mejor calidad.",
+    "search": "Busca entre nuestro catálogo de productos",
     "filters": {
       "name": "Nombre",
       "button": "Filtros",
