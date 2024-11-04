@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 
 import { Badge } from "../ui/badge";
 import { ScrollArea } from "../ui/scroll-area";
+import { statusColors, translateStatus } from "./OrderDetail";
 
 interface OrdersListProps {
   items: OrderClient[];
@@ -35,9 +36,6 @@ export function OrdersList({
               <div className="flex items-center">
                 <div className="flex items-center gap-2">
                   <div className="font-bold">{item.pickupCode}</div>
-                  {/* {!item.read && (
-                    <span className="flex h-2 w-2 rounded-full bg-blue-600" />
-                  )} */}
                 </div>
                 <div
                   className={cn(
@@ -47,7 +45,14 @@ export function OrdersList({
                       : "text-muted-foreground",
                   )}
                 >
-                  <Badge variant="outline">{item.orderStatus}</Badge>
+                  <Badge
+                    variant="outline"
+                    className={cn(statusColors[item.orderStatus] ?? "")}
+                  >
+                    <span className="uppercase">
+                      {translateStatus[item.orderStatus] ?? "Pendiente"}
+                    </span>
+                  </Badge>
                 </div>
               </div>
               <div className="text-xs font-medium">{}</div>
