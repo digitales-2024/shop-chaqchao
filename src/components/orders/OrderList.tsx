@@ -7,7 +7,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 
 import { Badge } from "../ui/badge";
-import { ScrollArea } from "../ui/scroll-area";
+import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 import { statusColors, translateStatus } from "./OrderDetail";
 
 interface OrdersListProps {
@@ -23,9 +23,10 @@ export function OrdersList({
 }: OrdersListProps) {
   const t = useTranslations("account.orders");
   const lang = useLocale();
+
   return (
-    <ScrollArea className="h-screen">
-      <div className="flex flex-col gap-2 p-4 pt-0">
+    <ScrollArea className="h-full sm:h-screen">
+      <div className="flex gap-2 p-4 pt-0 sm:flex-col">
         {items?.map((item) => (
           <button
             key={item.id}
@@ -36,9 +37,9 @@ export function OrdersList({
             onClick={() => setOrderSelect(item)}
           >
             <div className="flex w-full flex-col gap-1">
-              <div className="flex items-center">
+              <div className="flex items-center gap-2">
                 <div className="flex items-center gap-2">
-                  <div className="font-bold">{item.pickupCode}</div>
+                  <div className="truncate font-bold">{item.pickupCode}</div>
                 </div>
                 <div
                   className={cn(
@@ -69,7 +70,10 @@ export function OrdersList({
               </span>
             </div>
             <div className="inline-flex items-center justify-center gap-2">
-              <Calendar className="size-4 text-slate-400" strokeWidth={1} />
+              <Calendar
+                className="size-4 shrink-0 text-slate-400"
+                strokeWidth={1}
+              />
               <span>
                 {format(item.pickupTime, "PPPp", {
                   locale: lang === "es" ? es : undefined,
@@ -79,6 +83,7 @@ export function OrdersList({
           </button>
         ))}
       </div>
+      <ScrollBar orientation="horizontal" />
     </ScrollArea>
   );
 }
