@@ -132,9 +132,15 @@
       "subtitle": "Check the status of your orders",
       "order": "Order",
       "date": "Date",
-      "status": "Status",
       "detail": "Detail",
-      "empty": "You don't have any orders"
+      "download": "Download",
+      "empty": "You don't have any orders",
+      "status": {
+        "pending": "Pending",
+        "ready": "Ready",
+        "completed": "Completed",
+        "canceled": "Canceled"
+      }
     },
     "classes": {
       "title": "My classes",

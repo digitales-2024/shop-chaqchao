@@ -18,6 +18,7 @@ interface OrderClientProps {
 export const OrderClient = ({ defaultLayout = [30, 50] }: OrderClientProps) => {
   const { orders } = useOrders();
   const [orderSelect, setOrderSelect] = useState<Order | null>(null);
+
   return (
     <ResizablePanelGroup
       direction="horizontal"

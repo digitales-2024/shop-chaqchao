@@ -126,10 +126,15 @@
       "subtitle": "Revisa el estado de tus pedidos",
       "order": "Pedido",
       "date": "Fecha",
-      "status": "Estado",
-      "total": "Total",
       "detail": "Detalle",
-      "empty": "No tienes pedidos realizados"
+      "empty": "No tienes pedidos realizados",
+      "download": "Descargar",
+      "status": {
+        "pending": "Pendiente",
+        "ready": "Listo",
+        "completed": "Completado",
+        "canceled": "Cancelado"
+      }
     },
     "classes": {
       "title": "Mis clases",

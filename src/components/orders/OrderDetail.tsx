@@ -1,6 +1,7 @@
 "use client";
 import { OrderClient } from "@/types/order";
 import { Download, MoreVertical } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { cn } from "@/lib/utils";
 
@@ -25,28 +26,32 @@ export const statusColors: Record<OrderClient["orderStatus"], string> = {
 };
 
 export const translateStatus: Record<OrderClient["orderStatus"], string> = {
-  CONFIRMED: "Pendiente",
-  READY: "Listo",
-  COMPLETED: "Completado",
-  CANCELLED: "Cancelado",
+  CONFIRMED: "pending",
+  READY: "ready",
+  COMPLETED: "completed",
+  CANCELLED: "canceled",
 };
 
 export const OrderDetail = ({ order }: OrderDisplayProps) => {
+  const t = useTranslations("account.orders");
+
   return (
     <div className="flex h-full flex-col">
       <div className="flex w-full items-center justify-between p-2">
         <div>
-          <span className="font-bold">
-            {order?.pickupCode} -{" "}
-            <span
-              className={cn(
-                statusColors[order?.orderStatus ?? ""] ?? "",
-                "uppercase",
-              )}
-            >
-              {translateStatus[order?.orderStatus ?? ""]}
+          {order && (
+            <span className="font-bold">
+              {order.pickupCode} -{" "}
+              <span
+                className={cn(
+                  statusColors[order.orderStatus ?? ""] ?? "",
+                  "uppercase",
+                )}
+              >
+                {t(`status.${translateStatus[order.orderStatus] ?? "pending"}`)}
+              </span>
             </span>
-          </span>
+          )}
         </div>
         <div className="inline-flex items-center justify-center gap-1">
           <Separator orientation="vertical" className="mx-2 h-6" />
@@ -60,7 +65,7 @@ export const OrderDetail = ({ order }: OrderDisplayProps) => {
             <DropdownMenuContent align="end">
               <DropdownMenuItem>
                 <Download className="mr-2 h-4 w-4" />
-                Descargar
+                {t("download")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -90,7 +95,7 @@ export const OrderDetail = ({ order }: OrderDisplayProps) => {
         </div>
       ) : (
         <div className="p-8 text-center text-muted-foreground">
-          No message selected
+          {t("empty")}
         </div>
       )}
     </div>
