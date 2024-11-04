@@ -1,9 +1,9 @@
+import { UpdateClientsSchema } from "@/schemas/client/updateClientSchema";
 import { ForgotPasswordSchema } from "@/schemas/forgotPassword";
 import { ClientData, ClientDataUpdate, ResetPassword } from "@/types";
 import { createApi } from "@reduxjs/toolkit/query/react";
 
 import baseQueryWithReauth from "./baseQuery";
-import { UpdateClientsSchema } from "@/schemas/client/updateClientSchema";
 
 export const clientApi = createApi({
   reducerPath: "clientProfileApi",

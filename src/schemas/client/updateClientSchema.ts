@@ -12,7 +12,7 @@ export const clientsSchema = z.object({
 
 export const updateClientsSchema = clientsSchema.partial().extend({
   id: z.string().optional(),
-  birthDate: z.date().nullable().optional(), // Acepta null y opcional
+  birthDate: z.date().optional(), // Acepta null y opcional
 });
 
 export type UpdateClientsSchema = z.infer<typeof updateClientsSchema>;

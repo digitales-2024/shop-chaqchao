@@ -4,6 +4,7 @@ import {
   useUpdateClientMutation,
   useProfileQuery, // Asegúrate de importar el hook que obtenga el perfil del usuario
 } from "@/redux/services/clientApi";
+import { CustomErrorData } from "@/types";
 import { ClientDataUpdate } from "@/types/client";
 import { toast } from "sonner";
 
@@ -37,9 +38,17 @@ export const useClients = () => {
     const promise = () =>
       new Promise(async (resolve, reject) => {
         try {
-          const result = await updateClient({ ...input, id: clientId });
-          if (result.error && "data" in result.error) {
-            const error = (result.error.data as any).message;
+          const result = await updateClient({
+            ...input,
+            id: clientId,
+            birthDate: input.birthDate ?? undefined,
+          });
+          if (
+            result.error &&
+            typeof result.error === "object" &&
+            "data" in result.error
+          ) {
+            const error = (result.error.data as CustomErrorData).message;
             reject(new Error(error));
           }
           if (result.error) {

@@ -56,6 +56,15 @@ export const classApi = createApi({
       }),
       providesTags: ["Class"],
     }),
+    // Endpoint para obtener las clases registradas de un cliente
+    getClassesByClient: build.query({
+      query: () => ({
+        url: "/classes/client",
+        method: "GET",
+        credentials: "include",
+      }),
+      providesTags: ["Class"],
+    }),
   }),
 });
 
@@ -65,4 +74,5 @@ export const {
   useLanguagesQuery,
   useSchedulesQuery,
   usePricesQuery,
+  useGetClassesByClientQuery,
 } = classApi;

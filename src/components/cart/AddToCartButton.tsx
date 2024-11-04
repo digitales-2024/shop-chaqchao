@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingCart, Check } from "lucide-react";
 import { useState } from "react";
 
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 
 import { cn } from "@/lib/utils";
 
@@ -47,15 +47,14 @@ export function AddToCartButton({ product }: AddToCartButtonProps) {
   };
 
   return (
-    <Button
+    <div
       onClick={(e) => {
         e.stopPropagation();
         handleAddToCart();
       }}
-      disabled={isLoading || isAdded}
-      size="icon"
       className={cn(
-        "relative inline-flex size-14 items-center justify-center overflow-hidden rounded-full text-black transition-colors duration-300",
+        buttonVariants({ variant: "default", size: "icon" }),
+        "relative inline-flex size-14 items-center justify-center overflow-hidden rounded-2xl transition-colors duration-300",
         {
           "border-none bg-green-600": isAdded,
         },
@@ -96,6 +95,6 @@ export function AddToCartButton({ product }: AddToCartButtonProps) {
           </motion.div>
         )}
       </AnimatePresence>
-    </Button>
+    </div>
   );
 }

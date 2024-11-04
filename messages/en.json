@@ -27,6 +27,7 @@
   "categories": {
     "title": "All our products",
     "description": "Choose from our variety of products and enjoy the best quality.",
+    "search": "Search our product catalog",
     "filters": {
       "name": "Name",
       "button": "Filters",
@@ -106,17 +107,55 @@
       "required": "You must accept the terms and conditions"
     }
   },
-  "profile": {
-    "profile": "Profile",
-    "orders": "Orders",
-    "class": "Classes",
-    "signout": "Sign out",
-    "title": "My profile",
+  "account": {
+    "title": "My account",
     "subtitle": "Manage your personal information",
-    "name": "Name",
-    "lastName": "Last name",
-    "email": "Email",
-    "phone": "Phone",
-    "birthdate": "Birthdate"
+    "signout": "Sign out",
+    "profile": {
+      "profile": "Profile",
+      "title": "My profile",
+      "subtitle": " Update your personal information",
+      "name": "Name",
+      "nameDescription": "This is the name that will be displayed on your profile and in emails.",
+      "lastName": "Last name",
+      "email": "Email",
+      "phone": "Phone",
+      "phoneDescription": "We will use this number to keep you updated on your orders.",
+      "birthdate": "Birthdate",
+      "button": "Save changes",
+      "delete": "Delete account",
+      "deleteText": "Are you sure you want to delete your account?",
+      "deleteButton": "Delete account"
+    },
+    "orders": {
+      "title": "My orders",
+      "subtitle": "Check the status of your orders",
+      "order": "Order",
+      "date": "Date",
+      "detail": "Detail",
+      "download": "Download",
+      "empty": "You don't have any orders",
+      "status": {
+        "pending": "Pending",
+        "ready": "Ready",
+        "completed": "Completed",
+        "canceled": "Canceled"
+      }
+    },
+    "classes": {
+      "title": "My classes",
+      "subtitle": "Check the classes you have taken",
+      "class": "Class",
+      "date": "Date",
+      "status": "Status",
+      "detail": "Detail",
+      "empty": "You don't have any classes",
+      "participant": "Participant",
+      "download": "Download",
+      "schedule": "Schedule",
+      "language": "Language",
+      "adults": "Adults",
+      "children": "Children"
+    }
   }
 }
