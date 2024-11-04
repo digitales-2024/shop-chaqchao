@@ -3,7 +3,13 @@ import { OrderUpdateContext } from "@/contexts/OrderUpdateContext";
 import { useLogout } from "@/hooks/use-logout";
 import { useProfile } from "@/hooks/use-profile";
 import { getFirstLetter } from "@/utils/getFirstLetter";
-import { CreditCard, LogOut, NotebookPen, User, UserRound } from "lucide-react";
+import {
+  LogOut,
+  NotebookPen,
+  ShoppingBag,
+  User,
+  UserRound,
+} from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useContext } from "react";
@@ -45,7 +51,12 @@ export const UserLogin = () => {
             className="relative size-10 rounded-full border-primary bg-background font-nunito text-lg font-black capitalize outline outline-primary ring-0 ring-offset-0 transition-all duration-300 hover:scale-105 focus:ring-0 focus:ring-offset-0 focus-visible:border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
           >
             {hasOrderUpdates && (
-              <span className="absolute right-0 top-0 size-2 rounded-full bg-emerald-500" />
+              <div className="absolute -right-1 -top-0">
+                <span className="relative flex h-3 w-3">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex h-3 w-3 rounded-full bg-emerald-500"></span>
+                </span>
+              </div>
             )}
             {getFirstLetter(clientData.name)}
           </Button>
@@ -69,10 +80,15 @@ export const UserLogin = () => {
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
               <Link href="/account/orders" className="relative cursor-pointer">
-                <CreditCard className="mr-2 h-4 w-4" />
+                <ShoppingBag className="mr-2 h-4 w-4" />
                 {t("orders.title")}
                 {hasOrderUpdates && (
-                  <span className="absolute right-3 top-3 size-2 items-center rounded-full bg-emerald-500" />
+                  <div className="absolute right-3 top-3 size-2 items-center">
+                    <span className="relative flex h-3 w-3">
+                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
+                      <span className="relative inline-flex h-3 w-3 rounded-full bg-emerald-500"></span>
+                    </span>
+                  </div>
                 )}
               </Link>
             </DropdownMenuItem>
