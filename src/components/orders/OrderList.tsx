@@ -2,6 +2,7 @@ import { OrderClient } from "@/types/order";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { Calendar } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
 
 import { cn } from "@/lib/utils";
 
@@ -20,6 +21,8 @@ export function OrdersList({
   orderSelect,
   setOrderSelect,
 }: OrdersListProps) {
+  const t = useTranslations("account.orders");
+  const lang = useLocale();
   return (
     <ScrollArea className="h-screen">
       <div className="flex flex-col gap-2 p-4 pt-0">
@@ -50,7 +53,9 @@ export function OrdersList({
                     className={cn(statusColors[item.orderStatus] ?? "")}
                   >
                     <span className="uppercase">
-                      {translateStatus[item.orderStatus] ?? "Pendiente"}
+                      {t(
+                        `status.${translateStatus[item.orderStatus] ?? "pending"}`,
+                      )}
                     </span>
                   </Badge>
                 </div>
@@ -58,14 +63,18 @@ export function OrdersList({
               <div className="text-xs font-medium">{}</div>
             </div>
             <div className="inline-flex gap-1 text-xs font-bold">
-              Total:
+              Total
               <span className="font-black">
                 S/. {item.totalAmount ?? "0.00"}
               </span>
             </div>
             <div className="inline-flex items-center justify-center gap-2">
               <Calendar className="size-4 text-slate-400" strokeWidth={1} />
-              <span>{format(item.pickupTime, "PPPp", { locale: es })}</span>
+              <span>
+                {format(item.pickupTime, "PPPp", {
+                  locale: lang === "es" ? es : undefined,
+                })}
+              </span>
             </div>
           </button>
         ))}
