@@ -144,12 +144,18 @@
     },
     "classes": {
       "title": "My classes",
-      "subtitle": "Check the status of your classes",
+      "subtitle": "Check the classes you have taken",
       "class": "Class",
       "date": "Date",
       "status": "Status",
       "detail": "Detail",
-      "empty": "You don't have any classes"
+      "empty": "You don't have any classes",
+      "participant": "Participant",
+      "download": "Download",
+      "schedule": "Schedule",
+      "language": "Language",
+      "adults": "Adults",
+      "children": "Children"
     }
   }
 }

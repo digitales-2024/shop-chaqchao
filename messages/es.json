@@ -143,7 +143,13 @@
       "date": "Fecha",
       "status": "Estado",
       "detail": "Detalle",
-      "empty": "No tienes clases tomadas"
+      "empty": "No tienes clases tomadas",
+      "participant": "Participante",
+      "download": "Descargar",
+      "schedule": "Horario",
+      "language": "Idioma",
+      "adults": "Adultos",
+      "children": "Niños"
     }
   }
 }
