@@ -5,7 +5,7 @@ import { getToken } from "./lib/jwt/getToken";
 import { redirectToLogin } from "./lib/jwt/redirectToLogin";
 
 // Rutas que requieren autenticación
-const protectedRoutes = ["/profile"];
+const protectedRoutes = ["/account"];
 
 // Rutas de autenticación (accesibles solo por usuarios no autenticados)
 const authRoutes = [
@@ -18,18 +18,11 @@ const authRoutes = [
 export async function middleware(request: NextRequest) {
   const token = getToken(request);
   const { pathname } = request.nextUrl;
-
-  // Normalizar el pathname eliminando barras finales y convirtiendo a minúsculas
-  const normalizedPathname = pathname.replace(/\/+$/, "").toLowerCase() || "/";
-
-  // Función para verificar si la ruta coincide con alguna en la lista
+  // Función para verificar si la ruta coincide esta en la lista de rutas -> /account -> /account/settings pero no cuando es /account-login/settings/...
   const isRouteMatching = (pathList: string[]) => {
-    return pathList.some((route) => {
-      // Manejar rutas dinámicas con comodines
-      const routePattern = new RegExp(
-        "^" + route.replace(/\[.*?\]/g, "[^/]+") + "$",
-      );
-      return routePattern.test(normalizedPathname);
+    return pathList.some((path) => {
+      const pathRegex = new RegExp(`^${path}(?:$|/)`);
+      return pathRegex.test(pathname);
     });
   };
 
