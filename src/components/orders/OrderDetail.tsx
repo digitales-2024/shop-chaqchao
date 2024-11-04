@@ -18,7 +18,7 @@ interface OrderDisplayProps {
 export const OrderDetail = ({ order }: OrderDisplayProps) => {
   return (
     <div className="flex h-full flex-col">
-      <div className="flex items-center p-2">
+      <div className="flex w-full items-center justify-end p-2">
         <Separator orientation="vertical" className="mx-2 h-6" />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
