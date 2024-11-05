@@ -45,7 +45,7 @@ export const CartItem = React.forwardRef<HTMLDivElement, CartItemProps>(
                 <h2 className="truncate text-balance text-start font-nunito text-2xl font-bold capitalize">
                   {product.name}
                 </h2>
-                <div className="flex w-full flex-row justify-between">
+                <div className="flex w-full flex-row items-center justify-between">
                   <p className="font-commingSoon text-3xl font-semibold">
                     S/. {product.price}
                   </p>

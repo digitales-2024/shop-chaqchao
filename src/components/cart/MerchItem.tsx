@@ -3,6 +3,7 @@ import Image from "next/image";
 
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 
+import { Badge } from "../ui/badge";
 import { AddToCartButton } from "./AddToCartButton";
 
 interface MerchItemProps {
@@ -23,20 +24,20 @@ export const MerchItem = ({ product }: MerchItemProps) => {
             quality={100}
           />
         </div>
-        <div className="grid h-full w-full grid-rows-[auto_1fr_30px] gap-4 px-6 text-center">
-          <h2 className="text-balance text-start text-xs font-semibold capitalize text-secondary/50">
+        <div className="grid h-full w-full grid-rows-[auto_1fr_30px] justify-items-start gap-4 px-6">
+          <Badge className="border-primary capitalize" variant="outline">
             {product.category.name}
-          </h2>
+          </Badge>
           <h2 className="text-balance text-start text-lg font-bold capitalize">
             {product.name}
           </h2>
-          <p className="font-commingSoon text-3xl font-semibold">
-            S/ {product.price}
-          </p>
         </div>
       </CardContent>
-      <CardFooter className="flex h-full w-full items-center justify-center">
-        <AddToCartButton />
+      <CardFooter className="flex h-full w-full items-center justify-between">
+        <p className="font-commingSoon text-3xl font-semibold">
+          S/ {product.price}
+        </p>
+        <AddToCartButton product={product} />
       </CardFooter>
     </Card>
   );

@@ -75,6 +75,7 @@ export const ProductDialog = ({ product }: ProductDialogProps) => {
                   className="rounded-full bg-gray-200 p-1"
                   onClick={decrementQuantity}
                   disabled={!product.isAvailable}
+                  aria-label="decrement quantity"
                 >
                   <Minus className="h-4 w-4 text-gray-600" />
                 </motion.button>
@@ -89,6 +90,7 @@ export const ProductDialog = ({ product }: ProductDialogProps) => {
                 <motion.button
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
+                  aria-label="increment quantity"
                   className="rounded-full bg-gray-200 p-1"
                   onClick={incrementQuantity}
                   disabled={!product.isAvailable}

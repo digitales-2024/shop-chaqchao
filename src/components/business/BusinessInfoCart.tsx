@@ -101,7 +101,7 @@ export const BusinessInfoCart = () => {
               <MapPin className="size-5 shrink-0" />
               {businessInfo.address}
             </p>
-            <p className="mb-4">
+            <div className="mb-4">
               <span className="font-black">{t("schedule")}</span>
               <div className="flex flex-col gap-2">
                 {businessHours &&
@@ -118,7 +118,7 @@ export const BusinessInfoCart = () => {
                     ),
                   )}
               </div>
-            </p>
+            </div>
             <a
               href={`https://www.google.com/maps/dir/?api=1&destination=${direction}`}
               target="_blank"
