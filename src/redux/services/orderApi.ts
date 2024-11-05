@@ -3,7 +3,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import baseQueryWithReauth from "./baseQuery";
 
 export const orderApi = createApi({
-  reducerPath: "OrderApi",
+  reducerPath: "orderApi",
   baseQuery: baseQueryWithReauth,
   tagTypes: ["Orders"],
   endpoints: (build) => ({
