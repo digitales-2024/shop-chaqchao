@@ -1,6 +1,5 @@
 "use client";
 import { Product } from "@/types";
-import { AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import React, { useState } from "react";
 
@@ -56,9 +55,7 @@ export const CartItem = React.forwardRef<HTMLDivElement, CartItemProps>(
             </Card>
           </DialogTrigger>
 
-          <AnimatePresence>
-            <ProductDialog product={product} />
-          </AnimatePresence>
+          {isDialogOpen && <ProductDialog product={product} />}
         </Dialog>
       </div>
     );
