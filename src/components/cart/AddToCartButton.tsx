@@ -1,5 +1,6 @@
 "use client";
 
+import useCartStore from "@/redux/store/cart";
 import { Product } from "@/types";
 import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingCart, Check } from "lucide-react";
@@ -16,34 +17,22 @@ interface AddToCartButtonProps {
 export function AddToCartButton({ product }: AddToCartButtonProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [isAdded, setIsAdded] = useState(false);
-  const [cart, setCart] = useState<Product[]>([]);
+
+  const { addItemToCart } = useCartStore();
 
   const handleAddToCart = async () => {
     if (isLoading || isAdded) return;
-
+    // Simular una carga de 1 segundo
     setIsLoading(true);
-    try {
-      // Simular una llamada a API
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    setIsLoading(false);
+    setIsAdded(true);
+    addItemToCart(product);
 
-      setIsAdded(true);
-      setCart([...cart, product]);
-      // toast({
-      //   title: "Producto añadido",
-      //   description: "El artículo se ha añadido a tu carrito.",
-      // });
-
-      // Resetear el estado después de 2 segundos
-      setTimeout(() => setIsAdded(false), 2000);
-    } catch (error) {
-      // toast({
-      //   title: "Error",
-      //   description: "No se pudo añadir el producto al carrito.",
-      //   variant: "destructive",
-      // });
-    } finally {
-      setIsLoading(false);
-    }
+    // Reiniciar el estado después de 2 segundos
+    setTimeout(() => {
+      setIsAdded(false);
+    }, 1000);
   };
 
   return (
