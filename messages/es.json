@@ -151,5 +151,21 @@
       "adults": "Adultos",
       "children": "Niños"
     }
+  },
+  "business": {
+    "buttonOpen": "Ver ubicación de recogida",
+    "buttonClose": "Ocultar ubicación",
+    "address": "Punto de recogida",
+    "schedule": "Horario",
+    "see": "Ver como llegar",
+    "days": {
+      "MONDAY": "Lunes",
+      "TUESDAY": "Martes",
+      "WEDNESDAY": "Miercoles",
+      "THURSDAY": "Jueves",
+      "FRIDAY": "Viernes",
+      "SATURDAY": "Sábado",
+      "SUNDAY": "Domingo"
+    }
   }
 }

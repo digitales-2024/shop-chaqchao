@@ -157,5 +157,21 @@
       "adults": "Adults",
       "children": "Children"
     }
+  },
+  "business": {
+    "buttonOpen": "View collection point",
+    "buttonClose": "Hide location",
+    "address": "Collection point",
+    "schedule": "Schedule",
+    "see": "See how to get there",
+    "days": {
+      "SUNDAY": "Sunday",
+      "MONDAY": "Monday",
+      "TUESDAY": "Tuesday",
+      "WEDNESDAY": "Wednesday",
+      "THURSDAY": "Thursday",
+      "FRIDAY": "Friday",
+      "SATURDAY": "Saturday"
+    }
   }
 }
