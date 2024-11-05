@@ -173,5 +173,12 @@
       "FRIDAY": "Friday",
       "SATURDAY": "Saturday"
     }
+  },
+  "cart": {
+    "title": "My cart",
+    "empty": {
+      "title": "Your cart is empty",
+      "description": "Explore our products and find what you need!"
+    }
   }
 }

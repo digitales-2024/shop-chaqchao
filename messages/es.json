@@ -167,5 +167,12 @@
       "SATURDAY": "Sábado",
       "SUNDAY": "Domingo"
     }
+  },
+  "cart": {
+    "title": "Mi carrito",
+    "empty": {
+      "title": "Tu carrito está vacío",
+      "description": "¡Explora nuestros productos y encuentra lo que necesitas!"
+    }
   }
 }
