@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useState } from "react";
 
+import { BusinessInfoCart } from "../business/BusinessInfoCart";
 import { Button } from "../ui/button";
 import {
   DialogContent,
@@ -12,7 +13,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../ui/dialog";
-import { Input } from "../ui/input";
 import { ScrollArea } from "../ui/scroll-area";
 import { Separator } from "../ui/separator";
 
@@ -30,9 +30,9 @@ export const ProductDialog = ({ product }: ProductDialogProps) => {
   const t = useTranslations("cartItem");
 
   return (
-    <DialogContent className="max-h-[90vh] overflow-hidden border sm:max-w-[90vw] md:max-w-[80vw] lg:max-w-[1000px]">
-      <ScrollArea className="max-h-[90vh]">
-        <div className="grid gap-x-10 md:grid-cols-2">
+    <DialogContent className="h-full max-h-[90vh] overflow-hidden border sm:max-w-[90vw] md:max-w-[80vw] lg:max-w-[1000px]">
+      <ScrollArea className="h-full max-h-[90vh]">
+        <div className="grid h-full gap-x-10 md:grid-cols-2">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -67,36 +67,39 @@ export const ProductDialog = ({ product }: ProductDialogProps) => {
                 <span className="text-3xl font-bold">
                   S/. {product.price.toFixed(2)}
                 </span>
-              </div>
-              <div className="flex items-center space-x-4">
-                <Button
-                  variant="outline"
-                  size="icon"
+              </div>{" "}
+              <div className="flex items-center space-x-2">
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  className="rounded-full bg-gray-200 p-1"
                   onClick={decrementQuantity}
-                  aria-label="Disminuir cantidad"
+                  disabled={!product.isAvailable}
                 >
-                  <Minus className="h-4 w-4" />
-                </Button>
-                <Input
-                  type="number"
-                  min="1"
-                  value={quantity}
-                  onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
-                  className="w-20 text-center"
-                  aria-label="Cantidad"
-                />
-                <Button
-                  variant="outline"
-                  size="icon"
+                  <Minus className="h-4 w-4 text-gray-600" />
+                </motion.button>
+                <motion.span
+                  key={quantity}
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="w-8 text-center text-lg font-semibold"
+                >
+                  {quantity}
+                </motion.span>
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  className="rounded-full bg-gray-200 p-1"
                   onClick={incrementQuantity}
-                  aria-label="Aumentar cantidad"
+                  disabled={!product.isAvailable}
                 >
-                  <Plus className="h-4 w-4" />
-                </Button>
+                  <Plus className="h-4 w-4 text-gray-600" />
+                </motion.button>
               </div>
               <div className="flex space-x-4">
                 <Button className="flex-1 bg-primary text-black transition-colors duration-300 hover:bg-primary/80">
-                  <ShoppingBag className="mr-2 h-4 w-4" /> {t("addToCart")}
+                  <ShoppingBag className="mr-2 h-4 w-4" /> {t("addToCart")} (
+                  {quantity})
                 </Button>
               </div>
             </motion.div>
@@ -111,17 +114,7 @@ export const ProductDialog = ({ product }: ProductDialogProps) => {
               </h3>
               <p className="text-sm text-gray-600">{product.description}</p>
             </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className="text-sm text-gray-600"
-            >
-              <h4 className="mb-2 font-semibold text-gray-800">
-                Envío y devoluciones
-              </h4>
-              <p>a</p>
-            </motion.div>
+            <BusinessInfoCart />
           </div>
         </div>
       </ScrollArea>
