@@ -1,5 +1,6 @@
 "use client";
 import { Product } from "@/types";
+import { ShoppingBag } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
 
@@ -49,7 +50,13 @@ export const CartItem = React.forwardRef<HTMLDivElement, CartItemProps>(
                   <p className="font-commingSoon text-3xl font-semibold">
                     S/. {product.price}
                   </p>
-                  <AddToCartButton product={product} />
+                  <AddToCartButton
+                    product={product}
+                    size="icon"
+                    className="group/add transition-all duration-300 hover:scale-105"
+                  >
+                    <ShoppingBag className="group-hover/add:animate-tada" />
+                  </AddToCartButton>
                 </div>
               </CardFooter>
             </Card>
