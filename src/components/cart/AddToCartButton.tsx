@@ -13,6 +13,7 @@ interface AddToCartButtonProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof buttonVariants> {
   product: Product;
+  quantity?: number;
   asChild?: boolean;
 }
 
@@ -46,13 +47,16 @@ const buttonVariants = cva(
 );
 
 const AddToCartButton = React.forwardRef<HTMLDivElement, AddToCartButtonProps>(
-  ({ className, product, variant, size, asChild = false, ...props }, ref) => {
+  (
+    { className, product, quantity, variant, size, asChild = false, ...props },
+    ref,
+  ) => {
     const { addItemToCart } = useCartStore();
     const { onOpenChange } = useCartSheet();
 
     const handleAddToCart = async () => {
       onOpenChange();
-      addItemToCart(product);
+      addItemToCart(product, quantity);
     };
 
     const Comp = asChild ? Slot : "div";
