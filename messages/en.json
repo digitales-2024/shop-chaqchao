@@ -176,6 +176,11 @@
   },
   "cart": {
     "title": "My cart",
+    "description": {
+      "pre": "You have",
+      "product": "product",
+      "post": "in your cart"
+    },
     "empty": {
       "title": "Your cart is empty",
       "description": "Explore our products and find what you need!"

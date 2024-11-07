@@ -170,6 +170,11 @@
   },
   "cart": {
     "title": "Mi carrito",
+    "description": {
+      "pre": "Tienes",
+      "product": "producto",
+      "post": "en tu carrito"
+    },
     "empty": {
       "title": "Tu carrito está vacío",
       "description": "¡Explora nuestros productos y encuentra lo que necesitas!"
