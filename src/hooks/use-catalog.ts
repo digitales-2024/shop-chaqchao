@@ -1,4 +1,5 @@
 import {
+  useGetMerchQuery,
   useGetProductsFiltersQuery,
   useGetProductsRecommendByClientQuery,
   useGetProductsRecommendQuery,
@@ -16,6 +17,9 @@ export const useCatalog = (
 ) => {
   const { data: productRecommend, isLoading: isLoadingProductRecommend } =
     useGetProductsRecommendQuery();
+
+  const { data: productMerch, isLoading: isLoadingProductMerch } =
+    useGetMerchQuery();
 
   const {
     data: productRecommendByClient,
@@ -54,5 +58,7 @@ export const useCatalog = (
     isErrorProductFilters,
     isSuccessProductFilters,
     errorProductFilters,
+    productMerch,
+    isLoadingProductMerch,
   };
 };
