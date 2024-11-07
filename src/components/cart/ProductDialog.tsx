@@ -6,7 +6,6 @@ import Image from "next/image";
 import { useState } from "react";
 
 import { BusinessInfoCart } from "../business/BusinessInfoCart";
-import { Button } from "../ui/button";
 import {
   DialogContent,
   DialogDescription,
@@ -15,6 +14,7 @@ import {
 } from "../ui/dialog";
 import { ScrollArea } from "../ui/scroll-area";
 import { Separator } from "../ui/separator";
+import { AddToCartButton } from "./AddToCartButton";
 
 interface ProductDialogProps {
   product: Product;
@@ -68,11 +68,11 @@ export const ProductDialog = ({ product }: ProductDialogProps) => {
                   S/. {product.price.toFixed(2)}
                 </span>
               </div>{" "}
-              <div className="flex items-center space-x-2">
+              <div className="flex w-fit items-center space-x-2 rounded-full border border-neutral-200">
                 <motion.button
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
-                  className="rounded-full bg-gray-200 p-1"
+                  className="ease flex h-full min-w-[36px] max-w-[36px] flex-none items-center justify-center rounded-full p-2 transition-all duration-200 hover:border-neutral-800 hover:opacity-80"
                   onClick={decrementQuantity}
                   disabled={!product.isAvailable}
                   aria-label="decrement quantity"
@@ -91,7 +91,7 @@ export const ProductDialog = ({ product }: ProductDialogProps) => {
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                   aria-label="increment quantity"
-                  className="rounded-full bg-gray-200 p-1"
+                  className="ease flex h-full min-w-[36px] max-w-[36px] flex-none items-center justify-center rounded-full p-2 transition-all duration-200 hover:border-neutral-800 hover:opacity-80"
                   onClick={incrementQuantity}
                   disabled={!product.isAvailable}
                 >
@@ -99,10 +99,14 @@ export const ProductDialog = ({ product }: ProductDialogProps) => {
                 </motion.button>
               </div>
               <div className="flex space-x-4">
-                <Button className="flex-1 bg-primary text-black transition-colors duration-300 hover:bg-primary/80">
-                  <ShoppingBag className="mr-2 h-4 w-4" /> {t("addToCart")} (
-                  {quantity})
-                </Button>
+                <AddToCartButton
+                  product={product}
+                  quantity={quantity}
+                  className="text-md w-full"
+                >
+                  <ShoppingBag />
+                  {t("addToCart")} ({quantity})
+                </AddToCartButton>
               </div>
             </motion.div>
             <motion.div
