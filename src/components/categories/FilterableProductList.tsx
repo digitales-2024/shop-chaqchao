@@ -17,6 +17,7 @@ import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import { ScrollArea } from "../ui/scroll-area";
 import { Slider } from "../ui/slider";
 import { Switch } from "../ui/switch";
 
@@ -140,149 +141,156 @@ export const FilterableProductList = ({
   return (
     <>
       {/* Filtros por Categoría y Precio */}
-      <Accordion
-        type="multiple"
-        value={openAccordionItems}
-        onValueChange={setOpenAccordionItems}
-        className="w-full"
-      >
-        <AccordionItem value="item-1">
-          <AccordionTrigger className="font-nunito text-lg font-extrabold">
-            {t("filters.categories")}
-          </AccordionTrigger>
-          <AccordionContent>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="space-y-4"
-            >
-              {Array.from(new Set(dataCategories.map((p) => p.name))).map(
-                (category) => (
-                  <motion.div
-                    key={category}
-                    className="mb-2 flex items-center space-x-2"
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <Checkbox
-                      id={`category-${category}`}
-                      checked={filters.categoryName === category}
-                      aria-label={category}
-                      onCheckedChange={
-                        filters.categoryName === category
-                          ? () => handleFilterChange("categoryName", "")
-                          : () => handleFilterChange("categoryName", category)
-                      }
-                    />
-                    <Label
-                      htmlFor={`category-${category}`}
-                      className="capitalize"
+      <ScrollArea className="h-[90vh]">
+        <Accordion
+          type="multiple"
+          value={openAccordionItems}
+          onValueChange={setOpenAccordionItems}
+          className="w-full"
+        >
+          <AccordionItem value="item-1">
+            <AccordionTrigger className="font-nunito text-lg font-extrabold">
+              {t("filters.categories")}
+            </AccordionTrigger>
+            <AccordionContent>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="space-y-4"
+              >
+                {Array.from(new Set(dataCategories.map((p) => p.name))).map(
+                  (category) => (
+                    <motion.div
+                      key={category}
+                      className="mb-2 flex items-center space-x-2"
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3 }}
                     >
-                      {category}
-                    </Label>
-                  </motion.div>
-                ),
-              )}
-            </motion.div>
-          </AccordionContent>
-        </AccordionItem>
-        <AccordionItem value="item-2">
-          <AccordionTrigger className="font-nunito text-lg font-extrabold">
-            {t("filters.price")}
-          </AccordionTrigger>
-          <AccordionContent>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="flex flex-col gap-6 px-2 py-5"
-            >
-              <AnimatePresence mode="wait">
-                {isPreciseInput ? (
-                  <motion.div
-                    key="precise-input"
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.2 }}
-                    className="flex items-center space-x-2"
-                  >
-                    <div className="relative">
-                      S/.
-                      <Input
-                        aria-label="Precio mínimo"
-                        type="text"
-                        className="pl-7"
-                        value={filters.priceMin}
-                        onChange={handleMinPriceChange}
+                      <Checkbox
+                        id={`category-${category}`}
+                        checked={filters.categoryName === category}
+                        aria-label={category}
+                        onCheckedChange={
+                          filters.categoryName === category
+                            ? () => handleFilterChange("categoryName", "")
+                            : () => handleFilterChange("categoryName", category)
+                        }
                       />
-                    </div>
-                    <span>-</span>
-                    <div className="relative">
-                      S/.
-                      <Input
-                        aria-label="Precio máximo"
-                        type="text"
-                        className="pl-7"
-                        value={filters.priceMax}
-                        onChange={handleMaxPriceChange}
-                      />
-                    </div>
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="slider"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <Slider
-                      min={PRICES.min}
-                      max={PRICES.max}
-                      step={0.5}
-                      className="text-primary"
-                      value={
-                        filters.priceMin === undefined ||
-                        filters.priceMax === undefined
-                          ? [PRICES.min, PRICES.max]
-                          : [Number(filters.priceMin), Number(filters.priceMax)]
-                      }
-                      onValueChange={(value) => {
-                        handleFilterChange("priceMin", value[0]);
-                        handleFilterChange("priceMax", value[1]);
-                      }}
-                    />
-                    <div className="mt-2 flex justify-between text-sm">
-                      <span>
-                        S/. {Number(filters.priceMin || PRICES.min).toFixed(2)}
-                      </span>
-                      <span>
-                        S/. {Number(filters.priceMax || PRICES.max).toFixed(2)}
-                      </span>
-                    </div>
-                  </motion.div>
+                      <Label
+                        htmlFor={`category-${category}`}
+                        className="capitalize"
+                      >
+                        {category}
+                      </Label>
+                    </motion.div>
+                  ),
                 )}
-              </AnimatePresence>
-              <div className="flex items-center justify-end space-x-2">
-                <Label htmlFor="price-range-toggle" className="text-xs">
-                  {t("filters.preciseInput")}
-                </Label>
-                <Switch
-                  aria-label="Toggle precise input"
-                  id="price-range-toggle"
-                  checked={isPreciseInput}
-                  onCheckedChange={handlePreciseInputToggle}
-                />
-              </div>
-            </motion.div>
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
+              </motion.div>
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-2">
+            <AccordionTrigger className="font-nunito text-lg font-extrabold">
+              {t("filters.price")}
+            </AccordionTrigger>
+            <AccordionContent>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="flex flex-col gap-6 px-2 py-5"
+              >
+                <AnimatePresence mode="wait">
+                  {isPreciseInput ? (
+                    <motion.div
+                      key="precise-input"
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.2 }}
+                      className="flex items-center space-x-2"
+                    >
+                      <div className="relative">
+                        S/.
+                        <Input
+                          aria-label="Precio mínimo"
+                          type="text"
+                          className="pl-7"
+                          value={filters.priceMin}
+                          onChange={handleMinPriceChange}
+                        />
+                      </div>
+                      <span>-</span>
+                      <div className="relative">
+                        S/.
+                        <Input
+                          aria-label="Precio máximo"
+                          type="text"
+                          className="pl-7"
+                          value={filters.priceMax}
+                          onChange={handleMaxPriceChange}
+                        />
+                      </div>
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="slider"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <Slider
+                        min={PRICES.min}
+                        max={PRICES.max}
+                        step={0.5}
+                        className="text-primary"
+                        value={
+                          filters.priceMin === undefined ||
+                          filters.priceMax === undefined
+                            ? [PRICES.min, PRICES.max]
+                            : [
+                                Number(filters.priceMin),
+                                Number(filters.priceMax),
+                              ]
+                        }
+                        onValueChange={(value) => {
+                          handleFilterChange("priceMin", value[0]);
+                          handleFilterChange("priceMax", value[1]);
+                        }}
+                      />
+                      <div className="mt-2 flex justify-between text-sm">
+                        <span>
+                          S/.{" "}
+                          {Number(filters.priceMin || PRICES.min).toFixed(2)}
+                        </span>
+                        <span>
+                          S/.{" "}
+                          {Number(filters.priceMax || PRICES.max).toFixed(2)}
+                        </span>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+                <div className="flex items-center justify-end space-x-2">
+                  <Label htmlFor="price-range-toggle" className="text-xs">
+                    {t("filters.preciseInput")}
+                  </Label>
+                  <Switch
+                    aria-label="Toggle precise input"
+                    id="price-range-toggle"
+                    checked={isPreciseInput}
+                    onCheckedChange={handlePreciseInputToggle}
+                  />
+                </div>
+              </motion.div>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+      </ScrollArea>
 
       {/* Botón para Limpiar Filtros */}
       {Object.keys(filters).length < 1 ? null : (
