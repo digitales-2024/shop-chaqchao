@@ -151,5 +151,33 @@
       "adults": "Adultos",
       "children": "Niños"
     }
+  },
+  "business": {
+    "buttonOpen": "Ver ubicación de recogida",
+    "buttonClose": "Ocultar ubicación",
+    "address": "Punto de recogida",
+    "schedule": "Horario",
+    "see": "Ver como llegar",
+    "days": {
+      "MONDAY": "Lunes",
+      "TUESDAY": "Martes",
+      "WEDNESDAY": "Miercoles",
+      "THURSDAY": "Jueves",
+      "FRIDAY": "Viernes",
+      "SATURDAY": "Sábado",
+      "SUNDAY": "Domingo"
+    }
+  },
+  "cart": {
+    "title": "Mi carrito",
+    "description": {
+      "pre": "Tienes",
+      "product": "producto",
+      "post": "en tu carrito"
+    },
+    "empty": {
+      "title": "Tu carrito está vacío",
+      "description": "¡Explora nuestros productos y encuentra lo que necesitas!"
+    }
   }
 }

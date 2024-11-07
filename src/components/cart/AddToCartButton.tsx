@@ -1,100 +1,78 @@
 "use client";
 
+import useCartSheet from "@/hooks/use-cart-sheet";
+import useCartStore from "@/redux/store/cart";
 import { Product } from "@/types";
-import { motion, AnimatePresence } from "framer-motion";
-import { ShoppingCart, Check } from "lucide-react";
-import { useState } from "react";
-
-import { buttonVariants } from "@/components/ui/button";
+import { Slot } from "@radix-ui/react-slot";
+import { cva, VariantProps } from "class-variance-authority";
+import React from "react";
 
 import { cn } from "@/lib/utils";
 
-interface AddToCartButtonProps {
+interface AddToCartButtonProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof buttonVariants> {
   product: Product;
+  quantity?: number;
+  asChild?: boolean;
 }
 
-export function AddToCartButton({ product }: AddToCartButtonProps) {
-  const [isLoading, setIsLoading] = useState(false);
-  const [isAdded, setIsAdded] = useState(false);
-  const [cart, setCart] = useState<Product[]>([]);
+const buttonVariants = cva(
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 cursor-pointer",
+  {
+    variants: {
+      variant: {
+        default: "bg-primary text-black hover:bg-primary/90",
+        destructive:
+          "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+        outline:
+          "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+        secondary:
+          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        ghost: "hover:bg-accent hover:text-accent-foreground",
+        link: "text-primary underline-offset-4 hover:underline",
+      },
+      size: {
+        default: "h-10 px-4 py-2",
+        sm: "h-9 rounded-md px-3",
+        lg: "h-11 rounded-md px-8",
+        icon: "h-10 w-10",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+      size: "default",
+    },
+  },
+);
 
-  const handleAddToCart = async () => {
-    if (isLoading || isAdded) return;
+const AddToCartButton = React.forwardRef<HTMLDivElement, AddToCartButtonProps>(
+  (
+    { className, product, quantity, variant, size, asChild = false, ...props },
+    ref,
+  ) => {
+    const { addItemToCart } = useCartStore();
+    const { onOpenChange } = useCartSheet();
 
-    setIsLoading(true);
-    try {
-      // Simular una llamada a API
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+    const handleAddToCart = async () => {
+      onOpenChange();
+      addItemToCart(product, quantity);
+    };
 
-      setIsAdded(true);
-      setCart([...cart, product]);
-      // toast({
-      //   title: "Producto añadido",
-      //   description: "El artículo se ha añadido a tu carrito.",
-      // });
+    const Comp = asChild ? Slot : "div";
+    return (
+      <Comp
+        onClick={(e) => {
+          e.stopPropagation();
+          handleAddToCart();
+        }}
+        className={cn(buttonVariants({ variant, size, className }))}
+        ref={ref}
+        {...props}
+      />
+    );
+  },
+);
+AddToCartButton.displayName = "AddToCartButton";
 
-      // Resetear el estado después de 2 segundos
-      setTimeout(() => setIsAdded(false), 2000);
-    } catch (error) {
-      // toast({
-      //   title: "Error",
-      //   description: "No se pudo añadir el producto al carrito.",
-      //   variant: "destructive",
-      // });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  return (
-    <div
-      onClick={(e) => {
-        e.stopPropagation();
-        handleAddToCart();
-      }}
-      className={cn(
-        buttonVariants({ variant: "default", size: "icon" }),
-        "relative inline-flex size-14 items-center justify-center overflow-hidden rounded-2xl transition-colors duration-300",
-        {
-          "border-none bg-green-600": isAdded,
-        },
-      )}
-    >
-      <AnimatePresence mode="wait">
-        {isLoading && (
-          <motion.div
-            key="loading"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="absolute flex items-center justify-center"
-          >
-            <ShoppingCart className="h-5 w-5 animate-bounce" />
-          </motion.div>
-        )}
-        {isAdded && (
-          <motion.div
-            key="added"
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.5 }}
-            className="absolute inset-0 flex items-center justify-center text-white"
-          >
-            <Check className="h-5 w-5" />
-          </motion.div>
-        )}
-        {!isLoading && !isAdded && (
-          <motion.div
-            key="default"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="flex items-center justify-center"
-          >
-            <ShoppingCart className="h-5 w-5" />
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-}
+export { AddToCartButton };

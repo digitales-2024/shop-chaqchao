@@ -14,7 +14,7 @@ import { LineTitle } from "@/components/common/LineTitle";
 
 import { SearchProducts } from "./SearchProduts";
 
-const MotionCard = motion(CartItem);
+const MotionCard = motion.create(CartItem);
 
 export const ProductsFilters = () => {
   const [filters, setFilters] = useState<Filters>({});

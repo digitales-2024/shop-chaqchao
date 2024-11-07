@@ -1,6 +1,6 @@
 "use client";
 import { Product } from "@/types";
-import { AnimatePresence } from "framer-motion";
+import { ShoppingBag } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
 
@@ -46,19 +46,23 @@ export const CartItem = React.forwardRef<HTMLDivElement, CartItemProps>(
                 <h2 className="truncate text-balance text-start font-nunito text-2xl font-bold capitalize">
                   {product.name}
                 </h2>
-                <div className="flex w-full flex-row justify-between">
+                <div className="flex w-full flex-row items-center justify-between">
                   <p className="font-commingSoon text-3xl font-semibold">
                     S/. {product.price}
                   </p>
-                  <AddToCartButton product={product} />
+                  <AddToCartButton
+                    product={product}
+                    size="icon"
+                    className="group/add transition-all duration-300 hover:scale-105"
+                  >
+                    <ShoppingBag className="group-hover/add:animate-tada" />
+                  </AddToCartButton>
                 </div>
               </CardFooter>
             </Card>
           </DialogTrigger>
 
-          <AnimatePresence>
-            <ProductDialog product={product} />
-          </AnimatePresence>
+          {isDialogOpen && <ProductDialog product={product} />}
         </Dialog>
       </div>
     );
