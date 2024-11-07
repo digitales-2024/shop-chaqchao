@@ -1,4 +1,5 @@
 "use client";
+import useCartSheet from "@/hooks/use-cart-sheet";
 import useCartStore from "@/redux/store/cart";
 import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingBag } from "lucide-react";
@@ -36,8 +37,10 @@ export function CartSheet() {
 
   const t = useTranslations("cart");
 
+  const { open, onOpenChange } = useCartSheet();
+
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetTrigger asChild>
         <div className="group/cart relative flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full hover:bg-background">
           <span className="sr-only">Abrir carrito de pedidos</span>
