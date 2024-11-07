@@ -36,9 +36,9 @@ const FeaturedHeader: React.FC<FeaturedHeaderProps> = ({ children }) => {
 };
 
 export const Featured = () => {
-  const { productRecommend, isLoadingProductRecommend } = useCatalog();
+  const { productMerch, isLoadingProductMerch } = useCatalog();
 
-  if (isLoadingProductRecommend || !productRecommend) {
+  if (isLoadingProductMerch || !productMerch) {
     return (
       <FeaturedHeader>
         {[...Array(4)].map((_, index) => (
@@ -50,7 +50,7 @@ export const Featured = () => {
 
   return (
     <FeaturedHeader>
-      {productRecommend.map((product, index) => (
+      {productMerch.map((product, index) => (
         <MerchItem key={index} product={product} />
       ))}
     </FeaturedHeader>

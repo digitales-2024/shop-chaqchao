@@ -49,7 +49,7 @@ export const ProductsFilters = () => {
       </div>
       <SearchProducts filters={filters} setFilters={setFilters} />
       <div className="flex flex-col lg:flex-row">
-        <aside className="sticky top-32 hidden max-h-screen self-start overflow-y-auto lg:block lg:w-1/4 lg:pr-8">
+        <aside className="sticky top-28 hidden max-h-screen self-start lg:block lg:w-1/4 lg:pr-8">
           <FilterableProductList filters={filters} setFilters={setFilters} />
         </aside>
         <main className="flex-1">

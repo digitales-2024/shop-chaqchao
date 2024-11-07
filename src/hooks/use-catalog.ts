@@ -1,8 +1,11 @@
 import {
+  useGetMerchQuery,
   useGetProductsFiltersQuery,
   useGetProductsRecommendByClientQuery,
   useGetProductsRecommendQuery,
 } from "@/redux/services/catalogApi";
+import { socket } from "@/socket/socket";
+import { useEffect } from "react";
 
 import { Filters } from "@/components/categories/FilterableProductList";
 
@@ -14,12 +17,22 @@ interface CatalogProps {
 export const useCatalog = (
   { id, filters }: CatalogProps = { id: "", filters: {} },
 ) => {
-  const { data: productRecommend, isLoading: isLoadingProductRecommend } =
-    useGetProductsRecommendQuery();
+  const {
+    data: productRecommend,
+    isLoading: isLoadingProductRecommend,
+    refetch: refetchProductRecommend,
+  } = useGetProductsRecommendQuery();
+
+  const {
+    data: productMerch,
+    isLoading: isLoadingProductMerch,
+    refetch: refetchProductMerch,
+  } = useGetMerchQuery();
 
   const {
     data: productRecommendByClient,
     isLoading: isLoadingProductRecommendByClient,
+    refetch: refetchProductRecommendByClient,
   } = useGetProductsRecommendByClientQuery(
     {
       id: id || "",
@@ -35,6 +48,7 @@ export const useCatalog = (
     isError: isErrorProductFilters,
     isSuccess: isSuccessProductFilters,
     error: errorProductFilters,
+    refetch: refetchProductFilters,
   } = useGetProductsFiltersQuery(
     {
       filters: filters as Filters,
@@ -43,6 +57,42 @@ export const useCatalog = (
       skip: !filters,
     },
   );
+
+  // Manejo de eventos de socket
+
+  useEffect(() => {
+    const handleProducts = () => {
+      if (productRecommend) {
+        refetchProductRecommend();
+      }
+      if (productRecommendByClient) {
+        refetchProductRecommendByClient();
+      }
+
+      if (productMerch) {
+        refetchProductMerch();
+      }
+
+      if (productFilters) {
+        refetchProductFilters();
+      }
+    };
+
+    socket.on("product-availability-updated", handleProducts);
+
+    return () => {
+      socket.off("product-availability-updated", handleProducts);
+    };
+  }, [
+    productRecommend,
+    refetchProductRecommend,
+    productRecommendByClient,
+    refetchProductRecommendByClient,
+    productMerch,
+    refetchProductMerch,
+    productFilters,
+    refetchProductFilters,
+  ]);
 
   return {
     productRecommend,
@@ -54,5 +104,7 @@ export const useCatalog = (
     isErrorProductFilters,
     isSuccessProductFilters,
     errorProductFilters,
+    productMerch,
+    isLoadingProductMerch,
   };
 };

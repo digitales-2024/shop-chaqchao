@@ -24,6 +24,11 @@ export const catalogApi = createApi({
         `/catalog/products?${new URLSearchParams(filters as string)}`,
       providesTags: ["Catalog"],
     }),
+
+    getMerch: build.query<Product[], void>({
+      query: () => "/catalog/merch",
+      providesTags: ["Catalog"],
+    }),
   }),
 });
 
@@ -31,4 +36,5 @@ export const {
   useGetProductsRecommendQuery,
   useGetProductsRecommendByClientQuery,
   useGetProductsFiltersQuery,
+  useGetMerchQuery,
 } = catalogApi;
