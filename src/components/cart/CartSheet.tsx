@@ -60,9 +60,11 @@ export function CartSheet() {
             {cartItems.length === 0 ? (
               <CartEmpty />
             ) : (
-              `Tienes ${cartItems.length} ${
-                cartItems.length === 1 ? "producto" : "productos"
-              } en tu carrito`
+              <>
+                {t("description.pre")} {cartItems.length}{" "}
+                {t("description.product")}
+                {cartItems.length === 1 ? "" : "s"} {t("description.post")}
+              </>
             )}
           </SheetDescription>
         </SheetHeader>
