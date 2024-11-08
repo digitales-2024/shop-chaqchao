@@ -199,7 +199,11 @@
       "date": "Selecciona la fecha de recogida",
       "hour": "Selecciona la hora de recogida",
       "label": "Recogerás tu pedido el",
-      "buttonDate": "Confirmar fecha"
+      "buttonDate": "Confirmar fecha",
+      "messages": {
+        "date": "Por favor selecciona una fecha",
+        "hour": "Por favor selecciona una hora"
+      }
     },
     "invoice": {
       "RECEIPT": "Boleta",

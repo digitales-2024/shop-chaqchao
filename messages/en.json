@@ -205,7 +205,11 @@
       "date": "Select the date of collection",
       "hour": "Select the time of collection",
       "label": "You will pick up your order on",
-      "buttonDate": "Confirm date"
+      "buttonDate": "Confirm date",
+      "messages": {
+        "date": "The date is required",
+        "hour": "The hour is required"
+      }
     },
     "invoice": {
       "RECEIPT": "Receipt",
