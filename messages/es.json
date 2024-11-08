@@ -212,7 +212,13 @@
       "doc": "Número de documento",
       "address": "Dirección",
       "name": "Nombre o razon social",
-      "button": "Continuar"
+      "button": "Continuar",
+      "errors": {
+        "typeDoc": "El tipo de documento es requerido",
+        "number": "El número de documento es requerido",
+        "dni": "El número de documento debe tener al menos 8 caracteres",
+        "ruc": "El número de documento debe tener al menos 11 caracteres"
+      }
     }
   }
 }

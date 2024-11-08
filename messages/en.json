@@ -218,7 +218,13 @@
       "doc": "Document number",
       "address": "Address",
       "name": "Name or business name",
-      "button": "Continue"
+      "button": "Continue",
+      "errors": {
+        "typeDoc": "The type of document is required",
+        "number": "The document number is required",
+        "dni": "The document number must have at least 8 digits",
+        "ruc": "The document number must have at least 11 digits"
+      }
     }
   }
 }
