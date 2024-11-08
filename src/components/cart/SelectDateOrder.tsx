@@ -140,7 +140,7 @@ export const SelectDateOrder = () => {
           <p className="text-sm text-muted-foreground">
             {t("label")}{" "}
             {format(fullDate, "PPPp", {
-              locale: es,
+              locale: lang === "es" ? es : undefined,
             })}
           </p>
         )}
