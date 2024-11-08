@@ -11,5 +11,5 @@ export const useBusiness = () => {
     return data ?? ({} as Business);
   }, [isLoading, data]);
 
-  return { business };
+  return { business, isLoading };
 };
