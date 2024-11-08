@@ -58,7 +58,6 @@ export default function ResetPasswordPage() {
     const checkToken = () => {
       if (token) {
         const decodedToken = decodeToken(token as string);
-        console.log(decodedToken);
         if (decodedToken) {
           const currentTime = Math.floor(Date.now() / 1000);
           const expirationTime = decodedToken.exp;

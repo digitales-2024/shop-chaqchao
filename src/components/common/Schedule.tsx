@@ -25,10 +25,6 @@ const BusinessSchedule: React.FC = () => {
   } | null>(null);
 
   useEffect(() => {
-    socket.on("connect", () => {
-      console.log("Conectado al WebSocket");
-    });
-
     socket.on(
       "business-schedule-updated",
       (data: { businessId: string; isOpen: boolean }) => {
@@ -42,10 +38,6 @@ const BusinessSchedule: React.FC = () => {
         }
       },
     );
-
-    socket.on("disconnect", () => {
-      console.log("Desconectado del WebSocket");
-    });
 
     return () => {
       socket.off("business-schedule-updated");

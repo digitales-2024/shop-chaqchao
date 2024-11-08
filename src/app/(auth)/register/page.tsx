@@ -59,7 +59,6 @@ export default function AuthComponent() {
       terms: false,
     },
   });
-  console.log("🚀 ~ AuthComponent ~ form:", form.watch());
 
   function onSubmit(input: CreateClientsSchema) {
     const { name, firstName, ...filteredInput } = input;
@@ -355,7 +354,6 @@ export default function AuthComponent() {
         </div>
       </div>
 
-      {/* Mensaje "Hola, Amigo" se oculta en pantallas pequeñas */}
       <div className="relative hidden h-full items-start overflow-hidden rounded-3xl bg-secondary p-6 text-white [view-transition-name:_signin] md:flex">
         <Image
           src={Bg}
