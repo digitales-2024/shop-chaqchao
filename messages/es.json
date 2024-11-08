@@ -179,5 +179,36 @@
       "title": "Tu carrito está vacío",
       "description": "¡Explora nuestros productos y encuentra lo que necesitas!"
     }
+  },
+  "checkout": {
+    "back": "Atras",
+    "next": "Siguiente",
+    "summary": {
+      "title": "Resumen",
+      "address": "Punto de recogida",
+      "date": "Fecha de recogida",
+      "typeInvoice": "Tipo de documento",
+      "product": "Producto",
+      "quantity": "Cantidad",
+      "price": "Precio",
+      "subTotal": "SubTotal",
+      "total": "Total a pagar"
+    },
+    "dateOrder": {
+      "title": "¿Para cuando deseas tu pedido?",
+      "date": "Selecciona la fecha de recogida",
+      "hour": "Selecciona la hora de recogida",
+      "label": "Recogerás tu pedido el",
+      "buttonDate": "Confirmar fecha"
+    },
+    "invoice": {
+      "RECEIPT": "Boleta",
+      "INVOICE": "Factura",
+      "typeDoc": "Tipo de documento",
+      "doc": "Número de documento",
+      "address": "Dirección",
+      "name": "Nombre o razon social",
+      "button": "Continuar"
+    }
   }
 }

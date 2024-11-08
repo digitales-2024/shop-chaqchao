@@ -185,5 +185,36 @@
       "title": "Your cart is empty",
       "description": "Explore our products and find what you need!"
     }
+  },
+  "checkout": {
+    "back": "Back",
+    "next": "Next",
+    "summary": {
+      "title": "Summary",
+      "address": "Address ",
+      "date": "Date ",
+      "typeInvoice": "Type of document ",
+      "product": "Product",
+      "quantity": "Quantity",
+      "price": "Price",
+      "subTotal": "SubTotal",
+      "total": "Total to pay"
+    },
+    "dateOrder": {
+      "title": "For when do you want your order?",
+      "date": "Select the date of collection",
+      "hour": "Select the time of collection",
+      "label": "You will pick up your order on",
+      "buttonDate": "Confirm date"
+    },
+    "invoice": {
+      "RECEIPT": "Receipt",
+      "INVOICE": "Invoice",
+      "typeDoc": "Type of document",
+      "doc": "Document number",
+      "address": "Address",
+      "name": "Name or business name",
+      "button": "Continue"
+    }
   }
 }
