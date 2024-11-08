@@ -1,9 +1,10 @@
 import { CartItem, Product } from "@/types";
-import { Cart } from "@/types/cart";
+import { v4 as uuid } from "uuid";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 interface CartState {
+  id: string;
   cartItems: CartItem[];
   amountTotal: number;
   addItemToCart: (item: Product, quantity?: number) => void;
@@ -15,13 +16,11 @@ interface CartState {
 const useCartStore = create(
   persist<CartState>(
     (set, get) => ({
-      cart: {} as Cart,
+      id: uuid(),
       cartItems: [],
       amountTotal: 0,
 
       addItemToCart: (item, quantity) => {
-        // Verificamos que si el cart tiene esta vacio entonces el amountTotal debe ser 0
-
         if (get().cartItems.length === 0) {
           set({ amountTotal: 0 });
         }
