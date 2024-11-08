@@ -41,7 +41,7 @@ export default async function RootLayout({
           className={`${comingSoon.variable} ${geistSans.variable} font-nunito antialiased`}
         >
           <NextIntlClientProvider messages={messages}>
-            <Toaster />
+            <Toaster richColors />
             <Providers>{children}</Providers>
           </NextIntlClientProvider>
         </body>
