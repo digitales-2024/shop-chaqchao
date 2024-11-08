@@ -89,7 +89,7 @@ export const Hero = () => {
             variants={FADE_DOWN_ANIMATION_VARIANTS}
           >
             <Link
-              href="/"
+              href="/categories"
               className="group/see text-md inline-flex items-center justify-center gap-2 rounded-full bg-primary/90 py-2 pl-8 pr-3 text-white transition-all duration-300 hover:scale-105 hover:bg-primary sm:text-xl"
             >
               <span className="truncate">{t("button")}</span>

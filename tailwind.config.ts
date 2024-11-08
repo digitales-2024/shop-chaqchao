@@ -12,7 +12,7 @@ const config: Config = {
       fontFamily: {
         commingSoon: ["var(--font-coming-soon)"],
         nunito: ["var(--font-nunito-variable)"],
-        comfortaa: ["var(--font-comfortaa-regular)"],
+        comfortaa: ["var(--font-comfortaa-variable)"],
       },
       colors: {
         background: "hsl(var(--background))",
@@ -58,6 +58,16 @@ const config: Config = {
           "4": "hsl(var(--chart-4))",
           "5": "hsl(var(--chart-5))",
         },
+        sidebar: {
+          DEFAULT: "hsl(var(--sidebar-background))",
+          foreground: "hsl(var(--sidebar-foreground))",
+          primary: "hsl(var(--sidebar-primary))",
+          "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
+          accent: "hsl(var(--sidebar-accent))",
+          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
+          border: "hsl(var(--sidebar-border))",
+          ring: "hsl(var(--sidebar-ring))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -66,6 +76,8 @@ const config: Config = {
       },
       animation: {
         tada: "tada 1s ease-in-out",
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
       },
       keyframes: {
         tada: {
@@ -101,6 +113,22 @@ const config: Config = {
           },
           "100%": {
             transform: "scale(1) rotate(0)",
+          },
+        },
+        "accordion-down": {
+          from: {
+            height: "0",
+          },
+          to: {
+            height: "var(--radix-accordion-content-height)",
+          },
+        },
+        "accordion-up": {
+          from: {
+            height: "var(--radix-accordion-content-height)",
+          },
+          to: {
+            height: "0",
           },
         },
       },

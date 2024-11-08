@@ -2,7 +2,7 @@ import { useProfileQuery } from "@/redux/services/clientApi";
 
 export const useProfile = () => {
   const {
-    data: clienteData,
+    data: clientData,
     refetch,
     isLoading,
   } = useProfileQuery(undefined, {
@@ -10,7 +10,7 @@ export const useProfile = () => {
   });
 
   return {
-    clienteData,
+    clientData,
     refetch,
     isLoading,
   };

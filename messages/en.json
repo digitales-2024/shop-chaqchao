@@ -23,5 +23,167 @@
   "footer": {
     "title": "Store information",
     "copyrigth": "All rights reserved"
+  },
+  "categories": {
+    "title": "All our products",
+    "description": "Choose from our variety of products and enjoy the best quality.",
+    "search": "Search our product catalog",
+    "filters": {
+      "name": "Name",
+      "button": "Filters",
+      "categories": "Categories",
+      "price": "Price",
+      "preciseInput": "Enter precise",
+      "clearFilters": "Clear filters"
+    },
+    "metadata": {
+      "title": "Product categories",
+      "description": "Choose from our variety of products and enjoy the best quality."
+    }
+  },
+  "cartItem": {
+    "detail": "Product detail",
+    "addToCart": "Add to cart",
+    "quantity": "Quantity",
+    "outOfStock": "Out of stock"
+  },
+  "login": {
+    "title": "Hello",
+    "subtitle": "Welcome back to",
+    "email": "Email",
+    "password": "Password",
+    "button": "Log in",
+    "google": "Log in with Google",
+    "register": "Don't have an account?",
+    "registerButton": "Sign up",
+    "forgot": "Forgot your password?",
+    "terms": "By logging in, I declare that I agree with the",
+    "termsLink": "Terms and Privacy Policy"
+  },
+  "register": {
+    "title": "Welcome",
+    "subtitle": "Sign up to",
+    "name": "Name",
+    "placeholderName": "Enter your name",
+    "lastName": "Last name",
+    "placeholderLast": "Enter your last name",
+    "email": "Email",
+    "placeholderEmail": "Enter your email",
+    "password": "Password",
+    "placeholderPassword": "Enter your password",
+    "phone": "Phone",
+    "birthdate": "Birthdate",
+    "placeholderBirthDate": "Select your birthdate",
+    "button": "Sign up",
+    "google": "Sign up with Google",
+    "login": "Already have an account?",
+    "loginButton": "Log in",
+    "terms": "I declare that I agree with the",
+    "termsLink": "Terms and Privacy Policy"
+  },
+  "errors": {
+    "name": {
+      "minlength": "Name is required"
+    },
+    "lastName": {
+      "minlength": "Last name is required"
+    },
+    "email": {
+      "email": "Email must be a valid email address",
+      "minlength": "Email is required"
+    },
+    "password": {
+      "password": "Password must be a valid password",
+      "minlength": "Password must be at least 6 characters long",
+      "regex": "Password must contain at least one uppercase letter, one lowercase letter, and one number"
+    },
+    "phone": {
+      "required": "Phone is required"
+    },
+    "birthdate": {
+      "required": "Birthdate is required"
+    },
+    "terms": {
+      "required": "You must accept the terms and conditions"
+    }
+  },
+  "account": {
+    "title": "My account",
+    "subtitle": "Manage your personal information",
+    "signout": "Sign out",
+    "profile": {
+      "profile": "Profile",
+      "title": "My profile",
+      "subtitle": " Update your personal information",
+      "name": "Name",
+      "nameDescription": "This is the name that will be displayed on your profile and in emails.",
+      "lastName": "Last name",
+      "email": "Email",
+      "phone": "Phone",
+      "phoneDescription": "We will use this number to keep you updated on your orders.",
+      "birthdate": "Birthdate",
+      "button": "Save changes",
+      "delete": "Delete account",
+      "deleteText": "Are you sure you want to delete your account?",
+      "deleteButton": "Delete account"
+    },
+    "orders": {
+      "title": "My orders",
+      "subtitle": "Check the status of your orders",
+      "order": "Order",
+      "date": "Date",
+      "detail": "Detail",
+      "download": "Download",
+      "empty": "You don't have any orders",
+      "status": {
+        "pending": "Pending",
+        "ready": "Ready",
+        "completed": "Completed",
+        "canceled": "Canceled"
+      }
+    },
+    "classes": {
+      "title": "My classes",
+      "subtitle": "Check the classes you have taken",
+      "class": "Class",
+      "date": "Date",
+      "status": "Status",
+      "detail": "Detail",
+      "empty": "You don't have any classes",
+      "participant": "Participant",
+      "download": "Download",
+      "schedule": "Schedule",
+      "language": "Language",
+      "adults": "Adults",
+      "children": "Children"
+    }
+  },
+  "business": {
+    "buttonOpen": "View collection point",
+    "buttonClose": "Hide location",
+    "address": "Collection point",
+    "schedule": "Schedule",
+    "see": "See how to get there",
+    "days": {
+      "SUNDAY": "Sunday",
+      "MONDAY": "Monday",
+      "TUESDAY": "Tuesday",
+      "WEDNESDAY": "Wednesday",
+      "THURSDAY": "Thursday",
+      "FRIDAY": "Friday",
+      "SATURDAY": "Saturday"
+    }
+  },
+  "cart": {
+    "title": "My cart",
+    "description": {
+      "pre": "You have",
+      "product": "product",
+      "post": "in your cart"
+    },
+    "empty": {
+      "title": "Your cart is empty",
+      "description": "Explore our products and find what you need!"
+    }
   }
 }

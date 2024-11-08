@@ -1,5 +1,6 @@
+import { UpdateClientsSchema } from "@/schemas/client/updateClientSchema";
 import { ForgotPasswordSchema } from "@/schemas/forgotPassword";
-import { ClientData, ResetPassword } from "@/types";
+import { ClientData, ClientDataUpdate, ResetPassword } from "@/types";
 import { createApi } from "@reduxjs/toolkit/query/react";
 
 import baseQueryWithReauth from "./baseQuery";
@@ -16,6 +17,27 @@ export const clientApi = createApi({
       }),
 
       providesTags: ["Auth Client"],
+    }),
+    // Obtener todos los cliente by id
+    getClients: build.query({
+      query: (id) => ({
+        url: `/shop/client/${id}`,
+        credentials: "include",
+      }),
+      providesTags: ["Auth Client"],
+    }),
+    // Actualizar un cliente por id
+    updateClient: build.mutation<
+      ClientDataUpdate,
+      UpdateClientsSchema & { id: string }
+    >({
+      query: ({ id, ...body }) => ({
+        url: `/shop/client/${id}`,
+        method: "PATCH",
+        body,
+        credentials: "include",
+      }),
+      invalidatesTags: ["Auth Client"],
     }),
     forgotPassword: build.mutation<ForgotPasswordSchema, ForgotPasswordSchema>({
       query: (data) => ({
@@ -39,6 +61,8 @@ export const clientApi = createApi({
 
 export const {
   useProfileQuery,
+  useGetClientsQuery,
+  useUpdateClientMutation,
   useForgotPasswordMutation,
   useResetPasswordMutation,
 } = clientApi;

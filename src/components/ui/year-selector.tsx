@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import { Locale } from "@/i18n/config";
 import { addYears, format, subYears } from "date-fns";
 import { es } from "date-fns/locale";
 import {
@@ -8,8 +8,8 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
+import * as React from "react";
 
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -25,13 +25,33 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+import { cn } from "@/lib/utils";
+
+interface DatePickerWithYearNavigationProps {
+  className?: string;
+  selectedDate?: Date;
+  onDateChange?: (date: Date) => void;
+  lang?: Locale;
+}
+
 export default function DatePickerWithYearNavigation({
   className,
-}: {
-  className?: string;
-}) {
-  const [date, setDate] = React.useState<Date>();
-  const [calendarDate, setCalendarDate] = React.useState<Date>(new Date());
+  selectedDate,
+  onDateChange,
+  lang,
+}: DatePickerWithYearNavigationProps) {
+  const [date, setDate] = React.useState<Date | undefined>(selectedDate);
+
+  const [calendarDate, setCalendarDate] = React.useState<Date>(
+    selectedDate || new Date(),
+  );
+
+  React.useEffect(() => {
+    if (selectedDate) {
+      setDate(selectedDate);
+      setCalendarDate(selectedDate);
+    }
+  }, [selectedDate]);
 
   const years = Array.from({ length: 201 }, (_, i) => 1900 + i);
   const months = [
@@ -49,6 +69,21 @@ export default function DatePickerWithYearNavigation({
     "Diciembre",
   ];
 
+  const monthsEn = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
   const handleYearChange = (year: string) => {
     setCalendarDate((prevDate) => {
       const newDate = new Date(prevDate);
@@ -60,9 +95,18 @@ export default function DatePickerWithYearNavigation({
   const handleMonthChange = (month: string) => {
     setCalendarDate((prevDate) => {
       const newDate = new Date(prevDate);
-      newDate.setMonth(months.indexOf(month));
+      newDate.setMonth(
+        lang === "es" ? months.indexOf(month) : monthsEn.indexOf(month),
+      );
       return newDate;
     });
+  };
+
+  const handleDateSelect = (selected: Date | undefined) => {
+    setDate(selected);
+    if (selected && onDateChange) {
+      onDateChange(selected);
+    }
   };
 
   return (
@@ -71,7 +115,7 @@ export default function DatePickerWithYearNavigation({
         <Button
           variant={"outline"}
           className={cn(
-            "flex w-[260px] justify-start text-left font-normal",
+            "flex w-[280px] justify-start text-left font-normal",
             !date && "text-muted-foreground",
             className,
           )}
@@ -139,9 +183,8 @@ export default function DatePickerWithYearNavigation({
           </Button>
         </div>
         <Calendar
-          mode="single"
           selected={date}
-          onSelect={setDate}
+          onSelect={handleDateSelect}
           month={calendarDate}
           onMonthChange={setCalendarDate}
           initialFocus
