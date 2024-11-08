@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/sheet";
 
 import { Badge } from "../ui/badge";
-import { Button } from "../ui/button";
+import { ButtonCheckout } from "./ButtonCheckout";
 import { CartEmpty } from "./CartEmpty";
 import { DeleteItemButton } from "./DeleteItemButton";
 import { EditItemQuantityButton } from "./EditItemQuantityButton";
@@ -33,7 +33,7 @@ const springTransition = {
 };
 
 export function CartSheet() {
-  const { amountTotal, cartItems } = useCartStore();
+  const { cartItems, amountTotal } = useCartStore();
 
   const t = useTranslations("cart");
 
@@ -151,9 +151,7 @@ export function CartSheet() {
         </div>
         <SheetFooter>
           <SheetClose asChild>
-            {cartItems.length > 0 && (
-              <Button variant="default">Checkout</Button>
-            )}
+            {cartItems.length > 0 && <ButtonCheckout />}
           </SheetClose>
         </SheetFooter>
       </SheetContent>
