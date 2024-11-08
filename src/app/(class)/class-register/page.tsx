@@ -44,7 +44,7 @@ export default function ReservationPage() {
   const nextStep = () => setStep((prevStep) => prevStep + 1);
   const previousStep = () => setStep((prevStep) => prevStep - 1);
 
-  /*   const formatPhoneNumber = (phone: string): string => {
+  /* const formatPhoneNumber = (phone: string): string => {
     return phone.replace(/(\+\d{2})(\d{9})/, "$1 $2");
   }; */
 
@@ -71,7 +71,8 @@ export default function ReservationPage() {
       const result = await createClassRegistration(formattedData).unwrap();
       console.log("Reserva creada con éxito", result);
       setIsReservationSuccessful(true);
-      nextStep(); // Avanza al paso final
+      setStep(8);
+      // nextStep();
     } catch (error) {
       const apiError = error as ApiError;
       const errorMessage =
@@ -149,6 +150,7 @@ export default function ReservationPage() {
       {step === 7 && reservationData.date && (
         <Step7
           onNext={() => setStep(8)}
+          // onNext={handleSubmit}
           onBack={previousStep}
           updateData={updateData}
           userName={reservationData.userName}
@@ -163,8 +165,8 @@ export default function ReservationPage() {
       )}
 
       {/* Paso 8: Resumen de la Reserva */}
-      {step === 8 && (
-        /* isReservationSuccessful && */ <Confirmation
+      {step === 8 /* && isReservationSuccessful */ && (
+        <Confirmation
           data={{
             date: reservationData.date || new Date(),
             participants: reservationData.participants,

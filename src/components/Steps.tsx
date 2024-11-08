@@ -5,6 +5,8 @@ import {
   useSchedulesQuery,
   useLanguagesQuery,
   usePricesQuery,
+  // useCreateClassRegistrationMutation,
+  // useConfirmClassPaymentMutation,
 } from "@/redux/services/classApi";
 import { PaypalTransactionData } from "@/types/paypal";
 import {
@@ -17,16 +19,17 @@ import {
   Steps7Props,
   ConfirmationProps,
 } from "@/types/steps";
+import { showToast, formatPhoneNumber, isValidEmail } from "@/utils/helpers";
 import { addDays, format, isSameDay } from "date-fns";
 import { es } from "date-fns/locale";
 import { Calendar as CalendarIcon } from "lucide-react";
 import Image from "next/image";
 import React, { useState, useEffect, useRef } from "react";
 import Countdown from "react-countdown";
-import { toast } from "sonner";
 
 import PayPalButton from "@/components/class/PaypalButton";
 import { Calendar } from "@/components/ui/calendar";
+import { NavigationButtons } from "@/components/ui/NavigationClassButtons";
 import { PhoneInput } from "@/components/ui/phone-input";
 import {
   Popover,
@@ -78,23 +81,23 @@ export function Step2({ onNext, onBack, updateData }: Steps2Props) {
   const [userEmail, setUserEmail] = useState("");
   const [userPhone, setUserPhone] = useState("");
   const [emailError, setEmailError] = useState("");
-
-  const isValidEmail = (email: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
+  const [fullData, setFullData] = useState(false);
 
   // Verifica si hay campos vacíos
   const handleNext = () => {
     if (!userName || !userEmail || !userPhone) {
-      showToast("Por favor, complete todos los campos para continuar");
+      showToast(
+        "Por favor, complete todos los campos para continuar",
+        "warning",
+      );
       setEmailError("");
+      setFullData(true);
       return;
     }
 
     // Luego, verifica si el correo es válido
     if (!isValidEmail(userEmail)) {
-      showToast("Por favor, ingrese un correo electrónico válido");
+      showToast("Por favor, ingrese un correo electrónico válido", "warning");
       return;
     }
 
@@ -103,16 +106,6 @@ export function Step2({ onNext, onBack, updateData }: Steps2Props) {
     updateData({ userName, userEmail, userPhone });
     onNext();
   };
-
-  const showToast = (message: string) => {
-    toast.dismiss();
-    toast.warning(message, {
-      duration: 3000,
-      position: "top-right",
-      richColors: true,
-    });
-  };
-
   return (
     <div className="mx-auto w-full bg-white pb-48 pt-4">
       <div className="relative mb-6 py-4">
@@ -149,18 +142,11 @@ export function Step2({ onNext, onBack, updateData }: Steps2Props) {
         />
 
         <div className="mt-8 flex flex-wrap justify-center gap-4">
-          <button
-            onClick={onBack}
-            className="w-36 rounded-full bg-[#D78428] px-0 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 ease-in-out hover:bg-[#8c5038] sm:w-44 sm:px-12 sm:text-lg"
-          >
-            ATRÁS
-          </button>
-          <button
-            onClick={handleNext}
-            className="w-36 rounded-full bg-[#D78428] px-0 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 ease-in-out hover:bg-[#8c5038] sm:w-44 sm:px-12 sm:text-lg"
-          >
-            SIGUIENTE
-          </button>
+          <NavigationButtons
+            onNext={handleNext}
+            onBack={onBack}
+            isNextDisabled={fullData}
+          />
         </div>
       </div>
     </div>
@@ -173,6 +159,7 @@ export function Step3({ onNext, onBack, updateData }: Steps3Props) {
   const [datePickerDate, setDatePickerDate] = useState<Date | undefined>(
     undefined,
   );
+  const [fullData, setFullData] = useState(false);
 
   // Calcula los próximos 4 días empezando desde hoy
   const today = new Date();
@@ -185,26 +172,17 @@ export function Step3({ onNext, onBack, updateData }: Steps3Props) {
 
   const handleNext = () => {
     if (!selectedDate && !datePickerDate) {
-      showToast("Por favor, selecciona una fecha para continuar");
+      showToast("Por favor, selecciona una fecha para continuar", "warning");
       return;
     }
     updateData({ date: datePickerDate || selectedDate });
+    setFullData(true);
     onNext();
   };
 
   const handleBack = () => {
     onBack();
   };
-
-  const showToast = (message: string) => {
-    toast.dismiss();
-    toast.warning(message, {
-      duration: 3000,
-      position: "top-right",
-      richColors: true,
-    });
-  };
-
   return (
     <div className="mx-auto w-full bg-white px-4 pb-48 pt-4 sm:px-0">
       <div className="relative mb-6 py-4">
@@ -274,19 +252,11 @@ export function Step3({ onNext, onBack, updateData }: Steps3Props) {
         </Popover>
 
         <div className="mt-8 flex flex-wrap justify-center gap-4 text-center">
-          <button
-            className="rounded-full bg-[#D78428] px-12 py-3 text-lg font-semibold text-white shadow-lg transition-all duration-300 ease-in-out hover:bg-[#8c5038]"
-            onClick={handleBack}
-          >
-            ATRÁS
-          </button>
-
-          <button
-            className="rounded-full bg-[#D78428] px-8 py-3 text-lg font-semibold text-white shadow-lg transition-all duration-300 ease-in-out hover:bg-[#8c5038]"
-            onClick={handleNext}
-          >
-            SIGUIENTE
-          </button>
+          <NavigationButtons
+            onBack={handleBack}
+            onNext={handleNext}
+            isNextDisabled={fullData}
+          />
         </div>
       </div>
     </div>
@@ -301,27 +271,19 @@ export function Step4({
   selectedDate,
 }: Steps4Props) {
   const [time, setTime] = useState("");
+  const [fullData, setFullData] = useState(false);
 
   const { data: schedules, isLoading, isError } = useSchedulesQuery();
 
   const handleNext = () => {
     if (!time) {
-      showToast("Por favor, selecciona un horario para continuar.");
+      showToast("Por favor, selecciona un horario para continuar.", "warning");
       return;
     }
     updateData({ time });
+    setFullData(true);
     onNext();
   };
-
-  const showToast = (message: string) => {
-    toast.dismiss();
-    toast.warning(message, {
-      duration: 3000,
-      position: "top-right",
-      richColors: true,
-    });
-  };
-
   return (
     <div className="mx-auto w-full bg-white px-4 pb-48 pt-10 text-center sm:px-0">
       <div className="mb-6 flex justify-center space-x-10">
@@ -378,18 +340,11 @@ export function Step4({
       </div>
 
       <div className="mt-8 flex flex-wrap justify-center gap-4">
-        <button
-          className="w-36 rounded-full bg-[#D78428] px-0 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 ease-in-out hover:bg-[#8c5038] sm:w-44 sm:px-12 sm:text-lg"
-          onClick={onBack}
-        >
-          ATRÁS
-        </button>
-        <button
-          className="w-36 rounded-full bg-[#D78428] px-0 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 ease-in-out hover:bg-[#8c5038] sm:w-44 sm:px-12 sm:text-lg"
-          onClick={handleNext}
-        >
-          SIGUIENTE
-        </button>
+        <NavigationButtons
+          onBack={onBack}
+          onNext={handleNext}
+          isNextDisabled={fullData}
+        />
       </div>
     </div>
   );
@@ -404,27 +359,19 @@ export function Step5({
   time,
 }: Steps5Props) {
   const [selectedLanguage, setSelectedLanguage] = useState<string>("");
+  const [fullData, setFullData] = useState(false);
 
   const { data: languages, isLoading, isError } = useLanguagesQuery();
 
   const handleNext = () => {
     if (!selectedLanguage) {
-      showToast("Por favor, selecciona un idioma para continuar.");
+      showToast("Por favor, selecciona un idioma para continuar.", "warning");
       return;
     }
     updateData({ language: selectedLanguage });
+    setFullData(true);
     onNext();
   };
-
-  const showToast = (message: string) => {
-    toast.dismiss();
-    toast.warning(message, {
-      duration: 3000,
-      position: "top-right",
-      richColors: true,
-    });
-  };
-
   return (
     <div className="mx-auto w-full bg-white pb-48 pt-10 text-center">
       {/* Información seleccionada */}
@@ -486,19 +433,11 @@ export function Step5({
 
       {/* Botones de navegación */}
       <div className="mt-8 flex flex-wrap justify-center gap-4">
-        <button
-          className="w-36 rounded-full bg-[#D78428] px-0 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 ease-in-out hover:bg-[#8c5038] sm:w-44 sm:px-12 sm:text-lg"
-          onClick={onBack}
-        >
-          ATRÁS
-        </button>
-
-        <button
-          className="w-36 rounded-full bg-[#D78428] px-0 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 ease-in-out hover:bg-[#8c5038] sm:w-44 sm:px-12 sm:text-lg"
-          onClick={handleNext}
-        >
-          SIGUIENTE
-        </button>
+        <NavigationButtons
+          onBack={onBack}
+          onNext={handleNext}
+          isNextDisabled={fullData}
+        />
       </div>
     </div>
   );
@@ -514,31 +453,24 @@ export function Step6({
   language,
 }: Steps6Props) {
   const [participants, setParticipants] = useState<number | null>(null);
+  const [fullData, setFullData] = useState(false);
 
   const handleNext = () => {
     if (participants === null) {
       showToast(
         "Por favor, selecciona la cantidad de participantes para continuar.",
+        "warning",
       );
       return;
     }
     updateData({ participants });
+    setFullData(true);
     onNext();
   };
 
   const handleBack = () => {
     onBack();
   };
-
-  const showToast = (message: string) => {
-    toast.dismiss();
-    toast.warning(message, {
-      duration: 3000,
-      position: "top-right",
-      richColors: true,
-    });
-  };
-
   return (
     <div className="mx-auto w-full bg-white pb-48 pt-10 text-center">
       {/* Información seleccionada */}
@@ -584,20 +516,11 @@ export function Step6({
         ))}
       </div>
       <div className="mt-14 flex flex-wrap justify-center gap-4">
-        {/* Botones de navegación */}
-        <button
-          className="w-36 rounded-full bg-[#D78428] px-0 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 ease-in-out hover:bg-[#8c5038] sm:w-44 sm:px-12 sm:text-lg"
-          onClick={handleBack}
-        >
-          ATRÁS
-        </button>
-
-        <button
-          className="w-36 rounded-full bg-[#D78428] px-0 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 ease-in-out hover:bg-[#8c5038] sm:w-44 sm:px-12 sm:text-lg"
-          onClick={handleNext}
-        >
-          SIGUIENTE
-        </button>
+        <NavigationButtons
+          onBack={handleBack}
+          onNext={handleNext}
+          isNextDisabled={fullData}
+        />
       </div>
     </div>
   );
@@ -615,13 +538,11 @@ export function Step7({
   time,
   language,
   updateData,
-  // handleSubmit,
 }: Steps7Props) {
   const [allergies, setAllergies] = useState("");
   const [hasAllergies, setHasAllergies] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
   const [children, setChildren] = useState(0);
-  const { data: prices } = usePricesQuery();
   const [adultPrice, setAdultPrice] = useState(30);
   const [childPrice, setChildPrice] = useState(20);
   const [totalParticipants, setTotalParticipants] = useState(participants);
@@ -629,6 +550,10 @@ export function Step7({
   const [subTotal, setSubTotal] = useState(participants * adultPrice);
   const [classId, setClassId] = useState<string | null>(null);
   const [showCountdown, setShowCountdown] = useState(false);
+
+  const { data: prices } = usePricesQuery();
+  /* const [createClassRegistration] = useCreateClassRegistrationMutation();
+  const [confirmClassPayment] = useConfirmClassPaymentMutation(); */
 
   // Actualizando el número de participantes
   useEffect(() => {
@@ -758,36 +683,41 @@ export function Step7({
       if (!response.ok) {
         switch (result.message) {
           case "There are no more spots available.":
-            showToastError(
+            showToast(
               "No hay más cupos disponibles, Por favor escoga otra fecha u horario.",
+              "error",
             );
             break;
           case "Invalid number of participants":
             if (totalParticipants < 2 || totalParticipants > 8) {
-              showToastError(
+              showToast(
                 "Número invalido de participantes, El número minimo de participantes debe ser 2.",
+                "error",
               );
             }
             break;
           case "Invalid number of participants":
-            showToastError(
+            showToast(
               "Número invalido de participantes, El número minimo de participantes debe ser 1.",
+              "error",
             );
-
             break;
           case "Class is close":
-            showToastError(
+            showToast(
               "La clase esta cerrada, Por favor escoga otra fecha u horario.",
+              "error",
             );
             break;
           case "Registration is close":
-            showToastError(
+            showToast(
               "La inscripción esta cerrada, Por favor eliga otra fecha u horario.",
+              "error",
             );
             break;
           case "Invalid class date":
-            showToastError(
+            showToast(
               "Fecha invalida, Por favor eliga otra fecha u horario.",
+              "error",
             );
             break;
           default:
@@ -796,15 +726,126 @@ export function Step7({
         return;
       }
 
-      showToastSuccess("Clase registrada exitosamente. Proceda con el pago.");
+      showToast(
+        "Clase registrada exitosamente. Proceda con el pago.",
+        "success",
+      );
       setClassId(result.data.id);
       setTimeout(() => setShowCountdown(true), 2500);
-      // handleSubmit();
     } catch (error) {
-      showToastError("Error al registrar la clase. Inténtalo de nuevo.");
+      showToast("Error al registrar la clase. Inténtalo de nuevo.", "error");
       console.error("Error al registrar la clase:", error);
     }
   };
+
+  /* const handleRegisterClass = async () => {
+    const registrationData = {
+      userName,
+      userEmail,
+      userPhone,
+      scheduleClass: time,
+      languageClass: language || "español",
+      dateClass: selectedDate.toISOString(),
+      totalAdults: participants,
+      totalChildren: children,
+      typeCurrency: "DOLAR",
+      comments: hasAllergies ? allergies : "Ninguna",
+      paypalOrderId: "",
+      paypalOrderStatus: "",
+      paypalAmount: "",
+      paypalCurrency: "USD",
+      paypalDate: "",
+    };
+
+    try {
+      const result = await createClassRegistration(registrationData).unwrap();
+
+      if (result.statusCode && result.statusCode !== 201) {
+        switch (result.message) {
+          case "There are no more spots available.":
+            showToast(
+              "No hay más cupos disponibles, Por favor escoga otra fecha u horario.",
+              "error",
+            );
+            break;
+          case "Invalid number of participants":
+            if (totalParticipants < 2 || totalParticipants > 8) {
+              showToast(
+                "Número invalido de participantes, El número minimo de participantes debe ser 2.",
+                "error",
+              );
+            }
+            break;
+          case "Invalid number of participants":
+            showToast(
+              "Número invalido de participantes, El número minimo de participantes debe ser 1.",
+              "error",
+            );
+            break;
+          case "Class is close":
+            showToast(
+              "La clase esta cerrada, Por favor escoga otra fecha u horario.",
+              "error",
+            );
+            break;
+          case "Registration is close":
+            showToast(
+              "La inscripción esta cerrada, Por favor eliga otra fecha u horario.",
+              "error",
+            );
+            break;
+          case "Invalid class date":
+            showToast(
+              "Fecha invalida, Por favor eliga otra fecha u horario.",
+              "error",
+            );
+            break;
+          default:
+            return;
+        }
+        return;
+      }
+
+      // Si el registro es exitoso
+      showToast(
+        "Clase registrada exitosamente. Proceda con el pago.",
+        "success",
+      );
+      setClassId(result.data.id);
+      setTimeout(() => setShowCountdown(true), 2500);
+    } catch (error) {
+      showToast("Error al registrar la clase. Inténtalo de nuevo.", "error");
+      console.error("Error al registrar la clase:", error);
+    }
+  }; */
+
+  /* const handleConfirmPayment = async (paypalData: PaypalTransactionData) => {
+    if (!classId) return;
+
+    const paymentData = {
+      paypalOrderId: paypalData.paypalOrderId,
+      paypalOrderStatus: paypalData.paypalOrderStatus,
+      paypalAmount: paypalData.paypalAmount,
+      paypalCurrency: paypalData.paypalCurrency,
+      paypalDate: paypalData.paypalDate,
+    };
+
+    try {
+      const response = await confirmClassPayment({ classId, data: paymentData }).unwrap();
+      if (!response.ok) {
+        showToast("Error al registrar la clase. Inténtalo de nuevo.", "error");
+        console.log(result.message);
+        return;
+      }
+
+      showToast("Pago confirmado y clase registrada con éxito.", "success");
+      setShowCountdown(false);
+      onNext();
+    } catch (error) {
+      showToast("Error al confirmar el pago. Inténtalo de nuevo.", "error");
+      console.error("Error al confirmar el pago:", error);
+    }
+  }; */
 
   const confirmPayment = async (paypalData: PaypalTransactionData) => {
     if (!classId) return;
@@ -830,16 +871,16 @@ export function Step7({
       const result = await response.json();
 
       if (!response.ok) {
-        showToastError("Error al confirmar el pago");
+        showToast("Error al registrar la clase. Inténtalo de nuevo.", "error");
         console.log(result.message);
         return;
       }
 
-      showToastSuccess("Pago confirmado y clase registrada con éxito.");
+      showToast("Pago confirmado y clase registrada con éxito.", "success");
       setShowCountdown(false);
       onNext();
     } catch (error) {
-      showToastError("Error al confirmar el pago. Inténtalo de nuevo.");
+      showToast("Error al confirmar el pago. Inténtalo de nuevo.", "error");
       console.error("Error al confirmar el pago:", error);
     }
   };
@@ -856,8 +897,9 @@ export function Step7({
     if (completed) {
       setShowCountdown(false);
       setClassId(null);
-      showToastError(
+      showToast(
         "El tiempo para realizar el pago ha expirado y su cupo fue cancelado",
+        "error",
       );
       return null;
     } else {
@@ -870,33 +912,6 @@ export function Step7({
         </div>
       );
     }
-  };
-
-  const showToastError = (message: string) => {
-    toast.dismiss();
-    toast.error(message, {
-      duration: 2500,
-      position: "top-right",
-      richColors: true,
-    });
-  };
-
-  const showToastSuccess = (message: string) => {
-    toast.dismiss();
-    toast.success(message, {
-      duration: 2500,
-      position: "top-right",
-      richColors: true,
-    });
-  };
-
-  const showToastInfo = (message: string) => {
-    toast.dismiss();
-    toast.info(message, {
-      duration: 2500,
-      position: "top-right",
-      richColors: true,
-    });
   };
 
   return (
@@ -1093,12 +1108,22 @@ export function Step7({
             </button>
             <button
               className="h-9 w-60 rounded-full bg-[#D78428] px-10 text-sm font-semibold text-white shadow-lg transition-all duration-300 ease-in-out hover:bg-[#8c5038] sm:w-auto sm:text-xl"
+              /* onClick={
+                confirmed
+                  ? handleRegisterClass
+                  : () =>
+                      showToast(
+                        "Acepte los terminos y politicas para continuar",
+                        "info",
+                      )
+              } */
               onClick={() => {
                 {
                   confirmed
                     ? registerClass()
-                    : showToastInfo(
+                    : showToast(
                         "Acepte los terminos y politicas para continuar",
+                        "info",
                       );
                 }
               }}
@@ -1120,6 +1145,7 @@ export function Step7({
                 <PayPalButton
                   getTransactionData={getTransactionData}
                   onNext={onNext}
+                  // onPaymentSuccess={handleConfirmPayment}
                   onPaymentSuccess={confirmPayment}
                 />
               )}
@@ -1130,11 +1156,6 @@ export function Step7({
     </div>
   );
 }
-
-// Función para formatear el número de teléfono
-const formatPhoneNumber = (phone: string): string => {
-  return phone.replace(/(\+\d{2})(\d{9})/, "$1 $2");
-};
 
 // Confirmación final
 export function Confirmation({ data }: ConfirmationProps) {
