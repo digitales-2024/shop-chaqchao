@@ -33,7 +33,9 @@ export const SelectDateOrder = () => {
 
   // Función para deshabilitar fechas pasadas
   const deshabilitarFechasPasadas = (date: Date) => {
-    return date < new Date();
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Set to the start of today
+    return date < today;
   };
 
   // Actualizar fechaHoraCompleta cuando cambie la fecha o la hora
@@ -112,7 +114,7 @@ export const SelectDateOrder = () => {
               />
             </PopoverContent>
           </Popover>
-          <Select onValueChange={setHour} disabled={!date}>
+          <Select onValueChange={setHour} value={hour} disabled={!date}>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder={t("hour")}>
                 {hour ? (
