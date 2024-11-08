@@ -2,11 +2,11 @@
 export interface ReservationData {
   date: Date | null;
   participants: number;
-  children?: number;
+  children: number;
   time: string;
   allergies: string;
   confirmed: boolean;
-  language?: string;
+  language: string;
   userName: string;
   userEmail: string;
   userPhone: string;
