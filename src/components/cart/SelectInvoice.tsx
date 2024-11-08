@@ -1,10 +1,18 @@
 "use client";
 import useCartDetail from "@/hooks/use-cart-detail";
+import { Invoice } from "@/schemas/invoice.schema";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { useForm } from "react-hook-form";
+import { UseFormReturn } from "react-hook-form";
 
-import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form";
 import { Input } from "../ui/input";
 import {
   Select,
@@ -14,12 +22,14 @@ import {
   SelectValue,
 } from "../ui/select";
 
-const INVOICE = ["RECEIPT", "INVOICE"];
+export const INVOICE = ["RECEIPT", "INVOICE"];
 
-export const SelectInvoice = () => {
+interface SelectInvoiceProps {
+  form: UseFormReturn<Invoice>;
+}
+
+export const SelectInvoice = ({ form }: SelectInvoiceProps) => {
   const { invoice, setInvoice } = useCartDetail();
-
-  const form = useForm();
 
   const receiptDocuments = [
     {
@@ -47,7 +57,10 @@ export const SelectInvoice = () => {
           {INVOICE.map((type) => (
             <button
               key={type}
-              onClick={() => setInvoice(type)}
+              onClick={() => {
+                setInvoice(type);
+                form.setValue("documentType", "");
+              }}
               className={`relative z-10 rounded-full py-2 text-sm font-medium transition-colors ${
                 invoice === type ? "text-primary" : "text-muted-foreground"
               }`}
@@ -73,7 +86,7 @@ export const SelectInvoice = () => {
         <form className="space-y-2">
           <FormField
             control={form.control}
-            name="doc"
+            name="documentType"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="font-bold">{t("typeDoc")}</FormLabel>
@@ -100,18 +113,20 @@ export const SelectInvoice = () => {
                     </SelectContent>
                   </Select>
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
           <FormField
             control={form.control}
-            name="num-doc"
+            name="number"
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="font-bold">{t("doc")}</FormLabel>
                 <FormControl>
                   <Input {...field} />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
