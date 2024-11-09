@@ -1,110 +1,118 @@
 "use client";
 import useCartDetail from "@/hooks/use-cart-detail";
-import { Invoice, InvoiceSchema } from "@/schemas/invoice.schema";
-import { zodResolver } from "@hookform/resolvers/zod";
 import {
+  Calendar,
   CalendarCheck,
-  Check,
-  MapPinCheckInside,
+  ChevronDown,
+  ChevronUp,
+  Edit,
+  Receipt,
   ReceiptText,
+  User,
+  UserCheck,
 } from "lucide-react";
-import { useTranslations } from "next-intl";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
+
+import { cn } from "@/lib/utils";
 
 import { Button } from "../ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { SelectDateOrder } from "./SelectDateOrder";
 import { SelectInvoice } from "./SelectInvoice";
+import { StepEmail } from "./StepEmail";
 
 export const CheckoutSteps = () => {
-  const t = useTranslations("checkout");
-  const [step, setStep] = useState(1);
-  const totalSteps = 3;
-
-  const handleNext = () => {
-    if (step < totalSteps) setStep((prev) => prev + 1);
-  };
-
-  const handlePrevious = () => {
-    if (step > 1) setStep((prev) => prev - 1);
-  };
-
-  const form = useForm<Invoice>({
-    resolver: zodResolver(InvoiceSchema()),
-    defaultValues: {
-      documentType: "dni",
-      number: "",
-      address: "",
-      name: "",
+  const steps = [
+    {
+      title: "Login",
+      content: <StepEmail />,
+      icon: User,
+      iconCheck: UserCheck,
     },
-  });
-  const { date, hour } = useCartDetail();
+    {
+      title: "Fecha de recogida",
+      content: <SelectDateOrder />,
+      icon: Calendar,
+      iconCheck: CalendarCheck,
+    },
+    {
+      title: "Facturación",
+      content: <SelectInvoice />,
+      icon: ReceiptText,
+      iconCheck: Receipt,
+    },
+  ];
 
-  const handleConfirmDate = () => {
-    if (step === 1 && date && hour) {
-      handleNext();
-    }
-    if (!date) {
-      toast.warning(t("dateOrder.messages.date"));
-    } else {
-      if (!hour) {
-        toast.warning(t("dateOrder.messages.hour"));
-      }
-    }
-  };
+  const { activeStep, completedSteps, editMode, toggleStep, handleEdit } =
+    useCartDetail();
 
   return (
-    <div className="flex w-full flex-col items-center justify-start gap-10 pt-20">
-      <div className="h-2 w-full rounded-full bg-primary-foreground">
-        <div
-          className="relative flex h-full items-center justify-center rounded-full bg-emerald-500 transition-all duration-300 ease-in-out"
-          style={{ width: `${((step - 1) / (totalSteps - 1)) * 100}%` }}
-        >
-          <div className="absolute right-0 inline-flex size-10 items-center justify-center rounded-full border border-emerald-500 bg-white text-emerald-500">
-            {step === 1 ? (
-              <CalendarCheck />
-            ) : step === 2 ? (
-              <ReceiptText />
-            ) : (
-              <MapPinCheckInside />
+    <div className="w-full space-y-4">
+      {steps.map(
+        ({ title, content, icon: Icon, iconCheck: IconCheck }, index) => (
+          <Card
+            key={index}
+            className={cn(
+              activeStep === index
+                ? "border border-primary"
+                : "border-none bg-slate-50",
             )}
-          </div>
-        </div>
-      </div>
-      {step === 1 && <SelectDateOrder />}
-      {step === 2 && <SelectInvoice form={form} />}
-      <div className="inline-flex gap-8">
-        {step === 1 && (
-          <Button onClick={handleConfirmDate} className="rounded-full text-lg">
-            {t("dateOrder.buttonDate")}
-            <Check />
-          </Button>
-        )}
-        {step > 1 && (
-          <Button onClick={handlePrevious} className="rounded-full text-lg">
-            {t("back")}
-          </Button>
-        )}
-        {step === 2 && (
-          <Button
-            onClick={() => {
-              form.handleSubmit((data) => {
-                console.log(data);
-                handleNext();
-              })();
-            }}
-            className="rounded-full text-lg"
           >
-            {t("next")}
-          </Button>
-        )}
-        {step === 3 && (
-          <Button onClick={handleNext} className="rounded-full text-lg">
-            Finalizar
-          </Button>
-        )}
-      </div>
+            <CardHeader
+              className="cursor-pointer p-4"
+              onClick={() => toggleStep(index)}
+            >
+              <CardTitle className="flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  <div className="rounded-full border p-1">
+                    {completedSteps.includes(index) ? (
+                      <IconCheck className="size-4 shrink-0 text-green-500" />
+                    ) : (
+                      <Icon
+                        className={cn("size-4 shrink-0", {
+                          "text-slate-400": activeStep !== index,
+                        })}
+                      />
+                    )}
+                  </div>
+                  <span
+                    className={cn("text-sm uppercase", {
+                      "text-slate-400": activeStep !== index,
+                      "text-primary": completedSteps.includes(index),
+                    })}
+                  >
+                    {title}
+                  </span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  {completedSteps.includes(index) && editMode !== index && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleEdit(index);
+                      }}
+                    >
+                      <Edit className="mr-2 h-4 w-4" />
+                      Editar
+                    </Button>
+                  )}
+                  {activeStep === index ? (
+                    <ChevronUp className="h-5 w-5" />
+                  ) : (
+                    <ChevronDown className="h-5 w-5" />
+                  )}
+                </div>
+              </CardTitle>
+            </CardHeader>
+            {activeStep === index && (
+              <CardContent className="p-4">
+                <div className="mb-4">{content}</div>
+              </CardContent>
+            )}
+          </Card>
+        ),
+      )}
     </div>
   );
 };
