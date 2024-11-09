@@ -1,42 +1,87 @@
+import { InvoiceData, INVOICES } from "@/types";
+import { steps } from "framer-motion";
 import { create } from "zustand";
 
-interface CartDetailState {
+interface Login {
+  email: string;
+  name: string;
+}
+
+interface DateOrder {
   date: Date | undefined;
-  setDate: (date: Date | undefined) => void;
   hour: string | undefined;
-  setHour: (hour: string) => void;
-  invoice: string | undefined;
-  setInvoice: (invoice: string) => void;
   fullDate: Date | undefined;
-  setFullDate: (date: Date) => void;
-  step: number;
-  totalSteps: number;
-  setStep: (step: number) => void;
-  handleNext: () => void;
-  handlePrevious: () => void;
-  handleConfirmDate: () => void;
+}
+
+interface CartDetailState {
+  login: Login;
+  setLogin: (data: Login) => void;
+  dateOrder: DateOrder;
+  setDateOrder: (data: DateOrder) => void;
+  invoice: InvoiceData;
+  setInvoice: (data: InvoiceData) => void;
+  activeStep: number;
+  setActiveStep: (step: number) => void;
+  editMode: number | null;
+  setEditMode: (step: number | null) => void;
+  completedSteps: number[];
+  setCompletedSteps: (steps: number[]) => void;
+  handleStepComplete: (stepIndex: number) => void;
+  handleEdit: (stepIndex: number) => void;
+  toggleStep: (stepIndex: number) => void;
 }
 
 const useCartDetail = create<CartDetailState>((set) => ({
-  date: undefined,
-  setDate: (date: Date | undefined) => set(() => ({ date })),
-  hour: undefined,
-  setHour: (hour: string) => set(() => ({ hour })),
-  invoice: "RECEIPT",
-  setInvoice: (invoice: string) => set(() => ({ invoice })),
-  fullDate: undefined,
-  setFullDate: (fullDate: Date) => set(() => ({ fullDate })),
-  step: 1,
-  totalSteps: 3,
-  setStep: (step: number) => set(() => ({ step })),
-  handleNext: () =>
+  login: {
+    email: "",
+    name: "",
+  },
+  setLogin: (login: Login) => set(() => ({ login })),
+  dateOrder: {
+    date: undefined,
+    hour: undefined,
+    fullDate: undefined,
+  },
+  setDateOrder: (dateOrder: DateOrder) => set(() => ({ dateOrder })),
+  invoice: {
+    documentType: "",
+    number: "",
+    address: "",
+    name: "",
+    typeInvoice: INVOICES[0],
+  },
+  setInvoice: (invoice: InvoiceData) => set(() => ({ invoice })),
+  activeStep: 0,
+  setActiveStep: (activeStep: number) => set(() => ({ activeStep })),
+  editMode: null,
+  setEditMode: (editMode: number | null) => set(() => ({ editMode })),
+  completedSteps: [],
+  setCompletedSteps: (completedSteps: number[]) =>
+    set(() => ({ completedSteps })),
+  handleStepComplete: (stepIndex: number) => {
     set((state) => ({
-      step: state.step < state.totalSteps ? state.step + 1 : state.step,
-    })),
-  handlePrevious: () =>
-    set((state) => ({ step: state.step > 1 ? state.step - 1 : state.step })),
-  handleConfirmDate: () =>
-    set((state) => ({ step: state.step === 1 ? state.step + 1 : state.step })),
+      completedSteps: [...state.completedSteps, stepIndex],
+      editMode: null,
+    }));
+    if (stepIndex < steps.length - 1) {
+      set(() => ({ activeStep: stepIndex + 1 }));
+    }
+  },
+  handleEdit: (stepIndex: number) => {
+    set(() => ({ editMode: stepIndex }));
+    set(() => ({ activeStep: stepIndex }));
+  },
+  toggleStep: (stepIndex: number) => {
+    set((state) => {
+      if (
+        state.completedSteps.includes(stepIndex) &&
+        state.editMode !== stepIndex
+      ) {
+        return state;
+      }
+      return { activeStep: state.activeStep === stepIndex ? -1 : stepIndex };
+    });
+  },
 }));
 
 export default useCartDetail;

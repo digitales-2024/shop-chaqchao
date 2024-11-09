@@ -2,7 +2,8 @@
 import {
   useGetClientsQuery,
   useUpdateClientMutation,
-  useProfileQuery, // Asegúrate de importar el hook que obtenga el perfil del usuario
+  useProfileQuery,
+  useFindClientByEmailMutation,
 } from "@/redux/services/clientApi";
 import { CustomErrorData } from "@/types";
 import { ClientDataUpdate } from "@/types/client";
@@ -10,28 +11,28 @@ import { toast } from "sonner";
 
 // Hook personalizado para manejar operaciones con clientes
 export const useClients = () => {
-  // Obtener perfil del usuario logueado
   const { data: profileData, isLoading: isLoadingProfile } = useProfileQuery();
 
-  // Asegúrate de que profileData contenga el ID del cliente
-  const clientId = profileData?.id; // Ajusta según cómo se llame el campo
+  const clientId = profileData?.id;
 
-  // Obtener datos del cliente
   const {
     data: clientData,
     error,
     isLoading,
   } = useGetClientsQuery(clientId, {
-    skip: !clientId, // Solo hacer la consulta si hay un ID
+    skip: !clientId,
   });
 
-  // Actualizar cliente
+  const [
+    findClient,
+    { data: dataClientByEmail, isLoading: isLoadingClientByEmail },
+  ] = useFindClientByEmailMutation();
+
   const [
     updateClient,
     { isSuccess: isSuccessUpdateClient, isLoading: isLoadingUpdateClient },
   ] = useUpdateClientMutation();
 
-  // Manejar la actualización de un cliente
   const onUpdateClient = async (input: Partial<ClientDataUpdate>) => {
     if (!clientId) return; // No intentar actualizar si no hay un ID disponible
 
@@ -77,9 +78,12 @@ export const useClients = () => {
     clientData,
     error,
     isLoading,
+    findClient,
     onUpdateClient,
     isSuccessUpdateClient,
     isLoadingUpdateClient,
-    isLoadingProfile, // Para poder manejar el estado de carga del perfil
+    isLoadingProfile,
+    dataClientByEmail,
+    isLoadingClientByEmail,
   };
 };
