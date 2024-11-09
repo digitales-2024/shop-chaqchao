@@ -97,7 +97,7 @@ export const StepEmail = () => {
           </div>
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant="outline">Edit Profile</Button>
+              <Button>Iniciar sesión</Button>
             </DialogTrigger>
             <DialogContent className="">
               <FormLogin />
