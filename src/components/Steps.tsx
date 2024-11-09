@@ -18,16 +18,19 @@ import {
   Steps6Props,
   Steps7Props,
   ConfirmationProps,
+  TypeCurrency,
 } from "@/types/steps";
 import { showToast, formatPhoneNumber, isValidEmail } from "@/utils/helpers";
 import { addDays, format, isSameDay } from "date-fns";
 import { es } from "date-fns/locale";
 import { Calendar as CalendarIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import React, { useState, useEffect, useRef } from "react";
 import Countdown from "react-countdown";
 
 import PayPalButton from "@/components/class/PaypalButton";
+import { LineTitle } from "@/components/common/LineTitle";
 import { Calendar } from "@/components/ui/calendar";
 import { NavigationButtons } from "@/components/ui/NavigationClassButtons";
 import { PhoneInput } from "@/components/ui/phone-input";
@@ -45,31 +48,29 @@ export function Step1({ onNext, updateData }: Steps1Props) {
     onNext();
   };
 
+  const t = useTranslations("class.step1");
+
   return (
     <div className="mx-auto w-full bg-white pb-48 pt-4">
       <div className="relative mb-6 py-4">
-        <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-gray-300"></div>
-        </div>
-        <div className="relative flex justify-center">
-          <span className="bg-white px-4 font-commingSoon text-lg font-bold sm:text-2xl">
-            HAZ UNA RESERVA
+        <div className="flex items-center justify-center">
+          <LineTitle className="mx-4 flex-grow text-primary" />
+          <span className="bg-white px-4 text-lg font-bold sm:text-2xl">
+            {t("title")}
           </span>
+          <LineTitle className="mx-4 flex-grow rotate-180 text-primary" />
         </div>
       </div>
       <div className="mx-auto w-1/2 text-center">
-        <p className="mb-12 font-comfortaa text-sm leading-relaxed text-gray-700 sm:text-lg">
-          ¡Puede reservar nuestra clase en nuestra tienda o reservarla con
-          anticipación simplemente rellenando el siguiente formulario y pagando
-          a través de PayPal! Nuestro equipo confirmará su reserva y pago por
-          correo electrónico.
+        <p className="mb-12 text-sm leading-relaxed text-gray-700 sm:text-lg">
+          {t("description")}
         </p>
 
         <button
           onClick={handleNext}
-          className="h-12 w-36 rounded-full bg-[#D78428] px-0 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 ease-in-out hover:bg-[#8c5038] sm:w-44 sm:px-12 sm:text-lg"
+          className="h-12 w-36 rounded-full bg-primary px-0 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 ease-in-out hover:bg-secondary/90 sm:w-44 sm:px-12 sm:text-lg"
         >
-          RESERVA
+          {t("button").toUpperCase()}
         </button>
       </div>
     </div>
@@ -81,23 +82,20 @@ export function Step2({ onNext, onBack, updateData }: Steps2Props) {
   const [userEmail, setUserEmail] = useState("");
   const [userPhone, setUserPhone] = useState("");
   const [emailError, setEmailError] = useState("");
-  const [fullData, setFullData] = useState(false);
+
+  const t = useTranslations("class.step2");
 
   // Verifica si hay campos vacíos
   const handleNext = () => {
     if (!userName || !userEmail || !userPhone) {
-      showToast(
-        "Por favor, complete todos los campos para continuar",
-        "warning",
-      );
+      showToast(t("toast.fullFields"), "warning");
       setEmailError("");
-      setFullData(true);
       return;
     }
 
     // Luego, verifica si el correo es válido
     if (!isValidEmail(userEmail)) {
-      showToast("Por favor, ingrese un correo electrónico válido", "warning");
+      showToast(t("toast.emailValidation"), "warning");
       return;
     }
 
@@ -109,26 +107,25 @@ export function Step2({ onNext, onBack, updateData }: Steps2Props) {
   return (
     <div className="mx-auto w-full bg-white pb-48 pt-4">
       <div className="relative mb-6 py-4">
-        <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-gray-300"></div>
-        </div>
         <div className="relative flex justify-center">
+          <LineTitle className="mx-4 flex-grow text-primary" />
           <span className="bg-white px-4 font-commingSoon text-lg font-bold sm:text-2xl">
-            INFORMACIÓN DE CONTACTO
+            {t("title")}
           </span>
+          <LineTitle className="mx-4 flex-grow rotate-180 text-primary" />
         </div>
       </div>
       <div className="mx-auto w-1/2 space-y-6 text-center">
         <input
           type="text"
-          placeholder="Nombre completo"
+          placeholder={t("placeholder.name")}
           value={userName}
           onChange={(e) => setUserName(e.target.value)}
           className="w-full rounded-md border px-4 py-3 text-gray-700 focus:outline-none"
         />
         <input
           type="email"
-          placeholder="Correo electrónico"
+          placeholder={t("placeholder.email")}
           value={userEmail}
           onChange={(e) => setUserEmail(e.target.value)}
           className="w-full rounded-md border px-4 py-3 text-gray-700 focus:outline-none"
@@ -143,9 +140,10 @@ export function Step2({ onNext, onBack, updateData }: Steps2Props) {
 
         <div className="mt-8 flex flex-wrap justify-center gap-4">
           <NavigationButtons
+            back={t("button.back")}
+            next={t("button.next")}
             onNext={handleNext}
             onBack={onBack}
-            isNextDisabled={fullData}
           />
         </div>
       </div>
@@ -159,7 +157,8 @@ export function Step3({ onNext, onBack, updateData }: Steps3Props) {
   const [datePickerDate, setDatePickerDate] = useState<Date | undefined>(
     undefined,
   );
-  const [fullData, setFullData] = useState(false);
+
+  const t = useTranslations("class.step3");
 
   // Calcula los próximos 4 días empezando desde hoy
   const today = new Date();
@@ -172,11 +171,10 @@ export function Step3({ onNext, onBack, updateData }: Steps3Props) {
 
   const handleNext = () => {
     if (!selectedDate && !datePickerDate) {
-      showToast("Por favor, selecciona una fecha para continuar", "warning");
+      showToast(t("toast.fullFields"), "warning");
       return;
     }
     updateData({ date: datePickerDate || selectedDate });
-    setFullData(true);
     onNext();
   };
 
@@ -186,13 +184,12 @@ export function Step3({ onNext, onBack, updateData }: Steps3Props) {
   return (
     <div className="mx-auto w-full bg-white px-4 pb-48 pt-4 sm:px-0">
       <div className="relative mb-6 py-4">
-        <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-gray-300"></div>
-        </div>
         <div className="relative flex justify-center">
+          <LineTitle className="mx-4 flex-grow text-primary" />
           <span className="bg-white px-4 font-commingSoon text-lg font-bold sm:text-2xl">
-            ESCOJA EL DÍA
+            {t("title")}
           </span>
+          <LineTitle className="mx-4 flex-grow rotate-180 text-primary" />
         </div>
       </div>
 
@@ -210,8 +207,8 @@ export function Step3({ onNext, onBack, updateData }: Steps3Props) {
             <div
               className={`flex h-10 w-10 cursor-pointer items-center justify-center rounded-full transition-all duration-300 sm:h-14 sm:w-14 ${
                 selectedDate && isSameDay(selectedDate, day)
-                  ? "bg-[#D78428] text-white"
-                  : "bg-[#F5F5F5] text-[#A45C40] hover:bg-[#D78428] hover:text-white"
+                  ? "bg-primary text-white"
+                  : "bg-[#F5F5F5] text-secondary hover:bg-primary hover:text-white"
               } h-14 w-14 rounded sm:h-16 sm:w-16`}
               onClick={() => handleDateSelect(day)}
             >
@@ -230,7 +227,7 @@ export function Step3({ onNext, onBack, updateData }: Steps3Props) {
       <div className="flex flex-col items-center">
         <Popover>
           <PopoverTrigger asChild>
-            <button className="mb-4 mt-8 flex items-center rounded-full border-2 border-[#D78428] px-6 py-2 text-[#A45C40] transition-all hover:bg-[#D78428] hover:text-white">
+            <button className="mb-4 mt-8 flex items-center rounded-full border-2 border-primary px-6 py-2 text-secondary transition-all hover:bg-primary hover:text-white">
               <span>
                 {selectedDate
                   ? format(selectedDate, "PPP", { locale: es })
@@ -253,9 +250,10 @@ export function Step3({ onNext, onBack, updateData }: Steps3Props) {
 
         <div className="mt-8 flex flex-wrap justify-center gap-4 text-center">
           <NavigationButtons
+            back={t("button.back")}
+            next={t("button.next")}
             onBack={handleBack}
             onNext={handleNext}
-            isNextDisabled={fullData}
           />
         </div>
       </div>
@@ -271,52 +269,50 @@ export function Step4({
   selectedDate,
 }: Steps4Props) {
   const [time, setTime] = useState("");
-  const [fullData, setFullData] = useState(false);
 
   const { data: schedules, isLoading, isError } = useSchedulesQuery();
+  const t = useTranslations("class.step4");
 
   const handleNext = () => {
     if (!time) {
-      showToast("Por favor, selecciona un horario para continuar.", "warning");
+      showToast(t("toast.fullFields"), "warning");
       return;
     }
     updateData({ time });
-    setFullData(true);
     onNext();
   };
   return (
     <div className="mx-auto w-full bg-white px-4 pb-48 pt-10 text-center sm:px-0">
       <div className="mb-6 flex justify-center space-x-10">
-        <div className="rounded-full border border-[#D78428] px-8 py-2 text-sm font-bold text-[#D78428] sm:text-lg">
+        <div className="rounded-full border border-primary px-8 py-2 text-sm font-bold text-primary sm:text-lg">
           {selectedDate
             ? format(selectedDate, "eee'.' dd',' MMM'.'", {
                 locale: es,
               }).toUpperCase()
-            : "Fecha no sleccionada"}
+            : t("dateNotSelected")}
         </div>
       </div>
 
       <div className="relative mb-6 mt-8 py-4">
-        <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-gray-300"></div>
-        </div>
         <div className="relative flex justify-center">
+          <LineTitle className="mx-4 flex-grow text-primary" />
           <span className="bg-white px-4 font-commingSoon text-lg font-bold sm:text-2xl">
-            HORARIOS DISPONIBLES
+            {t("title")}
           </span>
+          <LineTitle className="mx-4 flex-grow rotate-180 text-primary" />
         </div>
       </div>
 
       <div className="grid grid-cols-1 text-center text-gray-500">
         {/* Horarios de reserva disponible */}
         <div className="">
-          <p className="mb-6 text-base font-semibold text-[#A45C40] sm:text-lg">
-            Escoja el Horario
+          <p className="mb-6 text-base font-semibold text-secondary sm:text-lg">
+            {t("subTitle")}
           </p>
           {isLoading ? (
-            <p>Cargando horarios...</p>
+            <p>{t("schedule.loading")}</p>
           ) : isError ? (
-            <p>Error al cargar horarios</p>
+            <p>{t("schedule.loadingError")}</p>
           ) : schedules && schedules.length > 0 ? (
             <div className="flex flex-wrap justify-center gap-4">
               {schedules.map((schedule, index) => (
@@ -324,9 +320,9 @@ export function Step4({
                   key={index}
                   className={`rounded-full border px-6 py-2 text-base transition-all sm:text-lg ${
                     time === schedule.startTime
-                      ? "bg-[#D78428] text-white"
-                      : "border-[#D78428] text-[#D78428]"
-                  } hover:bg-[#D78428] hover:text-white`}
+                      ? "bg-primary text-white"
+                      : "border-primary text-primary"
+                  } hover:bg-primary hover:text-white`}
                   onClick={() => setTime(schedule.startTime)}
                 >
                   {schedule.startTime}
@@ -334,16 +330,17 @@ export function Step4({
               ))}
             </div>
           ) : (
-            <p>No hay horarios disponibles</p>
+            <p>{t("schedule.notAvailable")}</p>
           )}
         </div>
       </div>
 
       <div className="mt-8 flex flex-wrap justify-center gap-4">
         <NavigationButtons
+          back={t("button.back")}
+          next={t("button.next")}
           onBack={onBack}
           onNext={handleNext}
-          isNextDisabled={fullData}
         />
       </div>
     </div>
@@ -359,56 +356,54 @@ export function Step5({
   time,
 }: Steps5Props) {
   const [selectedLanguage, setSelectedLanguage] = useState<string>("");
-  const [fullData, setFullData] = useState(false);
 
   const { data: languages, isLoading, isError } = useLanguagesQuery();
+  const t = useTranslations("class.step5");
 
   const handleNext = () => {
     if (!selectedLanguage) {
-      showToast("Por favor, selecciona un idioma para continuar.", "warning");
+      showToast(t("toast.fullFields"), "warning");
       return;
     }
     updateData({ language: selectedLanguage });
-    setFullData(true);
     onNext();
   };
   return (
     <div className="mx-auto w-full bg-white pb-48 pt-10 text-center">
       {/* Información seleccionada */}
       <div className="mb-6 flex flex-wrap justify-center gap-4 sm:gap-6">
-        <div className="rounded-full border border-[#D78428] px-8 py-2 text-sm font-bold text-[#D78428] sm:text-lg">
+        <div className="rounded-full border border-primary px-8 py-2 text-sm font-bold text-primary sm:text-lg">
           {selectedDate
             ? format(selectedDate, "eee'.' dd',' MMM'.'", {
                 locale: es,
               }).toUpperCase()
-            : "Fecha no seleccionada"}
+            : t("dateNotSelected")}
         </div>
-        <div className="rounded-full border border-[#D78428] px-8 py-2 text-sm font-bold text-[#D78428] sm:text-lg">
+        <div className="rounded-full border border-primary px-8 py-2 text-sm font-bold text-primary sm:text-lg">
           {time}
         </div>
       </div>
 
       <div className="relative mb-6 mt-8 py-4">
-        <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-gray-300"></div>
-        </div>
         <div className="relative flex justify-center">
+          <LineTitle className="mx-4 flex-grow text-primary" />
           <span className="bg-white px-4 font-commingSoon text-lg font-bold sm:text-2xl">
-            SELECCIONA EL IDIOMA
+            {t("title")}
           </span>
+          <LineTitle className="mx-4 flex-grow rotate-180 text-primary" />
         </div>
       </div>
 
       {/* Selección de idiomas */}
       <div className="grid grid-cols-1 text-center text-gray-500">
         <div>
-          <p className="mb-6 text-base font-semibold text-[#A45C40] sm:text-lg">
-            Idiomas Disponible
+          <p className="mb-6 text-base font-semibold text-secondary sm:text-lg">
+            {t("subTitle")}
           </p>
           {isLoading ? (
-            <p>Cargando idiomas...</p>
+            <p>{t("language.loading")}</p>
           ) : isError ? (
-            <p>Error al cargar idiomas.</p>
+            <p>{t("language.loadingError")}</p>
           ) : languages && languages.length > 0 ? (
             <div className="flex flex-wrap justify-center gap-4">
               {languages.map((language, index) => (
@@ -416,9 +411,9 @@ export function Step5({
                   key={index}
                   className={`rounded-full border px-6 py-2 text-sm transition-all sm:text-lg ${
                     selectedLanguage === language.languageName
-                      ? "bg-[#D78428] text-white"
-                      : "border-[#D78428] text-[#D78428]"
-                  } hover:bg-[#D78428] hover:text-white`}
+                      ? "bg-primary text-white"
+                      : "border-primary text-primary"
+                  } hover:bg-primary hover:text-white`}
                   onClick={() => setSelectedLanguage(language.languageName)}
                 >
                   {language.languageName.toUpperCase()}
@@ -426,7 +421,7 @@ export function Step5({
               ))}
             </div>
           ) : (
-            <p>No hay idiomas disponibles.</p>
+            <p>{t("language.notAvailabe")}</p>
           )}
         </div>
       </div>
@@ -434,9 +429,10 @@ export function Step5({
       {/* Botones de navegación */}
       <div className="mt-8 flex flex-wrap justify-center gap-4">
         <NavigationButtons
+          back={t("button.back")}
+          next={t("button.next")}
           onBack={onBack}
           onNext={handleNext}
-          isNextDisabled={fullData}
         />
       </div>
     </div>
@@ -453,18 +449,14 @@ export function Step6({
   language,
 }: Steps6Props) {
   const [participants, setParticipants] = useState<number | null>(null);
-  const [fullData, setFullData] = useState(false);
+  const t = useTranslations("class.step6");
 
   const handleNext = () => {
     if (participants === null) {
-      showToast(
-        "Por favor, selecciona la cantidad de participantes para continuar.",
-        "warning",
-      );
+      showToast(t("toast.fullFields"), "warning");
       return;
     }
     updateData({ participants });
-    setFullData(true);
     onNext();
   };
 
@@ -475,29 +467,28 @@ export function Step6({
     <div className="mx-auto w-full bg-white pb-48 pt-10 text-center">
       {/* Información seleccionada */}
       <div className="mb-6 flex flex-wrap justify-center gap-4 sm:gap-6">
-        <div className="rounded-full border border-[#D78428] px-8 py-2 text-sm font-bold text-[#D78428] sm:text-lg">
+        <div className="rounded-full border border-primary px-8 py-2 text-sm font-bold text-primary sm:text-lg">
           {selectedDate
             ? format(selectedDate, "eee'.' dd',' MMM'.'", {
                 locale: es,
               }).toUpperCase()
-            : "Fecha no seleccionada"}
+            : t("dateNotSelected")}
         </div>
-        <div className="rounded-full border border-[#D78428] px-8 py-2 text-sm font-bold text-[#D78428] sm:text-lg">
+        <div className="rounded-full border border-primary px-8 py-2 text-sm font-bold text-primary sm:text-lg">
           {time}
         </div>
-        <div className="rounded-full border border-[#D78428] px-8 py-2 text-sm font-bold text-[#D78428] sm:text-lg">
+        <div className="rounded-full border border-primary px-8 py-2 text-sm font-bold text-primary sm:text-lg">
           {language?.toUpperCase()}
         </div>
       </div>
 
       <div className="relative mb-6 mt-8 py-4">
-        <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-gray-300"></div>
-        </div>
         <div className="relative flex justify-center">
+          <LineTitle className="mx-4 flex-grow text-primary" />
           <span className="bg-white px-4 font-commingSoon text-lg font-bold sm:text-2xl">
-            CANTIDAD DE ADULTOS
+            {t("title")}
           </span>
+          <LineTitle className="mx-4 flex-grow rotate-180 text-primary" />
         </div>
       </div>
       <div className="mb-6 flex flex-wrap justify-center gap-4">
@@ -507,8 +498,8 @@ export function Step6({
             onClick={() => setParticipants(number)}
             className={`flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-lg font-semibold transition-colors duration-300 sm:h-12 sm:w-12 ${
               participants === number
-                ? "bg-[#D78428] text-white"
-                : "bg-[#F5F5F5] text-[#A45C40] hover:bg-[#D78428] hover:text-white"
+                ? "bg-primary text-white"
+                : "bg-[#F5F5F5] text-secondary hover:bg-primary hover:text-white"
             }`}
           >
             {number}
@@ -517,9 +508,10 @@ export function Step6({
       </div>
       <div className="mt-14 flex flex-wrap justify-center gap-4">
         <NavigationButtons
+          back={t("button.back")}
+          next={t("button.next")}
           onBack={handleBack}
           onNext={handleNext}
-          isNextDisabled={fullData}
         />
       </div>
     </div>
@@ -552,6 +544,7 @@ export function Step7({
   const [showCountdown, setShowCountdown] = useState(false);
 
   const { data: prices } = usePricesQuery();
+  const t = useTranslations("class.step7");
   /* const [createClassRegistration] = useCreateClassRegistrationMutation();
   const [confirmClassPayment] = useConfirmClassPaymentMutation(); */
 
@@ -583,11 +576,6 @@ export function Step7({
     updateData({ children });
   }, [children, updateData]);
 
-  const enum TypeCurrency {
-    Sol = "SOL",
-    Dolar = "DOLAR",
-  }
-
   // Actualizar `transactionDataRef` cuando cambien los datos de la reserva
   useEffect(() => {
     transactionDataRef.current = {
@@ -616,7 +604,6 @@ export function Step7({
     hasAllergies,
     allergies,
     total,
-    TypeCurrency.Dolar,
   ]);
 
   // Definir función para obtener los datos actualizados
@@ -683,42 +670,24 @@ export function Step7({
       if (!response.ok) {
         switch (result.message) {
           case "There are no more spots available.":
-            showToast(
-              "No hay más cupos disponibles, Por favor escoga otra fecha u horario.",
-              "error",
-            );
+            showToast(t("toast.noPlaceAvailable"), "error");
             break;
           case "Invalid number of participants":
             if (totalParticipants < 2 || totalParticipants > 8) {
-              showToast(
-                "Número invalido de participantes, El número minimo de participantes debe ser 2.",
-                "error",
-              );
+              showToast(t("toast.invalidNumberParticipantsRange"), "error");
             }
             break;
           case "Invalid number of participants":
-            showToast(
-              "Número invalido de participantes, El número minimo de participantes debe ser 1.",
-              "error",
-            );
+            showToast(t("toast.invalidNumberParticipants"), "error");
             break;
           case "Class is close":
-            showToast(
-              "La clase esta cerrada, Por favor escoga otra fecha u horario.",
-              "error",
-            );
+            showToast(t("toast.classIsClose"), "error");
             break;
           case "Registration is close":
-            showToast(
-              "La inscripción esta cerrada, Por favor eliga otra fecha u horario.",
-              "error",
-            );
+            showToast(t("toast.registrationIsClose"), "error");
             break;
           case "Invalid class date":
-            showToast(
-              "Fecha invalida, Por favor eliga otra fecha u horario.",
-              "error",
-            );
+            showToast(t("toast.invalidClassDate"), "error");
             break;
           default:
             return;
@@ -726,14 +695,11 @@ export function Step7({
         return;
       }
 
-      showToast(
-        "Clase registrada exitosamente. Proceda con el pago.",
-        "success",
-      );
+      showToast(t("toast.classRegisterSuccessfully"), "success");
       setClassId(result.data.id);
-      setTimeout(() => setShowCountdown(true), 2500);
+      setTimeout(() => setShowCountdown(true), 3000);
     } catch (error) {
-      showToast("Error al registrar la clase. Inténtalo de nuevo.", "error");
+      showToast(t("toast.errorRegisterClass"), "error");
       console.error("Error al registrar la clase:", error);
     }
   };
@@ -871,16 +837,16 @@ export function Step7({
       const result = await response.json();
 
       if (!response.ok) {
-        showToast("Error al registrar la clase. Inténtalo de nuevo.", "error");
+        showToast(t("toast.errorRegisterClass"), "error");
         console.log(result.message);
         return;
       }
 
-      showToast("Pago confirmado y clase registrada con éxito.", "success");
+      showToast(t("toast.paymentConfirmed"), "success");
       setShowCountdown(false);
       onNext();
     } catch (error) {
-      showToast("Error al confirmar el pago. Inténtalo de nuevo.", "error");
+      showToast(t("toast.errorConfirmPayment"), "error");
       console.error("Error al confirmar el pago:", error);
     }
   };
@@ -897,16 +863,13 @@ export function Step7({
     if (completed) {
       setShowCountdown(false);
       setClassId(null);
-      showToast(
-        "El tiempo para realizar el pago ha expirado y su cupo fue cancelado",
-        "error",
-      );
+      showToast(t("toast.timeOut"), "error");
       return null;
     } else {
       return (
         <div className="fixed right-5 top-5 z-50">
           <span className="fixed right-4 top-4 m-4 rounded-lg bg-red-500 p-3 text-lg font-bold text-white shadow-lg">
-            Tiempo restante para realizar el pago: {minutes}:
+            {t("remainingTime")} {minutes}:
             {seconds < 10 ? `0${seconds}` : seconds}
           </span>
         </div>
@@ -918,30 +881,29 @@ export function Step7({
     <div className="mx-auto w-full bg-white pb-48 pt-10 text-center">
       {/* Información seleccionada */}
       <div className="mb-6 flex flex-wrap justify-center gap-4 sm:gap-6">
-        <div className="font-bolf rounded-full border border-[#D78428] px-8 py-2 text-base font-bold text-[#D78428] sm:text-lg">
+        <div className="font-bolf rounded-full border border-primary px-8 py-2 text-base font-bold text-primary sm:text-lg">
           {format(selectedDate, "eee'.' dd',' MMM'.'", {
             locale: es,
           }).toUpperCase()}
         </div>
-        <div className="rounded-full border border-[#D78428] px-8 py-2 text-base font-bold text-[#D78428] sm:text-lg">
+        <div className="rounded-full border border-primary px-8 py-2 text-base font-bold text-primary sm:text-lg">
           {time}
         </div>
-        <div className="rounded-full border border-[#D78428] px-8 py-2 text-base font-bold text-[#D78428] sm:text-lg">
+        <div className="rounded-full border border-primary px-8 py-2 text-base font-bold text-primary sm:text-lg">
           {totalParticipants} Personas
         </div>
-        <div className="rounded-full border border-[#D78428] px-8 py-2 text-base font-bold text-[#D78428] sm:text-lg">
+        <div className="rounded-full border border-primary px-8 py-2 text-base font-bold text-primary sm:text-lg">
           {language?.toUpperCase()}
         </div>
       </div>
 
       <div className="relative mb-6 mt-8 py-4">
-        <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-gray-300"></div>
-        </div>
         <div className="relative flex justify-center">
+          <LineTitle className="mx-4 flex-grow text-primary" />
           <span className="bg-white px-4 font-commingSoon text-lg font-bold sm:text-2xl">
-            PERSONALIZA EXPERIENCIA
+            {t("title")}
           </span>
+          <LineTitle className="mx-4 flex-grow rotate-180 text-primary" />
         </div>
       </div>
 
@@ -949,24 +911,24 @@ export function Step7({
       <div className="mx-auto w-full max-w-3xl space-y-8">
         <div className="mb-6 flex items-center justify-between p-3 sm:p-0">
           <div>
-            <p className="text-sm sm:text-lg">Niños mayores de 14 años</p>
+            <p className="text-sm sm:text-lg">{t("children.detail")}</p>
             <p className="text-sm text-gray-500 sm:text-base">
-              Ya pagan como adulto*
+              {t("children.detailPay")}
             </p>
           </div>
           <div className="flex items-center justify-center">
             <button
-              className="rounded-full border border-[#D78428] px-3 py-1 text-sm font-bold sm:text-lg"
+              className="rounded-full border border-primary px-3 py-1 text-sm font-bold sm:text-lg"
               onClick={handleDecreaseChildren}
             >
-              -
+              {t("symbols.-")}
             </button>
             <span className="mx-2 text-lg sm:mx-3 sm:text-2xl">{children}</span>
             <button
-              className="rounded-full border border-[#D78428] px-3 py-1 text-sm font-bold sm:text-lg"
+              className="rounded-full border border-primary px-3 py-1 text-sm font-bold sm:text-lg"
               onClick={handleIncreaseChildren}
             >
-              +
+              {t("symbols.+")}
             </button>
           </div>
         </div>
@@ -974,28 +936,28 @@ export function Step7({
         {/* Selección de alergias */}
         <div className="mb-6 flex items-center justify-between p-3 text-left sm:p-0">
           <p className="text-sm font-semibold sm:text-lg">
-            Alergias o restricciones alimentarias
+            {t("allergies.title")}
           </p>
           <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
             <button
               className={`rounded-full border px-5 py-2 text-sm font-bold sm:px-8 sm:text-lg ${
                 hasAllergies
-                  ? "bg-[#D78428] text-white"
-                  : "border-[#D78428] text-[#D78428]"
+                  ? "bg-primary text-white"
+                  : "border-primary text-primary"
               }`}
               onClick={() => setHasAllergies(true)}
             >
-              SÍ
+              {t("allergies.button.si")}
             </button>
             <button
               className={`rounded-full border px-5 py-2 text-sm font-bold sm:px-8 sm:text-lg ${
                 !hasAllergies
-                  ? "bg-[#D78428] text-white"
-                  : "border-[#D78428] text-[#D78428]"
+                  ? "bg-primary text-white"
+                  : "border-primary text-primary"
               }`}
               onClick={() => setHasAllergies(false)}
             >
-              NO
+              {t("allergies.button.no")}
             </button>
           </div>
         </div>
@@ -1003,7 +965,7 @@ export function Step7({
         {/* Campo para especificar alergias */}
         {hasAllergies && (
           <textarea
-            placeholder="Especifique que alergias"
+            placeholder={t("allergies.placeholder")}
             value={allergies}
             onChange={handleAllergiesChange}
             className="m-3 mb-6 w-full rounded-md border p-2 text-gray-700 sm:m-0"
@@ -1014,7 +976,7 @@ export function Step7({
         {/* Resumen de la reserva */}
         <div className="mx-[15px] mb-6 max-w-lg rounded-md border border-gray-200 bg-white p-6 shadow-2xl sm:mx-auto">
           <h3 className="mb-4 text-lg font-semibold sm:text-2xl">
-            Resumen de tu reserva
+            {t("abstract.title")}
           </h3>
           <div className="mb-6 flex items-center justify-center">
             <div className="flex flex-wrap items-center justify-center gap-3">
@@ -1027,13 +989,13 @@ export function Step7({
               </div>
               <div>
                 <p className="mb-1 text-xs font-bold sm:text-base">
-                  WORKSHOP,{" "}
+                  {t("abstract.workshops")}
                   {format(selectedDate, "eee'.' dd',' MMM'.'", {
                     locale: es,
                   }).toUpperCase()}
                 </p>
                 <p className="text-xs font-semibold sm:text-base">
-                  {totalParticipants} PERSONAS - {time}
+                  {totalParticipants} {t("abstract.people")} {time}
                 </p>
               </div>
             </div>
@@ -1042,12 +1004,15 @@ export function Step7({
           {/* Detalle de subtotal */}
           <div className="mb-6">
             <h4 className="mb-6 text-base font-semibold sm:text-lg">
-              Subtotal
+              {t("subtotalDetail.title")}
             </h4>
             <div className="flex justify-between text-gray-700">
               <p className="text-sm sm:text-base">
-                <strong> Adultos ({participants}):</strong> ${adultPrice} x{" "}
-                {participants}
+                <strong>
+                  {" "}
+                  {t("subtotalDetail.adults")} ({participants}):
+                </strong>{" "}
+                ${adultPrice} x {participants}
               </p>
               <p className="text-sm font-bold sm:text-base">
                 ${(participants * adultPrice).toFixed(2)}
@@ -1055,7 +1020,11 @@ export function Step7({
             </div>
             <div className="flex justify-between text-gray-700">
               <p className="text-sm sm:text-base">
-                <strong> Niños ({children}):</strong> ${childPrice} x {children}
+                <strong>
+                  {" "}
+                  {t("subtotalDetail.children")} ({children}):
+                </strong>{" "}
+                ${childPrice} x {children}
               </p>
               <p className="text-sm font-bold sm:text-base">
                 ${(children * childPrice).toFixed(2)}
@@ -1064,7 +1033,9 @@ export function Step7({
 
             {/* Subtotal final */}
             <div className="mt-4 flex justify-between text-gray-700">
-              <p className="text-base font-semibold sm:text-lg">Subtotal</p>
+              <p className="text-base font-semibold sm:text-lg">
+                {t("subtotalDetail.title")}
+              </p>
               <p className="text-base font-bold sm:text-lg">
                 ${subTotal.toFixed(2)}
               </p>
@@ -1075,7 +1046,9 @@ export function Step7({
           <div className="my-4 border-t border-gray-300"></div>
 
           <div className="flex items-center justify-between text-gray-700">
-            <span className="text-sm font-semibold sm:text-base">Total</span>
+            <span className="text-sm font-semibold sm:text-base">
+              {t("total")}
+            </span>
             <span className="text-base font-bold sm:text-lg">${total}</span>
           </div>
 
@@ -1088,26 +1061,24 @@ export function Step7({
               type="checkbox"
               checked={confirmed}
               onChange={(e) => setConfirmed(e.target.checked)}
-              className="form-checkbox h-5 w-5 rounded border-[#D78428] text-[#D78428]"
+              className="form-checkbox h-5 w-5 rounded border-primary text-primary"
             />
             <label className="text-xs text-gray-700 sm:text-sm">
-              Estoy de acuerdo con los{" "}
-              <span className="text-[#D78428]">
-                Términos y Políticas de Privacidad.
-              </span>
+              {t("terms.accord")}
+              <span className="text-primary">{t("terms.terms")}</span>
             </label>
           </div>
 
           {/* Botones de navegación */}
           <div className="flex flex-wrap items-center justify-center gap-4">
             <button
-              className="h-9 w-60 rounded-full bg-[#D78428] px-10 text-sm font-semibold text-white shadow-lg transition-all duration-300 ease-in-out hover:bg-[#8c5038] sm:w-auto sm:text-xl"
+              className="h-9 w-60 rounded-full bg-primary px-10 text-sm font-semibold text-white shadow-lg transition-all duration-300 ease-in-out hover:bg-secondary sm:w-auto sm:text-xl"
               onClick={onBack}
             >
-              Atras
+              {t("buttons.back")}
             </button>
             <button
-              className="h-9 w-60 rounded-full bg-[#D78428] px-10 text-sm font-semibold text-white shadow-lg transition-all duration-300 ease-in-out hover:bg-[#8c5038] sm:w-auto sm:text-xl"
+              className="h-9 w-60 rounded-full bg-primary px-10 text-sm font-semibold text-white shadow-lg transition-all duration-300 ease-in-out hover:bg-secondary sm:w-auto sm:text-xl"
               /* onClick={
                 confirmed
                   ? handleRegisterClass
@@ -1121,14 +1092,11 @@ export function Step7({
                 {
                   confirmed
                     ? registerClass()
-                    : showToast(
-                        "Acepte los terminos y politicas para continuar",
-                        "info",
-                      );
+                    : showToast(t("toast.acceptTerms"), "info");
                 }
               }}
             >
-              Registrar Clase
+              {t("buttons.register")}
             </button>
 
             {/* Temporizador */}
@@ -1161,33 +1129,34 @@ export function Step7({
 export function Confirmation({ data }: ConfirmationProps) {
   const totalParticipants = data.participants + data.children;
   console.log("Data Confirmation:", data);
+  const t = useTranslations("class.confirmation");
 
   return (
     <div className="mx-auto my-12 rounded-lg bg-white py-8 text-center shadow-lg">
       {/* Información general */}
       <div className="mb-8 flex flex-wrap justify-center gap-8">
-        <div className="rounded-full border border-[#D78428] px-8 py-2 text-sm font-bold text-[#D78428] sm:text-lg">
+        <div className="rounded-full border border-primary px-8 py-2 text-sm font-bold text-primary sm:text-lg">
           {data.date
             ? format(data.date, "eee'.' dd',' MMM'.'", {
                 locale: es,
               }).toUpperCase()
-            : "Fecha no seleccionada"}
+            : t("dateNotSelected")}
         </div>
-        <div className="rounded-full border border-[#D78428] px-8 py-2 text-sm font-bold text-[#D78428] sm:text-lg">
-          {totalParticipants} Personas
+        <div className="rounded-full border border-primary px-8 py-2 text-sm font-bold text-primary sm:text-lg">
+          {totalParticipants} {t("people")}
         </div>
-        <div className="rounded-full border border-[#D78428] px-8 py-2 text-sm font-bold text-[#D78428] sm:text-lg">
+        <div className="rounded-full border border-primary px-8 py-2 text-sm font-bold text-primary sm:text-lg">
           {data.time}
         </div>
-        <div className="rounded-full border border-[#D78428] px-8 py-2 text-sm font-bold text-[#D78428] sm:text-lg">
+        <div className="rounded-full border border-primary px-8 py-2 text-sm font-bold text-primary sm:text-lg">
           {data.language.toUpperCase()}
         </div>
       </div>
 
       {/* Mensaje de confirmación */}
-      <div className="mb-8 bg-[#D78428] py-3 text-white">
+      <div className="mb-8 bg-primary py-3 text-white">
         <h2 className="font-commingSoon text-lg font-bold sm:text-2xl">
-          ¡RESERVA CONFIRMADA!
+          {t("confirmation")}
         </h2>
       </div>
 
@@ -1195,7 +1164,7 @@ export function Confirmation({ data }: ConfirmationProps) {
       <div className="grid grid-cols-1 gap-6 rounded-lg bg-white px-6 py-8 shadow-lg sm:grid-cols-2 sm:px-16 lg:px-20">
         <div className="rounded-lg bg-gray-50 p-6 shadow-md">
           <h3 className="mb-4 text-base font-semibold text-gray-800 sm:text-lg">
-            Detalles de la Reserva
+            {t("detail.title")}
           </h3>
           <p className="mb-2 text-base font-medium text-gray-700">
             <span className="mr-2 text-base sm:text-lg">👤</span>{" "}
@@ -1211,18 +1180,21 @@ export function Confirmation({ data }: ConfirmationProps) {
           </p>
           <p className="text-base font-medium text-gray-700">
             <span className="mr-2 text-base sm:text-lg">👥</span>{" "}
-            {data.participants} ADULTO(S), {data.children} NIÑO(S)
+            {data.participants} {t("detail.adults")}, {data.children}{" "}
+            {t("detail.children")}
           </p>
-          <p className="mt-4 text-sm text-gray-500">CONSIDERACIONES</p>
-          <p className="font-comfortaa text-xs text-gray-600 sm:text-sm">
-            *Llegar 5 min antes
+          <p className="mt-4 text-sm text-gray-500">
+            {t("detail.considerations.title")}
+          </p>
+          <p className="text-xs text-gray-600 sm:text-sm">
+            {t("detail.considerations.message")}
           </p>
         </div>
 
         {/* Alergias */}
         <div className="rounded-lg bg-gray-50 p-6 shadow-md">
           <h3 className="mb-4 text-base font-semibold text-gray-800 sm:text-lg">
-            Alergias
+            {t("allergies")}
           </h3>
           <p className="text-sm font-medium text-gray-700 sm:text-base">
             {data.allergies ? `SÍ: ${data.allergies}` : "NINGUNA"}

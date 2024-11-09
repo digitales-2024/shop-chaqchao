@@ -1,29 +1,30 @@
 import React from "react";
 
 interface NavigationButtonsProps {
+  back: string;
+  next: string;
   onNext: () => void;
   onBack: () => void;
-  isNextDisabled?: boolean;
 }
 
 export const NavigationButtons: React.FC<NavigationButtonsProps> = ({
+  back,
+  next,
   onNext,
   onBack,
-  isNextDisabled,
 }) => (
   <>
     <button
       onClick={onBack}
-      className="w-36 rounded-full bg-[#D78428] px-0 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 ease-in-out hover:bg-[#8c5038]"
+      className="w-36 rounded-full bg-primary px-0 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 ease-in-out hover:bg-secondary/90"
     >
-      ATRÁS
+      {back}
     </button>
     <button
       onClick={onNext}
-      disabled={isNextDisabled}
-      className="w-36 rounded-full bg-[#D78428] px-0 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 ease-in-out hover:bg-[#8c5038]"
+      className="w-36 rounded-full bg-primary px-0 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 ease-in-out hover:bg-secondary/90"
     >
-      SIGUIENTE
+      {next}
     </button>
   </>
 );

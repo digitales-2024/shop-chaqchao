@@ -3,14 +3,6 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 
 import baseQueryWithReauth from "./baseQuery";
 
-/* interface ConfirmPaymentData {
-  paypalOrderId: string;
-  paypalOrderStatus: string;
-  paypalAmount: string;
-  paypalCurrency: string;
-  paypalDate: string;
-} */
-
 export const classApi = createApi({
   reducerPath: "classApi",
   baseQuery: baseQueryWithReauth,

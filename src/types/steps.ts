@@ -81,3 +81,8 @@ export interface ConfirmationProps {
     confirmed: boolean;
   };
 }
+
+export const enum TypeCurrency {
+  Sol = "SOL",
+  Dolar = "DOLAR",
+}

@@ -179,5 +179,150 @@
       "title": "Tu carrito está vacío",
       "description": "¡Explora nuestros productos y encuentra lo que necesitas!"
     }
+  },
+  "class": {
+    "step1": {
+      "title": "Registra una clase",
+      "description": "¡Puede reservar nuestra clase en nuestra tienda o reservarla con anticipación simplemente rellenando el siguiente formulario y pagando a través de PayPal! Nuestro equipo confirmará su reserva y pago por correo electrónico.",
+      "button": "Registrar"
+    },
+    "step2": {
+      "title": "Información de contacto",
+      "toast": {
+        "fullFields": "Por favor, complete todos los campos para continuar.",
+        "emailValidation": "Por favor, ingrese un correo electrónico válido."
+      },
+      "placeholder": {
+        "name": "Nombre Completo",
+        "email": "Correo Electrónico"
+      },
+      "button": {
+        "back": "ATRAS",
+        "next": "SIGUIENTE"
+      }
+    },
+    "step3": {
+      "title": "Escoja el día",
+      "toast": {
+        "fullFields": "Por favor, selecciona una fecha para continuar"
+      },
+      "button": {
+        "back": "ATRAS",
+        "next": "SIGUIENTE"
+      }
+    },
+    "step4": {
+      "title": "Horarios disponibles",
+      "toast": {
+        "fullFields": "Por favor, selecciona un horario para continuar."
+      },
+      "dateNotSelected": "Fecha no seleccionada.",
+      "subTitle": "Escoja el horario",
+      "schedule": {
+        "loading": "Cargando horarios...",
+        "loadingError": "Error al cargar los horarios",
+        "notAvailable": "No hay horarios disponibles"
+      },
+      "button": {
+        "back": "ATRAS",
+        "next": "SIGUIENTE"
+      }
+    },
+    "step5": {
+      "title": "Seleccione el idioma",
+      "subTitle": "Idiomas disponibles",
+      "toast": {
+        "fullFields": "Por favor, seleccione un idioma para continuar."
+      },
+      "dateNotSelected": "Fecha no seleccionada",
+      "language": {
+        "loading": "Cargando idiomas...",
+        "loadingError": "Error al cargar los idiomas",
+        "notAvailable": "No hay idiomas disponibles"
+      },
+      "button": {
+        "back": "ATRAS",
+        "next": "SIGUIENTE"
+      }
+    },
+    "step6": {
+      "title": "Cantidad de adultos",
+      "toast": {
+        "fullFields": "Por favor, seleccione la cantidad de adultos para continuar."
+      },
+      "dateNotSelected": "Fecha no seleccionada",
+      "button": {
+        "back": "ATRAS",
+        "next": "SIGUIENTE"
+      }
+    },
+    "step7": {
+      "title": "Personalice su experiencia",
+      "toast": {
+        "noPlaceAvailable": "No hay más cupos disponibles, Por favor escoja otra fecha u horario.",
+        "invalidNumberParticipantsRange": "Número invalido de participantes, El número minimo de participantes debe ser 2.",
+        "invalidNumberParticipants": "Número invalido de participantes, El número minimo de participantes debe ser 1.",
+        "classIsClose": "La clase esta cerrada, Por favor escoja otra fecha u horario.",
+        "registrationIsClose": "La inscripción esta cerrada, Por favor eliga otra fecha u horario.",
+        "invalidClassDate": "Fecha invalida, Por favor elige otra fecha u horario.",
+        "classRegisterSuccessfully": "Clase registrada exitosamente. Proceda con el pago.",
+        "errorRegisterClass": "Error al registrar la clase. Inténtalo de nuevo.",
+        "paymentConfirmed": "Pago confirmado y clase registrada con éxito.",
+        "errorConfirmPayment": "Error al confirmar el pago. Inténtalo de nuevo.",
+        "acceptTerms": "Acepte los terminos y politicas para continuar",
+        "timeOut": "El tiempo para realizar el pago ha expirado y su cupo fue cancelado."
+      },
+      "remainingTime": "Tiempo restante para realizar el pago: ",
+      "children": {
+        "detail": "Niños mayores de 14 años",
+        "detailPay": "Ya pagan como adulto*"
+      },
+      "symbols": {
+        "+": "+",
+        "-": "-"
+      },
+      "allergies": {
+        "title": "Alergias o restricciones alimentarias",
+        "placeholder": "Especifique que alergias",
+        "button": {
+          "si": "Si",
+          "no": "No"
+        }
+      },
+      "abstract": {
+        "title": "Resumen de la reserva",
+        "workshops": "WORKSHOP, ",
+        "people": "PERSONAS - "
+      },
+      "subtotalDetail": {
+        "title": "Subtotal",
+        "adults": "Adultos",
+        "children": "Niños"
+      },
+      "total": "Total",
+      "terms": {
+        "accord": "Estoy de acuerdo con los ",
+        "terms": "Términos y Políticas de Privacidad"
+      },
+      "buttons": {
+        "back": "ATRAS",
+        "register": "REGISTRAR CLASE"
+      }
+    },
+    "confirmation": {
+      "people": "Personas",
+      "confirmation": "!RESERVA CONFIRMADA!",
+      "dateNotSelected": "Fecha no seleccionada",
+      "detail": {
+        "title": "Detalles de la Reserva",
+        "adults": "ADULTO(S)",
+        "children": "NIÑO(S)",
+        "considerations": {
+          "title": "CONSIDERACIONES",
+          "message": "*Llegar 5 minutos antes"
+        }
+      },
+      "allergies": "Alergias"
+    }
   }
 }
