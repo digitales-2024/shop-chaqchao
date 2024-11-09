@@ -1,9 +1,11 @@
 "use client";
 import useCartDetail from "@/hooks/use-cart-detail";
-import { Invoice } from "@/schemas/invoice.schema";
+import { InvoiceSchema } from "@/schemas/invoice.schema";
+import { Invoice, INVOICES } from "@/types";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { UseFormReturn } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 import {
   Form,
@@ -22,13 +24,16 @@ import {
   SelectValue,
 } from "../ui/select";
 
-export const INVOICE = ["RECEIPT", "INVOICE"];
-
-interface SelectInvoiceProps {
-  form: UseFormReturn<Invoice>;
-}
-
-export const SelectInvoice = ({ form }: SelectInvoiceProps) => {
+export const SelectInvoice = () => {
+  const form = useForm<Invoice>({
+    resolver: zodResolver(InvoiceSchema()),
+    defaultValues: {
+      documentType: "dni",
+      number: "",
+      address: "",
+      name: "",
+    },
+  });
   const { invoice, setInvoice } = useCartDetail();
 
   const receiptDocuments = [
@@ -54,15 +59,20 @@ export const SelectInvoice = ({ form }: SelectInvoiceProps) => {
     <div className="w-full max-w-80">
       <div className="relative mb-6">
         <div className="grid grid-cols-2 rounded-full bg-muted p-1">
-          {INVOICE.map((type) => (
+          {INVOICES.map((type) => (
             <button
               key={type}
               onClick={() => {
-                setInvoice(type);
+                setInvoice({
+                  ...invoice,
+                  typeInvoice: type,
+                });
                 form.setValue("documentType", "");
               }}
               className={`relative z-10 rounded-full py-2 text-sm font-medium transition-colors ${
-                invoice === type ? "text-primary" : "text-muted-foreground"
+                invoice.typeInvoice === type
+                  ? "text-primary"
+                  : "text-muted-foreground"
               }`}
             >
               {t(type.charAt(0).toUpperCase() + type.slice(1))}
@@ -72,7 +82,7 @@ export const SelectInvoice = ({ form }: SelectInvoiceProps) => {
             className="absolute bottom-[2px] left-[2px] right-[2px] top-[2px] rounded-full bg-background shadow-sm"
             initial={false}
             animate={{
-              x: invoice === INVOICE[0] ? "0%" : "100%",
+              x: invoice.typeInvoice === INVOICES[0] ? "0%" : "100%",
               width: "49.35%",
             }}
             transition={{
@@ -99,7 +109,7 @@ export const SelectInvoice = ({ form }: SelectInvoiceProps) => {
                       <SelectValue placeholder={t("typeDoc")} />
                     </SelectTrigger>
                     <SelectContent>
-                      {invoice === INVOICE[0]
+                      {invoice.typeInvoice === INVOICES[0]
                         ? receiptDocuments.map(({ code, label }) => (
                             <SelectItem key={code} value={code}>
                               {label}
@@ -130,7 +140,7 @@ export const SelectInvoice = ({ form }: SelectInvoiceProps) => {
               </FormItem>
             )}
           />
-          {invoice === INVOICE[1] && (
+          {invoice.typeInvoice === INVOICES[1] && (
             <>
               <FormField
                 control={form.control}
