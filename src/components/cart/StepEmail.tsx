@@ -6,7 +6,9 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
+import { FormLogin } from "../account/login/FormLogin";
 import { Button } from "../ui/button";
+import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog";
 import {
   Form,
   FormControl,
@@ -93,7 +95,14 @@ export const StepEmail = () => {
               ¡Inicia sesión y sigue disfrutando de tus compras!
             </p>
           </div>
-          <Button>Iniciar sesión</Button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant="outline">Edit Profile</Button>
+            </DialogTrigger>
+            <DialogContent className="">
+              <FormLogin />
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
     </div>
