@@ -15,7 +15,7 @@ export const DetailCheckout = () => {
   const { amountTotal } = useCartStore();
   const { business, isLoading } = useBusiness();
 
-  const { fullDate, invoice } = useCartDetail();
+  const { dateOrder, invoice } = useCartDetail();
 
   const t = useTranslations("checkout.summary");
   const i = useTranslations("checkout.invoice");
@@ -43,8 +43,8 @@ export const DetailCheckout = () => {
             <div className="flex flex-col gap-2">
               <span className="text-gray-400">{t("date")}:</span>
               <span className="font-bold">
-                {fullDate ? (
-                  format(fullDate, "PPPp", { locale: es })
+                {dateOrder.fullDate ? (
+                  format(dateOrder.fullDate, "PPPp", { locale: es })
                 ) : (
                   <Skeleton className="h-8 w-32" />
                 )}
@@ -55,7 +55,11 @@ export const DetailCheckout = () => {
             <div className="flex flex-col gap-2">
               <span className="text-gray-400">{t("typeInvoice")}:</span>
               <span className="font-bold">
-                {invoice ? i(invoice) : <Skeleton className="h-8 w-32" />}
+                {invoice ? (
+                  i(invoice.typeInvoice)
+                ) : (
+                  <Skeleton className="h-8 w-32" />
+                )}
               </span>
             </div>
             <div className="flex flex-col gap-2">
