@@ -1,8 +1,8 @@
 import useCartDetail from "@/hooks/use-cart-detail";
+import { INVOICES } from "@/types";
 import { useTranslations } from "next-intl";
 import { z } from "zod";
 
-import { INVOICE } from "@/components/cart/SelectInvoice";
 export const InvoiceSchema = () => {
   const t = useTranslations("checkout.invoice.errors");
 
@@ -13,8 +13,8 @@ export const InvoiceSchema = () => {
     }),
     number: z
       .string()
-      .min(invoice === INVOICE[0] ? 8 : 11, {
-        message: invoice === INVOICE[0] ? t("dni") : t("ruc"),
+      .min(invoice.typeInvoice === INVOICES[0] ? 8 : 11, {
+        message: invoice.typeInvoice === INVOICES[0] ? t("dni") : t("ruc"),
       })
       .regex(/^[0-9]+$/, {
         message: t("number"),
@@ -23,11 +23,4 @@ export const InvoiceSchema = () => {
     address: z.string().optional(),
     name: z.string().optional(),
   });
-};
-
-export type Invoice = {
-  documentType: string;
-  number: string;
-  address?: string;
-  name?: string;
 };
