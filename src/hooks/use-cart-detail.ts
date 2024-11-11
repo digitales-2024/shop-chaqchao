@@ -1,6 +1,7 @@
 import { InvoiceData, INVOICES } from "@/types";
-import { steps } from "framer-motion";
 import { create } from "zustand";
+
+import { steps } from "@/components/cart/CheckoutSteps";
 
 interface Login {
   email: string;

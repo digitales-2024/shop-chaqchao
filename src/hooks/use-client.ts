@@ -25,7 +25,11 @@ export const useClients = () => {
 
   const [
     findClient,
-    { data: dataClientByEmail, isLoading: isLoadingClientByEmail },
+    {
+      data: dataClientByEmail,
+      isLoading: isLoadingClientByEmail,
+      error: errorClientByEmail,
+    },
   ] = useFindClientByEmailMutation();
 
   const [
@@ -85,5 +89,6 @@ export const useClients = () => {
     isLoadingProfile,
     dataClientByEmail,
     isLoadingClientByEmail,
+    errorClientByEmail,
   };
 };
