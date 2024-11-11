@@ -79,7 +79,13 @@
     "login": "¿Ya tienes una cuenta?",
     "loginButton": "Iniciar sesión",
     "terms": "Declaro que estoy de acuerdo con los",
-    "termsLink": "Términos y Políticas de Privacidad"
+    "termsLink": "Términos y Políticas de Privacidad",
+    "tooltip": {
+      "description": "La contraseña debe contener al menos 6 caracteres",
+      "upper": "Una mayúscula",
+      "lower": "Una minúscula",
+      "number": "Un número"
+    }
   },
   "errors": {
     "name": {

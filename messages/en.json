@@ -79,7 +79,13 @@
     "login": "Already have an account?",
     "loginButton": "Log in",
     "terms": "I declare that I agree with the",
-    "termsLink": "Terms and Privacy Policy"
+    "termsLink": "Terms and Privacy Policy",
+    "tooltip": {
+      "description": "The password must contain at least 6 characters",
+      "upper": "One uppercase letter",
+      "lower": "One lowercase letter",
+      "number": "One number"
+    }
   },
   "errors": {
     "name": {
