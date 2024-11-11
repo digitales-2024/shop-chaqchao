@@ -25,9 +25,9 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
-import { SelectInvoice } from "./SelectInvoice";
 import { StepDateOrder } from "./StepDateOrder";
 import { StepEmail } from "./StepEmail";
+import { StepInvoice } from "./StepInvoice";
 
 export const steps = [
   {
@@ -44,7 +44,7 @@ export const steps = [
   },
   {
     title: "invoice",
-    content: <SelectInvoice />,
+    content: <StepInvoice />,
     icon: ReceiptText,
     iconCheck: Receipt,
   },
