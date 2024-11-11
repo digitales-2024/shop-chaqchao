@@ -156,10 +156,8 @@ export const StepEmail = () => {
           <Separator orientation="vertical" />
           <div className="flex flex-col justify-between">
             <div>
-              <h3 className="text-lg font-bold">¿Ya tienes cuenta?</h3>
-              <p className="text-sm">
-                ¡Inicia sesión y sigue disfrutando de tus compras!
-              </p>
+              <h3 className="text-lg font-bold">{t("account.title")}</h3>
+              <p className="text-sm">{t("account.description")} </p>
             </div>
             <DialogLogin />
           </div>
