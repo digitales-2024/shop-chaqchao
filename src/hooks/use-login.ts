@@ -1,6 +1,5 @@
 import { useLoginMutation } from "@/redux/services/authApi";
 import { Credentials, CustomErrorData } from "@/types";
-import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { SubmitHandler } from "react-hook-form";
 import { toast } from "sonner";
@@ -9,7 +8,6 @@ import { useAuth } from "./use-auth";
 
 export const useLogin = () => {
   const [login, { data, isSuccess, isLoading, error }] = useLoginMutation();
-  const router = useRouter();
   const { setClient } = useAuth();
 
   const onLogin: SubmitHandler<Credentials> = async (credentials) => {
@@ -75,9 +73,9 @@ export const useLogin = () => {
 
   useEffect(() => {
     if (isSuccess && data) {
-      router.replace("/");
+      window.location.reload();
     }
-  }, [data, isSuccess, router]);
+  }, [data, isSuccess]);
 
   return { onLogin, googleLogin, isLoading, error };
 };
