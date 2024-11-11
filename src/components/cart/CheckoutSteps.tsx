@@ -50,9 +50,6 @@ export const steps = [
 export const CheckoutSteps = () => {
   const { activeStep, completedSteps, editMode, handleEdit, login } =
     useCartDetail();
-  console.log("🚀 ~ CheckoutSteps ~ login:", login);
-  console.log("🚀 ~ CheckoutSteps ~ activeStep:", activeStep);
-
   const t = useTranslations("checkout");
   return (
     <div className="w-full space-y-4">
