@@ -17,7 +17,6 @@ import { Check } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "next-view-transitions";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import React, { startTransition } from "react";
 import { useForm } from "react-hook-form";
 
@@ -61,13 +60,13 @@ export default function AuthComponent() {
       terms: false,
     },
   });
-
   function onSubmit(input: CreateClientsSchema) {
     const { name, firstName, ...filteredInput } = input;
     const combinedName = `${name} ${firstName}`;
     const apiInput: CreateClientInputSchema = {
       ...filteredInput,
       name: combinedName,
+      birthDate: input.birthDate,
     };
     startTransition(async () => {
       await onCreateClient(apiInput);
@@ -77,9 +76,6 @@ export default function AuthComponent() {
   const locale = useLocale();
 
   const t = useTranslations("register");
-
-  const router = useRouter();
-  console.log("🚀 ~ AuthComponent ~ router:", router);
 
   return (
     <div className="grid h-screen grid-cols-1 p-2 font-nunito md:grid-cols-2">
@@ -123,6 +119,7 @@ export default function AuthComponent() {
                           </FormLabel>
                           <FormControl>
                             <Input
+                              autoComplete="off"
                               placeholder={t("placeholderName")}
                               {...field}
                             />
@@ -142,6 +139,7 @@ export default function AuthComponent() {
                           </FormLabel>
                           <FormControl>
                             <Input
+                              autoComplete="off"
                               placeholder={t("placeholderLast")}
                               {...field}
                             />
@@ -167,7 +165,6 @@ export default function AuthComponent() {
                           </FormLabel>
                           <FormControl>
                             <Input
-                              type="email"
                               autoComplete="off"
                               placeholder={t("placeholderEmail")}
                               {...field}
@@ -192,7 +189,7 @@ export default function AuthComponent() {
                             {t("password")}{" "}
                             <span className="text-rose-500">*</span>
                             <Tooltip>
-                              <TooltipTrigger>
+                              <TooltipTrigger tabIndex={-1}>
                                 <Badge
                                   className="aspect-square cursor-help rounded-full"
                                   variant="outline"
@@ -249,7 +246,11 @@ export default function AuthComponent() {
                               <span className="text-rose-500">*</span>
                             </FormLabel>
                             <FormControl>
-                              <PhoneInput defaultCountry="PE" {...field} />
+                              <PhoneInput
+                                autoComplete="off"
+                                defaultCountry="PE"
+                                {...field}
+                              />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -298,6 +299,7 @@ export default function AuthComponent() {
                                 <Link
                                   href="/terms"
                                   className="font-bold hover:text-primary"
+                                  tabIndex={-1}
                                 >
                                   {t("termsLink")}
                                 </Link>
