@@ -1,5 +1,7 @@
 "use client";
 import useCartDetail from "@/hooks/use-cart-detail";
+import { format } from "date-fns";
+import { es } from "date-fns/locale";
 import {
   Calendar,
   CalendarCheck,
@@ -11,7 +13,7 @@ import {
   User,
   UserCheck,
 } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 import { cn } from "@/lib/utils";
 
@@ -23,8 +25,8 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
-import { SelectDateOrder } from "./SelectDateOrder";
 import { SelectInvoice } from "./SelectInvoice";
+import { StepDateOrder } from "./StepDateOrder";
 import { StepEmail } from "./StepEmail";
 
 export const steps = [
@@ -36,7 +38,7 @@ export const steps = [
   },
   {
     title: "Fecha de recogida",
-    content: <SelectDateOrder />,
+    content: <StepDateOrder />,
     icon: Calendar,
     iconCheck: CalendarCheck,
   },
@@ -48,9 +50,12 @@ export const steps = [
   },
 ];
 export const CheckoutSteps = () => {
-  const { activeStep, completedSteps, editMode, handleEdit, login } =
+  const { activeStep, completedSteps, editMode, handleEdit, login, dateOrder } =
     useCartDetail();
   const t = useTranslations("checkout");
+
+  const locale = useLocale();
+
   return (
     <div className="w-full space-y-4">
       {steps.map(
@@ -113,10 +118,19 @@ export const CheckoutSteps = () => {
                   )}
                 </div>
               </CardTitle>
-              {login && activeStep !== index && (
+              {login && activeStep !== index && index === 0 && (
                 <CardDescription className="inline-flex gap-4">
                   <span className="font-bold capitalize">{login.name}</span>
                   <span className="font-bold">{login.email}</span>
+                </CardDescription>
+              )}
+              {dateOrder.fullDate && activeStep !== index && index === 1 && (
+                <CardDescription className="inline-flex gap-4">
+                  <span className="font-bold">
+                    {format(dateOrder.fullDate, "PPPp", {
+                      locale: locale === "es" ? es : undefined,
+                    })}
+                  </span>
                 </CardDescription>
               )}
             </CardHeader>
