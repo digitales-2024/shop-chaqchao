@@ -13,9 +13,11 @@ import {
 } from "@/schemas/client/createClientsSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
+import { Check } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "next-view-transitions";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { startTransition } from "react";
 import { useForm } from "react-hook-form";
 
@@ -32,15 +34,15 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from "@/components/ui/hover-card";
 import { Input } from "@/components/ui/input";
 import { InputPassword } from "@/components/ui/input-password";
 import { PhoneInput } from "@/components/ui/phone-input";
 import { Separator } from "@/components/ui/separator";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import DatePickerWithYearNavigation from "@/components/ui/year-selector";
 
 export default function AuthComponent() {
@@ -75,6 +77,9 @@ export default function AuthComponent() {
   const locale = useLocale();
 
   const t = useTranslations("register");
+
+  const router = useRouter();
+  console.log("🚀 ~ AuthComponent ~ router:", router);
 
   return (
     <div className="grid h-screen grid-cols-1 p-2 font-nunito md:grid-cols-2">
@@ -186,25 +191,36 @@ export default function AuthComponent() {
                           <FormLabel className="inline-flex items-center justify-center gap-2 font-bold">
                             {t("password")}{" "}
                             <span className="text-rose-500">*</span>
-                            <HoverCard>
-                              <HoverCardTrigger>
+                            <Tooltip>
+                              <TooltipTrigger>
                                 <Badge
                                   className="aspect-square cursor-help rounded-full"
                                   variant="outline"
                                 >
                                   ?
                                 </Badge>
-                              </HoverCardTrigger>
-                              <HoverCardContent className="font-normal">
-                                La contraseña debe tener al menos una{" "}
-                                <span className="font-bold uppercase">
-                                  mayúscula
-                                </span>
-                                , una{" "}
-                                <span className="font-bold">minúscula</span> y
-                                un <span className="font-bold">número</span>.
-                              </HoverCardContent>
-                            </HoverCard>
+                              </TooltipTrigger>
+                              <TooltipContent
+                                className="z-50 bg-white font-normal"
+                                align="start"
+                              >
+                                {t("tooltip.description")}{" "}
+                                <ul className="flex flex-col gap-2">
+                                  <li className="inline-flex items-center gap-2 font-bold">
+                                    <Check className="size-4 text-emerald-500" />
+                                    {t("tooltip.upper")}
+                                  </li>
+                                  <li className="inline-flex items-center gap-2 font-bold">
+                                    <Check className="size-4 text-emerald-500" />
+                                    {t("tooltip.lower")}
+                                  </li>
+                                  <li className="inline-flex items-center gap-2 font-bold">
+                                    <Check className="size-4 text-emerald-500" />
+                                    {t("tooltip.number")}
+                                  </li>
+                                </ul>
+                              </TooltipContent>
+                            </Tooltip>
                           </FormLabel>
                           <FormControl>
                             <InputPassword
@@ -229,7 +245,8 @@ export default function AuthComponent() {
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel className="font-bold">
-                              Celular <span className="text-rose-500">*</span>
+                              {t("phone")}{" "}
+                              <span className="text-rose-500">*</span>
                             </FormLabel>
                             <FormControl>
                               <PhoneInput defaultCountry="PE" {...field} />
@@ -244,7 +261,7 @@ export default function AuthComponent() {
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel className="font-bold">
-                              Fecha de cumpleaños
+                              {t("birthdate")}
                             </FormLabel>
                             <FormControl className="flex">
                               <DatePickerWithYearNavigation
@@ -270,7 +287,7 @@ export default function AuthComponent() {
                       render={({ field }) => (
                         <FormItem>
                           <FormControl>
-                            <div className="inline-flex items-center space-x-2">
+                            <div className="inline-flex items-center space-x-2 text-xs">
                               <Checkbox
                                 id="terms"
                                 checked={field.value}
