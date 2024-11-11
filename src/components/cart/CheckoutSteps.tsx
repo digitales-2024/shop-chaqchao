@@ -20,31 +20,29 @@ import { SelectDateOrder } from "./SelectDateOrder";
 import { SelectInvoice } from "./SelectInvoice";
 import { StepEmail } from "./StepEmail";
 
+export const steps = [
+  {
+    title: "Login",
+    content: <StepEmail />,
+    icon: User,
+    iconCheck: UserCheck,
+  },
+  {
+    title: "Fecha de recogida",
+    content: <SelectDateOrder />,
+    icon: Calendar,
+    iconCheck: CalendarCheck,
+  },
+  {
+    title: "Facturación",
+    content: <SelectInvoice />,
+    icon: ReceiptText,
+    iconCheck: Receipt,
+  },
+];
 export const CheckoutSteps = () => {
-  const steps = [
-    {
-      title: "Login",
-      content: <StepEmail />,
-      icon: User,
-      iconCheck: UserCheck,
-    },
-    {
-      title: "Fecha de recogida",
-      content: <SelectDateOrder />,
-      icon: Calendar,
-      iconCheck: CalendarCheck,
-    },
-    {
-      title: "Facturación",
-      content: <SelectInvoice />,
-      icon: ReceiptText,
-      iconCheck: Receipt,
-    },
-  ];
-
   const { activeStep, completedSteps, editMode, toggleStep, handleEdit } =
     useCartDetail();
-
   return (
     <div className="w-full space-y-4">
       {steps.map(
@@ -52,9 +50,10 @@ export const CheckoutSteps = () => {
           <Card
             key={index}
             className={cn(
-              activeStep === index
-                ? "border border-primary"
-                : "border-none bg-slate-50",
+              activeStep === index ? "border border-primary" : "bg-slate-50",
+              {
+                "border border-emerald-500": completedSteps.includes(index),
+              },
             )}
           >
             <CardHeader
@@ -63,7 +62,11 @@ export const CheckoutSteps = () => {
             >
               <CardTitle className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
-                  <div className="rounded-full border p-1">
+                  <div
+                    className={cn("rounded-full border p-1", {
+                      "border-emerald-500": completedSteps.includes(index),
+                    })}
+                  >
                     {completedSteps.includes(index) ? (
                       <IconCheck className="size-4 shrink-0 text-green-500" />
                     ) : (
@@ -77,7 +80,7 @@ export const CheckoutSteps = () => {
                   <span
                     className={cn("text-sm uppercase", {
                       "text-slate-400": activeStep !== index,
-                      "text-primary": completedSteps.includes(index),
+                      "text-emerald-500": completedSteps.includes(index),
                     })}
                   >
                     {title}
