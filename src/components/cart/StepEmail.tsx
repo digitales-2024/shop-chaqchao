@@ -37,10 +37,11 @@ export const StepEmail = () => {
 
   const t = useTranslations("checkout.login");
   const c = useTranslations("checkout");
+  const e = useTranslations("errors");
 
   const { login, setLogin, handleStepComplete } = useCartDetail();
   const emailSchema = z.object({
-    email: z.string().email("Ingrese un correo electrónico válido"),
+    email: z.string().email(e("email.email")),
   });
 
   type EmailSchema = z.infer<typeof emailSchema>;
@@ -148,7 +149,7 @@ export const StepEmail = () => {
                     <RefreshCcw className="spin size-4" /> Buscando{" "}
                   </>
                 ) : (
-                  "Continuar"
+                  c("continue")
                 )}
               </Button>
             </form>
