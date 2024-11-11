@@ -1,11 +1,15 @@
 "use client";
+import { ShoppingDelete } from "@/assets/icons";
+import { useCart } from "@/hooks/use-cart";
 import useCartSheet from "@/hooks/use-cart-sheet";
 import useCartStore from "@/redux/store/cart";
+import { ErrorData } from "@/types/error";
 import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingBag } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import {
   Sheet,
@@ -18,6 +22,9 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
+import { cn } from "@/lib/utils";
+
+import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { Badge } from "../ui/badge";
 import { ButtonCheckout } from "./ButtonCheckout";
 import { CartEmpty } from "./CartEmpty";
@@ -36,8 +43,38 @@ export function CartSheet() {
   const { cartItems, amountTotal } = useCartStore();
 
   const t = useTranslations("cart");
+  const c = useTranslations("checkout.checkout");
 
   const { open, onOpenChange } = useCartSheet();
+  const rounter = useRouter();
+
+  const { validate, isLoadingValidate, errorValidate } = useCart();
+  const handleCheckout = async () => {
+    if (cartItems.length > 0) {
+      const response = await validate({
+        cartItems: cartItems.map((item) => item.id),
+      });
+
+      if (response.data) {
+        onOpenChange();
+        rounter.push("/cart/checkout");
+      }
+    }
+  };
+
+  const validateItem = (item: string) => {
+    if (errorValidate) {
+      const errorData = (
+        errorValidate as ErrorData<ErrorData<{ id: string }[]>>
+      ).data;
+      if (errorData) {
+        const isAvailable = errorData.data.some((error) => error.id === item);
+        return isAvailable;
+      }
+      return false;
+    }
+    return false;
+  };
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -69,6 +106,29 @@ export function CartSheet() {
           </SheetDescription>
         </SheetHeader>
         <div className="grid gap-4 py-4">
+          <AnimatePresence>
+            {errorValidate ? (
+              <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, transition: { duration: 0.2 } }}
+                transition={{ ...springTransition }}
+              >
+                <Alert
+                  variant="destructive"
+                  className="border border-rose-500 text-rose-500"
+                >
+                  <ShoppingDelete className="stroke-rose-500" />
+                  <AlertTitle className="font-bold">
+                    {c("messages.warning.title")}
+                  </AlertTitle>
+                  <AlertDescription>
+                    {c("messages.warning.description")}
+                  </AlertDescription>
+                </Alert>
+              </motion.div>
+            ) : null}
+          </AnimatePresence>
           <ul>
             <AnimatePresence>
               {cartItems.length > 0 &&
@@ -91,7 +151,21 @@ export function CartSheet() {
                           <DeleteItemButton item={item} />
                         </div>
                         <div className="flex flex-row">
-                          <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-md border bg-white shadow">
+                          <div
+                            className={cn(
+                              "relative h-16 w-16 shrink-0 overflow-hidden rounded-md border bg-white shadow",
+                              {
+                                "border-rose-500": validateItem(item.id),
+                              },
+                            )}
+                          >
+                            {validateItem(item.id) && (
+                              <div className="absolute bottom-0 left-0 right-0 top-0 flex h-full w-full items-center justify-center bg-rose-100/60 text-xs">
+                                <div className="rounded-full bg-white p-2">
+                                  <ShoppingDelete className="size-4 text-rose-500" />
+                                </div>
+                              </div>
+                            )}
                             <Image
                               className="h-full w-full object-cover"
                               width={64}
@@ -151,7 +225,12 @@ export function CartSheet() {
         </div>
         <SheetFooter>
           <SheetClose asChild>
-            {cartItems.length > 0 && <ButtonCheckout />}
+            {cartItems.length > 0 && (
+              <ButtonCheckout
+                validate={handleCheckout}
+                isLoading={isLoadingValidate}
+              />
+            )}
           </SheetClose>
         </SheetFooter>
       </SheetContent>
