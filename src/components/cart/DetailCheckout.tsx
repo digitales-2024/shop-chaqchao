@@ -15,8 +15,7 @@ export const DetailCheckout = () => {
   const { amountTotal } = useCartStore();
   const { business, isLoading } = useBusiness();
 
-  const { dateOrder, invoice } = useCartDetail();
-
+  const { dateOrder, invoice, login } = useCartDetail();
   const t = useTranslations("checkout.summary");
   const i = useTranslations("checkout.invoice");
 
@@ -30,6 +29,16 @@ export const DetailCheckout = () => {
         <Separator />
         <div className="grid grid-cols-2">
           <div className="space-y-6">
+            <div className="flex flex-col gap-2">
+              {login.name ? (
+                <span className="truncate font-bold capitalize">
+                  {login.name}
+                </span>
+              ) : (
+                <Skeleton className="h-8 w-32" />
+              )}
+            </div>
+
             <div className="flex flex-col gap-2">
               <span className="text-gray-400">{t("address")}:</span>
               <span className="font-bold">
@@ -52,6 +61,13 @@ export const DetailCheckout = () => {
             </div>
           </div>
           <div className="space-y-6">
+            <div className="flex flex-col gap-2">
+              {login.email ? (
+                <span className="truncate font-bold">{login.email}</span>
+              ) : (
+                <Skeleton className="h-8 w-32" />
+              )}
+            </div>
             <div className="flex flex-col gap-2">
               <span className="text-gray-400">{t("typeInvoice")}:</span>
               <span className="font-bold">
