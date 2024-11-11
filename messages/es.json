@@ -205,6 +205,8 @@
     },
     "back": "Atras",
     "next": "Siguiente",
+    "continue": "Continuar",
+    "edit": "Editar",
     "summary": {
       "title": "Resumen",
       "address": "Punto de recogida",
@@ -240,6 +242,14 @@
         "number": "El número de documento es requerido",
         "dni": "El número de documento debe tener al menos 8 caracteres",
         "ruc": "El número de documento debe tener al menos 11 caracteres"
+      }
+    },
+    "login": {
+      "title": "¿Por qué necesitamos tu email?",
+      "description": "Necesitamos tu email para enviarte la confirmación de tu pedido y mantenernos en contacto contigo.",
+      "alert": {
+        "title": "Bienvenido  de nuevo!",
+        "description": "Hemos encontrado una cuenta con tu correo electrónico, por favor inicia sesión para continuar con tu pedido."
       }
     }
   }

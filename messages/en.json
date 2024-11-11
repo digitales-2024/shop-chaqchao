@@ -211,6 +211,8 @@
     },
     "back": "Back",
     "next": "Next",
+    "continue": "Continue",
+    "edit": "Edit",
     "summary": {
       "title": "Summary",
       "address": "Address ",
@@ -246,6 +248,14 @@
         "number": "The document number is required",
         "dni": "The document number must have at least 8 digits",
         "ruc": "The document number must have at least 11 digits"
+      }
+    },
+    "login": {
+      "title": "Why do we need your email?",
+      "description": "We need your email to send you the order confirmation and keep in touch with you",
+      "alert": {
+        "title": "Welcome back",
+        "description": "We have found an account with your email, please log in to continue with your order."
       }
     }
   }
