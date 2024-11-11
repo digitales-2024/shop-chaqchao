@@ -85,6 +85,12 @@
       "upper": "Una mayúscula",
       "lower": "Una minúscula",
       "number": "Un número"
+    },
+    "messages": {
+      "loading": "Creando usuario...",
+      "success": "¡Registro exitoso!",
+      "error": "¡Error al registrarse!",
+      "email": "El correo electrónico ya está en uso"
     }
   },
   "errors": {
@@ -105,7 +111,8 @@
     },
     "phone": { "required": "Ingrese un número de celular válido" },
     "birthdate": { "required": "Ingrese una fecha de nacimiento válida" },
-    "terms": { "required": "Debe aceptar los términos y condiciones" }
+    "terms": { "required": "Debe aceptar los términos y condiciones" },
+    "network": "Ocurrió un error inesperado, por favor intenta de nuevo"
   },
   "account": {
     "title": "Mi cuenta",

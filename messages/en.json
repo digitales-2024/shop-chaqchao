@@ -85,6 +85,12 @@
       "upper": "One uppercase letter",
       "lower": "One lowercase letter",
       "number": "One number"
+    },
+    "messages": {
+      "loading": "Creating user...",
+      "success": "User created successfully",
+      "error": "Error creating user",
+      "email": "Email already in use"
     }
   },
   "errors": {
@@ -111,7 +117,8 @@
     },
     "terms": {
       "required": "You must accept the terms and conditions"
-    }
+    },
+    "network": "Network error, try again later"
   },
   "account": {
     "title": "My account",
