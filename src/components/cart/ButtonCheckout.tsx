@@ -1,24 +1,30 @@
-import useCartSheet from "@/hooks/use-cart-sheet";
-import useCartStore from "@/redux/store/cart";
-import { ShoppingCart } from "lucide-react";
-import Link from "next/link";
+import { ShoppingCheck } from "@/assets/icons";
+import { RefreshCcw } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { cn } from "@/lib/utils";
 
-import { buttonVariants } from "../ui/button";
+import { Button, buttonVariants } from "../ui/button";
 
-export const ButtonCheckout = () => {
-  const { id } = useCartStore();
-  const { onOpenChange } = useCartSheet();
+interface ButtonCheckoutProps {
+  isLoading: boolean;
+  validate: () => void;
+}
+
+export const ButtonCheckout = ({
+  validate,
+  isLoading,
+}: ButtonCheckoutProps) => {
+  const t = useTranslations("checkout.checkout");
 
   return (
-    <Link
-      href={`/cart/${id}`}
+    <Button
       className={cn("font-bold", buttonVariants({}))}
-      onClick={onOpenChange}
+      onClick={validate}
+      disabled={isLoading}
     >
-      <ShoppingCart />
-      Realizar el pago
-    </Link>
+      {isLoading ? <RefreshCcw className="animate-spin" /> : <ShoppingCheck />}
+      {t("button")}
+    </Button>
   );
 };
