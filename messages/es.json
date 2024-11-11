@@ -256,6 +256,11 @@
         "description": "¡Inicia sesión y sigue disfrutando de tus compras!",
         "button": "Iniciar sesión"
       }
+    },
+    "steps": {
+      "login": "Iniciar sesión",
+      "date": "Fecha de recogida",
+      "invoice": "Datos de facturación"
     }
   }
 }

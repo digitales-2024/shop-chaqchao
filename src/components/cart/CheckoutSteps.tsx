@@ -31,19 +31,19 @@ import { StepEmail } from "./StepEmail";
 
 export const steps = [
   {
-    title: "Login",
+    title: "login",
     content: <StepEmail />,
     icon: User,
     iconCheck: UserCheck,
   },
   {
-    title: "Fecha de recogida",
+    title: "date",
     content: <StepDateOrder />,
     icon: Calendar,
     iconCheck: CalendarCheck,
   },
   {
-    title: "Facturación",
+    title: "invoice",
     content: <SelectInvoice />,
     icon: ReceiptText,
     iconCheck: Receipt,
@@ -94,7 +94,7 @@ export const CheckoutSteps = () => {
                       "text-emerald-500": completedSteps.includes(index),
                     })}
                   >
-                    {title}
+                    {t(`steps.${title}`)}
                   </span>
                 </div>
                 <div className="flex items-center space-x-2">

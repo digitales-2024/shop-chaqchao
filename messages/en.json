@@ -262,6 +262,11 @@
         "description": "Log in and keep enjoying your shopping!",
         "button": "Sign in"
       }
+    },
+    "steps": {
+      "login": "Log in",
+      "date": "Collection date",
+      "invoice": "Invoice"
     }
   }
 }
