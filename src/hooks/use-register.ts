@@ -1,12 +1,17 @@
 import { useCreateClientMutation } from "@/redux/services/authApi";
 import { CreateClientInputSchema } from "@/schemas/client/createClientsSchema";
 import { CustomErrorData } from "@/types";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { toast } from "sonner";
 
 export const useRegister = () => {
   const router = useRouter();
+
+  const e = useTranslations("errors");
+  const t = useTranslations("register.messages");
+
   const [
     createClient,
     { isSuccess: isSuccessCreateClient, data: dataRegisterClient },
@@ -27,11 +32,7 @@ export const useRegister = () => {
             reject(new Error(message));
           }
           if (result.error) {
-            reject(
-              new Error(
-                "Ocurrió un error inesperado, por favor intenta de nuevo",
-              ),
-            );
+            reject(new Error(e("network")));
           }
           resolve(result);
         } catch (error) {
@@ -40,10 +41,10 @@ export const useRegister = () => {
       });
 
     toast.promise(promise(), {
-      loading: "Creando usuario...",
-      success: "Usuario creado con éxito.",
+      loading: t("loading"),
+      success: t("success"),
       error: (error) => {
-        return error.message;
+        return t(error.message) || error.message;
       },
     });
   };
