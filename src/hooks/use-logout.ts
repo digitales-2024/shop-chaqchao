@@ -1,15 +1,12 @@
 "use client";
 import { useLogoutMutation } from "@/redux/services/authApi";
 import { CustomErrorData } from "@/types";
-import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 import { useAuth } from "./use-auth";
 
 export const useLogout = () => {
   const [logout, { isLoading, error }] = useLogoutMutation();
-  const router = useRouter();
-  console.log("🚀 ~ useLogout ~ router:", router);
   const { clearClient } = useAuth();
 
   const signOut = async () => {
