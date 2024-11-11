@@ -194,6 +194,15 @@
     }
   },
   "checkout": {
+    "checkout": {
+      "button": "Verificar pedido",
+      "messages": {
+        "warning": {
+          "title": "¡Atención!",
+          "description": "Algunos productos ya no están disponibles, por favor revisa tu carrito"
+        }
+      }
+    },
     "back": "Atras",
     "next": "Siguiente",
     "summary": {

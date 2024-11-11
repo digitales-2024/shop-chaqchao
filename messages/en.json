@@ -200,6 +200,15 @@
     }
   },
   "checkout": {
+    "checkout": {
+      "button": "Checkout",
+      "messages": {
+        "warning": {
+          "title": "Warning",
+          "description": "You must be logged in to continue with the purchase"
+        }
+      }
+    },
     "back": "Back",
     "next": "Next",
     "summary": {
