@@ -6,7 +6,7 @@ import { format, setHours, setMinutes } from "date-fns";
 import { es } from "date-fns/locale";
 import { CalendarIcon, Clock } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -21,9 +21,12 @@ import {
   SelectValue,
 } from "../ui/select";
 
-export const SelectDateOrder = () => {
-  const { date, hour, setDate, setFullDate, setHour, fullDate } =
-    useCartDetail();
+export const StepDateOrder = () => {
+  const { dateOrder, setDateOrder, handleStepComplete } = useCartDetail();
+
+  const memoizedDateOrder = useMemo(() => dateOrder, [dateOrder]);
+
+  const { date, hour, fullDate } = memoizedDateOrder;
 
   const { business } = useBusiness();
 
@@ -43,7 +46,10 @@ export const SelectDateOrder = () => {
     if (date && hour) {
       const [hours, minutes] = hour.split(":").map(Number);
       const nuevaFechaHora = setMinutes(setHours(date, hours), minutes);
-      setFullDate(nuevaFechaHora);
+      setDateOrder({
+        ...dateOrder,
+        fullDate: nuevaFechaHora,
+      });
     }
   }, [date, hour]);
 
@@ -61,6 +67,7 @@ export const SelectDateOrder = () => {
   }, [business, date]);
 
   const t = useTranslations("checkout.dateOrder");
+  const c = useTranslations("checkout");
   const lang = useLocale();
 
   useEffect(() => {
@@ -79,6 +86,17 @@ export const SelectDateOrder = () => {
       setHorasDisponibles(horas);
     }
   }, [openingTime, closingTime]);
+
+  const handleConfirmDate = () => {
+    if (date && hour) {
+      setDateOrder({
+        ...dateOrder,
+        date,
+        hour,
+      });
+      handleStepComplete(1);
+    }
+  };
 
   return (
     <div className="flex flex-col gap-6">
@@ -107,14 +125,28 @@ export const SelectDateOrder = () => {
             <PopoverContent className="w-auto p-0">
               <Calendar
                 selected={date}
-                onSelect={setDate}
+                onSelect={() => {
+                  setDateOrder({
+                    ...dateOrder,
+                    date: date ? undefined : new Date(),
+                  });
+                }}
                 disabled={deshabilitarFechasPasadas}
                 initialFocus
                 locale={lang === "es" ? es : undefined}
               />
             </PopoverContent>
           </Popover>
-          <Select onValueChange={setHour} value={hour} disabled={!date}>
+          <Select
+            value={hour}
+            onValueChange={(value) => {
+              setDateOrder({
+                ...dateOrder,
+                hour: value,
+              });
+            }}
+            disabled={!date}
+          >
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder={t("hour")}>
                 {hour ? (
@@ -144,6 +176,9 @@ export const SelectDateOrder = () => {
             })}
           </p>
         )}
+        <Button onClick={handleConfirmDate} disabled={!date || !hour}>
+          {c("continue")}
+        </Button>
       </div>
     </div>
   );
