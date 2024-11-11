@@ -11,11 +11,18 @@ import {
   User,
   UserCheck,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { cn } from "@/lib/utils";
 
 import { Button } from "../ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
 import { SelectDateOrder } from "./SelectDateOrder";
 import { SelectInvoice } from "./SelectInvoice";
 import { StepEmail } from "./StepEmail";
@@ -41,8 +48,12 @@ export const steps = [
   },
 ];
 export const CheckoutSteps = () => {
-  const { activeStep, completedSteps, editMode, toggleStep, handleEdit } =
+  const { activeStep, completedSteps, editMode, handleEdit, login } =
     useCartDetail();
+  console.log("🚀 ~ CheckoutSteps ~ login:", login);
+  console.log("🚀 ~ CheckoutSteps ~ activeStep:", activeStep);
+
+  const t = useTranslations("checkout");
   return (
     <div className="w-full space-y-4">
       {steps.map(
@@ -52,14 +63,12 @@ export const CheckoutSteps = () => {
             className={cn(
               activeStep === index ? "border border-primary" : "bg-slate-50",
               {
-                "border border-emerald-500": completedSteps.includes(index),
+                "border border-emerald-500 bg-white":
+                  completedSteps.includes(index),
               },
             )}
           >
-            <CardHeader
-              className="cursor-pointer p-4"
-              onClick={() => toggleStep(index)}
-            >
+            <CardHeader className="cursor-pointer p-4">
               <CardTitle className="flex items-center justify-between">
                 <div className="flex items-center space-x-2">
                   <div
@@ -97,7 +106,7 @@ export const CheckoutSteps = () => {
                       }}
                     >
                       <Edit className="mr-2 h-4 w-4" />
-                      Editar
+                      {t("edit")}
                     </Button>
                   )}
                   {activeStep === index ? (
@@ -107,6 +116,12 @@ export const CheckoutSteps = () => {
                   )}
                 </div>
               </CardTitle>
+              {login && activeStep !== index && (
+                <CardDescription className="inline-flex gap-4">
+                  <span className="font-bold capitalize">{login.name}</span>
+                  <span className="font-bold">{login.email}</span>
+                </CardDescription>
+              )}
             </CardHeader>
             {activeStep === index && (
               <CardContent className="p-4">
