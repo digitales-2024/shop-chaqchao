@@ -250,6 +250,11 @@
       "alert": {
         "title": "Bienvenido  de nuevo!",
         "description": "Hemos encontrado una cuenta con tu correo electrónico, por favor inicia sesión para continuar con tu pedido."
+      },
+      "account": {
+        "title": "¿Ya tienes una cuenta?",
+        "description": "",
+        "button": "Iniciar sesión"
       }
     }
   }

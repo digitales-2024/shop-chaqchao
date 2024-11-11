@@ -256,6 +256,11 @@
       "alert": {
         "title": "Welcome back",
         "description": "We have found an account with your email, please log in to continue with your order."
+      },
+      "account": {
+        "title": "Do you already have an account?",
+        "description": "Log in and keep enjoying your shopping!",
+        "button": "Sign in"
       }
     }
   }
