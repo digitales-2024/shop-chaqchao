@@ -1,3 +1,5 @@
+import { useTranslations } from "next-intl";
+
 import {
   Dialog,
   DialogTrigger,
@@ -14,6 +16,7 @@ import { FormLogin } from "../account/login/FormLogin";
 import { buttonVariants } from "../ui/button";
 
 export const DialogLogin = () => {
+  const t = useTranslations("checkout.login.account");
   return (
     <Dialog
       transition={{
@@ -29,7 +32,7 @@ export const DialogLogin = () => {
             cn(buttonVariants({})),
           )}
         >
-          Iniciar sesión
+          {t("button")}
         </DialogTitle>
       </DialogTrigger>
       <DialogContainer>
