@@ -241,6 +241,7 @@
         "typeDoc": "El tipo de documento es requerido",
         "number": "El número de documento es requerido",
         "dni": "El número de documento debe tener al menos 8 caracteres",
+        "passport": "El número de documento debe tener al menos 12 caracteres",
         "ruc": "El número de documento debe tener al menos 11 caracteres"
       }
     },
