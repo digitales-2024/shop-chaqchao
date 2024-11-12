@@ -79,10 +79,12 @@ export const DetailCheckout = () => {
               </span>
             </div>
             <div className="flex flex-col gap-2">
-              <span className="text-gray-400">Recoger:</span>
-              <span className="font-bold">
+              <span className="text-gray-400">{i("name")}:</span>
+              {invoice.name ? (
+                <span className="font-bold">{invoice.name}</span>
+              ) : (
                 <Skeleton className="h-8 w-32" />
-              </span>
+              )}
             </div>
           </div>
         </div>
