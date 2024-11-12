@@ -102,7 +102,7 @@ export const StepDateOrder = () => {
     <div className="flex flex-col gap-6">
       <h3 className="text-xl font-bold">{t("title")}</h3>
       <div className="flex flex-col items-center space-y-4">
-        <div className="flex space-x-2">
+        <div className="flex flex-wrap justify-center gap-2">
           <Popover>
             <PopoverTrigger asChild>
               <Button
