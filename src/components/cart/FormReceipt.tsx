@@ -1,6 +1,7 @@
 import useCartDetail from "@/hooks/use-cart-detail";
 import { InvoiceSchema } from "@/schemas/invoice.schema";
-import { Invoice, INVOICES } from "@/types";
+import { Invoice } from "@/types";
+import { DocumentType, InvoiceType } from "@/types/invoice";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
@@ -26,33 +27,61 @@ import { Input } from "../ui/input";
 
 const receiptDocuments = [
   {
-    code: "dni",
+    code: DocumentType.DNI,
     label: "DNI",
   },
   {
-    code: "passport",
+    code: DocumentType.PASSPORT,
     label: "Pasaporte",
   },
 ];
 export const FormReceipt = () => {
+  const { invoice, setInvoice, handleStepComplete, setActiveStep } =
+    useCartDetail();
   const form = useForm<Invoice>({
     resolver: zodResolver(InvoiceSchema()),
     defaultValues: {
-      documentType: "dni",
-      number: "",
-      address: "",
-      name: "",
+      documentType:
+        invoice.typeInvoice === InvoiceType.RECEIPT
+          ? invoice.documentType || DocumentType.DNI
+          : DocumentType.DNI,
+      number:
+        invoice.typeInvoice === InvoiceType.RECEIPT ? invoice.number || "" : "",
     },
   });
-  const { setInvoice } = useCartDetail();
   const t = useTranslations("checkout.invoice");
   const c = useTranslations("checkout");
 
   const handleSubmit = () => {
+    if (
+      form.getValues().documentType === DocumentType.DNI &&
+      form.getValues().number.length < 8
+    ) {
+      form.setError("number", {
+        type: "manual",
+        message: t("errors.dni"),
+      });
+      return;
+    }
+
+    if (
+      form.getValues().documentType === DocumentType.PASSPORT &&
+      form.getValues().number.length < 12
+    ) {
+      form.setError("number", {
+        type: "manual",
+        message: t("errors.passport"),
+      });
+      return;
+    }
+
     setInvoice({
-      typeInvoice: INVOICES[0],
+      typeInvoice: InvoiceType.RECEIPT,
       ...form.getValues(),
     });
+
+    handleStepComplete(2);
+    setActiveStep(-1);
   };
 
   return (
