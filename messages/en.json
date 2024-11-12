@@ -212,6 +212,31 @@
       "toast": {
         "fullFields": "Please select a date to continue."
       },
+      "moreDates": "MORE DATES",
+      "days": {
+        "today": "TODAY",
+        "mon": "MON",
+        "tue": "TUE",
+        "wed": "WED",
+        "thu": "THU",
+        "fri": "FRI",
+        "sat": "SAT",
+        "sun": "SUN"
+      },
+      "months": {
+        "jan": "JAN",
+        "feb": "FEB",
+        "mar": "MAR",
+        "apr": "APR",
+        "may": "MAY",
+        "jun": "JUN",
+        "jul": "JUL",
+        "aug": "AUG",
+        "sep": "SEP",
+        "oct": "OCT",
+        "nov": "NOV",
+        "dec": "DEC"
+      },
       "button": {
         "back": "BACK",
         "next": "NEXT"
@@ -237,6 +262,10 @@
     "step5": {
       "title": "Select language",
       "subTitle": "Available Languages",
+      "languages": {
+        "spanish": "SPANISH",
+        "english": "ENGLISH"
+      },
       "toast": {
         "fullFields": "Please select a language to continue."
       },
@@ -321,14 +350,32 @@
       "dateNotSelected": "Date not Selected",
       "detail": {
         "title": "Booking Details",
-        "adults": "ADULTS)",
+        "adults": "ADULT(S)",
         "children": "CHILDREN(S)",
         "considerations": {
           "title": "CONSIDERATIONS",
           "message": "*Arrive 5 minutes early"
         }
       },
-      "allergies": "Allergies"
+      "allergies": {
+        "title": "Food allergies or restrictions",
+        "allergie": "Allergies: ",
+        "yes": "Si",
+        "none": "NONE"
+      }
+    },
+    "reservationSumary": {
+      "abstract": {
+        "title": "Booking Summary"
+      },
+      "userName": "Name: ",
+      "userEmail": "Email: ",
+      "userPhone": "Phone: ",
+      "dateClass": "Date: ",
+      "scheduleClass": "Schedule: ",
+      "languageClass": "Language: ",
+      "participantsClass": "Participants: ",
+      "userAllergies": "Allergies: "
     }
   }
 }

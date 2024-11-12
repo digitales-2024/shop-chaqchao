@@ -21,12 +21,14 @@ export interface Steps2Props {
   onNext: () => void;
   onBack: () => void;
   updateData: (data: Partial<ReservationData>) => void;
+  reservationData: ReservationData;
 }
 
 export interface Steps3Props {
   onNext: () => void;
   onBack: () => void;
   updateData: (data: Partial<ReservationData>) => void;
+  reservationData: ReservationData;
 }
 
 export interface Steps4Props {
@@ -34,6 +36,7 @@ export interface Steps4Props {
   onBack: () => void;
   updateData: (data: { time: string }) => void;
   selectedDate: Date;
+  reservationData: ReservationData;
 }
 
 export interface Steps5Props {
@@ -42,6 +45,7 @@ export interface Steps5Props {
   updateData: (data: Partial<ReservationData>) => void;
   selectedDate: Date;
   time: string;
+  reservationData: ReservationData;
 }
 
 export interface Steps6Props {
@@ -51,13 +55,13 @@ export interface Steps6Props {
   selectedDate: Date;
   time: string;
   language: string | undefined;
+  reservationData: ReservationData;
 }
 
 export interface Steps7Props {
   onNext: () => void;
   onBack: () => void;
   updateData: (data: Partial<ReservationData>) => void;
-  /* handleSubmit: () => Promise<void>; */
   userName: string;
   userEmail: string;
   userPhone: string;

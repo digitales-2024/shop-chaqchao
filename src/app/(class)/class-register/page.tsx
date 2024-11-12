@@ -36,6 +36,7 @@ export default function ReservationPage() {
     userEmail: "",
     userPhone: "",
     typeCurrency: "DOLAR",
+    totalAmount: 0,
   });
 
   // const [createClassRegistration] = useCreateClassRegistrationMutation();
@@ -101,6 +102,7 @@ export default function ReservationPage() {
           onNext={nextStep}
           onBack={previousStep}
           updateData={updateData}
+          reservationData={reservationData}
         />
       )}
 
@@ -110,6 +112,7 @@ export default function ReservationPage() {
           onNext={nextStep}
           onBack={previousStep}
           updateData={updateData}
+          reservationData={reservationData}
         />
       )}
 
@@ -120,6 +123,7 @@ export default function ReservationPage() {
           onBack={previousStep}
           updateData={updateData}
           selectedDate={reservationData.date}
+          reservationData={reservationData}
         />
       )}
 
@@ -131,6 +135,7 @@ export default function ReservationPage() {
           updateData={updateData}
           selectedDate={reservationData.date}
           time={reservationData.time}
+          reservationData={reservationData}
         />
       )}
 
@@ -143,6 +148,7 @@ export default function ReservationPage() {
           selectedDate={reservationData.date}
           time={reservationData.time}
           language={reservationData.language}
+          reservationData={reservationData}
         />
       )}
 

@@ -11,4 +11,5 @@ export interface ReservationData {
   userEmail: string;
   userPhone: string;
   typeCurrency: string;
+  totalAmount: number;
 }

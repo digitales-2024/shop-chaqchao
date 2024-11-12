@@ -206,6 +206,31 @@
       "toast": {
         "fullFields": "Por favor, selecciona una fecha para continuar"
       },
+      "moreDates": "MÁS FECHAS",
+      "days": {
+        "today": "HOY",
+        "mon": "LUN",
+        "tue": "MAR",
+        "wed": "MIÉ",
+        "thu": "JUE",
+        "fri": "VIE",
+        "sat": "SAB",
+        "sun": "DOM"
+      },
+      "months": {
+        "jan": "ENE",
+        "feb": "FEB",
+        "mar": "MAR",
+        "apr": "ABR",
+        "may": "MAY",
+        "jun": "JUN",
+        "jul": "JUL",
+        "aug": "AGO",
+        "sep": "SET",
+        "oct": "OCT",
+        "nov": "NOV",
+        "dec": "DIC"
+      },
       "button": {
         "back": "ATRAS",
         "next": "SIGUIENTE"
@@ -231,6 +256,10 @@
     "step5": {
       "title": "Seleccione el idioma",
       "subTitle": "Idiomas disponibles",
+      "languages": {
+        "spanish": "ESPAÑOL",
+        "english": "INGLES"
+      },
       "toast": {
         "fullFields": "Por favor, seleccione un idioma para continuar."
       },
@@ -322,7 +351,25 @@
           "message": "*Llegar 5 minutos antes"
         }
       },
-      "allergies": "Alergias"
+      "allergies": {
+        "title": "Alergias o restricciones alimentarias",
+        "allergie": "Alergias: ",
+        "yes": "Si",
+        "none": "NINGUNA"
+      }
+    },
+    "reservationSumary": {
+      "abstract": {
+        "title": "Resumen de la Reserva"
+      },
+      "userName": "Nombre: ",
+      "userEmail": "Email: ",
+      "userPhone": "Teléfono: ",
+      "dateClass": "Fecha: ",
+      "scheduleClass": "Horario: ",
+      "languageClass": "Idioma: ",
+      "participantsClass": "Participantes: ",
+      "userAllergies": "Alergias: "
     }
   }
 }

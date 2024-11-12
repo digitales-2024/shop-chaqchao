@@ -40,6 +40,8 @@ import {
   PopoverContent,
 } from "@/components/ui/popover";
 
+import { ReservationSummary } from "./ReservationSumary";
+
 export function Step1({ onNext, updateData }: Steps1Props) {
   const handleNext = () => {
     updateData({
@@ -77,13 +79,36 @@ export function Step1({ onNext, updateData }: Steps1Props) {
   );
 }
 
-export function Step2({ onNext, onBack, updateData }: Steps2Props) {
+export function Step2({
+  onNext,
+  onBack,
+  updateData,
+  reservationData,
+}: Steps2Props) {
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userPhone, setUserPhone] = useState("");
   const [emailError, setEmailError] = useState("");
 
   const t = useTranslations("class.step2");
+
+  // Actualiza los valores en `reservationData` en tiempo real
+  const handleUserNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setUserName(value);
+    updateData({ userName: value, userEmail, userPhone });
+  };
+
+  const handleUserEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setUserEmail(value);
+    updateData({ userName, userEmail: value, userPhone });
+  };
+
+  const handleUserPhoneChange = (value: string) => {
+    setUserPhone(value);
+    updateData({ userName, userEmail, userPhone: value });
+  };
 
   // Verifica si hay campos vacíos
   const handleNext = () => {
@@ -115,36 +140,44 @@ export function Step2({ onNext, onBack, updateData }: Steps2Props) {
           <LineTitle className="mx-4 flex-grow rotate-180 text-primary" />
         </div>
       </div>
-      <div className="mx-auto w-1/2 space-y-6 text-center">
-        <input
-          type="text"
-          placeholder={t("placeholder.name")}
-          value={userName}
-          onChange={(e) => setUserName(e.target.value)}
-          className="w-full rounded-md border px-4 py-3 text-gray-700 focus:outline-none"
-        />
-        <input
-          type="email"
-          placeholder={t("placeholder.email")}
-          value={userEmail}
-          onChange={(e) => setUserEmail(e.target.value)}
-          className="w-full rounded-md border px-4 py-3 text-gray-700 focus:outline-none"
-        />
-        {emailError && <p className="text-sm text-red-500">{emailError}</p>}
 
-        <PhoneInput
-          defaultCountry="PE"
-          value={userPhone}
-          onChange={(value) => setUserPhone(value || "")}
-        />
-
-        <div className="mt-8 flex flex-wrap justify-center gap-4">
-          <NavigationButtons
-            back={t("button.back")}
-            next={t("button.next")}
-            onNext={handleNext}
-            onBack={onBack}
+      <div className="mx-auto flex max-w-4xl flex-col items-center gap-8 px-5 md:flex-row md:items-start">
+        <div className="flex-1 space-y-6">
+          <input
+            type="text"
+            placeholder={t("placeholder.name")}
+            value={userName}
+            onChange={handleUserNameChange}
+            className="w-full rounded-md border px-4 py-3 text-gray-700 focus:outline-none"
           />
+
+          <input
+            type="email"
+            placeholder={t("placeholder.email")}
+            value={userEmail}
+            onChange={handleUserEmailChange}
+            className="w-full rounded-md border px-4 py-3 text-gray-700 focus:outline-none"
+          />
+          {emailError && <p className="text-sm text-red-500">{emailError}</p>}
+
+          <PhoneInput
+            defaultCountry="PE"
+            value={userPhone}
+            onChange={handleUserPhoneChange}
+          />
+
+          <div className="mt-8 flex flex-wrap justify-center gap-4">
+            <NavigationButtons
+              back={t("button.back")}
+              next={t("button.next")}
+              onNext={handleNext}
+              onBack={onBack}
+            />
+          </div>
+        </div>
+
+        <div className="max-w-sm flex-1">
+          <ReservationSummary data={reservationData} />
         </div>
       </div>
     </div>
@@ -152,8 +185,19 @@ export function Step2({ onNext, onBack, updateData }: Steps2Props) {
 }
 
 // Step 3: Escoger fecha
-export function Step3({ onNext, onBack, updateData }: Steps3Props) {
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
+export function Step3({
+  onNext,
+  onBack,
+  updateData,
+  reservationData,
+}: Steps3Props) {
+  /* const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
+  const [datePickerDate, setDatePickerDate] = useState<Date | undefined>(
+    undefined,
+  ); */
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(
+    reservationData.date || undefined,
+  );
   const [datePickerDate, setDatePickerDate] = useState<Date | undefined>(
     undefined,
   );
@@ -167,6 +211,7 @@ export function Step3({ onNext, onBack, updateData }: Steps3Props) {
   const handleDateSelect = (day: Date) => {
     setSelectedDate(day);
     setDatePickerDate(undefined);
+    updateData({ date: day });
   };
 
   const handleNext = () => {
@@ -193,68 +238,85 @@ export function Step3({ onNext, onBack, updateData }: Steps3Props) {
         </div>
       </div>
 
-      <div className="mb-4 flex flex-wrap justify-center gap-4">
-        {nextDays.map((day, index) => (
-          <div
-            key={day.getTime()}
-            className="mx-3 flex flex-col items-center justify-center"
-          >
-            <span className="text-base font-bold sm:text-lg">
-              {index === 0
-                ? "HOY"
-                : format(day, "EEE", { locale: es }).toUpperCase()}
-            </span>
-            <div
-              className={`flex h-10 w-10 cursor-pointer items-center justify-center rounded-full transition-all duration-300 sm:h-14 sm:w-14 ${
-                selectedDate && isSameDay(selectedDate, day)
-                  ? "bg-primary text-white"
-                  : "bg-[#F5F5F5] text-secondary hover:bg-primary hover:text-white"
-              } h-14 w-14 rounded sm:h-16 sm:w-16`}
-              onClick={() => handleDateSelect(day)}
-            >
-              <span className="text-base font-bold sm:text-xl">
-                {format(day, "d", { locale: es })}
-              </span>
-            </div>
-            <span className="text-sm font-medium sm:text-base">
-              {format(day, "MMM", { locale: es }).toUpperCase()}
-            </span>
+      <div className="mx-auto flex max-w-4xl flex-col items-center gap-8 px-5 md:flex-row md:items-start">
+        <div className="flex-1 space-y-6">
+          <div className="mb-4 flex flex-wrap justify-center gap-4">
+            {nextDays.map((day, index) => (
+              <div
+                key={day.getTime()}
+                className="mx-3 flex flex-col items-center justify-center"
+              >
+                <span className="text-base font-bold sm:text-lg">
+                  {index === 0
+                    ? t("days.today")
+                    : t(`days.${format(day, "EEE").toLowerCase()}`)}
+                </span>
+                <div
+                  className={`flex h-10 w-10 cursor-pointer items-center justify-center rounded-full transition-all duration-300 sm:h-14 sm:w-14 ${
+                    selectedDate && isSameDay(selectedDate, day)
+                      ? "bg-primary text-white"
+                      : "bg-[#F5F5F5] text-secondary hover:bg-primary hover:text-white"
+                  } h-14 w-14 rounded sm:h-16 sm:w-16`}
+                  onClick={() => handleDateSelect(day)}
+                >
+                  <span className="text-base font-bold sm:text-xl">
+                    {format(day, "d", { locale: es })}
+                  </span>
+                </div>
+                <span className="text-sm font-medium sm:text-base">
+                  {format(day, "MMM", { locale: es }).toUpperCase()}
+                </span>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
 
-      {/* Popover para DatePicker */}
-      <div className="flex flex-col items-center">
-        <Popover>
-          <PopoverTrigger asChild>
-            <button className="mb-4 mt-8 flex items-center rounded-full border-2 border-primary px-6 py-2 text-secondary transition-all hover:bg-primary hover:text-white">
-              <span>
-                {selectedDate
-                  ? format(selectedDate, "PPP", { locale: es })
-                  : "MÁS FECHAS"}
-              </span>
-              <CalendarIcon className="ml-2 h-5 w-5" />
-            </button>
-          </PopoverTrigger>
-          <PopoverContent align="center" className="w-auto p-0">
-            <Calendar
-              selected={datePickerDate}
-              onSelect={(date: Date | undefined) => {
-                setSelectedDate(date);
-              }}
-              disabled={(date: Date) => date < new Date()}
-              initialFocus
-            />
-          </PopoverContent>
-        </Popover>
+          {/* Popover para DatePicker */}
+          <div className="flex flex-col items-center">
+            <Popover>
+              <PopoverTrigger asChild>
+                <button className="mb-4 mt-8 flex items-center rounded-full border-2 border-primary px-6 py-2 text-secondary transition-all hover:bg-primary hover:text-white">
+                  <span>
+                    {selectedDate
+                      ? format(selectedDate, "PPP", { locale: es })
+                      : t("moreDates")}
+                  </span>
+                  <CalendarIcon className="ml-2 h-5 w-5" />
+                </button>
+              </PopoverTrigger>
+              <PopoverContent align="center" className="w-auto p-0">
+                {/* <Calendar
+                  selected={datePickerDate}
+                  onSelect={(date: Date | undefined) => {
+                    setSelectedDate(date);
+                  }}
+                  disabled={(date: Date) => date < new Date()}
+                  initialFocus
+                /> */}
+                <Calendar
+                  selected={datePickerDate}
+                  onSelect={(date: Date | undefined) => {
+                    setSelectedDate(date);
+                    updateData({ date }); // Actualiza `reservationData` cuando se selecciona una fecha en el calendario
+                  }}
+                  disabled={(date: Date) => date < new Date()}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
 
-        <div className="mt-8 flex flex-wrap justify-center gap-4 text-center">
-          <NavigationButtons
-            back={t("button.back")}
-            next={t("button.next")}
-            onBack={handleBack}
-            onNext={handleNext}
-          />
+            <div className="mt-8 flex flex-wrap justify-center gap-4 text-center">
+              <NavigationButtons
+                back={t("button.back")}
+                next={t("button.next")}
+                onBack={handleBack}
+                onNext={handleNext}
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="max-w-sm flex-1">
+          <ReservationSummary data={reservationData} />
         </div>
       </div>
     </div>
@@ -267,11 +329,17 @@ export function Step4({
   onBack,
   updateData,
   selectedDate,
+  reservationData,
 }: Steps4Props) {
-  const [time, setTime] = useState("");
+  const [time, setTime] = useState(reservationData.time || "");
 
   const { data: schedules, isLoading, isError } = useSchedulesQuery();
   const t = useTranslations("class.step4");
+
+  const handleTimeSelection = (selectedTime: string) => {
+    setTime(selectedTime);
+    updateData({ time: selectedTime }); // Actualizamos el tiempo en reservationData
+  };
 
   const handleNext = () => {
     if (!time) {
@@ -303,45 +371,53 @@ export function Step4({
         </div>
       </div>
 
-      <div className="grid grid-cols-1 text-center text-gray-500">
-        {/* Horarios de reserva disponible */}
-        <div className="">
-          <p className="mb-6 text-base font-semibold text-secondary sm:text-lg">
-            {t("subTitle")}
-          </p>
-          {isLoading ? (
-            <p>{t("schedule.loading")}</p>
-          ) : isError ? (
-            <p>{t("schedule.loadingError")}</p>
-          ) : schedules && schedules.length > 0 ? (
-            <div className="flex flex-wrap justify-center gap-4">
-              {schedules.map((schedule, index) => (
-                <button
-                  key={index}
-                  className={`rounded-full border px-6 py-2 text-base transition-all sm:text-lg ${
-                    time === schedule.startTime
-                      ? "bg-primary text-white"
-                      : "border-primary text-primary"
-                  } hover:bg-primary hover:text-white`}
-                  onClick={() => setTime(schedule.startTime)}
-                >
-                  {schedule.startTime}
-                </button>
-              ))}
+      <div className="mx-auto flex max-w-4xl flex-col items-center gap-8 px-5 md:flex-row md:items-start">
+        <div className="flex-1 space-y-6">
+          <div className="grid grid-cols-1 text-center text-gray-500">
+            {/* Horarios de reserva disponible */}
+            <div className="">
+              <p className="mb-6 text-base font-semibold text-secondary sm:text-lg">
+                {t("subTitle")}
+              </p>
+              {isLoading ? (
+                <p>{t("schedule.loading")}</p>
+              ) : isError ? (
+                <p>{t("schedule.loadingError")}</p>
+              ) : schedules && schedules.length > 0 ? (
+                <div className="flex flex-wrap justify-center gap-4">
+                  {schedules.map((schedule, index) => (
+                    <button
+                      key={index}
+                      className={`rounded-full border px-6 py-2 text-base transition-all sm:text-lg ${
+                        time === schedule.startTime
+                          ? "bg-primary text-white"
+                          : "border-primary text-primary"
+                      } hover:bg-primary hover:text-white`}
+                      onClick={() => handleTimeSelection(schedule.startTime)}
+                    >
+                      {schedule.startTime}
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <p>{t("schedule.notAvailable")}</p>
+              )}
             </div>
-          ) : (
-            <p>{t("schedule.notAvailable")}</p>
-          )}
-        </div>
-      </div>
+          </div>
 
-      <div className="mt-8 flex flex-wrap justify-center gap-4">
-        <NavigationButtons
-          back={t("button.back")}
-          next={t("button.next")}
-          onBack={onBack}
-          onNext={handleNext}
-        />
+          <div className="mt-8 flex flex-wrap justify-center gap-4">
+            <NavigationButtons
+              back={t("button.back")}
+              next={t("button.next")}
+              onBack={onBack}
+              onNext={handleNext}
+            />
+          </div>
+        </div>
+
+        <div className="max-w-sm flex-1">
+          <ReservationSummary data={reservationData} />
+        </div>
       </div>
     </div>
   );
@@ -354,11 +430,19 @@ export function Step5({
   updateData,
   selectedDate,
   time,
+  reservationData,
 }: Steps5Props) {
-  const [selectedLanguage, setSelectedLanguage] = useState<string>("");
+  const [selectedLanguage, setSelectedLanguage] = useState<string>(
+    reservationData.language || "",
+  );
 
   const { data: languages, isLoading, isError } = useLanguagesQuery();
   const t = useTranslations("class.step5");
+
+  const handleLanguageSelection = (language: string) => {
+    setSelectedLanguage(language);
+    updateData({ language }); // Actualizamos el idioma en reservationData
+  };
 
   const handleNext = () => {
     if (!selectedLanguage) {
@@ -395,45 +479,56 @@ export function Step5({
       </div>
 
       {/* Selección de idiomas */}
-      <div className="grid grid-cols-1 text-center text-gray-500">
-        <div>
-          <p className="mb-6 text-base font-semibold text-secondary sm:text-lg">
-            {t("subTitle")}
-          </p>
-          {isLoading ? (
-            <p>{t("language.loading")}</p>
-          ) : isError ? (
-            <p>{t("language.loadingError")}</p>
-          ) : languages && languages.length > 0 ? (
-            <div className="flex flex-wrap justify-center gap-4">
-              {languages.map((language, index) => (
-                <button
-                  key={index}
-                  className={`rounded-full border px-6 py-2 text-sm transition-all sm:text-lg ${
-                    selectedLanguage === language.languageName
-                      ? "bg-primary text-white"
-                      : "border-primary text-primary"
-                  } hover:bg-primary hover:text-white`}
-                  onClick={() => setSelectedLanguage(language.languageName)}
-                >
-                  {language.languageName.toUpperCase()}
-                </button>
-              ))}
+      <div className="mx-auto flex max-w-4xl flex-col items-center gap-8 px-5 md:flex-row md:items-start">
+        <div className="flex-1 space-y-6">
+          <div className="grid grid-cols-1 text-center text-gray-500">
+            <div>
+              <p className="mb-6 text-base font-semibold text-secondary sm:text-lg">
+                {t("subTitle")}
+              </p>
+              {isLoading ? (
+                <p>{t("language.loading")}</p>
+              ) : isError ? (
+                <p>{t("language.loadingError")}</p>
+              ) : languages && languages.length > 0 ? (
+                <div className="flex flex-wrap justify-center gap-4">
+                  {languages.map((language, index) => (
+                    <button
+                      key={index}
+                      className={`rounded-full border px-6 py-2 text-sm transition-all sm:text-lg ${
+                        selectedLanguage === language.languageName
+                          ? "bg-primary text-white"
+                          : "border-primary text-primary"
+                      } hover:bg-primary hover:text-white`}
+                      onClick={() =>
+                        handleLanguageSelection(language.languageName)
+                      }
+                    >
+                      {language.languageName === "español"
+                        ? t("languages.spanish")
+                        : t("languages.english")}
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <p>{t("language.notAvailabe")}</p>
+              )}
             </div>
-          ) : (
-            <p>{t("language.notAvailabe")}</p>
-          )}
-        </div>
-      </div>
+          </div>
 
-      {/* Botones de navegación */}
-      <div className="mt-8 flex flex-wrap justify-center gap-4">
-        <NavigationButtons
-          back={t("button.back")}
-          next={t("button.next")}
-          onBack={onBack}
-          onNext={handleNext}
-        />
+          {/* Botones de navegación */}
+          <div className="mt-8 flex flex-wrap justify-center gap-4">
+            <NavigationButtons
+              back={t("button.back")}
+              next={t("button.next")}
+              onBack={onBack}
+              onNext={handleNext}
+            />
+          </div>
+        </div>
+        <div className="max-w-sm flex-1">
+          <ReservationSummary data={reservationData} />
+        </div>
       </div>
     </div>
   );
@@ -447,9 +542,18 @@ export function Step6({
   time,
   selectedDate,
   language,
+  reservationData,
 }: Steps6Props) {
-  const [participants, setParticipants] = useState<number | null>(null);
+  const [participants, setParticipants] = useState<number | null>(
+    reservationData.participants || null,
+  );
+  const step = 6;
   const t = useTranslations("class.step6");
+
+  const handleParticipantsSelection = (number: number) => {
+    setParticipants(number);
+    updateData({ participants: number });
+  };
 
   const handleNext = () => {
     if (participants === null) {
@@ -491,28 +595,37 @@ export function Step6({
           <LineTitle className="mx-4 flex-grow rotate-180 text-primary" />
         </div>
       </div>
-      <div className="mb-6 flex flex-wrap justify-center gap-4">
-        {[1, 2, 3, 4, 5, 6, 7, 8].map((number) => (
-          <div
-            key={number}
-            onClick={() => setParticipants(number)}
-            className={`flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-lg font-semibold transition-colors duration-300 sm:h-12 sm:w-12 ${
-              participants === number
-                ? "bg-primary text-white"
-                : "bg-[#F5F5F5] text-secondary hover:bg-primary hover:text-white"
-            }`}
-          >
-            {number}
+
+      <div className="mx-auto flex max-w-4xl flex-col items-center gap-8 px-5 md:flex-row md:items-start">
+        <div className="flex-1 space-y-6">
+          <div className="mb-6 flex flex-wrap justify-center gap-4">
+            {[1, 2, 3, 4, 5, 6, 7, 8].map((number) => (
+              <div
+                key={number}
+                onClick={() => handleParticipantsSelection(number)}
+                className={`flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-lg font-semibold transition-colors duration-300 sm:h-12 sm:w-12 ${
+                  participants === number
+                    ? "bg-primary text-white"
+                    : "bg-[#F5F5F5] text-secondary hover:bg-primary hover:text-white"
+                }`}
+              >
+                {number}
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-      <div className="mt-14 flex flex-wrap justify-center gap-4">
-        <NavigationButtons
-          back={t("button.back")}
-          next={t("button.next")}
-          onBack={handleBack}
-          onNext={handleNext}
-        />
+          <div className="mt-14 flex flex-wrap justify-center gap-4">
+            <NavigationButtons
+              back={t("button.back")}
+              next={t("button.next")}
+              onBack={handleBack}
+              onNext={handleNext}
+            />
+          </div>
+        </div>
+
+        <div className="max-w-sm flex-1">
+          <ReservationSummary data={reservationData} currentStep={step} />
+        </div>
       </div>
     </div>
   );
@@ -1194,10 +1307,13 @@ export function Confirmation({ data }: ConfirmationProps) {
         {/* Alergias */}
         <div className="rounded-lg bg-gray-50 p-6 shadow-md">
           <h3 className="mb-4 text-base font-semibold text-gray-800 sm:text-lg">
-            {t("allergies")}
+            {t("allergies.title")}
           </h3>
           <p className="text-sm font-medium text-gray-700 sm:text-base">
-            {data.allergies ? `SÍ: ${data.allergies}` : "NINGUNA"}
+            <span className="font-bold">{t("allergies.allergie")}</span>
+            {data.allergies
+              ? `${t("allergies.allergie")}: ${data.allergies}`
+              : t("allergies.none")}
           </p>
         </div>
       </div>
