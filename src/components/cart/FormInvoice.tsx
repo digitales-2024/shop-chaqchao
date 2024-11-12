@@ -1,8 +1,10 @@
 import useCartDetail from "@/hooks/use-cart-detail";
 import { InvoiceSchema } from "@/schemas/invoice.schema";
-import { Invoice, INVOICES } from "@/types";
+import { DocumentTypeInvoice, Invoice, InvoiceType } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { RefreshCcw } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import {
@@ -21,12 +23,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+import { getCustomerData } from "@/lib/api/api-sunat";
+
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 
 const invoiceDocuments = [
   {
-    code: "ruc",
+    code: DocumentTypeInvoice.RUC,
     label: "RUC",
   },
 ];
@@ -34,22 +38,50 @@ export const FormInvoice = () => {
   const form = useForm<Invoice>({
     resolver: zodResolver(InvoiceSchema()),
     defaultValues: {
-      documentType: "ruc",
+      documentType: DocumentTypeInvoice.RUC,
       number: "",
       address: "",
       name: "",
     },
   });
-  const { setInvoice } = useCartDetail();
+  const { setInvoice, handleStepComplete, setActiveStep } = useCartDetail();
   const t = useTranslations("checkout.invoice");
   const c = useTranslations("checkout");
 
   const handleSubmit = () => {
     setInvoice({
-      typeInvoice: INVOICES[1],
+      typeInvoice: InvoiceType.INVOICE,
       ...form.getValues(),
     });
+    handleStepComplete(2);
+    setActiveStep(-1);
   };
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (!form.getValues().number) return;
+
+    const fetchData = async () => {
+      setIsLoading(true);
+      const response = await getCustomerData("ruc", form.getValues().number);
+
+      setIsLoading(false);
+      form.setValue("name", response.razonSocial);
+      form.setValue("address", response.direccion);
+    };
+
+    if (
+      form.getValues().documentType === DocumentTypeInvoice.RUC &&
+      form.getValues().number.length === 11
+    ) {
+      fetchData();
+    } else {
+      form.setValue("name", "");
+      form.setValue("address", "");
+    }
+  }, [form.watch("number")]);
+
   return (
     <Form {...form}>
       <form className="space-y-2" onSubmit={form.handleSubmit(handleSubmit)}>
@@ -87,7 +119,14 @@ export const FormInvoice = () => {
             <FormItem>
               <FormLabel className="font-bold">{t("doc")}</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <div className="relative">
+                  <Input {...field} />
+                  {isLoading && (
+                    <span>
+                      <RefreshCcw className="absolute right-2 top-2 animate-spin text-primary" />
+                    </span>
+                  )}
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -100,8 +139,9 @@ export const FormInvoice = () => {
             <FormItem>
               <FormLabel className="font-bold">{t("address")}</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} readOnly />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -112,8 +152,9 @@ export const FormInvoice = () => {
             <FormItem>
               <FormLabel className="font-bold">{t("name")}</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input {...field} readOnly />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
