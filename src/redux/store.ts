@@ -3,6 +3,7 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 
 import { authApi } from "./services/authApi";
 import { businessApi } from "./services/businessApi";
+import { cartApi } from "./services/cartApi";
 import { catalogApi } from "./services/catalogApi";
 import { categoryApi } from "./services/categoryApi";
 import { classApi } from "./services/classApi";
@@ -18,6 +19,7 @@ export const store = configureStore({
     [orderApi.reducerPath]: orderApi.reducer,
     [classApi.reducerPath]: classApi.reducer,
     [businessApi.reducerPath]: businessApi.reducer,
+    [cartApi.reducerPath]: cartApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({})
@@ -27,7 +29,8 @@ export const store = configureStore({
       .concat(catalogApi.middleware)
       .concat(orderApi.middleware)
       .concat(classApi.middleware)
-      .concat(businessApi.middleware),
+      .concat(businessApi.middleware)
+      .concat(cartApi.middleware),
 });
 
 setupListeners(store.dispatch);

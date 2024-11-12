@@ -28,3 +28,16 @@ enum DayOfWeek {
   SATURDAY = "SATURDAY",
   SUNDAY = "SUNDAY",
 }
+
+export function getDayOfWeek(index: number): DayOfWeek | undefined {
+  const days = [
+    DayOfWeek.SUNDAY,
+    DayOfWeek.MONDAY,
+    DayOfWeek.TUESDAY,
+    DayOfWeek.WEDNESDAY,
+    DayOfWeek.THURSDAY,
+    DayOfWeek.FRIDAY,
+    DayOfWeek.SATURDAY,
+  ];
+  return days[index];
+}

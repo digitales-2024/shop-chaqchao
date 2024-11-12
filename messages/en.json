@@ -79,7 +79,19 @@
     "login": "Already have an account?",
     "loginButton": "Log in",
     "terms": "I declare that I agree with the",
-    "termsLink": "Terms and Privacy Policy"
+    "termsLink": "Terms and Privacy Policy",
+    "tooltip": {
+      "description": "The password must contain at least 6 characters",
+      "upper": "One uppercase letter",
+      "lower": "One lowercase letter",
+      "number": "One number"
+    },
+    "messages": {
+      "loading": "Creating user...",
+      "success": "User created successfully",
+      "error": "Error creating user",
+      "email": "Email already in use"
+    }
   },
   "errors": {
     "name": {
@@ -105,7 +117,8 @@
     },
     "terms": {
       "required": "You must accept the terms and conditions"
-    }
+    },
+    "network": "Network error, try again later"
   },
   "account": {
     "title": "My account",
@@ -184,6 +197,89 @@
     "empty": {
       "title": "Your cart is empty",
       "description": "Explore our products and find what you need!"
+    }
+  },
+  "checkout": {
+    "checkout": {
+      "button": "Checkout",
+      "messages": {
+        "warning": {
+          "title": "Warning",
+          "description": "You must be logged in to continue with the purchase"
+        }
+      }
+    },
+    "back": "Back",
+    "next": "Next",
+    "continue": "Continue",
+    "edit": "Edit",
+    "summary": {
+      "title": "Summary",
+      "address": "Address ",
+      "date": "Date ",
+      "typeInvoice": "Type of document ",
+      "product": "Product",
+      "quantity": "Quantity",
+      "price": "Price",
+      "subTotal": "SubTotal",
+      "total": "Total to pay",
+      "terms": "I have read and accept the",
+      "termsLink": "Terms and Conditions",
+      "privacy": "By continuing, you agree to our",
+      "privacyLink": "Privacy Policy",
+      "button": "Confirm order",
+      "errors": {
+        "terms": "You must accept the terms and conditions",
+        "privacy": "You must accept the privacy policy",
+        "empty": "You must add products to your cart"
+      }
+    },
+    "dateOrder": {
+      "title": "For when do you want your order?",
+      "date": "Select the date of collection",
+      "hour": "Select the time of collection",
+      "label": "You will pick up your order on",
+      "buttonDate": "Confirm date",
+      "messages": {
+        "date": "The date is required",
+        "hour": "The hour is required"
+      }
+    },
+    "invoice": {
+      "RECEIPT": "Receipt",
+      "INVOICE": "Invoice",
+      "typeDoc": "Type of document",
+      "doc": "Document number",
+      "address": "Address",
+      "name": "Name or business name",
+      "button": "Continue",
+      "errors": {
+        "typeDoc": "The type of document is required",
+        "number": "The document number is required",
+        "dni": "The document number must have at least 8 digits",
+        "passport": "The document number must have at least 12 digits",
+        "ruc": "The document number must have at least 11 digits",
+        "address": "The address is required",
+        "name": "The name is required"
+      }
+    },
+    "login": {
+      "title": "Why do we need your email?",
+      "description": "We need your email to send you the order confirmation and keep in touch with you",
+      "alert": {
+        "title": "Welcome back",
+        "description": "We have found an account with your email, please log in to continue with your order."
+      },
+      "account": {
+        "title": "Do you already have an account?",
+        "description": "Log in and keep enjoying your shopping!",
+        "button": "Sign in"
+      }
+    },
+    "steps": {
+      "login": "Log in",
+      "date": "Collection date",
+      "invoice": "Invoice"
     }
   }
 }

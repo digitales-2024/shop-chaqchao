@@ -1,4 +1,6 @@
 "use client";
+import { ShoppingDelete } from "@/assets/icons";
+import { useCart } from "@/hooks/use-cart";
 import useCartSheet from "@/hooks/use-cart-sheet";
 import useCartStore from "@/redux/store/cart";
 import { motion, AnimatePresence } from "framer-motion";
@@ -6,6 +8,7 @@ import { ShoppingBag } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import {
   Sheet,
@@ -18,8 +21,11 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
+import { cn } from "@/lib/utils";
+
 import { Badge } from "../ui/badge";
-import { Button } from "../ui/button";
+import { AlertValidate } from "./AlertValidate";
+import { ButtonCheckout } from "./ButtonCheckout";
 import { CartEmpty } from "./CartEmpty";
 import { DeleteItemButton } from "./DeleteItemButton";
 import { EditItemQuantityButton } from "./EditItemQuantityButton";
@@ -33,11 +39,23 @@ const springTransition = {
 };
 
 export function CartSheet() {
-  const { amountTotal, cartItems } = useCartStore();
+  const { cartItems, amountTotal } = useCartStore();
 
   const t = useTranslations("cart");
 
   const { open, onOpenChange } = useCartSheet();
+  const rounter = useRouter();
+
+  const { validateCart, validateItem, isLoadingValidate, errorValidate } =
+    useCart();
+  const handleCheckout = async () => {
+    const response = await validateCart(cartItems);
+
+    if (response && response.data) {
+      onOpenChange();
+      rounter.push("/cart/checkout");
+    }
+  };
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -69,6 +87,7 @@ export function CartSheet() {
           </SheetDescription>
         </SheetHeader>
         <div className="grid gap-4 py-4">
+          <AlertValidate errorValidate={errorValidate} />
           <ul>
             <AnimatePresence>
               {cartItems.length > 0 &&
@@ -91,7 +110,21 @@ export function CartSheet() {
                           <DeleteItemButton item={item} />
                         </div>
                         <div className="flex flex-row">
-                          <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-md border bg-white shadow">
+                          <div
+                            className={cn(
+                              "relative h-16 w-16 shrink-0 overflow-hidden rounded-md border bg-white shadow",
+                              {
+                                "border-rose-500": validateItem(item.id),
+                              },
+                            )}
+                          >
+                            {validateItem(item.id) && (
+                              <div className="absolute bottom-0 left-0 right-0 top-0 flex h-full w-full items-center justify-center bg-rose-100/60 text-xs">
+                                <div className="rounded-full bg-white p-2">
+                                  <ShoppingDelete className="size-4 text-rose-500" />
+                                </div>
+                              </div>
+                            )}
                             <Image
                               className="h-full w-full object-cover"
                               width={64}
@@ -152,7 +185,10 @@ export function CartSheet() {
         <SheetFooter>
           <SheetClose asChild>
             {cartItems.length > 0 && (
-              <Button variant="default">Checkout</Button>
+              <ButtonCheckout
+                validate={handleCheckout}
+                isLoading={isLoadingValidate}
+              />
             )}
           </SheetClose>
         </SheetFooter>

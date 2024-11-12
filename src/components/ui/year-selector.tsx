@@ -8,6 +8,7 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
 import * as React from "react";
 
 import { Button } from "@/components/ui/button";
@@ -53,8 +54,15 @@ export default function DatePickerWithYearNavigation({
     }
   }, [selectedDate]);
 
-  const years = Array.from({ length: 201 }, (_, i) => 1900 + i);
-  const months = [
+  const t = useTranslations("register");
+  const locale = useLocale();
+
+  const currentYear = new Date().getFullYear();
+  const years = Array.from(
+    { length: currentYear - 1900 + 1 },
+    (_, i) => 1900 + i,
+  );
+  const monthsEs = [
     "Enero",
     "Febrero",
     "Marzo",
@@ -83,6 +91,10 @@ export default function DatePickerWithYearNavigation({
     "November",
     "December",
   ];
+
+  const months = React.useMemo(() => {
+    return locale === "es" ? monthsEs : monthsEn;
+  }, [locale]);
 
   const handleYearChange = (year: string) => {
     setCalendarDate((prevDate) => {
@@ -115,16 +127,16 @@ export default function DatePickerWithYearNavigation({
         <Button
           variant={"outline"}
           className={cn(
-            "flex w-[280px] justify-start text-left font-normal",
+            "flex w-[280px] justify-start overflow-hidden text-left font-normal",
             !date && "text-muted-foreground",
             className,
           )}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
           {date ? (
-            format(date, "PPP", { locale: es })
+            format(date, "PPP", { locale: locale === "es" ? es : undefined })
           ) : (
-            <span>Selecciona una fecha</span>
+            <span className="truncate">{t("placeholderBirthDate")}</span>
           )}
         </Button>
       </PopoverTrigger>
@@ -171,7 +183,9 @@ export default function DatePickerWithYearNavigation({
             <span className="sr-only">Año anterior</span>
           </Button>
           <div className="font-semibold">
-            {format(calendarDate, "yyyy", { locale: es })}
+            {format(calendarDate, "yyyy", {
+              locale: locale === "es" ? es : undefined,
+            })}
           </div>
           <Button
             variant="outline"
@@ -188,7 +202,8 @@ export default function DatePickerWithYearNavigation({
           month={calendarDate}
           onMonthChange={setCalendarDate}
           initialFocus
-          locale={es}
+          locale={locale === "es" ? es : undefined}
+          disabled={(day) => day > new Date()}
         />
       </PopoverContent>
     </Popover>

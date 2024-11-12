@@ -8,3 +8,9 @@ export type ErrorFormData = {
   message: string[];
   statusCode: number;
 };
+
+export interface ErrorData<T> {
+  data: T;
+  message: string;
+  statusCode: number;
+}

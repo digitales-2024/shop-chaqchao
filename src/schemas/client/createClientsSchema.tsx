@@ -22,9 +22,9 @@ export const ClientSchema = () => {
         message: t("password.regex"),
       }),
     birthDate: z
-      .date({
-        required_error: "Ingrese la fecha de nacimiento",
-      })
+      .date()
+      .min(new Date(1900, 1, 1))
+      .max(new Date())
       .optional(),
     terms: z.boolean().refine((val) => val === true, {
       message: t("terms.required"),
