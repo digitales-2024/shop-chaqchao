@@ -31,7 +31,7 @@ export const TableCart = ({ validateItem, errorValidate }: TableCartProps) => {
   return (
     <>
       <AlertValidate errorValidate={errorValidate} />
-      <Table>
+      <Table className="w-auto">
         <TableHeader>
           <TableRow className="border-none">
             <TableHead className="font-bold text-black">
