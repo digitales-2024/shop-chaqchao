@@ -6,13 +6,11 @@ import useCartStore from "@/redux/store/cart";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { toast } from "sonner";
 
 import { Card, CardContent, CardHeader } from "../ui/card";
 import { Separator } from "../ui/separator";
 import { Skeleton } from "../ui/skeleton";
+import { CartEmpty } from "./CartEmpty";
 import { ConfirmCheckout } from "./ConfirmCheckout";
 import { TableCart } from "./TableCart";
 
@@ -24,22 +22,6 @@ export const DetailCheckout = () => {
   const t = useTranslations("checkout.summary");
   const i = useTranslations("checkout.invoice");
 
-  const router = useRouter();
-
-  useEffect(() => {
-    if (cartItems.length === 0) {
-      toast.error(t("errors.empty"), {
-        position: "top-center",
-      });
-      // Si el carrito esta vacio, redirigir al inicio esperar 2seg y redirigir
-      setTimeout(() => {
-        router.replace("/");
-      }, 2000);
-
-      return;
-    }
-  }, [cartItems]);
-
   const { validateCart, validateItem, errorValidate } = useCart();
 
   return (
@@ -50,69 +32,70 @@ export const DetailCheckout = () => {
 
       <CardContent className="flex flex-col gap-10">
         <Separator />
-        <div className="grid grid-cols-2">
-          <div className="space-y-6">
-            <div className="flex flex-col gap-2">
-              {login.name ? (
-                <span className="truncate font-bold capitalize">
-                  {login.name}
-                </span>
-              ) : (
-                <Skeleton className="h-8 w-32" />
-              )}
-            </div>
-
-            <div className="flex flex-col gap-2">
-              <span className="text-gray-400">{t("address")}:</span>
-              <span className="font-bold">
-                {isLoading ? (
-                  <Skeleton className="h-8 w-32" />
-                ) : (
-                  business.businessInfo.address
-                )}
+        <div className="space-y-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2">
+            {login.name ? (
+              <span className="truncate font-bold capitalize">
+                {login.name}
               </span>
-            </div>
-            <div className="flex flex-col gap-2">
-              <span className="text-gray-400">{t("date")}:</span>
-              <span className="font-bold">
-                {dateOrder.fullDate ? (
-                  format(dateOrder.fullDate, "PPPp", { locale: es })
-                ) : (
-                  <Skeleton className="h-8 w-32" />
-                )}
-              </span>
-            </div>
+            ) : (
+              <Skeleton className="h-8 w-32" />
+            )}
+            {login.email ? (
+              <span className="truncate font-bold">{login.email}</span>
+            ) : (
+              <Skeleton className="h-8 w-32" />
+            )}
           </div>
-          <div className="space-y-6">
-            <div className="flex flex-col gap-2">
-              {login.email ? (
-                <span className="truncate font-bold">{login.email}</span>
+          <div className="grid grid-cols-1 sm:grid-cols-2">
+            <span className="text-gray-400">{t("address")}:</span>
+            <span className="font-bold">
+              {isLoading ? (
+                <Skeleton className="h-8 w-32" />
+              ) : (
+                business.businessInfo.address
+              )}
+            </span>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2">
+            <span className="text-gray-400">{t("date")}:</span>
+            <span className="font-bold">
+              {dateOrder.fullDate ? (
+                format(dateOrder.fullDate, "PPPp", { locale: es })
               ) : (
                 <Skeleton className="h-8 w-32" />
               )}
-            </div>
-            <div className="flex flex-col gap-2">
-              <span className="text-gray-400">{t("typeInvoice")}:</span>
-              <span className="font-bold">
-                {invoice ? (
-                  i(invoice.typeInvoice)
-                ) : (
-                  <Skeleton className="h-8 w-32" />
-                )}
-              </span>
-            </div>
-            <div className="flex flex-col gap-2">
-              <span className="text-gray-400">{i("name")}:</span>
-              {invoice.name ? (
-                <span className="font-bold">{invoice.name}</span>
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2">
+            <span className="text-gray-400">{t("typeInvoice")}:</span>
+            <span className="font-bold">
+              {invoice ? (
+                i(invoice.typeInvoice)
               ) : (
                 <Skeleton className="h-8 w-32" />
               )}
-            </div>
+            </span>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2">
+            <span className="text-gray-400">{i("name")}:</span>
+            {invoice.name ? (
+              <span className="font-bold">{invoice.name}</span>
+            ) : (
+              <Skeleton className="h-8 w-32" />
+            )}
           </div>
         </div>
         <Separator />
-        <TableCart validateItem={validateItem} errorValidate={errorValidate} />
+        {cartItems.length > 0 ? (
+          <TableCart
+            validateItem={validateItem}
+            errorValidate={errorValidate}
+          />
+        ) : (
+          <CartEmpty />
+        )}
         <p className="inline-flex justify-between text-xl font-bold">
           {t("total")}
           <span>S/. {amountTotal.toFixed(2)}</span>
