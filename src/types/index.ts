@@ -22,5 +22,8 @@ export {
   INVOICES,
   type Invoice,
   type InvoiceData,
-  type InvoiceType,
+  InvoiceType,
+  DocumentType,
+  DocumentTypeInvoice,
+  type Receipt,
 } from "./invoice";
