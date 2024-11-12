@@ -3,7 +3,6 @@ import { ShoppingDelete } from "@/assets/icons";
 import { useCart } from "@/hooks/use-cart";
 import useCartSheet from "@/hooks/use-cart-sheet";
 import useCartStore from "@/redux/store/cart";
-import { ErrorData } from "@/types/error";
 import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingBag } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -24,8 +23,8 @@ import {
 
 import { cn } from "@/lib/utils";
 
-import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 import { Badge } from "../ui/badge";
+import { AlertValidate } from "./AlertValidate";
 import { ButtonCheckout } from "./ButtonCheckout";
 import { CartEmpty } from "./CartEmpty";
 import { DeleteItemButton } from "./DeleteItemButton";
@@ -43,37 +42,19 @@ export function CartSheet() {
   const { cartItems, amountTotal } = useCartStore();
 
   const t = useTranslations("cart");
-  const c = useTranslations("checkout.checkout");
 
   const { open, onOpenChange } = useCartSheet();
   const rounter = useRouter();
 
-  const { validate, isLoadingValidate, errorValidate } = useCart();
+  const { validateCart, validateItem, isLoadingValidate, errorValidate } =
+    useCart();
   const handleCheckout = async () => {
-    if (cartItems.length > 0) {
-      const response = await validate({
-        cartItems: cartItems.map((item) => item.id),
-      });
+    const response = await validateCart(cartItems);
 
-      if (response.data) {
-        onOpenChange();
-        rounter.push("/cart/checkout");
-      }
+    if (response && response.data) {
+      onOpenChange();
+      rounter.push("/cart/checkout");
     }
-  };
-
-  const validateItem = (item: string) => {
-    if (errorValidate) {
-      const errorData = (
-        errorValidate as ErrorData<ErrorData<{ id: string }[]>>
-      ).data;
-      if (errorData) {
-        const isAvailable = errorData.data.some((error) => error.id === item);
-        return isAvailable;
-      }
-      return false;
-    }
-    return false;
   };
 
   return (
@@ -106,29 +87,7 @@ export function CartSheet() {
           </SheetDescription>
         </SheetHeader>
         <div className="grid gap-4 py-4">
-          <AnimatePresence>
-            {errorValidate ? (
-              <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, transition: { duration: 0.2 } }}
-                transition={{ ...springTransition }}
-              >
-                <Alert
-                  variant="destructive"
-                  className="border border-rose-500 text-rose-500"
-                >
-                  <ShoppingDelete className="stroke-rose-500" />
-                  <AlertTitle className="font-bold">
-                    {c("messages.warning.title")}
-                  </AlertTitle>
-                  <AlertDescription>
-                    {c("messages.warning.description")}
-                  </AlertDescription>
-                </Alert>
-              </motion.div>
-            ) : null}
-          </AnimatePresence>
+          <AlertValidate errorValidate={errorValidate} />
           <ul>
             <AnimatePresence>
               {cartItems.length > 0 &&
