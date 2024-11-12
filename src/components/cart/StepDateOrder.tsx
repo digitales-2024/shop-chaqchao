@@ -125,10 +125,10 @@ export const StepDateOrder = () => {
             <PopoverContent className="w-auto p-0">
               <Calendar
                 selected={date}
-                onSelect={() => {
+                onSelect={(date) => {
                   setDateOrder({
                     ...dateOrder,
-                    date: date ? undefined : new Date(),
+                    date: date,
                   });
                 }}
                 disabled={deshabilitarFechasPasadas}
