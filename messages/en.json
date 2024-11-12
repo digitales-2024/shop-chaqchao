@@ -222,7 +222,16 @@
       "quantity": "Quantity",
       "price": "Price",
       "subTotal": "SubTotal",
-      "total": "Total to pay"
+      "total": "Total to pay",
+      "terms": "I have read and accept the",
+      "termsLink": "Terms and Conditions",
+      "privacy": "By continuing, you agree to our",
+      "privacyLink": "Privacy Policy",
+      "button": "Confirm order",
+      "errors": {
+        "terms": "You must accept the terms and conditions",
+        "privacy": "You must accept the privacy policy"
+      }
     },
     "dateOrder": {
       "title": "For when do you want your order?",

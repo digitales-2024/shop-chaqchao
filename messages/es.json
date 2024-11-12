@@ -216,7 +216,16 @@
       "quantity": "Cantidad",
       "price": "Precio",
       "subTotal": "SubTotal",
-      "total": "Total a pagar"
+      "total": "Total a pagar",
+      "terms": "He leído y acepto los",
+      "termsLink": "Términos y Condiciones",
+      "privacy": "He leído y acepto la",
+      "privacyLink": "Política de Privacidad",
+      "button": "Confirmar pedido",
+      "errors": {
+        "terms": "Debes aceptar los términos y condiciones",
+        "privacy": "Debes aceptar la política de privacidad"
+      }
     },
     "dateOrder": {
       "title": "¿Para cuando deseas tu pedido?",
