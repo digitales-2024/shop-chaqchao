@@ -1,4 +1,5 @@
 "use client";
+import { useCart } from "@/hooks/use-cart";
 import useCartDetail from "@/hooks/use-cart-detail";
 import { useBusiness } from "@/hooks/useBusiness";
 import useCartStore from "@/redux/store/cart";
@@ -38,6 +39,8 @@ export const DetailCheckout = () => {
       return;
     }
   }, [cartItems]);
+
+  const { validateCart, validateItem, errorValidate } = useCart();
 
   return (
     <Card className="rounded-3xl border-slate-100 p-10 shadow-none">
@@ -109,12 +112,12 @@ export const DetailCheckout = () => {
           </div>
         </div>
         <Separator />
-        <TableCart />
+        <TableCart validateItem={validateItem} errorValidate={errorValidate} />
         <p className="inline-flex justify-between text-xl font-bold">
           {t("total")}
           <span>S/. {amountTotal.toFixed(2)}</span>
         </p>
-        <ConfirmCheckout />
+        <ConfirmCheckout validateCart={validateCart} />
       </CardContent>
     </Card>
   );
