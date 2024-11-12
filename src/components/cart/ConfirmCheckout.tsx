@@ -3,6 +3,7 @@ import useCartStore from "@/redux/store/cart";
 import { CartItem } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -56,12 +57,19 @@ export const ConfirmCheckout = ({ validateCart }: ConfirmCheckoutProps) => {
 
   const { cartItems } = useCartStore();
 
+  const router = useRouter();
+
   const onConfirm = async () => {
     await validateCart(cartItems);
     if (cartItems.length === 0) {
       toast.error(t("errors.empty"), {
         position: "top-center",
       });
+
+      setTimeout(() => {
+        router.replace("/");
+      }, 1000);
+
       return;
     }
   };
