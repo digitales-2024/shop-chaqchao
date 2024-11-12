@@ -224,7 +224,8 @@
       "button": "Confirmar pedido",
       "errors": {
         "terms": "Debes aceptar los términos y condiciones",
-        "privacy": "Debes aceptar la política de privacidad"
+        "privacy": "Debes aceptar la política de privacidad",
+        "empty": "No hay productos en tu carrito"
       }
     },
     "dateOrder": {

@@ -230,7 +230,8 @@
       "button": "Confirm order",
       "errors": {
         "terms": "You must accept the terms and conditions",
-        "privacy": "You must accept the privacy policy"
+        "privacy": "You must accept the privacy policy",
+        "empty": "You must add products to your cart"
       }
     },
     "dateOrder": {
