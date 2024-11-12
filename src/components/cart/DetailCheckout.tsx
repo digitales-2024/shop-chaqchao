@@ -5,6 +5,9 @@ import useCartStore from "@/redux/store/cart";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { toast } from "sonner";
 
 import { Card, CardContent, CardHeader } from "../ui/card";
 import { Separator } from "../ui/separator";
@@ -13,12 +16,28 @@ import { ConfirmCheckout } from "./ConfirmCheckout";
 import { TableCart } from "./TableCart";
 
 export const DetailCheckout = () => {
-  const { amountTotal } = useCartStore();
+  const { amountTotal, cartItems } = useCartStore();
   const { business, isLoading } = useBusiness();
 
   const { dateOrder, invoice, login } = useCartDetail();
   const t = useTranslations("checkout.summary");
   const i = useTranslations("checkout.invoice");
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (cartItems.length === 0) {
+      toast.error(t("errors.empty"), {
+        position: "top-center",
+      });
+      // Si el carrito esta vacio, redirigir al inicio esperar 2seg y redirigir
+      setTimeout(() => {
+        router.replace("/");
+      }, 2000);
+
+      return;
+    }
+  }, [cartItems]);
 
   return (
     <Card className="rounded-3xl border-slate-100 p-10 shadow-none">
