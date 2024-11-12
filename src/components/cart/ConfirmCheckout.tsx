@@ -4,6 +4,7 @@ import { CartItem } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 import {
@@ -54,8 +55,15 @@ export const ConfirmCheckout = ({ validateCart }: ConfirmCheckoutProps) => {
   });
 
   const { cartItems } = useCartStore();
+
   const onConfirm = async () => {
     await validateCart(cartItems);
+    if (cartItems.length === 0) {
+      toast.error(t("errors.empty"), {
+        position: "top-center",
+      });
+      return;
+    }
   };
 
   // Confirmar que los datos del formulario esten completos para habilitar el boton de confirmar pedido
