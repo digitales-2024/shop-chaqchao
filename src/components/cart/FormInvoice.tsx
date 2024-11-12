@@ -35,16 +35,26 @@ const invoiceDocuments = [
   },
 ];
 export const FormInvoice = () => {
+  const { invoice, setInvoice, handleStepComplete, setActiveStep } =
+    useCartDetail();
+
   const form = useForm<Invoice>({
     resolver: zodResolver(InvoiceSchema()),
     defaultValues: {
-      documentType: DocumentTypeInvoice.RUC,
-      number: "",
-      address: "",
-      name: "",
+      documentType:
+        invoice.typeInvoice === InvoiceType.INVOICE
+          ? invoice.documentType || DocumentTypeInvoice.RUC
+          : DocumentTypeInvoice.RUC,
+      number:
+        invoice.typeInvoice === InvoiceType.INVOICE ? invoice.number || "" : "",
+      address:
+        invoice.typeInvoice === InvoiceType.INVOICE
+          ? invoice.address || ""
+          : "",
+      name:
+        invoice.typeInvoice === InvoiceType.INVOICE ? invoice.name || "" : "",
     },
   });
-  const { setInvoice, handleStepComplete, setActiveStep } = useCartDetail();
   const t = useTranslations("checkout.invoice");
   const c = useTranslations("checkout");
 
