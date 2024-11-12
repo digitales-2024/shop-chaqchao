@@ -9,6 +9,7 @@ import { useTranslations } from "next-intl";
 import { Card, CardContent, CardHeader } from "../ui/card";
 import { Separator } from "../ui/separator";
 import { Skeleton } from "../ui/skeleton";
+import { ConfirmCheckout } from "./ConfirmCheckout";
 import { TableCart } from "./TableCart";
 
 export const DetailCheckout = () => {
@@ -94,6 +95,7 @@ export const DetailCheckout = () => {
           {t("total")}
           <span>S/. {amountTotal.toFixed(2)}</span>
         </p>
+        <ConfirmCheckout />
       </CardContent>
     </Card>
   );
