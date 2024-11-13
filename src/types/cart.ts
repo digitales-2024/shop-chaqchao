@@ -8,3 +8,7 @@ export interface Cart {
 export interface CartItem extends Product {
   quantity: number;
 }
+
+export type CreateCart = {
+  tempId?: string;
+};
