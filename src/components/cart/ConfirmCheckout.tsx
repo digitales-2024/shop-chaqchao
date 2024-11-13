@@ -78,7 +78,6 @@ export const ConfirmCheckout = ({ validateCart }: ConfirmCheckoutProps) => {
   const isFormComplete =
     dateOrder.date &&
     dateOrder.fullDate &&
-    login.name &&
     login.email &&
     invoice.typeInvoice &&
     invoice.number;
@@ -145,10 +144,7 @@ export const ConfirmCheckout = ({ validateCart }: ConfirmCheckoutProps) => {
           <Button
             className="w-full text-lg font-bold"
             disabled={
-              !login.name ||
-              !login.email ||
-              !invoice.typeInvoice ||
-              !dateOrder.fullDate
+              !login.email || !invoice.typeInvoice || !dateOrder.fullDate
             }
           >
             {t("button")}
