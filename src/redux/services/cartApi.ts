@@ -100,4 +100,11 @@ export const cartApi = createApi({
   }),
 });
 
-export const { useValidateCartMutation, useCreateCartMutation } = cartApi;
+export const {
+  useValidateCartMutation,
+  useCreateCartMutation,
+  useAddItemToCartMutation,
+  useMergeCartsMutation,
+  useUpdateItemQuantityMutation,
+  useRemoveItemFromCartMutation,
+} = cartApi;
