@@ -1,5 +1,8 @@
-import { useValidateCartMutation } from "@/redux/services/cartApi";
-import { CartItem } from "@/types";
+import {
+  useCreateCartMutation,
+  useValidateCartMutation,
+} from "@/redux/services/cartApi";
+import { CartItem, CreateCart } from "@/types";
 import { ErrorData } from "@/types/error";
 
 export const useCart = () => {
@@ -7,6 +10,9 @@ export const useCart = () => {
     validate,
     { data: dataValidate, isLoading: isLoadingValidate, error: errorValidate },
   ] = useValidateCartMutation();
+
+  const [create, { data: dataCreateCart, isLoading: isLoadingCreateCart }] =
+    useCreateCartMutation();
 
   const validateCart = async (cartItems: CartItem[]) => {
     try {
@@ -34,11 +40,26 @@ export const useCart = () => {
     return false;
   };
 
+  /**
+   * Crear un carrito con los productos seleccionados
+   * @param cart Carrito a crear
+   * @returns Respuesta de la petición
+   */
+  const createCart = async (cart: CreateCart) => {
+    try {
+      const response = await create(cart);
+      return response;
+    } catch (error) {}
+  };
+
   return {
     validateCart,
     validateItem,
     dataValidate,
     isLoadingValidate,
     errorValidate,
+    createCart,
+    isLoadingCreateCart,
+    dataCreateCart,
   };
 };
