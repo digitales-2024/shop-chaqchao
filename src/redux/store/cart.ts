@@ -7,6 +7,7 @@ interface CartState {
   id: string | null;
   cartItems: CartItem[];
   amountTotal: number;
+  createCart: () => string;
   addItemToCart: (item: Product, quantity?: number) => void;
   increaseQuantity: (productId: string) => void;
   decreaseQuantity: (productId: string) => void;
@@ -20,12 +21,13 @@ const useCartStore = create(
       cartItems: [],
       amountTotal: 0,
 
-      addItemToCart: async (item, quantity) => {
-        if (!get().id) {
-          const id = uuid();
-          set({ id });
-        }
+      createCart: () => {
+        const id = uuid();
+        set({ id });
+        return id;
+      },
 
+      addItemToCart: (item, quantity) => {
         if (get().cartItems.length === 0) {
           set({ amountTotal: 0 });
         }
