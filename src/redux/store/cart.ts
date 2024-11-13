@@ -4,7 +4,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 interface CartState {
-  id: string;
+  id: string | null;
   cartItems: CartItem[];
   amountTotal: number;
   addItemToCart: (item: Product, quantity?: number) => void;
@@ -16,11 +16,16 @@ interface CartState {
 const useCartStore = create(
   persist<CartState>(
     (set, get) => ({
-      id: uuid(),
+      id: null,
       cartItems: [],
       amountTotal: 0,
 
-      addItemToCart: (item, quantity) => {
+      addItemToCart: async (item, quantity) => {
+        if (!get().id) {
+          const id = uuid();
+          set({ id });
+        }
+
         if (get().cartItems.length === 0) {
           set({ amountTotal: 0 });
         }
