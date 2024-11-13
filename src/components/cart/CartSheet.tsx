@@ -74,16 +74,18 @@ export function CartSheet() {
       <SheetContent>
         <SheetHeader>
           <SheetTitle>{t("title")}</SheetTitle>
-          <SheetDescription>
-            {cartItems.length === 0 ? (
-              <CartEmpty />
-            ) : (
-              <>
-                {t("description.pre")} {cartItems.length}{" "}
-                {t("description.product")}
-                {cartItems.length === 1 ? "" : "s"} {t("description.post")}
-              </>
-            )}
+          <SheetDescription asChild>
+            <div>
+              {cartItems.length === 0 ? (
+                <CartEmpty />
+              ) : (
+                <>
+                  {t("description.pre")} {cartItems.length}{" "}
+                  {t("description.product")}
+                  {cartItems.length === 1 ? "" : "s"} {t("description.post")}
+                </>
+              )}
+            </div>
           </SheetDescription>
         </SheetHeader>
         <div className="grid gap-4 py-4">
