@@ -1,7 +1,7 @@
 "use client";
 
+import { useCart } from "@/hooks/use-cart";
 import useCartSheet from "@/hooks/use-cart-sheet";
-import useCartStore from "@/redux/store/cart";
 import { Product } from "@/types";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, VariantProps } from "class-variance-authority";
@@ -51,12 +51,13 @@ const AddToCartButton = React.forwardRef<HTMLDivElement, AddToCartButtonProps>(
     { className, product, quantity, variant, size, asChild = false, ...props },
     ref,
   ) => {
-    const { addItemToCart } = useCartStore();
     const { onOpenChange } = useCartSheet();
+
+    const { addItemCard } = useCart();
 
     const handleAddToCart = async () => {
       onOpenChange();
-      addItemToCart(product, quantity);
+      addItemCard(product, quantity);
     };
 
     const Comp = asChild ? Slot : "div";
