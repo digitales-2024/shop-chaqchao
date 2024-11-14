@@ -23,10 +23,6 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({
           className="h-9 w-60"
           createOrder={(_data, actions) => {
             const transactionData = getTransactionData();
-            console.log(
-              "Transaction data to be sent:",
-              JSON.stringify(transactionData, null, 2),
-            );
             if (parseFloat(transactionData.paypalAmount) <= 0) {
               alert(
                 "El monto total debe ser mayor a cero para realizar el pago",
@@ -60,9 +56,9 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({
                 ),
               };
 
-              console.log("Final transaction data:", finalTransactionData);
               onPaymentSuccess(finalTransactionData);
-              onNext();
+              if (finalTransactionData.paypalOrderStatus === "COMPLETED")
+                onNext();
             }
           }}
           onError={(err) => console.error("Error en el pago de PayPal", err)}

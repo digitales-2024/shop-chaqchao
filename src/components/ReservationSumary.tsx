@@ -17,7 +17,7 @@ export const ReservationSummary: React.FC<ReservationSummaryProps> = ({
   const t = useTranslations("class.reservationSumary");
 
   return (
-    <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-xl sm:p-8">
+    <div className="rounded-lg border border-gray-200 bg-white p-6 sm:p-8">
       {/* Encabezado */}
       <div className="mb-6 text-center">
         <h3 className="text-2xl font-bold text-gray-800 sm:text-3xl">
@@ -104,7 +104,9 @@ export const ReservationSummary: React.FC<ReservationSummaryProps> = ({
             <Languages className="mr-3 h-5 w-5 text-green-600" />
             <p>
               <span className="font-bold">{t("languageClass")}</span>{" "}
-              {data.language === "español" ? "Español" : "English"}
+              {data.language === "español"
+                ? t("languages.spanish")
+                : t("languages.english")}
             </p>
           </div>
         )}

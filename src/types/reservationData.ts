@@ -7,6 +7,7 @@ export interface ReservationData {
   allergies: string;
   confirmed: boolean;
   language: string;
+  schedule: string;
   userName: string;
   userEmail: string;
   userPhone: string;

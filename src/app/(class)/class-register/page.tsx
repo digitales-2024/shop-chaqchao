@@ -1,6 +1,5 @@
 "use client";
 
-// import { useCreateClassRegistrationMutation } from "@/redux/services/classApi";
 import { ReservationData } from "@/types/reservationData";
 import React, { useCallback, useState } from "react";
 
@@ -15,15 +14,8 @@ import {
   Confirmation,
 } from "@/components/Steps";
 
-/* interface ApiError {
-  data?: {
-    message?: string;
-  };
-} */
-
 export default function ReservationPage() {
   const [step, setStep] = useState(1);
-  // const [isReservationSuccessful, setIsReservationSuccessful] = useState(false);
   const [reservationData, setReservationData] = useState<ReservationData>({
     date: null,
     participants: 1,
@@ -32,6 +24,7 @@ export default function ReservationPage() {
     allergies: "",
     confirmed: false,
     language: "",
+    schedule: "",
     userName: "",
     userEmail: "",
     userPhone: "",
@@ -39,60 +32,18 @@ export default function ReservationPage() {
     totalAmount: 0,
   });
 
-  // const [createClassRegistration] = useCreateClassRegistrationMutation();
-
   // Manejo de los Steps
   const nextStep = () => setStep((prevStep) => prevStep + 1);
   const previousStep = () => setStep((prevStep) => prevStep - 1);
-
-  /* const formatPhoneNumber = (phone: string): string => {
-    return phone.replace(/(\+\d{2})(\d{9})/, "$1 $2");
-  }; */
-
-  // Transformación de datos para el endpoint
-  /* const handleSubmit = async () => {
-    const formattedData = {
-      userName: reservationData.userName,
-      userEmail: reservationData.userEmail,
-      userPhone: formatPhoneNumber(reservationData.userPhone),
-      scheduleClass: reservationData.time,
-      languageClass: reservationData.language || "español",
-      dateClass: reservationData.date ? reservationData.date.toISOString() : "",
-      totalAdults: reservationData.participants || 0,
-      totalChildren: reservationData.children || 0,
-      typeCurrency: "DOLAR",
-      comments: reservationData.allergies || "Ninguna",
-      paypalOrderId: "",
-      paypalOrderStatus: "",
-      paypalAmount: "",
-      paypalCurrency: "USD",
-      paypalDate: "",
-    };
-    try {
-      const result = await createClassRegistration(formattedData).unwrap();
-      console.log("Reserva creada con éxito", result);
-      setIsReservationSuccessful(true);
-      setStep(8);
-      // nextStep();
-    } catch (error) {
-      const apiError = error as ApiError;
-      const errorMessage =
-        apiError.data?.message || "Error al crear la reserva";
-      console.error("Error:", errorMessage);
-      setIsReservationSuccessful(false);
-      setStep(2);
-    }
-  }; */
-
   const updateData = useCallback((data: Partial<ReservationData>) => {
     setReservationData((prevData) => ({
       ...prevData,
-      ...data, // Actualiza solo los valores cambiados
+      ...data,
     }));
   }, []);
 
   return (
-    <div className="reservation-page">
+    <div>
       {/* Paso 1: Inicio */}
       {step === 1 && <Step1 onNext={nextStep} updateData={updateData} />}
 
@@ -156,7 +107,6 @@ export default function ReservationPage() {
       {step === 7 && reservationData.date && (
         <Step7
           onNext={() => setStep(8)}
-          // onNext={handleSubmit}
           onBack={previousStep}
           updateData={updateData}
           userName={reservationData.userName}
@@ -166,18 +116,18 @@ export default function ReservationPage() {
           time={reservationData.time}
           language={reservationData.language}
           participants={reservationData.participants}
-          // handleSubmit={handleSubmit}
         />
       )}
 
       {/* Paso 8: Resumen de la Reserva */}
-      {step === 8 /* && isReservationSuccessful */ && (
+      {step === 8 && (
         <Confirmation
           data={{
             date: reservationData.date || new Date(),
             participants: reservationData.participants,
             children: reservationData.children || 0,
             language: reservationData.language || "",
+            schedule: reservationData.schedule || "",
             time: reservationData.time,
             allergies: reservationData.allergies,
             confirmed: reservationData.confirmed,

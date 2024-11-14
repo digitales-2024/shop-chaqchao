@@ -71,6 +71,14 @@ export interface Steps7Props {
   language: string | undefined;
 }
 
+export interface ApiResponse {
+  ok: boolean;
+  message?: string;
+  data?: {
+    id: string;
+  };
+}
+
 export interface ConfirmationProps {
   data: {
     userName: string;
@@ -80,6 +88,7 @@ export interface ConfirmationProps {
     participants: number;
     children: number;
     language: string;
+    schedule: string;
     time: string;
     allergies: string;
     confirmed: boolean;

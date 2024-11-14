@@ -197,8 +197,8 @@
         "email": "Correo Electrónico"
       },
       "button": {
-        "back": "ATRAS",
-        "next": "SIGUIENTE"
+        "back": "Atras",
+        "next": "Siguiente"
       }
     },
     "step3": {
@@ -232,8 +232,8 @@
         "dec": "DIC"
       },
       "button": {
-        "back": "ATRAS",
-        "next": "SIGUIENTE"
+        "back": "Atras",
+        "next": "Siguiente"
       }
     },
     "step4": {
@@ -249,8 +249,8 @@
         "notAvailable": "No hay horarios disponibles"
       },
       "button": {
-        "back": "ATRAS",
-        "next": "SIGUIENTE"
+        "back": "Atras",
+        "next": "Siguiente"
       }
     },
     "step5": {
@@ -270,8 +270,8 @@
         "notAvailable": "No hay idiomas disponibles"
       },
       "button": {
-        "back": "ATRAS",
-        "next": "SIGUIENTE"
+        "back": "Atras",
+        "next": "Siguiente"
       }
     },
     "step6": {
@@ -281,8 +281,8 @@
       },
       "dateNotSelected": "Fecha no seleccionada",
       "button": {
-        "back": "ATRAS",
-        "next": "SIGUIENTE"
+        "back": "Atras",
+        "next": "Siguiente"
       }
     },
     "step7": {
@@ -310,6 +310,9 @@
         "+": "+",
         "-": "-"
       },
+      "totalParticipants": {
+        "people": "Personas"
+      },
       "allergies": {
         "title": "Alergias o restricciones alimentarias",
         "placeholder": "Especifique que alergias",
@@ -334,14 +337,23 @@
         "terms": "Términos y Políticas de Privacidad"
       },
       "buttons": {
-        "back": "ATRAS",
-        "register": "REGISTRAR CLASE"
+        "back": "Atras",
+        "register": "Registrar Clase"
       }
     },
     "confirmation": {
       "people": "Personas",
       "confirmation": "!RESERVA CONFIRMADA!",
+      "userName": "Nombre: ",
+      "userEmail": "Correo: ",
+      "userPhone": "Teléfono: ",
+      "languageClass": "Idioma: ",
+      "dateClass": "Fecha: ",
+      "scheduleClass": "Horario: ",
+      "participantsClass": "Participantes: ",
+      "userAllergies": "Alergias: ",
       "dateNotSelected": "Fecha no seleccionada",
+      "state": "Estado: ",
       "detail": {
         "title": "Detalles de la Reserva",
         "adults": "ADULTO(S)",
@@ -355,15 +367,28 @@
         "title": "Alergias o restricciones alimentarias",
         "allergie": "Alergias: ",
         "yes": "Si",
-        "none": "NINGUNA"
-      }
+        "none": "Ninguna"
+      },
+      "companyName": "Nombre de la Empresa: ",
+      "phone": "Teléfono: ",
+      "description": "Descripción",
+      "quantity": "Cantidad",
+      "price": "Precio / Unidad",
+      "typeCurrency": "Tipo de Moneda",
+      "amount": "Monto",
+      "numberAdults": "Número de Adultos",
+      "numberChildren": "Número de Niños"
     },
     "reservationSumary": {
       "abstract": {
         "title": "Resumen de la Reserva"
       },
+      "languages": {
+        "spanish": "Español",
+        "english": "Ingles"
+      },
       "userName": "Nombre: ",
-      "userEmail": "Email: ",
+      "userEmail": "Correo: ",
       "userPhone": "Teléfono: ",
       "dateClass": "Fecha: ",
       "scheduleClass": "Horario: ",

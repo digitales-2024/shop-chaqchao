@@ -203,8 +203,8 @@
         "email": "Email"
       },
       "button": {
-        "back": "BACK",
-        "next": "NEXT"
+        "back": "Back",
+        "next": "Next"
       }
     },
     "step3": {
@@ -238,8 +238,8 @@
         "dec": "DEC"
       },
       "button": {
-        "back": "BACK",
-        "next": "NEXT"
+        "back": "Back",
+        "next": "Next"
       }
     },
     "step4": {
@@ -255,8 +255,8 @@
         "notAvailable": "There are no available times"
       },
       "button": {
-        "back": "BACK",
-        "next": "NEXT"
+        "back": "Back",
+        "next": "Next"
       }
     },
     "step5": {
@@ -276,8 +276,8 @@
         "notAvailable": "No languages ​​available"
       },
       "button": {
-        "back": "BACK",
-        "next": "NEXT"
+        "back": "Back",
+        "next": "Next"
       }
     },
     "step6": {
@@ -287,8 +287,8 @@
       },
       "dateNotSelected": "Date not Selected",
       "button": {
-        "back": "BACK",
-        "next": "NEXT"
+        "back": "Back",
+        "next": "Next"
       }
     },
     "step7": {
@@ -316,6 +316,9 @@
         "+": "+",
         "-": "-"
       },
+      "totalParticipants": {
+        "people": "People"
+      },
       "allergies": {
         "title": "Food allergies or restrictions",
         "placeholder": "Please specify which allergies",
@@ -340,20 +343,29 @@
         "terms": "Terms and Privacy Policy"
       },
       "buttons": {
-        "back": "BACK",
-        "register": "REGISTER CLASS"
+        "back": "Back",
+        "register": "Register Class"
       }
     },
     "confirmation": {
       "people": "People",
-      "confirmation": "RESERVATION CONFIRMED!",
+      "confirmation": "Reservation Confirmed!",
+      "userName": "Names: ",
+      "userEmail": "Email: ",
+      "userPhone": "Phone: ",
+      "languageClass": "Language: ",
+      "dateClass": "Date: ",
+      "scheduleClass": "Schedule: ",
+      "participantsClass": "Participants: ",
+      "userAllergies": "Allergies: ",
       "dateNotSelected": "Date not Selected",
+      "state": "State: ",
       "detail": {
         "title": "Booking Details",
-        "adults": "ADULT(S)",
-        "children": "CHILDREN(S)",
+        "adults": "Adult(S)",
+        "children": "Children(S)",
         "considerations": {
-          "title": "CONSIDERATIONS",
+          "title": "Considerations",
           "message": "*Arrive 5 minutes early"
         }
       },
@@ -361,19 +373,32 @@
         "title": "Food allergies or restrictions",
         "allergie": "Allergies: ",
         "yes": "Si",
-        "none": "NONE"
-      }
+        "none": "None"
+      },
+      "companyName": "Company Name: ",
+      "phone": "Phone: ",
+      "description": "Description",
+      "quantity": "Quantity",
+      "price": "Price / Unit",
+      "typeCurrency": "type Currency",
+      "amount": "Amount",
+      "numberAdults": "Number of Adults",
+      "numberChildren": "Number of Children"
     },
     "reservationSumary": {
       "abstract": {
         "title": "Booking Summary"
       },
+      "languages": {
+        "spanish": "Spanish",
+        "english": "English"
+      },
       "userName": "Name: ",
       "userEmail": "Email: ",
       "userPhone": "Phone: ",
+      "languageClass": "Language: ",
       "dateClass": "Date: ",
       "scheduleClass": "Schedule: ",
-      "languageClass": "Language: ",
       "participantsClass": "Participants: ",
       "userAllergies": "Allergies: "
     }

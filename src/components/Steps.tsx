@@ -1,12 +1,15 @@
 "use client";
 
+import { ChaqchaoLogo } from "@/assets/images/ChaqchaoLogo";
 import Workshop from "@/assets/images/workshop_01.webp";
+import {
+  useRegisterClass,
+  useConfirmClassPayment,
+} from "@/hooks/use-class-registration";
 import {
   useSchedulesQuery,
   useLanguagesQuery,
   usePricesQuery,
-  // useCreateClassRegistrationMutation,
-  // useConfirmClassPaymentMutation,
 } from "@/redux/services/classApi";
 import { PaypalTransactionData } from "@/types/paypal";
 import {
@@ -70,15 +73,16 @@ export function Step1({ onNext, updateData }: Steps1Props) {
 
         <button
           onClick={handleNext}
-          className="h-12 w-36 rounded-full bg-primary px-0 py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 ease-in-out hover:bg-secondary/90 sm:w-44 sm:px-12 sm:text-lg"
+          className="h-12 w-36 rounded-full bg-primary py-3 text-base font-semibold text-white shadow-lg transition-all duration-300 ease-in-out hover:bg-secondary/90 sm:w-44 sm:text-lg"
         >
-          {t("button").toUpperCase()}
+          {t("button")}
         </button>
       </div>
     </div>
   );
 }
 
+// Step2: Datos del usuario (Name, Email, Phone)
 export function Step2({
   onNext,
   onBack,
@@ -134,7 +138,7 @@ export function Step2({
       <div className="relative mb-6 py-4">
         <div className="relative flex justify-center">
           <LineTitle className="mx-4 flex-grow text-primary" />
-          <span className="bg-white px-4 font-commingSoon text-lg font-bold sm:text-2xl">
+          <span className="bg-white px-4 text-lg font-bold sm:text-2xl">
             {t("title")}
           </span>
           <LineTitle className="mx-4 flex-grow rotate-180 text-primary" />
@@ -191,10 +195,6 @@ export function Step3({
   updateData,
   reservationData,
 }: Steps3Props) {
-  /* const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
-  const [datePickerDate, setDatePickerDate] = useState<Date | undefined>(
-    undefined,
-  ); */
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(
     reservationData.date || undefined,
   );
@@ -231,7 +231,7 @@ export function Step3({
       <div className="relative mb-6 py-4">
         <div className="relative flex justify-center">
           <LineTitle className="mx-4 flex-grow text-primary" />
-          <span className="bg-white px-4 font-commingSoon text-lg font-bold sm:text-2xl">
+          <span className="bg-white px-4 text-lg font-bold sm:text-2xl">
             {t("title")}
           </span>
           <LineTitle className="mx-4 flex-grow rotate-180 text-primary" />
@@ -284,19 +284,11 @@ export function Step3({
                 </button>
               </PopoverTrigger>
               <PopoverContent align="center" className="w-auto p-0">
-                {/* <Calendar
-                  selected={datePickerDate}
-                  onSelect={(date: Date | undefined) => {
-                    setSelectedDate(date);
-                  }}
-                  disabled={(date: Date) => date < new Date()}
-                  initialFocus
-                /> */}
                 <Calendar
                   selected={datePickerDate}
                   onSelect={(date: Date | undefined) => {
                     setSelectedDate(date);
-                    updateData({ date }); // Actualiza `reservationData` cuando se selecciona una fecha en el calendario
+                    updateData({ date });
                   }}
                   disabled={(date: Date) => date < new Date()}
                   initialFocus
@@ -328,7 +320,6 @@ export function Step4({
   onNext,
   onBack,
   updateData,
-  selectedDate,
   reservationData,
 }: Steps4Props) {
   const [time, setTime] = useState(reservationData.time || "");
@@ -338,7 +329,7 @@ export function Step4({
 
   const handleTimeSelection = (selectedTime: string) => {
     setTime(selectedTime);
-    updateData({ time: selectedTime }); // Actualizamos el tiempo en reservationData
+    updateData({ time: selectedTime });
   };
 
   const handleNext = () => {
@@ -350,21 +341,11 @@ export function Step4({
     onNext();
   };
   return (
-    <div className="mx-auto w-full bg-white px-4 pb-48 pt-10 text-center sm:px-0">
-      <div className="mb-6 flex justify-center space-x-10">
-        <div className="rounded-full border border-primary px-8 py-2 text-sm font-bold text-primary sm:text-lg">
-          {selectedDate
-            ? format(selectedDate, "eee'.' dd',' MMM'.'", {
-                locale: es,
-              }).toUpperCase()
-            : t("dateNotSelected")}
-        </div>
-      </div>
-
-      <div className="relative mb-6 mt-8 py-4">
+    <div className="mx-auto w-full bg-white px-4 pb-48 pt-4 sm:px-0">
+      <div className="relative mb-6 mt-0 py-4">
         <div className="relative flex justify-center">
           <LineTitle className="mx-4 flex-grow text-primary" />
-          <span className="bg-white px-4 font-commingSoon text-lg font-bold sm:text-2xl">
+          <span className="bg-white px-4 text-lg font-bold sm:text-2xl">
             {t("title")}
           </span>
           <LineTitle className="mx-4 flex-grow rotate-180 text-primary" />
@@ -428,8 +409,6 @@ export function Step5({
   onNext,
   onBack,
   updateData,
-  selectedDate,
-  time,
   reservationData,
 }: Steps5Props) {
   const [selectedLanguage, setSelectedLanguage] = useState<string>(
@@ -441,7 +420,7 @@ export function Step5({
 
   const handleLanguageSelection = (language: string) => {
     setSelectedLanguage(language);
-    updateData({ language }); // Actualizamos el idioma en reservationData
+    updateData({ language });
   };
 
   const handleNext = () => {
@@ -453,25 +432,11 @@ export function Step5({
     onNext();
   };
   return (
-    <div className="mx-auto w-full bg-white pb-48 pt-10 text-center">
-      {/* Información seleccionada */}
-      <div className="mb-6 flex flex-wrap justify-center gap-4 sm:gap-6">
-        <div className="rounded-full border border-primary px-8 py-2 text-sm font-bold text-primary sm:text-lg">
-          {selectedDate
-            ? format(selectedDate, "eee'.' dd',' MMM'.'", {
-                locale: es,
-              }).toUpperCase()
-            : t("dateNotSelected")}
-        </div>
-        <div className="rounded-full border border-primary px-8 py-2 text-sm font-bold text-primary sm:text-lg">
-          {time}
-        </div>
-      </div>
-
-      <div className="relative mb-6 mt-8 py-4">
+    <div className="mx-auto w-full bg-white pb-48 pt-4 text-center">
+      <div className="relative mb-6 mt-0 py-4">
         <div className="relative flex justify-center">
           <LineTitle className="mx-4 flex-grow text-primary" />
-          <span className="bg-white px-4 font-commingSoon text-lg font-bold sm:text-2xl">
+          <span className="bg-white px-4 text-lg font-bold sm:text-2xl">
             {t("title")}
           </span>
           <LineTitle className="mx-4 flex-grow rotate-180 text-primary" />
@@ -539,9 +504,6 @@ export function Step6({
   onNext,
   onBack,
   updateData,
-  time,
-  selectedDate,
-  language,
   reservationData,
 }: Steps6Props) {
   const [participants, setParticipants] = useState<number | null>(
@@ -568,28 +530,11 @@ export function Step6({
     onBack();
   };
   return (
-    <div className="mx-auto w-full bg-white pb-48 pt-10 text-center">
-      {/* Información seleccionada */}
-      <div className="mb-6 flex flex-wrap justify-center gap-4 sm:gap-6">
-        <div className="rounded-full border border-primary px-8 py-2 text-sm font-bold text-primary sm:text-lg">
-          {selectedDate
-            ? format(selectedDate, "eee'.' dd',' MMM'.'", {
-                locale: es,
-              }).toUpperCase()
-            : t("dateNotSelected")}
-        </div>
-        <div className="rounded-full border border-primary px-8 py-2 text-sm font-bold text-primary sm:text-lg">
-          {time}
-        </div>
-        <div className="rounded-full border border-primary px-8 py-2 text-sm font-bold text-primary sm:text-lg">
-          {language?.toUpperCase()}
-        </div>
-      </div>
-
-      <div className="relative mb-6 mt-8 py-4">
+    <div className="mx-auto w-full bg-white pb-48 pt-4 text-center">
+      <div className="relative mb-6 mt-0 py-4">
         <div className="relative flex justify-center">
           <LineTitle className="mx-4 flex-grow text-primary" />
-          <span className="bg-white px-4 font-commingSoon text-lg font-bold sm:text-2xl">
+          <span className="bg-white px-4 text-lg font-bold sm:text-2xl">
             {t("title")}
           </span>
           <LineTitle className="mx-4 flex-grow rotate-180 text-primary" />
@@ -653,13 +598,14 @@ export function Step7({
   const [totalParticipants, setTotalParticipants] = useState(participants);
   const [total, setTotal] = useState(participants * adultPrice);
   const [subTotal, setSubTotal] = useState(participants * adultPrice);
-  const [classId, setClassId] = useState<string | null>(null);
-  const [showCountdown, setShowCountdown] = useState(false);
+
+  const { handleRegisterClass, classId, showCountdown, isLoading } =
+    useRegisterClass();
+  const { confirmClassPayment, isLoading: isConfirmLoading } =
+    useConfirmClassPayment();
 
   const { data: prices } = usePricesQuery();
   const t = useTranslations("class.step7");
-  /* const [createClassRegistration] = useCreateClassRegistrationMutation();
-  const [confirmClassPayment] = useConfirmClassPaymentMutation(); */
 
   // Actualizando el número de participantes
   useEffect(() => {
@@ -688,6 +634,25 @@ export function Step7({
   useEffect(() => {
     updateData({ children });
   }, [children, updateData]);
+
+  // Data para la transacciòn
+  const transactionDataRef = useRef({
+    userName,
+    userEmail,
+    userPhone,
+    scheduleClass: time,
+    languageClass: language || "",
+    dateClass: selectedDate.toISOString(),
+    totalAdults: participants,
+    totalChildren: children,
+    typeCurrency: TypeCurrency.Dolar,
+    comments: hasAllergies ? allergies : "Ninguna",
+    paypalAmount: total.toFixed(2),
+    paypalCurrency: "",
+  });
+
+  // Definir función para obtener los datos actualizados
+  const getTransactionData = () => transactionDataRef.current;
 
   // Actualizar `transactionDataRef` cuando cambien los datos de la reserva
   useEffect(() => {
@@ -719,25 +684,6 @@ export function Step7({
     total,
   ]);
 
-  // Definir función para obtener los datos actualizados
-  const getTransactionData = () => transactionDataRef.current;
-
-  // Data para la transacciòn
-  const transactionDataRef = useRef({
-    userName,
-    userEmail,
-    userPhone,
-    scheduleClass: time,
-    languageClass: language || "",
-    dateClass: selectedDate.toISOString(),
-    totalAdults: participants,
-    totalChildren: children,
-    typeCurrency: TypeCurrency.Dolar,
-    comments: hasAllergies ? allergies : "Ninguna",
-    paypalAmount: total.toFixed(2),
-    paypalCurrency: "",
-  });
-
   const handleIncreaseChildren = () => {
     setChildren((prev) => prev + 1);
   };
@@ -752,78 +698,14 @@ export function Step7({
     updateData({ allergies: newAllergies });
   };
 
+  // Registrar una Clase
   const registerClass = async () => {
-    try {
-      const response = await fetch("http://localhost:4000/api/v1/classes", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userName,
-          userEmail,
-          userPhone,
-          scheduleClass: time,
-          languageClass: language || "",
-          dateClass: selectedDate.toISOString(),
-          totalAdults: participants,
-          totalChildren: children,
-          typeCurrency: TypeCurrency.Dolar,
-          comments: hasAllergies ? allergies : "Ninguna",
-          paypalOrderId: "",
-          paypalOrderStatus: "",
-          paypalAmount: "",
-          paypalCurrency: "USD",
-          paypalDate: "",
-        }),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        switch (result.message) {
-          case "There are no more spots available.":
-            showToast(t("toast.noPlaceAvailable"), "error");
-            break;
-          case "Invalid number of participants":
-            if (totalParticipants < 2 || totalParticipants > 8) {
-              showToast(t("toast.invalidNumberParticipantsRange"), "error");
-            }
-            break;
-          case "Invalid number of participants":
-            showToast(t("toast.invalidNumberParticipants"), "error");
-            break;
-          case "Class is close":
-            showToast(t("toast.classIsClose"), "error");
-            break;
-          case "Registration is close":
-            showToast(t("toast.registrationIsClose"), "error");
-            break;
-          case "Invalid class date":
-            showToast(t("toast.invalidClassDate"), "error");
-            break;
-          default:
-            return;
-        }
-        return;
-      }
-
-      showToast(t("toast.classRegisterSuccessfully"), "success");
-      setClassId(result.data.id);
-      setTimeout(() => setShowCountdown(true), 3000);
-    } catch (error) {
-      showToast(t("toast.errorRegisterClass"), "error");
-      console.error("Error al registrar la clase:", error);
-    }
-  };
-
-  /* const handleRegisterClass = async () => {
-    const registrationData = {
+    const payload = {
       userName,
       userEmail,
       userPhone,
       scheduleClass: time,
-      languageClass: language || "español",
+      languageClass: language || "",
       dateClass: selectedDate.toISOString(),
       totalAdults: participants,
       totalChildren: children,
@@ -831,139 +713,24 @@ export function Step7({
       comments: hasAllergies ? allergies : "Ninguna",
       paypalOrderId: "",
       paypalOrderStatus: "",
-      paypalAmount: "",
+      paypalAmount: total.toFixed(2),
       paypalCurrency: "USD",
       paypalDate: "",
     };
 
-    try {
-      const result = await createClassRegistration(registrationData).unwrap();
-
-      if (result.statusCode && result.statusCode !== 201) {
-        switch (result.message) {
-          case "There are no more spots available.":
-            showToast(
-              "No hay más cupos disponibles, Por favor escoga otra fecha u horario.",
-              "error",
-            );
-            break;
-          case "Invalid number of participants":
-            if (totalParticipants < 2 || totalParticipants > 8) {
-              showToast(
-                "Número invalido de participantes, El número minimo de participantes debe ser 2.",
-                "error",
-              );
-            }
-            break;
-          case "Invalid number of participants":
-            showToast(
-              "Número invalido de participantes, El número minimo de participantes debe ser 1.",
-              "error",
-            );
-            break;
-          case "Class is close":
-            showToast(
-              "La clase esta cerrada, Por favor escoga otra fecha u horario.",
-              "error",
-            );
-            break;
-          case "Registration is close":
-            showToast(
-              "La inscripción esta cerrada, Por favor eliga otra fecha u horario.",
-              "error",
-            );
-            break;
-          case "Invalid class date":
-            showToast(
-              "Fecha invalida, Por favor eliga otra fecha u horario.",
-              "error",
-            );
-            break;
-          default:
-            return;
-        }
-        return;
-      }
-
-      // Si el registro es exitoso
-      showToast(
-        "Clase registrada exitosamente. Proceda con el pago.",
-        "success",
-      );
-      setClassId(result.data.id);
-      setTimeout(() => setShowCountdown(true), 2500);
-    } catch (error) {
-      showToast("Error al registrar la clase. Inténtalo de nuevo.", "error");
-      console.error("Error al registrar la clase:", error);
-    }
-  }; */
-
-  /* const handleConfirmPayment = async (paypalData: PaypalTransactionData) => {
-    if (!classId) return;
-
-    const paymentData = {
-      paypalOrderId: paypalData.paypalOrderId,
-      paypalOrderStatus: paypalData.paypalOrderStatus,
-      paypalAmount: paypalData.paypalAmount,
-      paypalCurrency: paypalData.paypalCurrency,
-      paypalDate: paypalData.paypalDate,
-    };
-
-    try {
-      const response = await confirmClassPayment({ classId, data: paymentData }).unwrap();
-      if (!response.ok) {
-        showToast("Error al registrar la clase. Inténtalo de nuevo.", "error");
-        console.log(result.message);
-        return;
-      }
-
-      showToast("Pago confirmado y clase registrada con éxito.", "success");
-      setShowCountdown(false);
-      onNext();
-    } catch (error) {
-      showToast("Error al confirmar el pago. Inténtalo de nuevo.", "error");
-      console.error("Error al confirmar el pago:", error);
-    }
-  }; */
-
-  const confirmPayment = async (paypalData: PaypalTransactionData) => {
-    if (!classId) return;
-
-    try {
-      const response = await fetch(
-        `http://localhost:4000/api/v1/classes/${classId}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            paypalOrderId: String(paypalData.paypalOrderId),
-            paypalOrderStatus: String(paypalData.paypalOrderStatus),
-            paypalAmount: paypalData.paypalAmount,
-            paypalCurrency: String(paypalData.paypalCurrency),
-            paypalDate: String(paypalData.paypalDate),
-          }),
-        },
-      );
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        showToast(t("toast.errorRegisterClass"), "error");
-        console.log(result.message);
-        return;
-      }
-
-      showToast(t("toast.paymentConfirmed"), "success");
-      setShowCountdown(false);
-      onNext();
-    } catch (error) {
-      showToast(t("toast.errorConfirmPayment"), "error");
-      console.error("Error al confirmar el pago:", error);
-    }
+    await handleRegisterClass(payload);
   };
 
+  // Validar el Pago
+  const confirmPayment = async (paypalData: PaypalTransactionData) => {
+    if (!classId) {
+      showToast(t("toast.errorRegisterClass"), "error");
+      return;
+    }
+    await confirmClassPayment(classId, paypalData);
+  };
+
+  // Temporizador
   const countdownRenderer = ({
     minutes,
     seconds,
@@ -974,8 +741,6 @@ export function Step7({
     completed: boolean;
   }) => {
     if (completed) {
-      setShowCountdown(false);
-      setClassId(null);
       showToast(t("toast.timeOut"), "error");
       return null;
     } else {
@@ -991,29 +756,11 @@ export function Step7({
   };
 
   return (
-    <div className="mx-auto w-full bg-white pb-48 pt-10 text-center">
-      {/* Información seleccionada */}
-      <div className="mb-6 flex flex-wrap justify-center gap-4 sm:gap-6">
-        <div className="font-bolf rounded-full border border-primary px-8 py-2 text-base font-bold text-primary sm:text-lg">
-          {format(selectedDate, "eee'.' dd',' MMM'.'", {
-            locale: es,
-          }).toUpperCase()}
-        </div>
-        <div className="rounded-full border border-primary px-8 py-2 text-base font-bold text-primary sm:text-lg">
-          {time}
-        </div>
-        <div className="rounded-full border border-primary px-8 py-2 text-base font-bold text-primary sm:text-lg">
-          {totalParticipants} Personas
-        </div>
-        <div className="rounded-full border border-primary px-8 py-2 text-base font-bold text-primary sm:text-lg">
-          {language?.toUpperCase()}
-        </div>
-      </div>
-
-      <div className="relative mb-6 mt-8 py-4">
+    <div className="mx-auto w-full bg-white pb-48 pt-4 text-center">
+      <div className="relative mb-6 mt-0 py-4">
         <div className="relative flex justify-center">
           <LineTitle className="mx-4 flex-grow text-primary" />
-          <span className="bg-white px-4 font-commingSoon text-lg font-bold sm:text-2xl">
+          <span className="bg-white px-4 text-lg font-bold sm:text-2xl">
             {t("title")}
           </span>
           <LineTitle className="mx-4 flex-grow rotate-180 text-primary" />
@@ -1087,7 +834,7 @@ export function Step7({
         )}
 
         {/* Resumen de la reserva */}
-        <div className="mx-[15px] mb-6 max-w-lg rounded-md border border-gray-200 bg-white p-6 shadow-2xl sm:mx-auto">
+        <div className="mx-[15px] mb-6 max-w-lg rounded-md border border-gray-200 bg-white p-6 sm:mx-auto">
           <h3 className="mb-4 text-lg font-semibold sm:text-2xl">
             {t("abstract.title")}
           </h3>
@@ -1169,7 +916,7 @@ export function Step7({
           <div className="my-4 mb-10 border-t border-gray-300"></div>
 
           {/* Checkbox para términos y condiciones */}
-          <div className="mb-8 flex items-center space-x-3 font-commingSoon">
+          <div className="mb-8 flex items-center space-x-3">
             <input
               type="checkbox"
               checked={confirmed}
@@ -1192,15 +939,6 @@ export function Step7({
             </button>
             <button
               className="h-9 w-60 rounded-full bg-primary px-10 text-sm font-semibold text-white shadow-lg transition-all duration-300 ease-in-out hover:bg-secondary sm:w-auto sm:text-xl"
-              /* onClick={
-                confirmed
-                  ? handleRegisterClass
-                  : () =>
-                      showToast(
-                        "Acepte los terminos y politicas para continuar",
-                        "info",
-                      )
-              } */
               onClick={() => {
                 {
                   confirmed
@@ -1208,6 +946,7 @@ export function Step7({
                     : showToast(t("toast.acceptTerms"), "info");
                 }
               }}
+              disabled={isLoading || isConfirmLoading}
             >
               {t("buttons.register")}
             </button>
@@ -1222,11 +961,10 @@ export function Step7({
 
             {/* Paypal Button */}
             <div className="flex items-center justify-center">
-              {confirmed && showCountdown && classId !== null && (
+              {confirmed && showCountdown && classId && (
                 <PayPalButton
                   getTransactionData={getTransactionData}
                   onNext={onNext}
-                  // onPaymentSuccess={handleConfirmPayment}
                   onPaymentSuccess={confirmPayment}
                 />
               )}
@@ -1240,82 +978,122 @@ export function Step7({
 
 // Confirmación final
 export function Confirmation({ data }: ConfirmationProps) {
-  const totalParticipants = data.participants + data.children;
-  console.log("Data Confirmation:", data);
+  const total = data.participants * 30 + data.children * 20;
   const t = useTranslations("class.confirmation");
 
   return (
-    <div className="mx-auto my-12 rounded-lg bg-white py-8 text-center shadow-lg">
-      {/* Información general */}
-      <div className="mb-8 flex flex-wrap justify-center gap-8">
-        <div className="rounded-full border border-primary px-8 py-2 text-sm font-bold text-primary sm:text-lg">
-          {data.date
-            ? format(data.date, "eee'.' dd',' MMM'.'", {
-                locale: es,
-              }).toUpperCase()
-            : t("dateNotSelected")}
-        </div>
-        <div className="rounded-full border border-primary px-8 py-2 text-sm font-bold text-primary sm:text-lg">
-          {totalParticipants} {t("people")}
-        </div>
-        <div className="rounded-full border border-primary px-8 py-2 text-sm font-bold text-primary sm:text-lg">
-          {data.time}
-        </div>
-        <div className="rounded-full border border-primary px-8 py-2 text-sm font-bold text-primary sm:text-lg">
-          {data.language.toUpperCase()}
-        </div>
-      </div>
-
-      {/* Mensaje de confirmación */}
-      <div className="mb-8 bg-primary py-3 text-white">
-        <h2 className="font-commingSoon text-lg font-bold sm:text-2xl">
-          {t("confirmation")}
-        </h2>
-      </div>
-
-      {/* Detalles de la reserva */}
-      <div className="grid grid-cols-1 gap-6 rounded-lg bg-white px-6 py-8 shadow-lg sm:grid-cols-2 sm:px-16 lg:px-20">
-        <div className="rounded-lg bg-gray-50 p-6 shadow-md">
-          <h3 className="mb-4 text-base font-semibold text-gray-800 sm:text-lg">
+    <div className="mx-auto my-12 w-[80%] max-w-4xl rounded-lg border border-gray-300 bg-white shadow-lg sm:w-full">
+      {/* Encabezado */}
+      <div className="flex items-start gap-4 border-b border-gray-300 p-4 sm:items-center sm:justify-between md:items-start">
+        <div>
+          <h1 className="mb-3 text-2xl font-bold text-gray-800">
             {t("detail.title")}
-          </h3>
-          <p className="mb-2 text-base font-medium text-gray-700">
-            <span className="mr-2 text-base sm:text-lg">👤</span>{" "}
-            {data.userName}
+          </h1>
+          <p className="mb-3 text-sm text-gray-600">
+            <strong>{t("companyName")}</strong>Chaqchao Chocolate Factory
           </p>
-          <p className="mb-2 text-base font-medium text-gray-700">
-            <span className="mr-2 text-base sm:text-lg">✉️</span>{" "}
-            {data.userEmail}
+          <p className="mb-3 text-sm text-gray-600">
+            <strong>{t("phone")}</strong>958 086 581
           </p>
-          <p className="mb-2 text-base font-medium text-gray-700">
-            <span className="mr-2 text-base sm:text-lg">📞</span>{" "}
+          <p className="mb-3 text-sm text-gray-600">
+            <strong>{t("userEmail")}</strong>caja@chaqchao-chocolates.com
+          </p>
+        </div>
+        <div className="mx-auto flex-shrink-0 sm:mx-0">
+          <ChaqchaoLogo className="w-20 md:w-32" fill="white" />
+        </div>
+      </div>
+
+      {/* Información General */}
+      <div className="grid grid-cols-1 gap-4 border-b border-gray-300 p-4 text-sm text-gray-700 sm:grid-cols-2">
+        <div>
+          <p className="mb-3">
+            <strong>{t("userName")}</strong> {data.userName}
+          </p>
+          <p className="mb-3">
+            <strong>{t("userEmail")}</strong> {data.userEmail}
+          </p>
+          <p className="mb-3">
+            <strong>{t("userPhone")}</strong>{" "}
             {formatPhoneNumber(data.userPhone)}
           </p>
-          <p className="text-base font-medium text-gray-700">
-            <span className="mr-2 text-base sm:text-lg">👥</span>{" "}
-            {data.participants} {t("detail.adults")}, {data.children}{" "}
-            {t("detail.children")}
+          <p className="mb-3">
+            <strong>{t("languageClass")}</strong> {data.language}
           </p>
-          <p className="mt-4 text-sm text-gray-500">
-            {t("detail.considerations.title")}
-          </p>
-          <p className="text-xs text-gray-600 sm:text-sm">
-            {t("detail.considerations.message")}
+          <p className="mb-3">
+            <strong>{t("dateClass")}</strong>{" "}
+            {format(data.date || new Date(), "dd/MM/yyyy", { locale: es })}
           </p>
         </div>
+        <div>
+          <p className="mb-3">
+            <strong>{t("scheduleClass")}</strong> {data.time}
+          </p>
+          <p className="mb-3">
+            <strong>{t("participantsClass")}</strong> {data.participants}{" "}
+            {t("detail.adults")}, {data.children} {t("detail.children")}
+          </p>
+          <p className="mb-3">
+            <strong>{t("userAllergies")}</strong>{" "}
+            {data.allergies ? data.allergies : t("allergies.none")}
+          </p>
+          <p className="mb-3">
+            <strong>{t("state")}</strong> Completed
+          </p>
+        </div>
+      </div>
 
-        {/* Alergias */}
-        <div className="rounded-lg bg-gray-50 p-6 shadow-md">
-          <h3 className="mb-4 text-base font-semibold text-gray-800 sm:text-lg">
-            {t("allergies.title")}
-          </h3>
-          <p className="text-sm font-medium text-gray-700 sm:text-base">
-            <span className="font-bold">{t("allergies.allergie")}</span>
-            {data.allergies
-              ? `${t("allergies.allergie")}: ${data.allergies}`
-              : t("allergies.none")}
-          </p>
-        </div>
+      {/* Detalles de Reserva */}
+      <div className="overflow-x-auto p-4">
+        <table className="w-full border border-gray-300 text-sm text-gray-700">
+          <thead>
+            <tr className="bg-gray-100">
+              <th className="border-r border-gray-300 p-2">
+                {t("description")}
+              </th>
+              <th className="border-r border-gray-300 p-2">{t("quantity")}</th>
+              <th className="border-r border-gray-300 p-2">{t("price")}</th>
+              <th className="border-r border-gray-300 p-2">
+                {t("typeCurrency")}
+              </th>
+              <th className="p-2">{t("amount")}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td className="border-r border-gray-300 p-2">
+                {t("numberAdults")}
+              </td>
+              <td className="border-r border-gray-300 p-2 text-center">
+                {data.participants}
+              </td>
+              <td className="border-r border-gray-300 p-2 text-center">30</td>
+              <td className="border-r border-gray-300 p-2 text-center">USD</td>
+              <td className="pr-5 text-right sm:pr-11">
+                ${data.participants * 30}
+              </td>
+            </tr>
+            <tr>
+              <td className="border-r border-gray-300 p-2">
+                {t("numberChildren")}
+              </td>
+              <td className="border-r border-gray-300 p-2 text-center">
+                {data.children}
+              </td>
+              <td className="border-r border-gray-300 p-2 text-center">20</td>
+              <td className="border-r border-gray-300 p-2 text-center">USD</td>
+              <td className="pr-5 text-right sm:pr-11">
+                ${data.children * 20}
+              </td>
+            </tr>
+            <tr className="font-bold">
+              <td className="border-r border-gray-300 p-2">Total</td>
+              <td colSpan={5} className="pl-2 pr-5 text-right sm:pr-11">
+                ${total}
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   );
