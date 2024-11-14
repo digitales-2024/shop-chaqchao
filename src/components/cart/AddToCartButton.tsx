@@ -15,6 +15,7 @@ interface AddToCartButtonProps
   product: Product;
   quantity?: number;
   asChild?: boolean;
+  setIsDialogOpen?: (value: boolean) => void;
 }
 
 const buttonVariants = cva(
@@ -48,7 +49,16 @@ const buttonVariants = cva(
 
 const AddToCartButton = React.forwardRef<HTMLDivElement, AddToCartButtonProps>(
   (
-    { className, product, quantity, variant, size, asChild = false, ...props },
+    {
+      className,
+      product,
+      quantity,
+      variant,
+      size,
+      setIsDialogOpen,
+      asChild = false,
+      ...props
+    },
     ref,
   ) => {
     const { onOpenChange } = useCartSheet();
@@ -57,6 +67,9 @@ const AddToCartButton = React.forwardRef<HTMLDivElement, AddToCartButtonProps>(
 
     const handleAddToCart = async () => {
       onOpenChange();
+      if (setIsDialogOpen) {
+        setIsDialogOpen(false);
+      }
       addItemCard(product, quantity);
     };
 

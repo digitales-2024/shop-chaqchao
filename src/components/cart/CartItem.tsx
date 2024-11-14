@@ -15,7 +15,7 @@ interface CartItemProps {
 
 export const CartItem = React.forwardRef<HTMLDivElement, CartItemProps>(
   ({ product }, ref) => {
-    const [isDialogOpen, setIsDialogOpen] = useState(false);
+    const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 
     return (
       <div ref={ref} className="h-fit">
@@ -62,7 +62,12 @@ export const CartItem = React.forwardRef<HTMLDivElement, CartItemProps>(
             </Card>
           </DialogTrigger>
 
-          {isDialogOpen && <ProductDialog product={product} />}
+          {isDialogOpen && (
+            <ProductDialog
+              product={product}
+              setIsDialogOpen={setIsDialogOpen}
+            />
+          )}
         </Dialog>
       </div>
     );
