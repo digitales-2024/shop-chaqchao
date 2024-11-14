@@ -81,6 +81,7 @@ export const useCart = () => {
    */
   const addItemCard = useCallback(
     async (item: Product, quantity?: number) => {
+      const itemCart = cartItems.find((item) => item.id === item.id);
       try {
         addItemToCart(item, quantity);
         let cartId = cartIdFromStore;
@@ -96,7 +97,10 @@ export const useCart = () => {
           quantity,
         }).unwrap();
       } catch (error) {
-        removeItemFromCart(item.id);
+        if (itemCart && itemCart?.quantity > 0) {
+          decreaseQuantity(item.id);
+        }
+
         toast("¡Ups! Algo salió mal", {
           description:
             "No pudimos agregar el producto al carrito. Por favor, inténtalo de nuevo.",
@@ -112,7 +116,8 @@ export const useCart = () => {
       createCart,
       createCartMutation,
       addItemToCartMutation,
-      removeItemFromCart,
+      decreaseQuantity,
+      cartItems,
     ],
   );
 
