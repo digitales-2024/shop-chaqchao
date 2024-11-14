@@ -10,7 +10,7 @@ interface CartState {
   createCart: () => string;
   addItemToCart: (item: Product, quantity?: number) => void;
   increaseQuantity: (productId: string) => void;
-  decreaseQuantity: (productId: string) => void;
+  decreaseQuantity: (productId: string, quantity?: number) => void;
   removeItemFromCart: (productId: string) => void;
 }
 
@@ -81,26 +81,29 @@ const useCartStore = create(
           set({ cartItems: [...get().cartItems] });
         }
       },
-      decreaseQuantity: (productId) => {
+      decreaseQuantity: (productId, quantity) => {
         const itemExists = get().cartItems.find(
           (cartItem) => cartItem.id === productId,
         );
 
         if (itemExists) {
           if (typeof itemExists.quantity === "number") {
-            if (itemExists.quantity === 1) {
+            const reduceQuantity = quantity || 1;
+            if (itemExists.quantity <= reduceQuantity) {
               const updatedCartItems = get().cartItems.filter(
                 (item) => item.id !== productId,
               );
               set({
                 cartItems: updatedCartItems,
-                amountTotal: get().amountTotal - itemExists.price,
+                amountTotal:
+                  get().amountTotal - itemExists.price * itemExists.quantity,
               });
             } else {
-              itemExists.quantity--;
+              itemExists.quantity -= reduceQuantity;
               set({
                 cartItems: [...get().cartItems],
-                amountTotal: get().amountTotal - itemExists.price,
+                amountTotal:
+                  get().amountTotal - itemExists.price * reduceQuantity,
               });
             }
           }

@@ -100,7 +100,7 @@ export const useCart = () => {
         }).unwrap();
       } catch (error) {
         if (itemCart && itemCart?.quantity > 0) {
-          decreaseQuantity(item.id);
+          decreaseQuantity(item.id, quantity);
         }
 
         toast(t("title"), {
