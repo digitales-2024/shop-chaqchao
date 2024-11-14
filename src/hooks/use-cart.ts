@@ -11,12 +11,14 @@ import useCartStore from "@/redux/store/cart";
 import { CartItem, Product } from "@/types";
 import { ErrorData } from "@/types/error";
 import { ShoppingBag } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { createElement, useCallback } from "react";
 import { toast } from "sonner";
 
 import { TypeUpdateItemQuantity } from "@/components/cart/EditItemQuantityButton";
 
 export const useCart = () => {
+  const t = useTranslations("errors.cart");
   const {
     addItemToCart,
     cartItems,
@@ -101,9 +103,8 @@ export const useCart = () => {
           decreaseQuantity(item.id);
         }
 
-        toast("¡Ups! Algo salió mal", {
-          description:
-            "No pudimos agregar el producto al carrito. Por favor, inténtalo de nuevo.",
+        toast(t("title"), {
+          description: t("addItemCart"),
           closeButton: true,
           className: "text-rose-500",
           icon: createElement(ShoppingBag),
@@ -118,6 +119,7 @@ export const useCart = () => {
       addItemToCartMutation,
       decreaseQuantity,
       cartItems,
+      t,
     ],
   );
 
@@ -141,9 +143,8 @@ export const useCart = () => {
         }).unwrap();
       } catch (error) {
         addItemToCart(item);
-        toast("¡Ups! Algo salió mal", {
-          description:
-            "No pudimos eliminar el producto del carrito. Por favor, inténtalo de nuevo.",
+        toast(t("title"), {
+          description: t("removeItemCart"),
           closeButton: true,
           className: "text-rose-500",
           icon: createElement(ShoppingDelete),
@@ -156,6 +157,7 @@ export const useCart = () => {
       cartIdFromStore,
       removeItemToCartMutation,
       addItemToCart,
+      t,
     ],
   );
 
@@ -169,7 +171,7 @@ export const useCart = () => {
     try {
       await mergeCartsMutation({ anonCartId, authClientId }).unwrap();
     } catch (error) {
-      toast("¡Ups! Algo salió mal", {
+      toast(t("cart.title"), {
         description:
           "No pudimos fusionar los carritos. Por favor, inténtalo de nuevo.",
         closeButton: true,
@@ -185,56 +187,63 @@ export const useCart = () => {
    * @param quantity Cantidad a actualizar
    * @returns Si la cantidad fue actualizada
    */
-  const updateItemQuantity = async (
-    productId: string,
-    type: TypeUpdateItemQuantity = "PLUS",
-  ) => {
-    const item = cartItems.find((item) => item.id === productId);
-    try {
-      // Obtiene el producto del carrito
-      if (!item) return;
-      // Si la cantidad es 1 y se intenta decrementar, se elimina el producto
-      if (item.quantity === 1 && type === "MIN") {
-        removeItemCard(productId);
-        return;
+  const updateItemQuantity = useCallback(
+    async (productId: string, type: TypeUpdateItemQuantity = "PLUS") => {
+      const item = cartItems.find((item) => item.id === productId);
+      try {
+        // Obtiene el producto del carrito
+        if (!item) return;
+        // Si la cantidad es 1 y se intenta decrementar, se elimina el producto
+        if (item.quantity === 1 && type === "MIN") {
+          removeItemCard(productId);
+          return;
+        }
+
+        // Incrementamos la cantidad
+        if (type === "PLUS") {
+          increaseQuantity(productId);
+        }
+        // Decrementamos la cantidad
+        else if (type === "MIN") {
+          decreaseQuantity(productId);
+        }
+
+        // Obtiene el ID del carrito activo desde el estado o localStorage
+        const cartId = cartIdFromStore; // Asume una función que obtiene el ID actual
+
+        if (!cartId) return;
+
+        await updateItemQuantityMutation({
+          cartId,
+          productId,
+          quantity: item.quantity,
+        }).unwrap();
+      } catch (error) {
+        // Si hay un error, se restaura la cantidad del producto
+        if (type === "PLUS") {
+          decreaseQuantity(productId);
+        } else if (type === "MIN") {
+          increaseQuantity(productId);
+        }
+
+        toast(t("title"), {
+          description: t("updateItemQuantity"),
+          closeButton: true,
+          className: "text-rose-500",
+          icon: createElement(ShoppingBag),
+        });
       }
-
-      // Incrementamos la cantidad
-      if (type === "PLUS") {
-        increaseQuantity(productId);
-      }
-      // Decrementamos la cantidad
-      else if (type === "MIN") {
-        decreaseQuantity(productId);
-      }
-
-      // Obtiene el ID del carrito activo desde el estado o localStorage
-      const cartId = cartIdFromStore; // Asume una función que obtiene el ID actual
-
-      if (!cartId) return;
-
-      await updateItemQuantityMutation({
-        cartId,
-        productId,
-        quantity: item.quantity,
-      }).unwrap();
-    } catch (error) {
-      // Si hay un error, se restaura la cantidad del producto
-      if (type === "PLUS") {
-        decreaseQuantity(productId);
-      } else if (type === "MIN") {
-        increaseQuantity(productId);
-      }
-
-      toast("¡Ups! Algo salió mal", {
-        description:
-          "No pudimos actualizar la cantidad del producto en el carrito. Por favor, inténtalo de nuevo.",
-        closeButton: true,
-        className: "text-rose-500",
-        icon: createElement(ShoppingBag),
-      });
-    }
-  };
+    },
+    [
+      cartIdFromStore,
+      cartItems,
+      decreaseQuantity,
+      increaseQuantity,
+      removeItemCard,
+      updateItemQuantityMutation,
+      t,
+    ],
+  );
 
   return {
     validateCart,

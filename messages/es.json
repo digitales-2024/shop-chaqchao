@@ -112,7 +112,13 @@
     "phone": { "required": "Ingrese un número de celular válido" },
     "birthdate": { "required": "Ingrese una fecha de nacimiento válida" },
     "terms": { "required": "Debe aceptar los términos y condiciones" },
-    "network": "Ocurrió un error inesperado, por favor intenta de nuevo"
+    "network": "Ocurrió un error inesperado, por favor intenta de nuevo",
+    "cart": {
+      "title": "¡Ups! Algo salió mal",
+      "addItemCart": "No pudimos agregar el producto al carrito. Por favor, inténtalo de nuevo.",
+      "removeItemCart": "No pudimos eliminar el producto del carrito. Por favor, inténtalo de nuevo.",
+      "updateItemQuantity": "No pudimos actualizar el producto en el carrito. Por favor, inténtalo de nuevo."
+    }
   },
   "account": {
     "title": "Mi cuenta",

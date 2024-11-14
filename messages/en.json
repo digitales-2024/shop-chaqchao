@@ -118,7 +118,13 @@
     "terms": {
       "required": "You must accept the terms and conditions"
     },
-    "network": "Network error, try again later"
+    "network": "Network error, try again later",
+    "cart": {
+      "title": "Oops! Something went wrong",
+      "addItemCart": "We couldn't add the product to the cart. Please try again.",
+      "removeItemCart": "We couldn't remove the product from the cart. Please try again.",
+      "updateItemQuantity": "We couldn't update the product in the cart. Please try again."
+    }
   },
   "account": {
     "title": "My account",
