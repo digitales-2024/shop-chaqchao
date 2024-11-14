@@ -89,7 +89,7 @@ export const TableCart = ({ validateItem, errorValidate }: TableCartProps) => {
               </TableCell>
               <TableCell>
                 <div className="flex h-9 w-fit flex-row items-center justify-start rounded-full border border-neutral-200">
-                  <EditItemQuantityButton item={cartItem} type="minus" />
+                  <EditItemQuantityButton item={cartItem} type="MIN" />
                   <p className="w-6 text-center">
                     <motion.span
                       key={cartItem.quantity}
@@ -100,7 +100,7 @@ export const TableCart = ({ validateItem, errorValidate }: TableCartProps) => {
                       {cartItem.quantity}
                     </motion.span>
                   </p>
-                  <EditItemQuantityButton item={cartItem} type="plus" />
+                  <EditItemQuantityButton item={cartItem} type="PLUS" />
                 </div>
               </TableCell>
               <TableCell className="truncate">
