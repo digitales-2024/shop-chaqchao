@@ -1,15 +1,15 @@
 "use client";
 
-import useCartStore from "@/redux/store/cart";
+import { useCart } from "@/hooks/use-cart";
 import { CartItem } from "@/types";
 import { X } from "lucide-react";
 
 export function DeleteItemButton({ item }: { item: CartItem }) {
-  const { removeItemFromCart } = useCartStore();
+  const { removeItemCard } = useCart();
   return (
     <form
       action={() => {
-        removeItemFromCart(item.id);
+        removeItemCard(item.id);
       }}
     >
       <button

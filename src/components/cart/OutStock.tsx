@@ -1,5 +1,5 @@
+import { ShoppingDelete } from "@/assets/icons";
 import { motion } from "framer-motion";
-import { ShoppingBag } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { cn } from "@/lib/utils";
@@ -21,7 +21,7 @@ export const OutStock = () => {
         transition={{ type: "spring", stiffness: 300, damping: 25 }}
         className="flex items-center space-x-2 rounded-full bg-white px-4 py-2 font-semibold text-red-500"
       >
-        <ShoppingBag className="animate-tada" />
+        <ShoppingDelete className="animate-tada" />
         <span>{t("outOfStock")}</span>
       </motion.div>
     </motion.div>

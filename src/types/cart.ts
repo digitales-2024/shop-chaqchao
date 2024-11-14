@@ -1,9 +1,14 @@
 import { Product } from "./catalog";
 
 export interface Cart {
-  items: CartItem[];
-  totalAmount: string;
+  id: string;
+  cartItems: CartItem[];
+  amountTotal: number;
 }
 export interface CartItem extends Product {
   quantity: number;
 }
+
+export type CreateCart = {
+  tempId?: string;
+};

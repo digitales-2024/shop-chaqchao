@@ -18,9 +18,13 @@ import { AddToCartButton } from "./AddToCartButton";
 
 interface ProductDialogProps {
   product: Product;
+  setIsDialogOpen: (value: boolean) => void;
 }
 
-export const ProductDialog = ({ product }: ProductDialogProps) => {
+export const ProductDialog = ({
+  product,
+  setIsDialogOpen,
+}: ProductDialogProps) => {
   const [quantity, setQuantity] = useState(1);
 
   const incrementQuantity = () => setQuantity((prev) => prev + 1);
@@ -103,6 +107,7 @@ export const ProductDialog = ({ product }: ProductDialogProps) => {
                   product={product}
                   quantity={quantity}
                   className="text-md w-full"
+                  setIsDialogOpen={setIsDialogOpen}
                 >
                   <ShoppingBag />
                   {t("addToCart")} ({quantity})

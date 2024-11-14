@@ -1,5 +1,6 @@
 import {
   useGetMerchQuery,
+  useGetProductByIdQuery,
   useGetProductsFiltersQuery,
   useGetProductsRecommendByClientQuery,
   useGetProductsRecommendQuery,
@@ -58,8 +59,20 @@ export const useCatalog = (
     },
   );
 
-  // Manejo de eventos de socket
+  const {
+    data: productById,
+    isLoading: isLoadingProductById,
+    refetch: refetchProductById,
+  } = useGetProductByIdQuery(
+    {
+      id: id as string,
+    },
+    {
+      skip: !id,
+    },
+  );
 
+  // Manejo de eventos de socket
   useEffect(() => {
     const handleProducts = () => {
       if (productRecommend) {
@@ -75,6 +88,10 @@ export const useCatalog = (
 
       if (productFilters) {
         refetchProductFilters();
+      }
+
+      if (productById) {
+        refetchProductById();
       }
     };
 
@@ -92,6 +109,8 @@ export const useCatalog = (
     refetchProductMerch,
     productFilters,
     refetchProductFilters,
+    productById,
+    refetchProductById,
   ]);
 
   return {
@@ -106,5 +125,7 @@ export const useCatalog = (
     errorProductFilters,
     productMerch,
     isLoadingProductMerch,
+    productById,
+    isLoadingProductById,
   };
 };
