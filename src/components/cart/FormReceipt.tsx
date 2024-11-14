@@ -1,4 +1,5 @@
 import useCartDetail from "@/hooks/use-cart-detail";
+import { useProfile } from "@/hooks/use-profile";
 import { RecieptSchema } from "@/schemas/invoice.schema";
 import { Invoice } from "@/types";
 import { DocumentType, InvoiceType } from "@/types/invoice";
@@ -38,6 +39,9 @@ const receiptDocuments = [
 export const FormReceipt = () => {
   const { invoice, setInvoice, handleStepComplete, setActiveStep } =
     useCartDetail();
+
+  const { clientData } = useProfile();
+
   const form = useForm<Invoice>({
     resolver: zodResolver(RecieptSchema()),
     defaultValues: {
@@ -47,6 +51,10 @@ export const FormReceipt = () => {
           : DocumentType.DNI,
       number:
         invoice.typeInvoice === InvoiceType.RECEIPT ? invoice.number || "" : "",
+      name:
+        invoice.typeInvoice === InvoiceType.RECEIPT
+          ? (clientData ? clientData.name : invoice.name) || ""
+          : "",
     },
   });
   const t = useTranslations("checkout.invoice");
@@ -120,6 +128,19 @@ export const FormReceipt = () => {
           render={({ field }) => (
             <FormItem>
               <FormLabel className="font-bold">{t("doc")}</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="font-bold">{t("name")}</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
