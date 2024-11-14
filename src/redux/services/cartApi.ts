@@ -37,7 +37,7 @@ export const cartApi = createApi({
       { cartId: string; productId: string; quantity?: number }
     >({
       query: ({ cartId, productId, quantity }) => ({
-        url: `${cartId}/items`,
+        url: `/cart/${cartId}/items`,
         method: "POST",
         body: { productId, quantity },
       }),
@@ -66,7 +66,7 @@ export const cartApi = createApi({
       { cartId: string; productId: string; quantity: number }
     >({
       query: ({ cartId, productId, quantity }) => ({
-        url: `${cartId}/items/${productId}`,
+        url: `/cart/${cartId}/items/${productId}`,
         method: "PATCH",
         body: { quantity },
       }),
@@ -80,7 +80,7 @@ export const cartApi = createApi({
       { cartId: string; productId: string }
     >({
       query: ({ cartId, productId }) => ({
-        url: `${cartId}/items/${productId}`,
+        url: `/cart/${cartId}/items/${productId}`,
         method: "DELETE",
       }),
 
@@ -90,7 +90,7 @@ export const cartApi = createApi({
     // Completar la compra del carrito y crear una orden
     checkout: build.mutation<void, { cartId: string }>({
       query: ({ cartId }) => ({
-        url: `${cartId}/checkout`,
+        url: `/cart/${cartId}/checkout`,
         method: "POST",
         credentials: "include",
       }),
