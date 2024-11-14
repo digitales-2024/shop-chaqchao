@@ -24,6 +24,7 @@ import {
 import { cn } from "@/lib/utils";
 
 import { Badge } from "../ui/badge";
+import { ScrollArea } from "../ui/scroll-area";
 import { AlertValidate } from "./AlertValidate";
 import { ButtonCheckout } from "./ButtonCheckout";
 import { CartEmpty } from "./CartEmpty";
@@ -91,89 +92,94 @@ export function CartSheet() {
         <div className="grid gap-4 py-4">
           <AlertValidate errorValidate={errorValidate} />
           <ul>
-            <AnimatePresence>
-              {cartItems.length > 0 &&
-                cartItems.map((item, index) => {
-                  return (
-                    <motion.li
-                      key={item.id}
-                      initial={{ opacity: 0, y: 50, scale: 0.9 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{
-                        opacity: 0,
-                        scale: 0.9,
-                        transition: { duration: 0.2 },
-                      }}
-                      transition={{ ...springTransition, delay: index * 0.1 }}
-                      className="flex w-full flex-col border-b border-neutral-300"
-                    >
-                      <div className="relative flex w-full flex-row justify-between px-1 py-4">
-                        <div className="absolute z-40 -ml-1 -mt-2">
-                          <DeleteItemButton item={item} />
-                        </div>
-                        <div className="flex flex-row">
-                          <div
-                            className={cn(
-                              "relative h-16 w-16 shrink-0 overflow-hidden rounded-md border bg-white shadow",
-                              {
-                                "border-rose-500": validateItem(item.id),
-                              },
-                            )}
-                          >
-                            {validateItem(item.id) && (
-                              <div className="absolute bottom-0 left-0 right-0 top-0 flex h-full w-full items-center justify-center bg-rose-100/60 text-xs">
-                                <div className="rounded-full bg-white p-2">
-                                  <ShoppingDelete className="size-4 text-rose-500" />
+            <ScrollArea className="h-full max-h-[70vh]">
+              <AnimatePresence>
+                {cartItems.length > 0 &&
+                  cartItems.map((item, index) => {
+                    return (
+                      <motion.li
+                        key={item.id}
+                        initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{
+                          opacity: 0,
+                          scale: 0.9,
+                          transition: { duration: 0.2 },
+                        }}
+                        transition={{ ...springTransition, delay: index * 0.1 }}
+                        className="flex w-full flex-col border-b border-neutral-300"
+                      >
+                        <div className="relative flex w-full flex-row justify-between px-1 py-4">
+                          <div className="absolute z-40 -ml-1 -mt-2">
+                            <DeleteItemButton item={item} />
+                          </div>
+                          <div className="flex flex-row">
+                            <div
+                              className={cn(
+                                "relative h-16 w-16 shrink-0 overflow-hidden rounded-md border bg-white shadow",
+                                {
+                                  "border-rose-500": validateItem(item.id),
+                                },
+                              )}
+                            >
+                              {validateItem(item.id) && (
+                                <div className="absolute bottom-0 left-0 right-0 top-0 flex h-full w-full items-center justify-center bg-rose-100/60 text-xs">
+                                  <div className="rounded-full bg-white p-2">
+                                    <ShoppingDelete className="size-4 text-rose-500" />
+                                  </div>
                                 </div>
-                              </div>
-                            )}
-                            <Image
-                              className="h-full w-full object-cover"
-                              width={64}
-                              height={64}
-                              alt={item.name}
-                              src={item.image}
-                            />
-                          </div>
-                          <Link
-                            href={"/"}
-                            className="z-30 ml-2 flex flex-row space-x-4"
-                          >
-                            <div className="flex flex-1 flex-col text-base">
-                              <span className="font-bold capitalize leading-tight">
-                                {item.name}
-                              </span>
-                              <p className="text-sm capitalize text-primary">
-                                {item.category.name}
-                              </p>
+                              )}
+                              <Image
+                                className="h-full w-full object-cover"
+                                width={64}
+                                height={64}
+                                alt={item.name}
+                                src={item.image}
+                              />
                             </div>
-                          </Link>
-                        </div>
-                        <div className="flex h-16 flex-col justify-between">
-                          <Price
-                            className="flex justify-end space-y-2 text-right text-sm"
-                            amount={item.price}
-                          />
-                          <div className="ml-auto flex h-9 flex-row items-center rounded-full border border-neutral-200">
-                            <EditItemQuantityButton item={item} type="minus" />
-                            <p className="w-6 text-center">
-                              <motion.span
-                                key={item.quantity}
-                                initial={{ scale: 1.5 }}
-                                animate={{ scale: 1 }}
-                                className="w-full text-sm"
-                              >
-                                {item.quantity}
-                              </motion.span>
-                            </p>
-                            <EditItemQuantityButton item={item} type="plus" />
+                            <Link
+                              href={"/"}
+                              className="z-30 ml-2 flex flex-row space-x-4"
+                            >
+                              <div className="flex flex-1 flex-col text-base">
+                                <span className="font-bold capitalize leading-tight">
+                                  {item.name}
+                                </span>
+                                <p className="text-sm capitalize text-primary">
+                                  {item.category.name}
+                                </p>
+                              </div>
+                            </Link>
+                          </div>
+                          <div className="flex h-16 flex-col justify-between">
+                            <Price
+                              className="flex justify-end space-y-2 text-right text-sm"
+                              amount={item.price}
+                            />
+                            <div className="ml-auto flex h-9 flex-row items-center rounded-full border border-neutral-200">
+                              <EditItemQuantityButton
+                                item={item}
+                                type="minus"
+                              />
+                              <p className="w-6 text-center">
+                                <motion.span
+                                  key={item.quantity}
+                                  initial={{ scale: 1.5 }}
+                                  animate={{ scale: 1 }}
+                                  className="w-full text-sm"
+                                >
+                                  {item.quantity}
+                                </motion.span>
+                              </p>
+                              <EditItemQuantityButton item={item} type="plus" />
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </motion.li>
-                  );
-                })}
-            </AnimatePresence>
+                      </motion.li>
+                    );
+                  })}
+              </AnimatePresence>
+            </ScrollArea>
           </ul>
           {cartItems.length > 0 && (
             <div className="py-4 text-sm">
