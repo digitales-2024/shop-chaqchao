@@ -257,7 +257,8 @@
       "typeDoc": "Type of document",
       "doc": "Document number",
       "address": "Address",
-      "name": "Name or business name",
+      "name": "Name",
+      "nameBusiness": "Name or business name",
       "button": "Continue",
       "errors": {
         "typeDoc": "The type of document is required",
@@ -266,7 +267,8 @@
         "passport": "The document number must have at least 12 digits",
         "ruc": "The document number must have at least 11 digits",
         "address": "The address is required",
-        "name": "The name is required"
+        "name": "The name is required",
+        "nameBusiness": "The name or business name is required"
       }
     },
     "login": {
