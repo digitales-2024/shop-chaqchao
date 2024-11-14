@@ -1,19 +1,48 @@
+import { ShoppingDelete } from "@/assets/icons";
 import {
+  useAddItemToCartMutation,
   useCreateCartMutation,
+  useMergeCartsMutation,
+  useRemoveItemFromCartMutation,
+  useUpdateItemQuantityMutation,
   useValidateCartMutation,
 } from "@/redux/services/cartApi";
-import { CartItem, CreateCart } from "@/types";
+import useCartStore from "@/redux/store/cart";
+import { CartItem, Product } from "@/types";
 import { ErrorData } from "@/types/error";
+import { ShoppingBag } from "lucide-react";
+import { createElement, useCallback } from "react";
+import { toast } from "sonner";
+
+import { TypeUpdateItemQuantity } from "@/components/cart/EditItemQuantityButton";
 
 export const useCart = () => {
+  const {
+    addItemToCart,
+    cartItems,
+    id: cartIdFromStore,
+    removeItemFromCart,
+    decreaseQuantity,
+    increaseQuantity,
+    createCart,
+  } = useCartStore();
+
   const [
     validate,
     { data: dataValidate, isLoading: isLoadingValidate, error: errorValidate },
   ] = useValidateCartMutation();
 
-  const [create, { data: dataCreateCart, isLoading: isLoadingCreateCart }] =
-    useCreateCartMutation();
+  const [createCartMutation] = useCreateCartMutation();
+  const [addItemToCartMutation] = useAddItemToCartMutation();
+  const [mergeCartsMutation] = useMergeCartsMutation();
+  const [removeItemToCartMutation] = useRemoveItemFromCartMutation();
+  const [updateItemQuantityMutation] = useUpdateItemQuantityMutation();
 
+  /**
+   * Validar los productos seleccionados
+   * @param cartItems Productos a validar
+   * @returns Respuesta de la petición
+   */
   const validateCart = async (cartItems: CartItem[]) => {
     try {
       if (cartItems.length > 0) {
@@ -26,6 +55,11 @@ export const useCart = () => {
     } catch (error) {}
   };
 
+  /**
+   * Validar si un producto tiene un error
+   * @param item Producto a validar
+   * @returns Si el producto tiene un error
+   */
   const validateItem = (item: string) => {
     if (errorValidate) {
       const errorData = (
@@ -41,15 +75,160 @@ export const useCart = () => {
   };
 
   /**
-   * Crear un carrito con los productos seleccionados
-   * @param cart Carrito a crear
-   * @returns Respuesta de la petición
+   * Agregar un producto al carrito
+   * @param item Producto a agregar
+   * @returns Si el producto fue agregado
    */
-  const createCart = async (cart: CreateCart) => {
+  const addItemCard = useCallback(
+    async (item: Product, quantity?: number) => {
+      try {
+        addItemToCart(item, quantity);
+        let cartId = cartIdFromStore;
+
+        if (!cartId) {
+          cartId = createCart();
+          await createCartMutation({ tempId: cartId }).unwrap();
+        }
+
+        await addItemToCartMutation({
+          cartId,
+          productId: item.id,
+          quantity,
+        }).unwrap();
+      } catch (error) {
+        removeItemFromCart(item.id);
+        toast("¡Ups! Algo salió mal", {
+          description:
+            "No pudimos agregar el producto al carrito. Por favor, inténtalo de nuevo.",
+          closeButton: true,
+          className: "text-rose-500",
+          icon: createElement(ShoppingBag),
+        });
+      }
+    },
+    [
+      addItemToCart,
+      cartIdFromStore,
+      createCart,
+      createCartMutation,
+      addItemToCartMutation,
+      removeItemFromCart,
+    ],
+  );
+
+  /**
+   * Eliminar un producto del carrito
+   * @param productId ID del producto a eliminar
+   * @returns Si el producto fue eliminado
+   */
+  const removeItemCard = useCallback(
+    async (productId: string) => {
+      const item = cartItems.find((item) => item.id === productId) as Product;
+      try {
+        removeItemFromCart(productId);
+        // Obtiene el ID del carrito activo desde el estado o localStorage
+        const cartId = cartIdFromStore; // Asume una función que obtiene el ID actual
+
+        if (!cartId) return;
+        await removeItemToCartMutation({
+          cartId,
+          productId,
+        }).unwrap();
+      } catch (error) {
+        addItemToCart(item);
+        toast("¡Ups! Algo salió mal", {
+          description:
+            "No pudimos eliminar el producto del carrito. Por favor, inténtalo de nuevo.",
+          closeButton: true,
+          className: "text-rose-500",
+          icon: createElement(ShoppingDelete),
+        });
+      }
+    },
+    [
+      removeItemFromCart,
+      cartItems,
+      cartIdFromStore,
+      removeItemToCartMutation,
+      addItemToCart,
+    ],
+  );
+
+  /**
+   * Fusionar carritos
+   * @param anonCartId ID del carrito anónimo
+   * @param authClientId ID del cliente autenticado
+   * @returns Si los carritos fueron fusionados
+   */
+  const mergeCart = async (anonCartId: string, authClientId: string) => {
     try {
-      const response = await create(cart);
-      return response;
-    } catch (error) {}
+      await mergeCartsMutation({ anonCartId, authClientId }).unwrap();
+    } catch (error) {
+      toast("¡Ups! Algo salió mal", {
+        description:
+          "No pudimos fusionar los carritos. Por favor, inténtalo de nuevo.",
+        closeButton: true,
+        className: "text-rose-500",
+        icon: createElement(ShoppingBag),
+      });
+    }
+  };
+
+  /**
+   * Actaulizar la cantidad de un producto en el carrito
+   * @param productId ID del producto a actualizar
+   * @param quantity Cantidad a actualizar
+   * @returns Si la cantidad fue actualizada
+   */
+  const updateItemQuantity = async (
+    productId: string,
+    type: TypeUpdateItemQuantity = "PLUS",
+  ) => {
+    const item = cartItems.find((item) => item.id === productId);
+    try {
+      // Obtiene el producto del carrito
+      if (!item) return;
+      // Si la cantidad es 1 y se intenta decrementar, se elimina el producto
+      if (item.quantity === 1 && type === "MIN") {
+        removeItemCard(productId);
+        return;
+      }
+
+      // Incrementamos la cantidad
+      if (type === "PLUS") {
+        increaseQuantity(productId);
+      }
+      // Decrementamos la cantidad
+      else if (type === "MIN") {
+        decreaseQuantity(productId);
+      }
+
+      // Obtiene el ID del carrito activo desde el estado o localStorage
+      const cartId = cartIdFromStore; // Asume una función que obtiene el ID actual
+
+      if (!cartId) return;
+
+      await updateItemQuantityMutation({
+        cartId,
+        productId,
+        quantity: item.quantity,
+      }).unwrap();
+    } catch (error) {
+      // Si hay un error, se restaura la cantidad del producto
+      if (type === "PLUS") {
+        decreaseQuantity(productId);
+      } else if (type === "MIN") {
+        increaseQuantity(productId);
+      }
+
+      toast("¡Ups! Algo salió mal", {
+        description:
+          "No pudimos actualizar la cantidad del producto en el carrito. Por favor, inténtalo de nuevo.",
+        closeButton: true,
+        className: "text-rose-500",
+        icon: createElement(ShoppingBag),
+      });
+    }
   };
 
   return {
@@ -58,8 +237,9 @@ export const useCart = () => {
     dataValidate,
     isLoadingValidate,
     errorValidate,
-    createCart,
-    isLoadingCreateCart,
-    dataCreateCart,
+    addItemCard,
+    removeItemCard,
+    mergeCart,
+    updateItemQuantity,
   };
 };
