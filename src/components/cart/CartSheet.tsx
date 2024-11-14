@@ -157,10 +157,7 @@ export function CartSheet() {
                               amount={item.price}
                             />
                             <div className="ml-auto flex h-9 flex-row items-center rounded-full border border-neutral-200">
-                              <EditItemQuantityButton
-                                item={item}
-                                type="minus"
-                              />
+                              <EditItemQuantityButton item={item} type="MIN" />
                               <p className="w-6 text-center">
                                 <motion.span
                                   key={item.quantity}
@@ -171,7 +168,7 @@ export function CartSheet() {
                                   {item.quantity}
                                 </motion.span>
                               </p>
-                              <EditItemQuantityButton item={item} type="plus" />
+                              <EditItemQuantityButton item={item} type="PLUS" />
                             </div>
                           </div>
                         </div>
