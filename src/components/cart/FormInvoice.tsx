@@ -37,7 +37,6 @@ const invoiceDocuments = [
 export const FormInvoice = () => {
   const { invoice, setInvoice, handleStepComplete, setActiveStep } =
     useCartDetail();
-
   const form = useForm<Invoice>({
     resolver: zodResolver(InvoiceSchema()),
     defaultValues: {
@@ -160,7 +159,7 @@ export const FormInvoice = () => {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="font-bold">{t("name")}</FormLabel>
+              <FormLabel className="font-bold">{t("nameBusiness")}</FormLabel>
               <FormControl>
                 <Input {...field} readOnly />
               </FormControl>

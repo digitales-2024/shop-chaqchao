@@ -468,8 +468,9 @@
       "INVOICE": "Factura",
       "typeDoc": "Tipo de documento",
       "doc": "Número de documento",
+      "name": "Nombre",
       "address": "Dirección",
-      "name": "Nombre o razon social",
+      "nameBusiness": "Nombre o razon social",
       "button": "Continuar",
       "errors": {
         "typeDoc": "El tipo de documento es requerido",
@@ -478,7 +479,8 @@
         "passport": "El número de documento debe tener al menos 12 caracteres",
         "ruc": "El número de documento debe tener al menos 11 caracteres",
         "address": "La dirección es requerida",
-        "name": "El nombre o razón social es requerido"
+        "name": "El nombre es requerido",
+        "nameBusiness": "El nombre o razón social es requerido"
       }
     },
     "login": {

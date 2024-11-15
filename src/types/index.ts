@@ -27,3 +27,5 @@ export {
   DocumentTypeInvoice,
   type Receipt,
 } from "./invoice";
+
+export { type CreatePayment, type ResponsePayment } from "./payment";

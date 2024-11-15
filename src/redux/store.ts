@@ -9,6 +9,7 @@ import { categoryApi } from "./services/categoryApi";
 import { classApi } from "./services/classApi";
 import { clientApi } from "./services/clientApi";
 import { orderApi } from "./services/orderApi";
+import { paymentApi } from "./services/paymentApi";
 
 export const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ export const store = configureStore({
     [classApi.reducerPath]: classApi.reducer,
     [businessApi.reducerPath]: businessApi.reducer,
     [cartApi.reducerPath]: cartApi.reducer,
+    [paymentApi.reducerPath]: paymentApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({})
@@ -30,7 +32,8 @@ export const store = configureStore({
       .concat(orderApi.middleware)
       .concat(classApi.middleware)
       .concat(businessApi.middleware)
-      .concat(cartApi.middleware),
+      .concat(cartApi.middleware)
+      .concat(paymentApi.middleware),
 });
 
 setupListeners(store.dispatch);

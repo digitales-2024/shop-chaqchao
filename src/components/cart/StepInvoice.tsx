@@ -1,6 +1,6 @@
 "use client";
 import useCartDetail from "@/hooks/use-cart-detail";
-import { INVOICES } from "@/types";
+import { INVOICES, InvoiceType } from "@/types";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 
@@ -20,8 +20,11 @@ export const StepInvoice = () => {
               key={type}
               onClick={() => {
                 setInvoice({
-                  ...invoice,
                   typeInvoice: type,
+                  documentType: "",
+                  number: "",
+                  name: "",
+                  address: "",
                 });
               }}
               className={`relative z-10 rounded-full py-2 text-sm font-medium transition-colors ${
@@ -37,7 +40,7 @@ export const StepInvoice = () => {
             className="absolute bottom-[2px] left-[2px] right-[2px] top-[2px] rounded-full bg-background shadow-sm"
             initial={false}
             animate={{
-              x: invoice.typeInvoice === INVOICES[0] ? "0%" : "100%",
+              x: invoice.typeInvoice === InvoiceType.RECEIPT ? "0%" : "100%",
               width: "49.35%",
             }}
             transition={{
@@ -48,7 +51,7 @@ export const StepInvoice = () => {
         </div>
       </div>
       <AnimatePresence>
-        {invoice.typeInvoice === INVOICES[0] ? (
+        {invoice.typeInvoice === InvoiceType.RECEIPT ? (
           <FormReceipt />
         ) : (
           <FormInvoice />
