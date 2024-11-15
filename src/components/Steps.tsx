@@ -607,35 +607,7 @@ export function Step7({
   const { data: prices } = usePricesQuery();
   const t = useTranslations("class.step7");
 
-  // Actualizando el número de participantes
-  useEffect(() => {
-    setTotalParticipants(participants + children);
-  }, [children, participants]);
-
-  // Obtener los precios de adultos y niños
-  useEffect(() => {
-    if (prices) {
-      const adult = prices.find((p) => p.classTypeUser === "ADULT");
-      const child = prices.find((p) => p.classTypeUser === "CHILD");
-      setAdultPrice(adult ? adult.price : 0);
-      setChildPrice(child ? child.price : 0);
-    }
-  }, [prices]);
-
-  // Calculando el subtotal y el total
-  useEffect(() => {
-    const calculatedSubTotal =
-      participants * adultPrice + children * childPrice;
-    setSubTotal(calculatedSubTotal);
-    setTotal(calculatedSubTotal);
-  }, [participants, children, adultPrice, childPrice]);
-
-  // Actualizando en numero de niños
-  useEffect(() => {
-    updateData({ children });
-  }, [children, updateData]);
-
-  // Data para la transacciòn
+  // Data for the transaction
   const transactionDataRef = useRef({
     userName,
     userEmail,
@@ -651,10 +623,112 @@ export function Step7({
     paypalCurrency: "",
   });
 
-  // Definir función para obtener los datos actualizados
+  // Get updated data
   const getTransactionData = () => transactionDataRef.current;
 
-  // Actualizar `transactionDataRef` cuando cambien los datos de la reserva
+  // Increasing the number of children
+  const handleIncreaseChildren = () => {
+    setChildren((prev) => prev + 1);
+  };
+
+  // Decrease the number of children
+  const handleDecreaseChildren = () => {
+    setChildren((prev) => (prev > 0 ? prev - 1 : prev));
+  };
+
+  // Update allergies
+  const handleAllergiesChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const newAllergies = e.target.value;
+    setAllergies(newAllergies);
+    updateData({ allergies: newAllergies });
+  };
+
+  // Register a class
+  const registerClass = async () => {
+    const payload = {
+      userName,
+      userEmail,
+      userPhone,
+      scheduleClass: time,
+      languageClass: language || "",
+      dateClass: selectedDate.toISOString(),
+      totalAdults: participants,
+      totalChildren: children,
+      typeCurrency: "DOLAR",
+      comments: hasAllergies ? allergies : "Ninguna",
+      paypalOrderId: "",
+      paypalOrderStatus: "",
+      paypalAmount: total.toFixed(2),
+      paypalCurrency: "USD",
+      paypalDate: "",
+    };
+
+    await handleRegisterClass(payload);
+  };
+
+  // Validate Payment
+  const confirmPayment = async (paypalData: PaypalTransactionData) => {
+    if (!classId) {
+      showToast(t("toast.errorRegisterClass"), "error");
+      return;
+    }
+    await confirmClassPayment(classId, paypalData);
+  };
+
+  // Timer
+  const countdownRenderer = ({
+    minutes,
+    seconds,
+    completed,
+  }: {
+    minutes: number;
+    seconds: number;
+    completed: boolean;
+  }) => {
+    if (completed) {
+      showToast(t("toast.timeOut"), "error");
+      return null;
+    } else {
+      return (
+        <div className="fixed right-5 top-5 z-50">
+          <span className="fixed right-4 top-4 m-4 rounded-lg bg-red-500 p-3 text-lg font-bold text-white shadow-lg">
+            {t("remainingTime")} {minutes}:
+            {seconds < 10 ? `0${seconds}` : seconds}
+          </span>
+        </div>
+      );
+    }
+  };
+
+  // Updating the number of participants
+  useEffect(() => {
+    setTotalParticipants(participants + children);
+  }, [children, participants]);
+
+  // Get adult and child prices
+  useEffect(() => {
+    if (prices) {
+      const adult = prices.find((p) => p.classTypeUser === "ADULT");
+      const child = prices.find((p) => p.classTypeUser === "CHILD");
+      setAdultPrice(adult ? adult.price : 0);
+      setChildPrice(child ? child.price : 0);
+    }
+  }, [prices]);
+
+  // Calculate subtotal and total
+  useEffect(() => {
+    const calculatedSubTotal =
+      participants * adultPrice + children * childPrice;
+    setSubTotal(calculatedSubTotal);
+    setTotal(calculatedSubTotal);
+  }, [participants, children, adultPrice, childPrice]);
+
+  // Update the number of children
+  useEffect(() => {
+    updateData({ children });
+  }, [children, updateData]);
+
+  // Update `transactionDataRef` when reservation data changes
   useEffect(() => {
     transactionDataRef.current = {
       userName,
@@ -683,77 +757,6 @@ export function Step7({
     allergies,
     total,
   ]);
-
-  const handleIncreaseChildren = () => {
-    setChildren((prev) => prev + 1);
-  };
-
-  const handleDecreaseChildren = () => {
-    setChildren((prev) => (prev > 0 ? prev - 1 : prev));
-  };
-
-  const handleAllergiesChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const newAllergies = e.target.value;
-    setAllergies(newAllergies);
-    updateData({ allergies: newAllergies });
-  };
-
-  // Registrar una Clase
-  const registerClass = async () => {
-    const payload = {
-      userName,
-      userEmail,
-      userPhone,
-      scheduleClass: time,
-      languageClass: language || "",
-      dateClass: selectedDate.toISOString(),
-      totalAdults: participants,
-      totalChildren: children,
-      typeCurrency: "DOLAR",
-      comments: hasAllergies ? allergies : "Ninguna",
-      paypalOrderId: "",
-      paypalOrderStatus: "",
-      paypalAmount: total.toFixed(2),
-      paypalCurrency: "USD",
-      paypalDate: "",
-    };
-
-    await handleRegisterClass(payload);
-  };
-
-  // Validar el Pago
-  const confirmPayment = async (paypalData: PaypalTransactionData) => {
-    if (!classId) {
-      showToast(t("toast.errorRegisterClass"), "error");
-      return;
-    }
-    await confirmClassPayment(classId, paypalData);
-  };
-
-  // Temporizador
-  const countdownRenderer = ({
-    minutes,
-    seconds,
-    completed,
-  }: {
-    minutes: number;
-    seconds: number;
-    completed: boolean;
-  }) => {
-    if (completed) {
-      showToast(t("toast.timeOut"), "error");
-      return null;
-    } else {
-      return (
-        <div className="fixed right-5 top-5 z-50">
-          <span className="fixed right-4 top-4 m-4 rounded-lg bg-red-500 p-3 text-lg font-bold text-white shadow-lg">
-            {t("remainingTime")} {minutes}:
-            {seconds < 10 ? `0${seconds}` : seconds}
-          </span>
-        </div>
-      );
-    }
-  };
 
   return (
     <div className="mx-auto w-full bg-white pb-48 pt-4 text-center">
@@ -954,7 +957,7 @@ export function Step7({
             {/* Temporizador */}
             {showCountdown && (
               <Countdown
-                date={Date.now() + 5 * 60 * 1000}
+                date={Date.now() + 1 * 60 * 1000}
                 renderer={countdownRenderer}
               />
             )}
