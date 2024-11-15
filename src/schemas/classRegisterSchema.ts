@@ -21,6 +21,34 @@ export const classSchema = z.object({
     .min(0, { message: "El número de niños no puede ser negativo" }),
   typeCurrency: z.string().min(1, { message: "Debes seleccionar una moneda" }),
   comments: z.string().optional(),
+  paypalOrderId: z.string().optional(),
+  paypalOrderStatus: z.string().optional(),
+  paypalAmount: z.string().optional(),
+  paypalCurrency: z.string().optional(),
+  paypalDate: z.string().optional(),
 });
+
+export interface RegisterClassResponse {
+  statusCode: number;
+  message: string;
+  data: {
+    id: string;
+    userName: string;
+    userEmail: string;
+    userPhone: string;
+    totalParticipants: number;
+    totalAdults: number;
+    totalChildren: number;
+    totalPrice: number;
+    totalPriceAdults: number;
+    totalPriceChildren: number;
+    languageClass: string;
+    typeCurrency: string;
+    scheduleClass: string;
+    dateClass: string;
+    comments: string;
+    status: string;
+  };
+}
 
 export type CreateClassSchema = z.infer<typeof classSchema>;

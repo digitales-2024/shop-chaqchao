@@ -2,13 +2,15 @@
 export interface ReservationData {
   date: Date | null;
   participants: number;
-  children?: number;
+  children: number;
   time: string;
   allergies: string;
   confirmed: boolean;
-  language?: string;
+  language: string;
+  schedule: string;
   userName: string;
   userEmail: string;
   userPhone: string;
   typeCurrency: string;
+  totalAmount: number;
 }
