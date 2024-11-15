@@ -32,9 +32,7 @@ const useIzipay = (token: string | null) => {
           keyRSA: "RSA",
           callbackResponse: callback,
         });
-      } catch (error: any) {
-        console.error(error.message, error.Errors, error.date);
-      }
+      } catch (error: any) {}
     }
   };
 
