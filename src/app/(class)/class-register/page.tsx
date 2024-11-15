@@ -1,8 +1,7 @@
 "use client";
 
-import { useCreateClassRegistrationMutation } from "@/redux/services/classApi";
 import { ReservationData } from "@/types/reservationData";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 
 import {
   Step1,
@@ -15,15 +14,8 @@ import {
   Confirmation,
 } from "@/components/Steps";
 
-interface ApiError {
-  data?: {
-    message?: string;
-  };
-}
-
 export default function ReservationPage() {
-  const [step, setStep] = useState(1); // Estado para manejar los pasos
-  const [isReservationSuccessful, setIsReservationSuccessful] = useState(false); // Estado para verificar éxito
+  const [step, setStep] = useState(1);
   const [reservationData, setReservationData] = useState<ReservationData>({
     date: null,
     participants: 1,
@@ -32,61 +24,26 @@ export default function ReservationPage() {
     allergies: "",
     confirmed: false,
     language: "",
+    schedule: "",
     userName: "",
     userEmail: "",
     userPhone: "",
     typeCurrency: "DOLAR",
+    totalAmount: 0,
   });
 
-  const [createClassRegistration] = useCreateClassRegistrationMutation();
-
-  const updateData = (data: Partial<ReservationData>) => {
-    setReservationData((prev) => ({ ...prev, ...data }));
-  };
-
-  // Maneja el siguiente paso
+  // Manejo de los Steps
   const nextStep = () => setStep((prevStep) => prevStep + 1);
-
-  // Maneja el paso anterior
   const previousStep = () => setStep((prevStep) => prevStep - 1);
-
-  const formatPhoneNumber = (phone: string): string => {
-    // Asegurarse de que el número comience con + y contenga un espacio entre el código y el número principal
-    return phone.replace(/(\+\d{2})(\d{9})/, "$1 $2");
-  };
-
-  const handleSubmit = async () => {
-    // Transformación de datos para el endpoint
-    const formattedData = {
-      userName: reservationData.userName,
-      userEmail: reservationData.userEmail,
-      userPhone: formatPhoneNumber(reservationData.userPhone),
-      scheduleClass: reservationData.time,
-      languageClass: reservationData.language || "español",
-      dateClass: reservationData.date ? reservationData.date.toISOString() : "",
-      totalAdults: reservationData.participants || 0,
-      totalChildren: reservationData.children || 0,
-      typeCurrency: "DOLAR",
-      comments: reservationData.allergies || "Ninguna",
-    };
-    try {
-      const result = await createClassRegistration(formattedData).unwrap();
-      console.log("Reserva creada con éxito", result);
-      alert("Reserva creada con éxito");
-      setIsReservationSuccessful(true);
-      nextStep(); // Avanza al paso final
-    } catch (error) {
-      const apiError = error as ApiError;
-      const errorMessage =
-        apiError.data?.message || "Error al crear la reserva";
-      alert(errorMessage);
-      setIsReservationSuccessful(false);
-      setStep(2);
-    }
-  };
+  const updateData = useCallback((data: Partial<ReservationData>) => {
+    setReservationData((prevData) => ({
+      ...prevData,
+      ...data,
+    }));
+  }, []);
 
   return (
-    <div className="reservation-page">
+    <div>
       {/* Paso 1: Inicio */}
       {step === 1 && <Step1 onNext={nextStep} updateData={updateData} />}
 
@@ -96,6 +53,7 @@ export default function ReservationPage() {
           onNext={nextStep}
           onBack={previousStep}
           updateData={updateData}
+          reservationData={reservationData}
         />
       )}
 
@@ -105,6 +63,7 @@ export default function ReservationPage() {
           onNext={nextStep}
           onBack={previousStep}
           updateData={updateData}
+          reservationData={reservationData}
         />
       )}
 
@@ -115,6 +74,7 @@ export default function ReservationPage() {
           onBack={previousStep}
           updateData={updateData}
           selectedDate={reservationData.date}
+          reservationData={reservationData}
         />
       )}
 
@@ -126,6 +86,7 @@ export default function ReservationPage() {
           updateData={updateData}
           selectedDate={reservationData.date}
           time={reservationData.time}
+          reservationData={reservationData}
         />
       )}
 
@@ -138,31 +99,35 @@ export default function ReservationPage() {
           selectedDate={reservationData.date}
           time={reservationData.time}
           language={reservationData.language}
+          reservationData={reservationData}
         />
       )}
 
       {/* Paso 7: Alergias y confirmación */}
       {step === 7 && reservationData.date && (
         <Step7
-          onNext={nextStep}
+          onNext={() => setStep(8)}
           onBack={previousStep}
           updateData={updateData}
+          userName={reservationData.userName}
+          userEmail={reservationData.userEmail}
+          userPhone={reservationData.userPhone}
           selectedDate={reservationData.date}
           time={reservationData.time}
           language={reservationData.language}
           participants={reservationData.participants}
-          handleSubmit={handleSubmit}
         />
       )}
 
       {/* Paso 8: Resumen de la Reserva */}
-      {step === 8 && isReservationSuccessful && (
+      {step === 8 && (
         <Confirmation
           data={{
-            date: reservationData.date,
+            date: reservationData.date || new Date(),
             participants: reservationData.participants,
             children: reservationData.children || 0,
             language: reservationData.language || "",
+            schedule: reservationData.schedule || "",
             time: reservationData.time,
             allergies: reservationData.allergies,
             confirmed: reservationData.confirmed,
