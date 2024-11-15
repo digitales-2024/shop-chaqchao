@@ -1,12 +1,22 @@
 import { PayPalButtonProps } from "@/types/paypal";
+import { showToast } from "@/utils/helpers";
 import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
+import { useEffect } from "react";
 
 const PayPalButton: React.FC<PayPalButtonProps> = ({
   getTransactionData,
   onNext,
   onPaymentSuccess,
+  onCancel,
 }) => {
   const clientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || "";
+
+  useEffect(() => {
+    if (!clientId) {
+      console.log("Paypal Client ID is missing");
+    }
+  }, [clientId]);
+
   return (
     <PayPalScriptProvider
       options={{
@@ -17,7 +27,6 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({
         <PayPalButtons
           style={{
             layout: "horizontal",
-            label: "pay",
             tagline: false,
           }}
           className="h-9 w-60"
@@ -43,6 +52,12 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({
               ],
             });
           }}
+          onClick={() => {
+            const transactionData = getTransactionData();
+            if (parseFloat(transactionData.paypalAmount) <= 0) {
+              console.warn("Intento de pago con monto cero");
+            }
+          }}
           onApprove={async (_data, actions) => {
             if (actions && actions.order) {
               const details = await actions.order.capture();
@@ -60,6 +75,10 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({
               if (finalTransactionData.paypalOrderStatus === "COMPLETED")
                 onNext();
             }
+          }}
+          onCancel={() => {
+            showToast("Pago cancelado", "error");
+            if (onCancel) onCancel();
           }}
           onError={(err) => console.error("Error en el pago de PayPal", err)}
         />

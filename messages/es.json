@@ -318,7 +318,8 @@
         "paymentConfirmed": "Pago confirmado y clase registrada con éxito.",
         "errorConfirmPayment": "Error al confirmar el pago. Inténtalo de nuevo.",
         "acceptTerms": "Acepte los terminos y politicas para continuar",
-        "timeOut": "El tiempo para realizar el pago ha expirado y su cupo fue cancelado."
+        "timeOut": "El tiempo para realizar el pago ha expirado y su cupo fue cancelado.",
+        "paymentCancelled": "Pago cancelado"
       },
       "remainingTime": "Tiempo restante para realizar el pago: ",
       "children": {

@@ -599,8 +599,13 @@ export function Step7({
   const [total, setTotal] = useState(participants * adultPrice);
   const [subTotal, setSubTotal] = useState(participants * adultPrice);
 
-  const { handleRegisterClass, classId, showCountdown, isLoading } =
-    useRegisterClass();
+  const {
+    handleRegisterClass,
+    classId,
+    showCountdown,
+    setShowCountdown,
+    isLoading,
+  } = useRegisterClass();
   const { confirmClassPayment, isLoading: isConfirmLoading } =
     useConfirmClassPayment();
 
@@ -675,6 +680,13 @@ export function Step7({
     await confirmClassPayment(classId, paypalData);
   };
 
+  // Function to stop the timer
+  const cancelCountdown = () => {
+    setShowCountdown(false);
+    const message = t("toast.paymentCancelled");
+    showToast(message, "error");
+  };
+
   // Timer
   const countdownRenderer = ({
     minutes,
@@ -687,6 +699,7 @@ export function Step7({
   }) => {
     if (completed) {
       showToast(t("toast.timeOut"), "error");
+      setShowCountdown(false);
       return null;
     } else {
       return (
@@ -933,7 +946,7 @@ export function Step7({
           </div>
 
           {/* Botones de navegación */}
-          <div className="flex flex-wrap items-center justify-center gap-4">
+          <div className="flex flex-col flex-wrap items-center justify-center gap-x-4 gap-y-4 sm:flex-row">
             <button
               className="h-9 w-60 rounded-full bg-primary px-10 text-sm font-semibold text-white shadow-lg transition-all duration-300 ease-in-out hover:bg-secondary sm:w-auto sm:text-xl"
               onClick={onBack}
@@ -957,7 +970,7 @@ export function Step7({
             {/* Temporizador */}
             {showCountdown && (
               <Countdown
-                date={Date.now() + 1 * 60 * 1000}
+                date={Date.now() + 5 * 60 * 1000}
                 renderer={countdownRenderer}
               />
             )}
@@ -969,6 +982,7 @@ export function Step7({
                   getTransactionData={getTransactionData}
                   onNext={onNext}
                   onPaymentSuccess={confirmPayment}
+                  onCancel={cancelCountdown}
                 />
               )}
             </div>

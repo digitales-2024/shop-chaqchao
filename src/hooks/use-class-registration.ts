@@ -24,7 +24,6 @@ export const useRegisterClass = () => {
       } catch (error) {
         const err = error as { data: { message: string } };
         const errorMessage = err.data.message;
-        console.log("Error Message:", errorMessage);
 
         switch (errorMessage) {
           case "There are no more spots available.":
@@ -54,7 +53,13 @@ export const useRegisterClass = () => {
     [registerClass, t],
   );
 
-  return { handleRegisterClass, classId, showCountdown, isLoading };
+  return {
+    handleRegisterClass,
+    classId,
+    showCountdown,
+    setShowCountdown,
+    isLoading,
+  };
 };
 
 export const useConfirmClassPayment = () => {

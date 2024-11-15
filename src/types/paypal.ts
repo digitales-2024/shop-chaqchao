@@ -32,4 +32,5 @@ export interface PayPalButtonProps {
   };
   onNext: () => void;
   onPaymentSuccess: (data: PaypalTransactionData) => void;
+  onCancel: () => void;
 }
