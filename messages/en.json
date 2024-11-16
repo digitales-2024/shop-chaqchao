@@ -452,6 +452,7 @@
       "privacy": "By continuing, you agree to our",
       "privacyLink": "Privacy Policy",
       "button": "Confirm order",
+      "loading": "Processing order...",
       "errors": {
         "terms": "You must accept the terms and conditions",
         "privacy": "You must accept the privacy policy",

@@ -446,6 +446,7 @@
       "privacy": "He leído y acepto la",
       "privacyLink": "Política de Privacidad",
       "button": "Confirmar pedido",
+      "loading": "Confirmando pedido...",
       "errors": {
         "terms": "Debes aceptar los términos y condiciones",
         "privacy": "Debes aceptar la política de privacidad",
