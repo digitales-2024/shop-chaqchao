@@ -1,7 +1,11 @@
+import { ShoppingCheck, ShoppingDelete } from "@/assets/icons";
 import useCartDetail from "@/hooks/use-cart-detail";
+import { usePayment } from "@/hooks/use-payment";
 import useCartStore from "@/redux/store/cart";
 import { CartItem } from "@/types";
+import { getDataOrderDynamic } from "@/utils/getDataOrderDynamic";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { RefreshCcw } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -24,8 +28,21 @@ import { Button, buttonVariants } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
 import PaymentConfirm from "./PaymentConfirm";
 
+const merchantCode = "58843145";
+const publicKey =
+  "58843145:testpublickey_UdSBSiNOUF791ufTiN6S7s8jSOt6NLKnJbKv93JCtvtum";
+const currency = "PEN";
 interface ConfirmCheckoutProps {
   validateCart: (cartItems: CartItem[]) => Promise<boolean>;
+}
+
+interface OrderInfo {
+  transactionId: string;
+  orderNumber: string;
+  merchantCode: string;
+  publicKey: string;
+  amount: string;
+  currency: string;
 }
 
 export const ConfirmCheckout = ({ validateCart }: ConfirmCheckoutProps) => {
@@ -57,19 +74,22 @@ export const ConfirmCheckout = ({ validateCart }: ConfirmCheckoutProps) => {
     },
   });
 
-  const { cartItems } = useCartStore();
+  const { cartItems, amountTotal } = useCartStore();
 
   const router = useRouter();
 
-  const [isConfirm, setIsConfirm] = useState(false);
+  const [showPayment, setShowPayment] = useState(false);
+  const [orderInfo, setOrderInfo] = useState<OrderInfo | null>(null);
+  const [token, setToken] = useState<string | null>(null);
+  const [isLoadingGenerateToken, setIsLoadingGenerateToken] = useState(false);
+
+  const { generatePaymentToken } = usePayment();
 
   const onConfirm = async () => {
     try {
       await validateCart(cartItems);
       if (cartItems.length === 0) {
-        toast.error(t("errors.empty"), {
-          position: "top-center",
-        });
+        toast.error(t("errors.empty"), { position: "top-center" });
 
         setTimeout(() => {
           router.replace("/");
@@ -77,18 +97,90 @@ export const ConfirmCheckout = ({ validateCart }: ConfirmCheckoutProps) => {
 
         return;
       }
+      setIsLoadingGenerateToken(true);
 
-      setIsConfirm(true);
-    } catch (error) {}
+      // Generar un nuevo transactionId y orderNumber
+      const { transactionId, orderNumber } = getDataOrderDynamic();
+
+      // Calcular el monto total como string con dos decimales
+      const amount = amountTotal.toFixed(2).toString();
+
+      // Establecer el estado de orderInfo
+      const newOrderInfo: OrderInfo = {
+        transactionId,
+        orderNumber,
+        merchantCode,
+        publicKey,
+        amount,
+        currency,
+      };
+
+      setOrderInfo(newOrderInfo);
+
+      // Generar el token de pago
+      const tokenResponse = await generatePaymentToken({
+        transaction: transactionId,
+        body: {
+          requestSource: "ECOMMERCE",
+          merchantCode: merchantCode,
+          orderNumber: orderNumber,
+          publicKey: publicKey,
+          amount: amount,
+        },
+      });
+
+      if (!tokenResponse) {
+        throw new Error("Error al generar token");
+      }
+
+      setToken(tokenResponse ?? null);
+      setIsLoadingGenerateToken(false);
+      setShowPayment(true);
+    } catch (error) {
+      toast("Ops!", {
+        description: "Algo salió mal, por favor intenta de nuevo.",
+        icon: <ShoppingDelete />,
+        className: "text-rose-500",
+      });
+      setIsLoadingGenerateToken(false);
+      setShowPayment(false);
+      setOrderInfo(null);
+    }
   };
 
-  // Confirmar que los datos del formulario esten completos para habilitar el boton de confirmar pedido
+  const handlePaymentSuccess = () => {
+    toast("¡Pago realizado con éxito!", {
+      description: "Gracias por tu compra.",
+      icon: <ShoppingCheck />,
+      className: "text-green-500",
+    });
+    // Resetear estados o redireccionar según sea necesario
+    setOrderInfo(null);
+    setToken(null);
+    setShowPayment(false);
+    // Opcional: Vaciar el carrito, redirigir, etc.
+  };
+
+  const handlePaymentError = () => {
+    toast("Ops!", {
+      description: "Algo salió mal, por favor intenta de nuevo.",
+      icon: <ShoppingDelete />,
+      className: "text-rose-500",
+    });
+    // Resetear orderInfo y token para permitir reintentar
+    setOrderInfo(null);
+    setToken(null);
+    setShowPayment(false);
+  };
+
+  // Confirmar que los datos del formulario estén completos para habilitar el botón de confirmar pedido
   const isFormComplete =
     dateOrder.date &&
     dateOrder.fullDate &&
     login.email &&
     invoice.typeInvoice &&
     invoice.number;
+
   return (
     <>
       <Form {...form}>
@@ -149,15 +241,25 @@ export const ConfirmCheckout = ({ validateCart }: ConfirmCheckoutProps) => {
               </FormItem>
             )}
           />
-          {!isConfirm &&
+          {!showPayment &&
             (!!isFormComplete ? (
               <Button
                 className="w-full text-lg font-bold"
                 disabled={
-                  !login.email || !invoice.typeInvoice || !dateOrder.fullDate
+                  !login.email ||
+                  !invoice.typeInvoice ||
+                  !dateOrder.fullDate ||
+                  isLoadingGenerateToken
                 }
               >
-                {t("button")}
+                {isLoadingGenerateToken ? (
+                  <>
+                    <RefreshCcw className="animate-spin" />
+                    {t("loading")}
+                  </>
+                ) : (
+                  t("button")
+                )}
               </Button>
             ) : (
               <div
@@ -171,7 +273,14 @@ export const ConfirmCheckout = ({ validateCart }: ConfirmCheckoutProps) => {
             ))}
         </form>
       </Form>
-      {isConfirm && <PaymentConfirm setIsConfirm={setIsConfirm} />}
+      {showPayment && orderInfo && (
+        <PaymentConfirm
+          token={token}
+          orderInfo={orderInfo}
+          onPaymentSuccess={handlePaymentSuccess}
+          onPaymentError={handlePaymentError}
+        />
+      )}
     </>
   );
 };
