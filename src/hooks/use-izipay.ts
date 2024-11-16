@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect } from "react";
 
 declare global {
@@ -10,7 +9,7 @@ declare global {
 const useIzipay = (token: string | null) => {
   useEffect(() => {
     const script = document.createElement("script");
-    script.src = "https://sandbox-checkout.izipay.pe/payments/v1/js/index.js";
+    script.src = "https://checkout.izipay.pe/payments/v1/js/index.js";
     script.async = true;
     script.onload = () => {
       console.log("Izipay SDK loaded");
@@ -32,7 +31,9 @@ const useIzipay = (token: string | null) => {
           keyRSA: "RSA",
           callbackResponse: callback,
         });
-      } catch (error: any) {}
+      } catch (error: any) {
+        console.error(error.message, error.Errors, error.date);
+      }
     }
   };
 
