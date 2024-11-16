@@ -1,67 +1,36 @@
 import useIzipay from "@/hooks/use-izipay";
-import { usePayment } from "@/hooks/use-payment";
-import useCartStore from "@/redux/store/cart";
-import { getDataOrderDynamic } from "@/utils/getDataOrderDynamic";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import { ButtonPayment } from "./ButtonPayment";
 
-const { transactionId, orderNumber } = getDataOrderDynamic();
-
-/* Inicio datos del comercio */
-const MERCHANT_CODE = "4001834";
-const PUBLIC_KEY = "VErethUtraQuxas57wuMuquprADrAHAb";
-/* Fin datos del comercio */
-
-/************* Inicio datos de la transacción **************/
-const TRANSACTION_ID = transactionId;
-const ORDER_NUMBER = orderNumber;
-const ORDER_CURRENCY = "PEN";
-
 interface PaymentConfirmProps {
-  setIsConfirm: React.Dispatch<React.SetStateAction<boolean>>;
+  token: string | null;
+  orderInfo: {
+    transactionId: string;
+    orderNumber: string;
+    merchantCode: string;
+    amount: string;
+  };
+  onPaymentSuccess: () => void;
+  onPaymentError: () => void;
 }
 
-const PaymentConfirm: React.FC<PaymentConfirmProps> = ({ setIsConfirm }) => {
-  const [token, setToken] = useState<string | null>(null);
-  const { generatePaymentToken } = usePayment();
+const PaymentConfirm = ({
+  token,
+  orderInfo,
+  onPaymentSuccess,
+  onPaymentError,
+}: PaymentConfirmProps) => {
   const { loadIzipayForm } = useIzipay(token);
-  const { amountTotal } = useCartStore();
-
-  const AMOUNT = amountTotal.toFixed(2).toString() ?? "00.00";
-
-  useEffect(() => {
-    const fetchToken = async () => {
-      const data = await generatePaymentToken({
-        transaction: TRANSACTION_ID,
-        body: {
-          requestSource: "ECOMMERCE",
-          merchantCode: MERCHANT_CODE,
-          orderNumber: ORDER_NUMBER,
-          publicKey: PUBLIC_KEY,
-          amount: AMOUNT,
-        },
-      }).catch(() => {
-        if (setIsConfirm) {
-          setIsConfirm(false);
-        }
-      });
-      if (data) {
-        setToken(data);
-      }
-    };
-
-    fetchToken();
-  }, []);
 
   const iziConfig = {
-    transactionId: TRANSACTION_ID,
+    transactionId: orderInfo.transactionId,
     action: "pay",
-    merchantCode: MERCHANT_CODE,
+    merchantCode: orderInfo.merchantCode,
     order: {
-      orderNumber: ORDER_NUMBER,
-      currency: ORDER_CURRENCY,
-      amount: AMOUNT,
+      orderNumber: orderInfo.orderNumber,
+      currency: "PEN",
+      amount: orderInfo.amount,
       processType: "AT",
       merchantBuyerId: "mc1768",
       dateTimeTransaction: "1670258741603000",
@@ -131,23 +100,17 @@ const PaymentConfirm: React.FC<PaymentConfirmProps> = ({ setIsConfirm }) => {
     },
   };
 
-  const handlePayment = () => {
-    loadIzipayForm(iziConfig, (response: any) => {
-      document.querySelector("#payment-message")!.innerHTML = JSON.stringify(
-        response,
-        null,
-        2,
-      );
+  const handleLoadForm = () => {
+    loadIzipayForm(iziConfig, (response) => {
+      if (response.code === "00") {
+        onPaymentSuccess();
+      } else {
+        onPaymentError();
+      }
     });
   };
 
-  return (
-    <div>
-      <ButtonPayment onClick={handlePayment} disabled={!token} />
-      <div id="your-iframe-payment"></div>
-      <pre id="payment-message"></pre>
-    </div>
-  );
+  return <ButtonPayment onClick={handleLoadForm} />;
 };
 
 export default PaymentConfirm;
