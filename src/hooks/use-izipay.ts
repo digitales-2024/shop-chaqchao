@@ -9,7 +9,7 @@ declare global {
 const useIzipay = (token: string | null) => {
   useEffect(() => {
     const script = document.createElement("script");
-    script.src = "https://checkout.izipay.pe/payments/v1/js/index.js";
+    script.src = process.env.NEXT_PUBLIC_IZIPAY_SDK_URL ?? "";
     script.async = true;
     script.onload = () => {
       console.log("Izipay SDK loaded");
