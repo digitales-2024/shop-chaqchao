@@ -11,6 +11,9 @@ export const RecieptSchema = () => {
     number: z.string().regex(/^[0-9]+$/, {
       message: t("number"),
     }),
+    address: z.string().min(1, {
+      message: t("address"),
+    }),
     name: z.string().min(1, {
       message: t("name"),
     }),
