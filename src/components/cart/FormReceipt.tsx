@@ -50,6 +50,11 @@ export const FormReceipt = () => {
           : DocumentType.DNI,
       number:
         invoice.typeInvoice === InvoiceType.RECEIPT ? invoice.number || "" : "",
+
+      address:
+        invoice.typeInvoice === InvoiceType.RECEIPT
+          ? invoice.address || ""
+          : "",
       name:
         invoice.typeInvoice === InvoiceType.RECEIPT
           ? (clientData ? clientData.name : invoice.name) || ""
@@ -126,6 +131,19 @@ export const FormReceipt = () => {
           render={({ field }) => (
             <FormItem>
               <FormLabel className="font-bold">{t("doc")}</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="address"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="font-bold">{t("address")}</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
