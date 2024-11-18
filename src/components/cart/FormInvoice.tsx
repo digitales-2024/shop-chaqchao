@@ -35,8 +35,7 @@ const invoiceDocuments = [
   },
 ];
 export const FormInvoice = () => {
-  const { invoice, setInvoice, handleStepComplete, setActiveStep } =
-    useCartDetail();
+  const { invoice, setInvoice, handleStepComplete } = useCartDetail();
   const form = useForm<Invoice>({
     resolver: zodResolver(InvoiceSchema()),
     defaultValues: {
@@ -63,7 +62,6 @@ export const FormInvoice = () => {
       ...form.getValues(),
     });
     handleStepComplete(2);
-    setActiveStep(-1);
   };
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
