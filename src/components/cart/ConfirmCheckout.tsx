@@ -28,9 +28,6 @@ import { Button, buttonVariants } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
 import PaymentConfirm from "./PaymentConfirm";
 
-const merchantCode = "58843145";
-const publicKey =
-  "58843145:testpublickey_UdSBSiNOUF791ufTiN6S7s8jSOt6NLKnJbKv93JCtvtum";
 const currency = "PEN";
 interface ConfirmCheckoutProps {
   validateCart: (cartItems: CartItem[]) => Promise<boolean>;
@@ -86,6 +83,9 @@ export const ConfirmCheckout = ({ validateCart }: ConfirmCheckoutProps) => {
   const { generatePaymentToken } = usePayment();
 
   const onConfirm = async () => {
+    const merchantCode = process.env.NEXT_PUBLIC_IZIPAY_MERCHANT_CODE ?? "";
+    const publicKey = process.env.NEXT_PUBLIC_IZIPAY_PUBLIC_KEY ?? "";
+
     try {
       await validateCart(cartItems);
       if (cartItems.length === 0) {
