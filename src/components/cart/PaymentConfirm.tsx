@@ -1,4 +1,7 @@
+import useCartDetail from "@/hooks/use-cart-detail";
 import useIzipay from "@/hooks/use-izipay";
+import { getDateTimeTransaction } from "@/utils/getDateTimeTransaction";
+import { getMerchantBuyerId } from "@/utils/getMerchantBuyerId";
 import React from "react";
 
 import { ButtonPayment } from "./ButtonPayment";
@@ -22,6 +25,7 @@ const PaymentConfirm = ({
   onPaymentError,
 }: PaymentConfirmProps) => {
   const { loadIzipayForm } = useIzipay(token);
+  const { login, invoice } = useCartDetail();
 
   const iziConfig = {
     transactionId: orderInfo.transactionId,
@@ -32,29 +36,28 @@ const PaymentConfirm = ({
       currency: "PEN",
       amount: orderInfo.amount,
       processType: "AT",
-      merchantBuyerId: "mc1768",
-      dateTimeTransaction: "1670258741603000",
-      payMethod: "all",
+      merchantBuyerId: getMerchantBuyerId,
+      dateTimeTransaction: getDateTimeTransaction,
+      payMethod: "CARD,YAPE_CODE,PAGO_PUSH",
     },
     billing: {
-      firstName: "Juan",
-      lastName: "Wick",
-      email: "jwick@izipay.pe",
-      phoneNumber: "989339999",
-      street: "calle el demo",
-      city: "lima",
-      state: "lima",
-      country: "PE",
-      postalCode: "00001",
-      document: "12345678",
-      documentType: "DNI",
+      firstName: login.name ?? "hola",
+      lastName: "nose",
+      email: login.email ?? "",
+      phoneNumber: "",
+      street: invoice.address ?? "",
+      city: "",
+      state: "",
+      country: "",
+      postalCode: "",
+      document: invoice.number,
+      documentType: invoice.documentType,
     },
     render: {
       typeForm: "pop-up",
-      container: "#your-iframe-payment",
       showButtonProcessForm: false,
     },
-    urlRedirect: "https://server.punto-web.com/comercio/creceivedemo.asp?p=h1",
+    urlRedirect: "https://server.punto-web.com/comercio/creceivedemo.asp?p=h1", // TODO Cambiar por la URL de redirección
     appearance: {
       customTheme: {
         colors: {
