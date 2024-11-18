@@ -45,16 +45,19 @@ export const useCart = () => {
    * @param cartItems Productos a validar
    * @returns Respuesta de la petición
    */
-  const validateCart = async (cartItems: CartItem[]) => {
+  const validateCart = async (cartItems: CartItem[]): Promise<boolean> => {
     try {
       if (cartItems.length > 0) {
         const response = await validate({
           cartItems: cartItems.map((item) => item.id),
         });
 
-        return response;
+        return response.data ? true : false;
       }
-    } catch (error) {}
+      return false;
+    } catch (error) {
+      return false;
+    }
   };
 
   /**

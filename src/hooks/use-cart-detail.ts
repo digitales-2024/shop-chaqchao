@@ -20,6 +20,8 @@ interface CartDetailState {
   dateOrder: DateOrder;
   setDateOrder: (data: DateOrder) => void;
   invoice: InvoiceData;
+  someonePickup: boolean;
+  setSomeonePickup: (data: boolean) => void;
   setInvoice: (data: InvoiceData) => void;
   activeStep: number;
   setActiveStep: (step: number) => void;
@@ -51,6 +53,8 @@ const useCartDetail = create<CartDetailState>((set) => ({
     name: "",
     typeInvoice: INVOICES[0],
   },
+  someonePickup: false,
+  setSomeonePickup: (someonePickup: boolean) => set(() => ({ someonePickup })),
   setInvoice: (invoice: InvoiceData) => set(() => ({ invoice })),
   activeStep: 0,
   setActiveStep: (activeStep: number) => set(() => ({ activeStep })),
