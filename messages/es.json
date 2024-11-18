@@ -447,6 +447,7 @@
       "privacyLink": "Política de Privacidad",
       "button": "Confirmar pedido",
       "loading": "Confirmando pedido...",
+      "someone": "Recogerá otra persona el pedido",
       "errors": {
         "terms": "Debes aceptar los términos y condiciones",
         "privacy": "Debes aceptar la política de privacidad",
@@ -497,10 +498,19 @@
         "button": "Iniciar sesión"
       }
     },
+    "someone": {
+      "title": "Recogida de Pedido",
+      "description": "Indique quién recogerá el pedido.",
+      "quest": "¿Recogerá otra persona el pedido?",
+      "no": "No, recogeré el pedido yo mismo",
+      "yes": "Sí, otra persona recogerá el pedido",
+      "button": "Confirmar recogida"
+    },
     "steps": {
       "login": "Iniciar sesión",
       "date": "Fecha de recogida",
-      "invoice": "Datos de facturación"
+      "invoice": "Datos de facturación",
+      "someone": "Recogida de Pedido"
     }
   }
 }

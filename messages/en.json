@@ -453,6 +453,7 @@
       "privacyLink": "Privacy Policy",
       "button": "Confirm order",
       "loading": "Processing order...",
+      "someone": "Someone else will pick up the order",
       "errors": {
         "terms": "You must accept the terms and conditions",
         "privacy": "You must accept the privacy policy",
@@ -490,6 +491,14 @@
         "nameBusiness": "The name or business name is required"
       }
     },
+    "someone": {
+      "title": "Who will pick up the order?",
+      "description": "Indicate who will pick up the order.",
+      "quest": "Will someone else pick up the order?",
+      "no": "No, I will pick up the order myself",
+      "yes": "Yes, someone else will pick up the order",
+      "button": "Confirm pickup"
+    },
     "login": {
       "title": "Why do we need your email?",
       "description": "We need your email to send you the order confirmation and keep in touch with you",
@@ -506,7 +515,8 @@
     "steps": {
       "login": "Log in",
       "date": "Collection date",
-      "invoice": "Invoice"
+      "invoice": "Invoice",
+      "someone": "Order"
     }
   }
 }
