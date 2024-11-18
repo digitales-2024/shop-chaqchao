@@ -18,7 +18,7 @@ export const DetailCheckout = () => {
   const { amountTotal, cartItems } = useCartStore();
   const { business, isLoading } = useBusiness();
 
-  const { dateOrder, invoice, login } = useCartDetail();
+  const { dateOrder, invoice, login, someonePickup } = useCartDetail();
   const t = useTranslations("checkout.summary");
   const i = useTranslations("checkout.invoice");
 
@@ -85,6 +85,10 @@ export const DetailCheckout = () => {
             ) : (
               <Skeleton className="h-8 w-32" />
             )}
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2">
+            <span className="text-gray-400">{t("someone")}:</span>
+            <span className="font-bold">{someonePickup ? "Si" : "No"}</span>
           </div>
         </div>
         <Separator />
