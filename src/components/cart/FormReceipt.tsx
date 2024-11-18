@@ -62,7 +62,7 @@ export const FormReceipt = () => {
   const handleSubmit = () => {
     if (
       form.getValues().documentType === DocumentType.DNI &&
-      form.getValues().number.length < 8
+      form.getValues().number.length !== 8
     ) {
       form.setError("number", {
         type: "manual",
@@ -73,7 +73,7 @@ export const FormReceipt = () => {
 
     if (
       form.getValues().documentType === DocumentType.PASSPORT &&
-      form.getValues().number.length < 12
+      form.getValues().number.length !== 12
     ) {
       form.setError("number", {
         type: "manual",
