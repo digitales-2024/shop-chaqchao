@@ -37,8 +37,7 @@ const receiptDocuments = [
   },
 ];
 export const FormReceipt = () => {
-  const { invoice, setInvoice, handleStepComplete, setActiveStep } =
-    useCartDetail();
+  const { invoice, setInvoice, handleStepComplete } = useCartDetail();
 
   const { clientData } = useProfile();
 
@@ -89,7 +88,6 @@ export const FormReceipt = () => {
     });
 
     handleStepComplete(2);
-    setActiveStep(-1);
   };
 
   return (
