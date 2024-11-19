@@ -61,7 +61,7 @@ export const ConfirmCheckout = ({ validateCart }: ConfirmCheckoutProps) => {
 
   type ConfirmCheckoutType = z.infer<typeof confirmCheckoutSchema>;
 
-  const { dateOrder, invoice, login } = useCartDetail();
+  const { dateOrder, invoice, contact } = useCartDetail();
 
   const form = useForm<ConfirmCheckoutType>({
     resolver: zodResolver(confirmCheckoutSchema),
@@ -177,7 +177,7 @@ export const ConfirmCheckout = ({ validateCart }: ConfirmCheckoutProps) => {
   const isFormComplete =
     dateOrder.date &&
     dateOrder.fullDate &&
-    login.email &&
+    contact.email &&
     invoice.typeInvoice &&
     invoice.number;
 
@@ -246,7 +246,7 @@ export const ConfirmCheckout = ({ validateCart }: ConfirmCheckoutProps) => {
               <Button
                 className="w-full text-lg font-bold"
                 disabled={
-                  !login.email ||
+                  !contact.email ||
                   !invoice.typeInvoice ||
                   !dateOrder.fullDate ||
                   isLoadingGenerateToken
