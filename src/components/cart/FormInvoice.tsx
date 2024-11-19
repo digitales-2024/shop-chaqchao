@@ -27,6 +27,7 @@ import { getCustomerData } from "@/lib/api/api-sunat";
 
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import { FormBilling } from "./FormBilling";
 
 const invoiceDocuments = [
   {
@@ -49,8 +50,23 @@ export const FormInvoice = () => {
         invoice.typeInvoice === InvoiceType.INVOICE
           ? invoice.address || ""
           : "",
-      name:
-        invoice.typeInvoice === InvoiceType.INVOICE ? invoice.name || "" : "",
+      nameBusiness:
+        invoice.typeInvoice === InvoiceType.INVOICE && "nameBusiness" in invoice
+          ? invoice.nameBusiness || ""
+          : "",
+      country:
+        invoice.typeInvoice === InvoiceType.INVOICE
+          ? invoice.country || ""
+          : "",
+
+      state:
+        invoice.typeInvoice === InvoiceType.INVOICE ? invoice.state || "" : "",
+      city:
+        invoice.typeInvoice === InvoiceType.INVOICE ? invoice.city || "" : "",
+      codPostal:
+        invoice.typeInvoice === InvoiceType.INVOICE
+          ? invoice.codPostal || ""
+          : "",
     },
   });
   const t = useTranslations("checkout.invoice");
@@ -60,6 +76,7 @@ export const FormInvoice = () => {
     setInvoice({
       typeInvoice: InvoiceType.INVOICE,
       ...form.getValues(),
+      nameBusiness: form.getValues().nameBusiness || "",
     });
     handleStepComplete(2);
   };
@@ -74,7 +91,7 @@ export const FormInvoice = () => {
       const response = await getCustomerData("ruc", form.getValues().number);
 
       setIsLoading(false);
-      form.setValue("name", response.razonSocial);
+      form.setValue("nameBusiness", response.razonSocial);
       form.setValue("address", response.direccion);
     };
 
@@ -84,7 +101,7 @@ export const FormInvoice = () => {
     ) {
       fetchData();
     } else {
-      form.setValue("name", "");
+      form.setValue("nameBusiness", "");
       form.setValue("address", "");
     }
   }, [form.watch("number")]);
@@ -141,20 +158,7 @@ export const FormInvoice = () => {
         />
         <FormField
           control={form.control}
-          name="address"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="font-bold">{t("address")}</FormLabel>
-              <FormControl>
-                <Input {...field} readOnly />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="name"
+          name="nameBusiness"
           render={({ field }) => (
             <FormItem>
               <FormLabel className="font-bold">{t("nameBusiness")}</FormLabel>
@@ -165,6 +169,7 @@ export const FormInvoice = () => {
             </FormItem>
           )}
         />
+        <FormBilling form={form} />
         <Button className="w-full">{c("continue")}</Button>
       </form>
     </Form>
