@@ -8,10 +8,13 @@ import { CalendarIcon, Clock } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useMemo, useState } from "react";
 
+import { Card, CardContent } from "@/components/ui/card";
+
 import { cn } from "@/lib/utils";
 
 import { Button } from "../ui/button";
 import { Calendar } from "../ui/calendar";
+import { Label } from "../ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import {
   Select,
@@ -20,9 +23,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import { Switch } from "../ui/switch";
 
 export const StepDateOrder = () => {
-  const { dateOrder, setDateOrder, handleStepComplete } = useCartDetail();
+  const {
+    dateOrder,
+    setDateOrder,
+    handleStepComplete,
+    setActiveStep,
+    setSomeonePickup,
+    someonePickup,
+  } = useCartDetail();
 
   const memoizedDateOrder = useMemo(() => dateOrder, [dateOrder]);
 
@@ -67,7 +78,6 @@ export const StepDateOrder = () => {
   }, [business, date]);
 
   const t = useTranslations("checkout.dateOrder");
-  const c = useTranslations("checkout");
   const lang = useLocale();
 
   useEffect(() => {
@@ -94,7 +104,9 @@ export const StepDateOrder = () => {
         date,
         hour,
       });
-      handleStepComplete(1);
+      setSomeonePickup(someonePickup);
+      handleStepComplete(2);
+      setActiveStep(-1);
     }
   };
 
@@ -176,8 +188,28 @@ export const StepDateOrder = () => {
             })}
           </p>
         )}
+        <Card className="mx-auto w-full">
+          <CardContent>
+            <div className="flex items-center justify-between space-x-2 py-4">
+              <Label
+                htmlFor="recoge-otra-persona"
+                className="flex flex-col space-y-1"
+              >
+                <span>{t("quest")}</span>
+                <span className="text-sm font-normal text-muted-foreground">
+                  {someonePickup ? t("yes") : t("no")}
+                </span>
+              </Label>
+              <Switch
+                id="recoge-otra-persona"
+                checked={someonePickup}
+                onCheckedChange={setSomeonePickup}
+              />
+            </div>
+          </CardContent>
+        </Card>
         <Button onClick={handleConfirmDate} disabled={!date || !hour}>
-          {c("continue")}
+          {t("button")}
         </Button>
       </div>
     </div>
