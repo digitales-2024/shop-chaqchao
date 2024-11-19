@@ -432,7 +432,10 @@
       "date": "Select the date of collection",
       "hour": "Select the time of collection",
       "label": "You will pick up your order on",
-      "buttonDate": "Confirm date",
+      "button": "Confirm",
+      "quest": "Will someone else pick up the order?",
+      "no": "No, I will pick up the order myself",
+      "yes": "Yes, someone else will pick up the order",
       "messages": {
         "date": "The date is required",
         "hour": "The hour is required"
@@ -464,14 +467,7 @@
         "postalCode": "The postal code is required and must have at least 5 digits"
       }
     },
-    "someone": {
-      "title": "Who will pick up the order?",
-      "description": "Indicate who will pick up the order.",
-      "quest": "Will someone else pick up the order?",
-      "no": "No, I will pick up the order myself",
-      "yes": "Yes, someone else will pick up the order",
-      "button": "Confirm pickup"
-    },
+
     "contact": {
       "title": "Contact information",
       "description": "Enter your contact information to continue with the order.",

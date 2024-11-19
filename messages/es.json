@@ -433,7 +433,10 @@
       "date": "Selecciona la fecha de recogida",
       "hour": "Selecciona la hora de recogida",
       "label": "Recogerás tu pedido el",
-      "buttonDate": "Confirmar fecha",
+      "button": "Confirmar",
+      "quest": "¿Recogerá otra persona el pedido?",
+      "no": "No, recogeré el pedido yo mismo",
+      "yes": "Sí, otra persona recogerá el pedido",
       "messages": {
         "date": "Por favor selecciona una fecha",
         "hour": "Por favor selecciona una hora"
@@ -451,6 +454,7 @@
       "country": "País",
       "city": "Ciudad",
       "button": "Continuar",
+
       "errors": {
         "typeDoc": "El tipo de documento es requerido",
         "number": "El número de documento es requerido",
@@ -491,14 +495,6 @@
         "description": "¡Inicia sesión y sigue disfrutando de tus compras!",
         "button": "Iniciar sesión"
       }
-    },
-    "someone": {
-      "title": "Recogida de Pedido",
-      "description": "Indique quién recogerá el pedido.",
-      "quest": "¿Recogerá otra persona el pedido?",
-      "no": "No, recogeré el pedido yo mismo",
-      "yes": "Sí, otra persona recogerá el pedido",
-      "button": "Confirmar recogida"
     },
     "steps": {
       "contact": "Información de contacto",

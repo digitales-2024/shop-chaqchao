@@ -12,7 +12,6 @@ import {
   ReceiptText,
   User,
   UserCheck,
-  Users,
 } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 
@@ -29,7 +28,6 @@ import {
 import { StepContact } from "./StepContact";
 import { StepDateOrder } from "./StepDateOrder";
 import { StepInvoice } from "./StepInvoice";
-import { StepSomeonePickup } from "./StepSomeonePickup";
 
 export const steps = [
   {
@@ -49,12 +47,6 @@ export const steps = [
     content: <StepDateOrder />,
     icon: Calendar,
     iconCheck: CalendarCheck,
-  },
-  {
-    title: "someone",
-    content: <StepSomeonePickup />,
-    icon: Users,
-    iconCheck: Users,
   },
 ];
 export const CheckoutSteps = () => {
