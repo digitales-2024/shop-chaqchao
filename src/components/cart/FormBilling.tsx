@@ -44,7 +44,7 @@ export const FormBilling = ({ form }: FormBillingProps) => {
             <FormControl>
               <LocationSelector
                 onCountryChange={(country) => {
-                  form.setValue("country", country?.name || "");
+                  form.setValue("country", country?.iso2 || "");
                 }}
                 onStateChange={(state) => {
                   form.setValue("state", state?.name || "");
