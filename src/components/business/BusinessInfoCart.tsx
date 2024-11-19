@@ -1,15 +1,11 @@
 import { useBusiness } from "@/hooks/useBusiness";
 import { BusinessHour } from "@/types/business";
 import { motion } from "framer-motion";
-import { ChevronDown, Clock, ExternalLink, MapPin } from "lucide-react";
+import { Clock, ExternalLink, MapPin } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
-
-import { Button } from "../ui/button";
 
 const direction = "Chaqchao+Express,+Avenida+Ejército,+Yanahuara";
 export const BusinessInfoCart = () => {
-  const [showDirection, setShowDirection] = useState(false);
   const t = useTranslations("business");
   const d = useTranslations("business.days");
   const { business } = useBusiness();
@@ -77,60 +73,34 @@ export const BusinessInfoCart = () => {
       transition={{ delay: 0.5 }}
       className="text-sm text-gray-600"
     >
-      <Button
-        variant="ghost"
-        className="mb-4 w-full"
-        onClick={() => setShowDirection(!showDirection)}
-      >
-        <MapPin className="mr-2 h-4 w-4" />
-        {showDirection ? t("buttonClose") : t("buttonOpen")}
-        <ChevronDown
-          className={`ml-2 h-4 w-4 transition-transform duration-200 ${showDirection ? "rotate-180" : ""}`}
-        />
-      </Button>
-      <motion.div
-        initial={false}
-        animate={{ height: showDirection ? "auto" : 0 }}
-        transition={{ duration: 0.3 }}
-        className="overflow-hidden"
-      >
-        {showDirection && (
-          <div className="space-y-4 rounded-md bg-muted p-4">
-            <h3 className="mb-2 font-black">{t("address")}</h3>
-            <p className="mb-2 inline-flex items-center gap-2">
-              <MapPin className="size-5 shrink-0" />
-              {businessInfo.address}
-            </p>
-            <div className="mb-4">
-              <span className="font-black">{t("schedule")}</span>
-              <div className="flex flex-col gap-2">
-                {businessHours &&
-                  getFormattedBusinessHours(businessHours).map(
-                    (hour, index) => (
-                      <div
-                        key={index}
-                        className="inline-flex items-center gap-2"
-                      >
-                        <Clock className="size-4 shrink-0" />
-                        <span className="font-bold">{hour.nombre}:</span>{" "}
-                        {hour.valor}
-                      </div>
-                    ),
-                  )}
-              </div>
-            </div>
-            <a
-              href={`https://www.google.com/maps/dir/?api=1&destination=${direction}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center text-primary hover:underline"
-            >
-              {t("see")}
-              <ExternalLink className="ml-2 h-4 w-4" />
-            </a>
+      <div className="space-y-4 rounded-md bg-muted p-4">
+        <h3 className="mb-2 font-black">{t("address")}</h3>
+        <p className="mb-2 inline-flex items-center gap-2">
+          <MapPin className="size-5 shrink-0" />
+          {businessInfo.address}
+        </p>
+        <div className="mb-4">
+          <span className="font-black">{t("schedule")}</span>
+          <div className="flex flex-col gap-2">
+            {businessHours &&
+              getFormattedBusinessHours(businessHours).map((hour, index) => (
+                <div key={index} className="inline-flex items-center gap-2">
+                  <Clock className="size-4 shrink-0" />
+                  <span className="font-bold">{hour.nombre}:</span> {hour.valor}
+                </div>
+              ))}
           </div>
-        )}
-      </motion.div>
+        </div>
+        <a
+          href={`https://www.google.com/maps/dir/?api=1&destination=${direction}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center text-primary hover:underline"
+        >
+          {t("see")}
+          <ExternalLink className="ml-2 h-4 w-4" />
+        </a>
+      </div>
     </motion.div>
   );
 };
