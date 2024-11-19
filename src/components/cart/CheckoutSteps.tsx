@@ -39,16 +39,16 @@ export const steps = [
     iconCheck: UserCheck,
   },
   {
-    title: "date",
-    content: <StepDateOrder />,
-    icon: Calendar,
-    iconCheck: CalendarCheck,
-  },
-  {
     title: "invoice",
     content: <StepInvoice />,
     icon: ReceiptText,
     iconCheck: Receipt,
+  },
+  {
+    title: "date",
+    content: <StepDateOrder />,
+    icon: Calendar,
+    iconCheck: CalendarCheck,
   },
   {
     title: "someone",
