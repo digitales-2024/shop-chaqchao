@@ -7,7 +7,10 @@ export type ClientGoogleData = {
 export type ClientData = {
   id: string;
   name: string;
+  lastName?: string;
+  phone: string;
   email: string;
+  image?: string;
 };
 export type ClientPayload = {
   id: string;
