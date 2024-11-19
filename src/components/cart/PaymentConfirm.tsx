@@ -25,7 +25,9 @@ const PaymentConfirm = ({
   onPaymentError,
 }: PaymentConfirmProps) => {
   const { loadIzipayForm } = useIzipay(token);
-  const { login, invoice } = useCartDetail();
+  const { contact, invoice } = useCartDetail();
+  console.log("🚀 ~ contact:", contact);
+  console.log("🚀 ~ invoice:", invoice);
 
   const iziConfig = {
     transactionId: orderInfo.transactionId,
@@ -41,15 +43,15 @@ const PaymentConfirm = ({
       payMethod: "CARD,YAPE_CODE,PAGO_PUSH",
     },
     billing: {
-      firstName: login.name ?? "hola",
-      lastName: "nose",
-      email: login.email ?? "",
-      phoneNumber: "",
-      street: invoice.address ?? "",
-      city: "",
-      state: "",
-      country: "",
-      postalCode: "",
+      firstName: contact.name ?? "",
+      lastName: contact.lastName ?? "",
+      email: contact.email ?? "",
+      phoneNumber: contact.phone ?? "",
+      street: invoice.address.slice(0, 40) ?? "",
+      city: invoice.city ?? "",
+      state: invoice.state ?? "",
+      country: invoice.country ?? "",
+      postalCode: invoice.codPostal ?? "",
       document: invoice.number,
       documentType: invoice.documentType,
     },
@@ -59,6 +61,7 @@ const PaymentConfirm = ({
     },
     urlRedirect: "https://server.punto-web.com/comercio/creceivedemo.asp?p=h1", // TODO Cambiar por la URL de redirección
     appearance: {
+      logo: "https://pub-843b15cc9c5d4932b34855ee68a2f5be.r2.dev/chaqchao_logo_horizontal.png",
       customTheme: {
         colors: {
           primary: {
