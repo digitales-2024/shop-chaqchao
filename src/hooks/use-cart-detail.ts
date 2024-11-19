@@ -1,4 +1,4 @@
-import { InvoiceData, INVOICES } from "@/types";
+import { InvoiceData, InvoiceType, ReceiptData } from "@/types";
 import { create } from "zustand";
 
 import { steps } from "@/components/cart/CheckoutSteps";
@@ -21,7 +21,7 @@ interface CartDetailState {
   setContact: (data: Contact) => void;
   dateOrder: DateOrder;
   setDateOrder: (data: DateOrder) => void;
-  invoice: InvoiceData;
+  invoice: InvoiceData | ReceiptData;
   someonePickup: boolean;
   setSomeonePickup: (data: boolean) => void;
   setInvoice: (data: InvoiceData) => void;
@@ -54,8 +54,12 @@ const useCartDetail = create<CartDetailState>((set) => ({
     documentType: "",
     number: "",
     address: "",
-    name: "",
-    typeInvoice: INVOICES[0],
+    typeInvoice: InvoiceType.RECEIPT,
+    nameBusiness: "",
+    city: "",
+    codPostal: "",
+    country: "",
+    state: "",
   },
   someonePickup: false,
   setSomeonePickup: (someonePickup: boolean) => set(() => ({ someonePickup })),
