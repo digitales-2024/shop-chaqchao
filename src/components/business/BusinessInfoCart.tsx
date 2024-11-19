@@ -1,15 +1,17 @@
+"use client";
 import { useBusiness } from "@/hooks/useBusiness";
 import { BusinessHour } from "@/types/business";
 import { motion } from "framer-motion";
 import { Clock, ExternalLink, MapPin } from "lucide-react";
 import { useTranslations } from "next-intl";
 
+import { Skeleton } from "../ui/skeleton";
+
 const direction = "Chaqchao+Express,+Avenida+Ejército,+Yanahuara";
 export const BusinessInfoCart = () => {
   const t = useTranslations("business");
   const d = useTranslations("business.days");
-  const { business } = useBusiness();
-  const { businessHours, businessInfo } = business;
+  const { isLoading, business } = useBusiness();
 
   const getFormattedBusinessHours = (
     hours: BusinessHour[],
@@ -75,20 +77,27 @@ export const BusinessInfoCart = () => {
     >
       <div className="space-y-4 rounded-md bg-muted p-4">
         <h3 className="mb-2 font-black">{t("address")}</h3>
-        <p className="mb-2 inline-flex items-center gap-2">
+        <div className="mb-2 inline-flex items-center gap-2">
           <MapPin className="size-5 shrink-0" />
-          {businessInfo.address}
-        </p>
+          {isLoading ? (
+            <Skeleton className="h-4 w-32" />
+          ) : (
+            <span>{business.businessInfo.address}</span>
+          )}
+        </div>
         <div className="mb-4">
           <span className="font-black">{t("schedule")}</span>
           <div className="flex flex-col gap-2">
-            {businessHours &&
-              getFormattedBusinessHours(businessHours).map((hour, index) => (
-                <div key={index} className="inline-flex items-center gap-2">
-                  <Clock className="size-4 shrink-0" />
-                  <span className="font-bold">{hour.nombre}:</span> {hour.valor}
-                </div>
-              ))}
+            {business.businessHours &&
+              getFormattedBusinessHours(business.businessHours).map(
+                (hour, index) => (
+                  <div key={index} className="inline-flex items-center gap-2">
+                    <Clock className="size-4 shrink-0" />
+                    <span className="font-bold">{hour.nombre}:</span>{" "}
+                    {hour.valor}
+                  </div>
+                ),
+              )}
           </div>
         </div>
         <a
