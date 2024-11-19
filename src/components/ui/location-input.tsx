@@ -137,7 +137,7 @@ const LocationSelector = ({
             <CommandList>
               <CommandEmpty>No country found.</CommandEmpty>
               <CommandGroup>
-                <ScrollArea className="h-[300px]">
+                <ScrollArea className="h-[280px]">
                   {countriesData.map((country) => (
                     <CommandItem
                       key={country.id}
@@ -195,7 +195,7 @@ const LocationSelector = ({
               <CommandList>
                 <CommandEmpty>No state found.</CommandEmpty>
                 <CommandGroup>
-                  <ScrollArea className="h-[300px]">
+                  <ScrollArea className="h-[290px]">
                     {availableStates.map((state) => (
                       <CommandItem
                         key={state.id}
