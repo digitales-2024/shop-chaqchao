@@ -28,15 +28,19 @@ export const DOCUMENT_TYPE_INVOICE: DocumentTypeInvoice[] = [
 export interface Receipt {
   documentType: string;
   number: string;
-}
-export interface Invoice extends Receipt {
   address: string;
   country: string;
   state: string;
   city: string;
   codPostal: string;
 }
+export interface Invoice extends Receipt {
+  nameBusiness: string;
+}
 
+export interface ReceiptData extends Receipt {
+  typeInvoice: InvoiceType;
+}
 export interface InvoiceData extends Invoice {
   typeInvoice: InvoiceType;
 }

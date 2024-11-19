@@ -49,12 +49,25 @@ export const InvoiceSchema = () => {
       .regex(/^[0-9]+$/, {
         message: t("number"),
       }),
-
+    nameBusiness: z.string().min(1, {
+      message: t("nameBusiness"),
+    }),
     address: z.string().min(1, {
       message: t("address"),
     }),
-    name: z.string().min(1, {
-      message: t("nameBusiness"),
+    country: z.string().min(1, {
+      message: t("country"),
     }),
+    city: z.string().min(1, {
+      message: t("city"),
+    }),
+    codPostal: z
+      .string()
+      .min(5, {
+        message: t("postalCode"),
+      })
+      .max(5, {
+        message: t("postalCode"),
+      }),
   });
 };

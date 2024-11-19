@@ -22,6 +22,7 @@ export {
   INVOICES,
   type Invoice,
   type InvoiceData,
+  type ReceiptData,
   InvoiceType,
   DocumentType,
   DocumentTypeInvoice,
