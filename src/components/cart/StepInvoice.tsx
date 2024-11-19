@@ -12,8 +12,8 @@ export const StepInvoice = () => {
   const { invoice, setInvoice } = useCartDetail();
 
   return (
-    <div className="mx-auto w-full max-w-80">
-      <div className="relative mb-6">
+    <div className="mx-auto w-full px-4">
+      <div className="relative mb-6 w-full">
         <div className="grid grid-cols-2 rounded-full bg-muted p-1">
           {INVOICES.map((type) => (
             <button
@@ -23,8 +23,12 @@ export const StepInvoice = () => {
                   typeInvoice: type,
                   documentType: "",
                   number: "",
-                  name: "",
                   address: "",
+                  country: "",
+                  state: "",
+                  city: "",
+                  codPostal: "",
+                  nameBusiness: "",
                 });
               }}
               className={`relative z-10 rounded-full py-2 text-sm font-medium transition-colors ${
