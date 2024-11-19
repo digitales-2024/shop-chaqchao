@@ -78,7 +78,7 @@ export const FormInvoice = () => {
       ...form.getValues(),
       nameBusiness: form.getValues().nameBusiness || "",
     });
-    handleStepComplete(2);
+    handleStepComplete(1);
   };
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
