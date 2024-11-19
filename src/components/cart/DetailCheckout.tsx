@@ -3,6 +3,7 @@ import { useCart } from "@/hooks/use-cart";
 import useCartDetail from "@/hooks/use-cart-detail";
 import useCartStore from "@/redux/store/cart";
 import { InvoiceType } from "@/types";
+import { getCodeCountry } from "@/utils/getCodeCountry";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { useTranslations } from "next-intl";
@@ -151,7 +152,9 @@ export const DetailCheckout = () => {
                 {t("invoice.country")}:
               </span>
               {invoice.country ? (
-                <span className="truncate font-bold">{invoice.country}</span>
+                <span className="truncate font-bold">
+                  {getCodeCountry(invoice.country)}
+                </span>
               ) : (
                 <Skeleton className="h-8 w-full" />
               )}
