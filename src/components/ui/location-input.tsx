@@ -31,7 +31,7 @@ interface Timezone {
   tzName: string;
 }
 
-interface CountryProps {
+export interface CountryProps {
   id: number;
   name: string;
   iso3: string;
