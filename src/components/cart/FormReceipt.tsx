@@ -1,5 +1,4 @@
 import useCartDetail from "@/hooks/use-cart-detail";
-import { useProfile } from "@/hooks/use-profile";
 import { RecieptSchema } from "@/schemas/invoice.schema";
 import { Invoice } from "@/types";
 import { DocumentType, InvoiceType } from "@/types/invoice";
@@ -25,6 +24,7 @@ import {
 
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import { FormBilling } from "./FormBilling";
 
 const receiptDocuments = [
   {
@@ -38,8 +38,6 @@ const receiptDocuments = [
 ];
 export const FormReceipt = () => {
   const { invoice, setInvoice, handleStepComplete } = useCartDetail();
-
-  const { clientData } = useProfile();
 
   const form = useForm<Invoice>({
     resolver: zodResolver(RecieptSchema()),
@@ -55,9 +53,17 @@ export const FormReceipt = () => {
         invoice.typeInvoice === InvoiceType.RECEIPT
           ? invoice.address || ""
           : "",
-      name:
+      country:
         invoice.typeInvoice === InvoiceType.RECEIPT
-          ? (clientData ? clientData.name : invoice.name) || ""
+          ? invoice.country || ""
+          : "",
+      state:
+        invoice.typeInvoice === InvoiceType.RECEIPT ? invoice.state || "" : "",
+      city:
+        invoice.typeInvoice === InvoiceType.RECEIPT ? invoice.city || "" : "",
+      codPostal:
+        invoice.typeInvoice === InvoiceType.RECEIPT
+          ? invoice.codPostal || ""
           : "",
     },
   });
@@ -92,7 +98,7 @@ export const FormReceipt = () => {
       ...form.getValues(),
     });
 
-    handleStepComplete(2);
+    handleStepComplete(1);
   };
 
   return (
@@ -138,32 +144,7 @@ export const FormReceipt = () => {
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name="address"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="font-bold">{t("address")}</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="font-bold">{t("name")}</FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <FormBilling form={form} />
         <Button className="w-full">{c("continue")}</Button>
       </form>
     </Form>
