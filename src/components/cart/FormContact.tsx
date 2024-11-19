@@ -99,7 +99,7 @@ export const FormContact = () => {
         onSubmit={form.handleSubmit(onSubmit)}
         className="mx-auto w-full space-y-4 py-2 md:px-10"
       >
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <FormField
             control={form.control}
             name="name"
