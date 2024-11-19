@@ -1,7 +1,6 @@
 import useCartDetail from "@/hooks/use-cart-detail";
 import { RecieptSchema } from "@/schemas/invoice.schema";
-import { Invoice } from "@/types";
-import { DocumentType, InvoiceType } from "@/types/invoice";
+import { DocumentType, InvoiceType, Receipt } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
@@ -39,7 +38,7 @@ const receiptDocuments = [
 export const FormReceipt = () => {
   const { invoice, setInvoice, handleStepComplete } = useCartDetail();
 
-  const form = useForm<Invoice>({
+  const form = useForm<Receipt>({
     resolver: zodResolver(RecieptSchema()),
     defaultValues: {
       documentType:
@@ -96,6 +95,7 @@ export const FormReceipt = () => {
     setInvoice({
       typeInvoice: InvoiceType.RECEIPT,
       ...form.getValues(),
+      nameBusiness: "",
     });
 
     handleStepComplete(1);
