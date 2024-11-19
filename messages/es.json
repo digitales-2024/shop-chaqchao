@@ -93,33 +93,7 @@
       "email": "El correo electrónico ya está en uso"
     }
   },
-  "errors": {
-    "name": {
-      "minlength": "El nombre es obligatorio"
-    },
-    "lastName": {
-      "minlength": "El apellido es obligatorio"
-    },
-    "email": {
-      "email": "Ingrese un correo electrónico válido",
-      "minlength": "El correo electrónico es obligatorio"
-    },
-    "password": {
-      "password": "Ingrese una contraseña válida",
-      "minlength": "La contraseña debe tener al menos 6 caracteres",
-      "regex": "La contraseña debe tener al menos una letra mayúscula, una letra minúscula y un número"
-    },
-    "phone": { "required": "Ingrese un número de celular válido" },
-    "birthdate": { "required": "Ingrese una fecha de nacimiento válida" },
-    "terms": { "required": "Debe aceptar los términos y condiciones" },
-    "network": "Ocurrió un error inesperado, por favor intenta de nuevo",
-    "cart": {
-      "title": "¡Ups! Algo salió mal",
-      "addItemCart": "No pudimos agregar el producto al carrito. Por favor, inténtalo de nuevo.",
-      "removeItemCart": "No pudimos eliminar el producto del carrito. Por favor, inténtalo de nuevo.",
-      "updateItemQuantity": "No pudimos actualizar el producto en el carrito. Por favor, inténtalo de nuevo."
-    }
-  },
+
   "account": {
     "title": "Mi cuenta",
     "subtitle": "Administra tu información personal",
@@ -471,8 +445,10 @@
       "typeDoc": "Tipo de documento",
       "doc": "Número de documento",
       "name": "Nombre",
-      "address": "Dirección",
       "nameBusiness": "Nombre o razon social",
+      "address": "Dirección",
+      "codPostal": "Código Postal",
+      "country": "País",
       "button": "Continuar",
       "errors": {
         "typeDoc": "El tipo de documento es requerido",
@@ -485,12 +461,26 @@
         "nameBusiness": "El nombre o razón social es requerido"
       }
     },
-    "login": {
-      "title": "¿Por qué necesitamos tu email?",
-      "description": "Necesitamos tu email para enviarte la confirmación de tu pedido y mantenernos en contacto contigo.",
+    "contact": {
+      "title": "Información de contacto",
+      "description": "Por favor, ingresa tu información de contacto para continuar con tu pedido.",
+      "name": "Nombre",
+      "lastName": "Apellido",
+      "email": "Correo electrónico",
+      "phone": "Celular",
+      "descriptionPhone": "Usaremos este número para mantenerte actualizado sobre tu pedido.",
+      "descriptionEmail": "Recibirás la confirmación de tu pedido en este correo electrónico.",
+      "button": "Confirmar información de contacto",
+      "loading": "Verificando información...",
       "alert": {
-        "title": "Bienvenido  de nuevo!",
+        "title": "¡Hola! Bienvenido de nuevo.",
         "description": "Hemos encontrado una cuenta con tu correo electrónico, por favor inicia sesión para continuar con tu pedido."
+      },
+      "errors": {
+        "name": "El nombre es requerido",
+        "lastName": "El apellido es requerido",
+        "email": "Ingrese un correo electrónico válido",
+        "phone": "El número de celular es requerido"
       },
       "account": {
         "title": "¿Ya tienes una cuenta?",
@@ -507,10 +497,37 @@
       "button": "Confirmar recogida"
     },
     "steps": {
-      "login": "Iniciar sesión",
+      "contact": "Información de contacto",
       "date": "Fecha de recogida",
       "invoice": "Datos de facturación",
       "someone": "Recogida de Pedido"
+    }
+  },
+  "errors": {
+    "name": {
+      "minlength": "El nombre es obligatorio"
+    },
+    "lastName": {
+      "minlength": "El apellido es obligatorio"
+    },
+    "email": {
+      "email": "Ingrese un correo electrónico válido",
+      "minlength": "El correo electrónico es obligatorio"
+    },
+    "password": {
+      "password": "Ingrese una contraseña válida",
+      "minlength": "La contraseña debe tener al menos 6 caracteres",
+      "regex": "La contraseña debe tener al menos una letra mayúscula, una letra minúscula y un número"
+    },
+    "phone": { "required": "Ingrese un número de celular válido" },
+    "birthdate": { "required": "Ingrese una fecha de nacimiento válida" },
+    "terms": { "required": "Debe aceptar los términos y condiciones" },
+    "network": "Ocurrió un error inesperado, por favor intenta de nuevo",
+    "cart": {
+      "title": "¡Ups! Algo salió mal",
+      "addItemCart": "No pudimos agregar el producto al carrito. Por favor, inténtalo de nuevo.",
+      "removeItemCart": "No pudimos eliminar el producto del carrito. Por favor, inténtalo de nuevo.",
+      "updateItemQuantity": "No pudimos actualizar el producto en el carrito. Por favor, inténtalo de nuevo."
     }
   }
 }

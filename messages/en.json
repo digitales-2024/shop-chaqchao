@@ -93,39 +93,6 @@
       "email": "Email already in use"
     }
   },
-  "errors": {
-    "name": {
-      "minlength": "Name is required"
-    },
-    "lastName": {
-      "minlength": "Last name is required"
-    },
-    "email": {
-      "email": "Email must be a valid email address",
-      "minlength": "Email is required"
-    },
-    "password": {
-      "password": "Password must be a valid password",
-      "minlength": "Password must be at least 6 characters long",
-      "regex": "Password must contain at least one uppercase letter, one lowercase letter, and one number"
-    },
-    "phone": {
-      "required": "Phone is required"
-    },
-    "birthdate": {
-      "required": "Birthdate is required"
-    },
-    "terms": {
-      "required": "You must accept the terms and conditions"
-    },
-    "network": "Network error, try again later",
-    "cart": {
-      "title": "Oops! Something went wrong",
-      "addItemCart": "We couldn't add the product to the cart. Please try again.",
-      "removeItemCart": "We couldn't remove the product from the cart. Please try again.",
-      "updateItemQuantity": "We couldn't update the product in the cart. Please try again."
-    }
-  },
   "account": {
     "title": "My account",
     "subtitle": "Manage your personal information",
@@ -476,9 +443,12 @@
       "INVOICE": "Invoice",
       "typeDoc": "Type of document",
       "doc": "Document number",
-      "address": "Address",
       "name": "Name",
       "nameBusiness": "Name or business name",
+      "address": "Dirección",
+      "city": "Ciudad",
+      "codPostal": "Código Postal",
+      "country": "País",
       "button": "Continue",
       "errors": {
         "typeDoc": "The type of document is required",
@@ -499,12 +469,26 @@
       "yes": "Yes, someone else will pick up the order",
       "button": "Confirm pickup"
     },
-    "login": {
-      "title": "Why do we need your email?",
-      "description": "We need your email to send you the order confirmation and keep in touch with you",
+    "contact": {
+      "title": "Contact information",
+      "description": "Enter your contact information to continue with the order.",
+      "name": "Name",
+      "lastName": "Last name",
+      "email": "Email",
+      "phone": "Phone",
+      "descriptionPhone": "We will use this number to keep you updated on your orders.",
+      "descriptionEmail": "We will send you the order confirmation to this email.",
+      "button": "Confirm contact",
+      "loading": "Checking if you have an account...",
       "alert": {
-        "title": "Welcome back",
+        "title": "Hello! Welcome back",
         "description": "We have found an account with your email, please log in to continue with your order."
+      },
+      "errors": {
+        "name": "The name is required",
+        "lastName": "The last name is required",
+        "email": "The email is required",
+        "phone": "The phone is required"
       },
       "account": {
         "title": "Do you already have an account?",
@@ -513,10 +497,43 @@
       }
     },
     "steps": {
-      "login": "Log in",
+      "contact": "Contact information",
       "date": "Collection date",
       "invoice": "Invoice",
       "someone": "Order"
+    }
+  },
+  "errors": {
+    "name": {
+      "minlength": "Name is required"
+    },
+    "lastName": {
+      "minlength": "Last name is required"
+    },
+    "email": {
+      "email": "Email must be a valid email address",
+      "minlength": "Email is required"
+    },
+    "password": {
+      "password": "Password must be a valid password",
+      "minlength": "Password must be at least 6 characters long",
+      "regex": "Password must contain at least one uppercase letter, one lowercase letter, and one number"
+    },
+    "phone": {
+      "required": "Phone is required"
+    },
+    "birthdate": {
+      "required": "Birthdate is required"
+    },
+    "terms": {
+      "required": "You must accept the terms and conditions"
+    },
+    "network": "Network error, try again later",
+    "cart": {
+      "title": "Oops! Something went wrong",
+      "addItemCart": "We couldn't add the product to the cart. Please try again.",
+      "removeItemCart": "We couldn't remove the product from the cart. Please try again.",
+      "updateItemQuantity": "We couldn't update the product in the cart. Please try again."
     }
   }
 }
