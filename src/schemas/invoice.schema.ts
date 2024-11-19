@@ -14,9 +14,20 @@ export const RecieptSchema = () => {
     address: z.string().min(1, {
       message: t("address"),
     }),
-    name: z.string().min(1, {
-      message: t("name"),
+    country: z.string().min(1, {
+      message: t("country"),
     }),
+    city: z.string().min(1, {
+      message: t("city"),
+    }),
+    codPostal: z
+      .string()
+      .min(5, {
+        message: t("postalCode"),
+      })
+      .max(5, {
+        message: t("postalCode"),
+      }),
   });
 };
 

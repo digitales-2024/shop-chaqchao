@@ -30,8 +30,11 @@ export interface Receipt {
   number: string;
 }
 export interface Invoice extends Receipt {
-  address?: string;
-  name: string;
+  address: string;
+  country: string;
+  state: string;
+  city: string;
+  codPostal: string;
 }
 
 export interface InvoiceData extends Invoice {
