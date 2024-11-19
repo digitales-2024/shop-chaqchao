@@ -51,8 +51,7 @@ export function CartSheet() {
     useCart();
   const handleCheckout = async () => {
     const response = await validateCart(cartItems);
-
-    if (response && response.data) {
+    if (response) {
       onOpenChange();
       rounter.push("/cart/checkout");
     }
