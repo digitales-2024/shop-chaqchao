@@ -57,10 +57,10 @@ export const clientApi = createApi({
       }),
     }),
 
-    // Buscar cliente por email
-    findClientByEmail: build.mutation({
+    // Existe un cliente por email
+    existClienByEmail: build.mutation<ClientData, { email: string }>({
       query: (email) => ({
-        url: `/shop/client`,
+        url: `/shop/client/email`,
         method: "POST",
         body: email,
       }),
@@ -74,5 +74,5 @@ export const {
   useUpdateClientMutation,
   useForgotPasswordMutation,
   useResetPasswordMutation,
-  useFindClientByEmailMutation,
+  useExistClienByEmailMutation,
 } = clientApi;

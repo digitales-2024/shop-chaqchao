@@ -3,7 +3,7 @@ import {
   useGetClientsQuery,
   useUpdateClientMutation,
   useProfileQuery,
-  useFindClientByEmailMutation,
+  useExistClienByEmailMutation,
 } from "@/redux/services/clientApi";
 import { CustomErrorData } from "@/types";
 import { ClientDataUpdate } from "@/types/client";
@@ -24,13 +24,13 @@ export const useClients = () => {
   });
 
   const [
-    findClient,
+    existClienByEmail,
     {
       data: dataClientByEmail,
       isLoading: isLoadingClientByEmail,
       error: errorClientByEmail,
     },
-  ] = useFindClientByEmailMutation();
+  ] = useExistClienByEmailMutation();
 
   const [
     updateClient,
@@ -82,7 +82,7 @@ export const useClients = () => {
     clientData,
     error,
     isLoading,
-    findClient,
+    existClienByEmail,
     onUpdateClient,
     isSuccessUpdateClient,
     isLoadingUpdateClient,
