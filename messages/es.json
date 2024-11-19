@@ -449,6 +449,7 @@
       "address": "Dirección",
       "codPostal": "Código Postal",
       "country": "País",
+      "city": "Ciudad",
       "button": "Continuar",
       "errors": {
         "typeDoc": "El tipo de documento es requerido",
@@ -458,7 +459,10 @@
         "ruc": "El número de documento debe tener al menos 11 caracteres",
         "address": "La dirección es requerida",
         "name": "El nombre es requerido",
-        "nameBusiness": "El nombre o razón social es requerido"
+        "nameBusiness": "El nombre o razón social es requerido",
+        "country": "El país y el estado son requerido",
+        "city": "La ciudad es requerida",
+        "postalCode": "El código postal debe tener al menos 5 dígitos"
       }
     },
     "contact": {

@@ -458,7 +458,10 @@
         "ruc": "The document number must have at least 11 digits",
         "address": "The address is required",
         "name": "The name is required",
-        "nameBusiness": "The name or business name is required"
+        "nameBusiness": "The name or business name is required",
+        "country": "The country and state are required",
+        "city": "The city is required",
+        "postalCode": "The postal code is required and must have at least 5 digits"
       }
     },
     "someone": {
