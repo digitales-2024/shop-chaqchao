@@ -3,9 +3,11 @@ import { create } from "zustand";
 
 import { steps } from "@/components/cart/CheckoutSteps";
 
-interface Login {
-  email: string;
+interface Contact {
   name: string;
+  lastName: string;
+  email: string;
+  phone: string;
 }
 
 interface DateOrder {
@@ -15,8 +17,8 @@ interface DateOrder {
 }
 
 interface CartDetailState {
-  login: Login;
-  setLogin: (data: Login) => void;
+  contact: Contact;
+  setContact: (data: Contact) => void;
   dateOrder: DateOrder;
   setDateOrder: (data: DateOrder) => void;
   invoice: InvoiceData;
@@ -35,11 +37,13 @@ interface CartDetailState {
 }
 
 const useCartDetail = create<CartDetailState>((set) => ({
-  login: {
-    email: "",
+  contact: {
     name: "",
+    lastName: "",
+    email: "",
+    phone: "",
   },
-  setLogin: (login: Login) => set(() => ({ login })),
+  setContact: (contact: Contact) => set(() => ({ contact })),
   dateOrder: {
     date: undefined,
     hour: undefined,
