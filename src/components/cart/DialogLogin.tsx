@@ -16,7 +16,7 @@ import { FormLogin } from "../account/login/FormLogin";
 import { buttonVariants } from "../ui/button";
 
 export const DialogLogin = () => {
-  const t = useTranslations("checkout.login.account");
+  const t = useTranslations("checkout.contact.account");
   return (
     <Dialog
       transition={{
