@@ -35,7 +35,7 @@ export interface Receipt {
   codPostal: string;
 }
 export interface Invoice extends Receipt {
-  nameBusiness: string;
+  nameBusiness?: string;
 }
 
 export interface ReceiptData extends Receipt {
