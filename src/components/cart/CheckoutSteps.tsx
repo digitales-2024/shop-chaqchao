@@ -63,7 +63,7 @@ export const CheckoutSteps = () => {
   const locale = useLocale();
 
   return (
-    <div className="w-full space-y-4">
+    <div className="top-32 w-full space-y-4 sm:sticky">
       {steps.map(
         ({ title, content, icon: Icon, iconCheck: IconCheck }, index) => (
           <Card
