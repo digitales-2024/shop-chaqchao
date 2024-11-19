@@ -26,15 +26,15 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
+import { StepContact } from "./StepContact";
 import { StepDateOrder } from "./StepDateOrder";
-import { StepEmail } from "./StepEmail";
 import { StepInvoice } from "./StepInvoice";
 import { StepSomeonePickup } from "./StepSomeonePickup";
 
 export const steps = [
   {
-    title: "login",
-    content: <StepEmail />,
+    title: "contact",
+    content: <StepContact />,
     icon: User,
     iconCheck: UserCheck,
   },
@@ -58,8 +58,14 @@ export const steps = [
   },
 ];
 export const CheckoutSteps = () => {
-  const { activeStep, completedSteps, editMode, handleEdit, login, dateOrder } =
-    useCartDetail();
+  const {
+    activeStep,
+    completedSteps,
+    editMode,
+    handleEdit,
+    contact,
+    dateOrder,
+  } = useCartDetail();
   const t = useTranslations("checkout");
 
   const locale = useLocale();
@@ -126,10 +132,10 @@ export const CheckoutSteps = () => {
                   )}
                 </div>
               </CardTitle>
-              {login && activeStep !== index && index === 0 && (
+              {contact && activeStep !== index && index === 0 && (
                 <CardDescription className="inline-flex gap-4">
-                  <span className="font-bold capitalize">{login.name}</span>
-                  <span className="font-bold">{login.email}</span>
+                  <span className="font-bold capitalize">{contact.name}</span>
+                  <span className="font-bold">{contact.email}</span>
                 </CardDescription>
               )}
               {dateOrder.fullDate && activeStep !== index && index === 1 && (
