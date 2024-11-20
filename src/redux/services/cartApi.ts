@@ -65,12 +65,12 @@ export const cartApi = createApi({
     // Actualizar la cantidad de un producto en el carrito
     updateItemQuantity: build.mutation<
       void,
-      { cartId: string; productId: string; quantity: number }
+      { cartId: string; productId: string; quantity: number; clientId?: string }
     >({
-      query: ({ cartId, productId, quantity }) => ({
+      query: ({ cartId, productId, quantity, clientId }) => ({
         url: `/cart/${cartId}/items/${productId}`,
         method: "PATCH",
-        body: { quantity },
+        body: { quantity, clientId },
       }),
 
       invalidatesTags: ["Cart"],
@@ -79,11 +79,12 @@ export const cartApi = createApi({
     // Eliminar un producto del carrito
     removeItemFromCart: build.mutation<
       void,
-      { cartId: string; productId: string }
+      { cartId: string; productId: string; clientId?: string }
     >({
-      query: ({ cartId, productId }) => ({
-        url: `/cart/${cartId}/items/${productId}`,
+      query: ({ cartId, productId, clientId }) => ({
+        url: `/cart/${cartId}/items/${productId}/delete`,
         method: "DELETE",
+        body: { clientId },
       }),
 
       invalidatesTags: ["Cart"],

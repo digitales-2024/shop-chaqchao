@@ -153,6 +153,7 @@ export const useCart = () => {
         await removeItemToCartMutation({
           cartId,
           productId,
+          clientId,
         }).unwrap();
       } catch (error) {
         addItemToCart(item);
@@ -171,6 +172,7 @@ export const useCart = () => {
       removeItemToCartMutation,
       addItemToCart,
       t,
+      clientId,
     ],
   );
 
@@ -229,6 +231,7 @@ export const useCart = () => {
           cartId,
           productId,
           quantity: item.quantity,
+          clientId,
         }).unwrap();
       } catch (error) {
         // Si hay un error, se restaura la cantidad del producto
@@ -254,6 +257,7 @@ export const useCart = () => {
       removeItemCard,
       updateItemQuantityMutation,
       t,
+      clientId,
     ],
   );
 
@@ -267,7 +271,6 @@ export const useCart = () => {
 
   return {
     validateCart,
-    isActiveCartClient,
     validateItem,
     dataValidate,
     isLoadingValidate,
@@ -277,5 +280,6 @@ export const useCart = () => {
     mergeCart,
     updateItemQuantity,
     clearCart,
+    isActiveCartClient,
   };
 };
