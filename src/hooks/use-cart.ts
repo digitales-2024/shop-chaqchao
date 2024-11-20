@@ -5,6 +5,7 @@ import {
   useMergeCartsMutation,
   useRemoveItemFromCartMutation,
   useUpdateItemQuantityMutation,
+  useValidateActiveCartQuery,
   useValidateCartMutation,
 } from "@/redux/services/cartApi";
 import useCartStore from "@/redux/store/cart";
@@ -39,6 +40,7 @@ export const useCart = () => {
   const [mergeCartsMutation] = useMergeCartsMutation();
   const [removeItemToCartMutation] = useRemoveItemFromCartMutation();
   const [updateItemQuantityMutation] = useUpdateItemQuantityMutation();
+  const { data: dataActiveCartClient } = useValidateActiveCartQuery();
 
   /**
    * Validar los productos seleccionados
@@ -167,12 +169,11 @@ export const useCart = () => {
   /**
    * Fusionar carritos
    * @param anonCartId ID del carrito anónimo
-   * @param authClientId ID del cliente autenticado
    * @returns Si los carritos fueron fusionados
    */
-  const mergeCart = async (anonCartId: string, authClientId: string) => {
+  const mergeCart = async (anonCartId: string) => {
     try {
-      await mergeCartsMutation({ anonCartId, authClientId }).unwrap();
+      await mergeCartsMutation({ anonCartId }).unwrap();
     } catch (error) {
       toast(t("cart.title"), {
         description:
@@ -250,6 +251,7 @@ export const useCart = () => {
 
   return {
     validateCart,
+    dataActiveCartClient,
     validateItem,
     dataValidate,
     isLoadingValidate,
