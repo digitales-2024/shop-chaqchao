@@ -46,10 +46,7 @@ export const cartApi = createApi({
     }),
 
     // Fusionar carritos
-    mergeCarts: build.mutation<
-      void,
-      { anonCartId: string; authClientId: string }
-    >({
+    mergeCarts: build.mutation<void, { anonCartId: string }>({
       query: ({ anonCartId }) => ({
         url: `/cart/${anonCartId}/merge`,
         method: "POST",
@@ -97,6 +94,14 @@ export const cartApi = createApi({
 
       invalidatesTags: ["Cart"],
     }),
+
+    // Validar si el cliente tiene un carrito activo
+    validateActiveCart: build.query<{ id: string }, void>({
+      query: () => ({
+        url: "/cart/check",
+        credentials: "include",
+      }),
+    }),
   }),
 });
 
@@ -107,4 +112,5 @@ export const {
   useMergeCartsMutation,
   useUpdateItemQuantityMutation,
   useRemoveItemFromCartMutation,
+  useValidateActiveCartQuery,
 } = cartApi;
