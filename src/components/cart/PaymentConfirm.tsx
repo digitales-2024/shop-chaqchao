@@ -26,9 +26,6 @@ const PaymentConfirm = ({
 }: PaymentConfirmProps) => {
   const { loadIzipayForm } = useIzipay(token);
   const { contact, invoice } = useCartDetail();
-  console.log("🚀 ~ contact:", contact);
-  console.log("🚀 ~ invoice:", invoice);
-
   const iziConfig = {
     transactionId: orderInfo.transactionId,
     action: "pay",
