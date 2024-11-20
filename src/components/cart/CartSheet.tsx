@@ -49,12 +49,6 @@ export function CartSheet() {
   const { validateCart, validateItem, isLoadingValidate, errorValidate } =
     useCart();
 
-  // useEffect(() => {
-  //   if (id) {
-  //     mergeCart(id);
-  //   }
-  // }, [id]);
-
   const handleCheckout = async () => {
     const response = await validateCart(cartItems);
     if (response) {
