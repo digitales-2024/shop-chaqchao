@@ -34,12 +34,17 @@ export const cartApi = createApi({
     // Agregar un producto al carrito
     addItemToCart: build.mutation<
       void,
-      { cartId: string; productId: string; quantity?: number }
+      {
+        cartId: string;
+        productId: string;
+        quantity?: number;
+        clientId?: string;
+      }
     >({
-      query: ({ cartId, productId, quantity }) => ({
+      query: ({ cartId, productId, quantity, clientId }) => ({
         url: `/cart/${cartId}/items`,
         method: "POST",
-        body: { productId, quantity },
+        body: { productId, quantity, clientId },
       }),
 
       invalidatesTags: ["Cart"],
