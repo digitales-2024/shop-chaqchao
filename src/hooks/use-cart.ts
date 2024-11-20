@@ -13,10 +13,12 @@ import { CartItem, Product } from "@/types";
 import { ErrorData } from "@/types/error";
 import { ShoppingBag } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { createElement, useCallback } from "react";
+import { createElement, useCallback, useMemo } from "react";
 import { toast } from "sonner";
 
 import { TypeUpdateItemQuantity } from "@/components/cart/EditItemQuantityButton";
+
+import { useProfile } from "./use-profile";
 
 export const useCart = () => {
   const t = useTranslations("errors.cart");
@@ -35,12 +37,16 @@ export const useCart = () => {
     { data: dataValidate, isLoading: isLoadingValidate, error: errorValidate },
   ] = useValidateCartMutation();
 
+  const { clientData } = useProfile();
+
+  const clientId = useMemo(() => clientData?.id, [clientData]);
+
   const [createCartMutation] = useCreateCartMutation();
   const [addItemToCartMutation] = useAddItemToCartMutation();
   const [mergeCartsMutation] = useMergeCartsMutation();
   const [removeItemToCartMutation] = useRemoveItemFromCartMutation();
   const [updateItemQuantityMutation] = useUpdateItemQuantityMutation();
-  const { data: dataActiveCartClient } = useValidateActiveCartQuery();
+  const { data: isActiveCartClient } = useValidateActiveCartQuery();
 
   /**
    * Validar los productos seleccionados
@@ -95,13 +101,14 @@ export const useCart = () => {
 
         if (!cartId) {
           cartId = createCart();
-          await createCartMutation({ tempId: cartId }).unwrap();
+          await createCartMutation({ tempId: cartId, clientId }).unwrap();
         }
 
         await addItemToCartMutation({
           cartId,
           productId: item.id,
           quantity,
+          clientId,
         }).unwrap();
       } catch (error) {
         if (itemCart && itemCart?.quantity > 0) {
@@ -125,6 +132,7 @@ export const useCart = () => {
       decreaseQuantity,
       cartItems,
       t,
+      clientId,
     ],
   );
 
@@ -186,7 +194,7 @@ export const useCart = () => {
   };
 
   /**
-   * Actaulizar la cantidad de un producto en el carrito
+   * Actualizar la cantidad de un producto en el carrito
    * @param productId ID del producto a actualizar
    * @param quantity Cantidad a actualizar
    * @returns Si la cantidad fue actualizada
@@ -249,9 +257,17 @@ export const useCart = () => {
     ],
   );
 
+  /**
+   * Eliminar carrito del estado
+   * @returns Si el carrito fue eliminado
+   */
+  const clearCart = () => {
+    return useCartStore.getState().clearCart();
+  };
+
   return {
     validateCart,
-    dataActiveCartClient,
+    isActiveCartClient,
     validateItem,
     dataValidate,
     isLoadingValidate,
@@ -260,5 +276,6 @@ export const useCart = () => {
     removeItemCard,
     mergeCart,
     updateItemQuantity,
+    clearCart,
   };
 };
