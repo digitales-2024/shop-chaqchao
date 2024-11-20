@@ -41,7 +41,6 @@ const springTransition = {
 
 export function CartSheet() {
   const { cartItems, amountTotal } = useCartStore();
-
   const t = useTranslations("cart");
 
   const { open, onOpenChange } = useCartSheet();
@@ -49,6 +48,13 @@ export function CartSheet() {
 
   const { validateCart, validateItem, isLoadingValidate, errorValidate } =
     useCart();
+
+  // useEffect(() => {
+  //   if (id) {
+  //     mergeCart(id);
+  //   }
+  // }, [id]);
+
   const handleCheckout = async () => {
     const response = await validateCart(cartItems);
     if (response) {
