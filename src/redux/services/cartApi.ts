@@ -1,4 +1,4 @@
-import { CreateCart } from "@/types";
+import { CartItem, CreateCart } from "@/types";
 import { createApi } from "@reduxjs/toolkit/query/react";
 
 import baseQueryWithReauth from "./baseQuery";
@@ -21,7 +21,10 @@ export const cartApi = createApi({
     }),
 
     // Crear un carrito
-    createCart: build.mutation<{ id: string }, CreateCart>({
+    createCart: build.mutation<
+      { id: string; cartItems: CartItem[]; amountTotal: number },
+      CreateCart
+    >({
       query: (cart) => ({
         url: "/cart",
         method: "POST",
@@ -45,18 +48,6 @@ export const cartApi = createApi({
         url: `/cart/${cartId}/items`,
         method: "POST",
         body: { productId, quantity, clientId },
-      }),
-
-      invalidatesTags: ["Cart"],
-    }),
-
-    // Fusionar carritos
-    mergeCarts: build.mutation<void, { anonCartId: string }>({
-      query: ({ anonCartId }) => ({
-        url: `/cart/${anonCartId}/merge`,
-        method: "POST",
-        body: { anonCartId },
-        credentials: "include",
       }),
 
       invalidatesTags: ["Cart"],
@@ -107,6 +98,20 @@ export const cartApi = createApi({
         url: "/cart/check",
         credentials: "include",
       }),
+
+      providesTags: ["Cart"],
+    }),
+
+    // Carrito por su tempId
+    cartByTempId: build.mutation<
+      { id: string; cartItems: CartItem[]; amountTotal: number },
+      string
+    >({
+      query: (tempId) => ({
+        url: `/cart/temp/${tempId}`,
+        method: "POST",
+      }),
+      invalidatesTags: ["Cart"],
     }),
   }),
 });
@@ -115,8 +120,8 @@ export const {
   useValidateCartMutation,
   useCreateCartMutation,
   useAddItemToCartMutation,
-  useMergeCartsMutation,
   useUpdateItemQuantityMutation,
   useRemoveItemFromCartMutation,
   useValidateActiveCartQuery,
+  useCartByTempIdMutation,
 } = cartApi;
