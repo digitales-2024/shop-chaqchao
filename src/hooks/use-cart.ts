@@ -95,7 +95,6 @@ export const useCart = () => {
       const itemCart = cartItems.find((item) => item.id === item.id);
       try {
         let cartId = cartIdFromStore;
-        console.log("🚀 ~ cartId:", cartId);
         addItemToCart(item, quantity);
 
         if (!cartId) {
@@ -103,7 +102,6 @@ export const useCart = () => {
           await createCartMutation({ tempId: cartId, clientId }).unwrap();
         } else {
           const cartDB = await cartByTempIdMutation(cartId).unwrap();
-          console.log("🚀 ~ cartDB:", cartDB);
           // Si el carrito no existe en la base de datos, se crea
           if (!cartDB) {
             clearCart();
