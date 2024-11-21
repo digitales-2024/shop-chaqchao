@@ -1,11 +1,10 @@
 import { ShoppingDelete } from "@/assets/icons";
 import {
   useAddItemToCartMutation,
+  useCartByTempIdMutation,
   useCreateCartMutation,
-  useMergeCartsMutation,
   useRemoveItemFromCartMutation,
   useUpdateItemQuantityMutation,
-  useValidateActiveCartQuery,
   useValidateCartMutation,
 } from "@/redux/services/cartApi";
 import useCartStore from "@/redux/store/cart";
@@ -43,10 +42,9 @@ export const useCart = () => {
 
   const [createCartMutation] = useCreateCartMutation();
   const [addItemToCartMutation] = useAddItemToCartMutation();
-  const [mergeCartsMutation] = useMergeCartsMutation();
   const [removeItemToCartMutation] = useRemoveItemFromCartMutation();
   const [updateItemQuantityMutation] = useUpdateItemQuantityMutation();
-  const { data: isActiveCartClient } = useValidateActiveCartQuery();
+  const [cartByTempIdMutation] = useCartByTempIdMutation();
 
   /**
    * Validar los productos seleccionados
@@ -96,12 +94,23 @@ export const useCart = () => {
     async (item: Product, quantity?: number) => {
       const itemCart = cartItems.find((item) => item.id === item.id);
       try {
-        addItemToCart(item, quantity);
         let cartId = cartIdFromStore;
+        console.log("🚀 ~ cartId:", cartId);
+        addItemToCart(item, quantity);
 
         if (!cartId) {
           cartId = createCart();
           await createCartMutation({ tempId: cartId, clientId }).unwrap();
+        } else {
+          const cartDB = await cartByTempIdMutation(cartId).unwrap();
+          console.log("🚀 ~ cartDB:", cartDB);
+          // Si el carrito no existe en la base de datos, se crea
+          if (!cartDB) {
+            clearCart();
+            cartId = createCart();
+            addItemToCart(item, quantity);
+            await createCartMutation({ tempId: cartId, clientId }).unwrap();
+          }
         }
 
         await addItemToCartMutation({
@@ -133,6 +142,7 @@ export const useCart = () => {
       cartItems,
       t,
       clientId,
+      cartByTempIdMutation,
     ],
   );
 
@@ -175,25 +185,6 @@ export const useCart = () => {
       clientId,
     ],
   );
-
-  /**
-   * Fusionar carritos
-   * @param anonCartId ID del carrito anónimo
-   * @returns Si los carritos fueron fusionados
-   */
-  const mergeCart = async (anonCartId: string) => {
-    try {
-      await mergeCartsMutation({ anonCartId }).unwrap();
-    } catch (error) {
-      toast(t("cart.title"), {
-        description:
-          "No pudimos fusionar los carritos. Por favor, inténtalo de nuevo.",
-        closeButton: true,
-        className: "text-rose-500",
-        icon: createElement(ShoppingBag),
-      });
-    }
-  };
 
   /**
    * Actualizar la cantidad de un producto en el carrito
@@ -277,9 +268,7 @@ export const useCart = () => {
     errorValidate,
     addItemCard,
     removeItemCard,
-    mergeCart,
     updateItemQuantity,
     clearCart,
-    isActiveCartClient,
   };
 };
