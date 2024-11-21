@@ -21,6 +21,7 @@
     "@fontsource-variable/comfortaa": "^5.1.0",
     "@fontsource-variable/nunito": "^5.1.0",
     "@hookform/resolvers": "^3.9.0",
+    "@lyracom/embedded-form-glue": "^1.4.2",
     "@paypal/react-paypal-js": "^8.7.0",
     "@radix-ui/react-accordion": "^1.2.1",
     "@radix-ui/react-alert-dialog": "^1.1.2",
