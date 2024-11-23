@@ -7,6 +7,7 @@ import { getLocale, getMessages } from "next-intl/server";
 import { ViewTransitions } from "next-view-transitions";
 import localFont from "next/font/local";
 import "./globals.css";
+import Script from "next/script";
 import { Toaster } from "sonner";
 
 const geistSans = localFont({
@@ -36,6 +37,16 @@ export default async function RootLayout({
   return (
     <ViewTransitions>
       <html lang={locale}>
+        <head>
+          <link
+            rel="stylesheet"
+            href="https://static.micuentaweb.pe/static/js/krypton-client/V4.0/ext/classic.css"
+          />
+          <Script
+            src="https://static.micuentaweb.pe/static/js/krypton-client/V4.0/stable/kr-payment-form.min.js"
+            strategy="afterInteractive"
+          />
+        </head>
         <body
           className={`${comingSoon.variable} ${geistSans.variable} font-nunito antialiased`}
         >
