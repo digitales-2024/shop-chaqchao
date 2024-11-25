@@ -40,7 +40,7 @@ export default async function RootLayout({
         <head>
           <link
             rel="stylesheet"
-            href="https://static.micuentaweb.pe/static/js/krypton-client/V4.0/ext/classic.css"
+            href="https://static.micuentaweb.pe/static/js/krypton-client/V4.0/ext/classic-reset.min.css"
           />
           <Script
             src="https://static.micuentaweb.pe/static/js/krypton-client/V4.0/stable/kr-payment-form.min.js"
