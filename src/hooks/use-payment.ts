@@ -12,16 +12,16 @@ export const usePayment = () => {
 
   const generatePaymentToken = async (data: UsePayment) => {
     try {
-      const response = await generatePaymentTokenMutation(data).unwrap();
-
-      if (response.code !== "200") {
+      const token = await generatePaymentTokenMutation(data).unwrap();
+      if (token) {
         toast("¡Bien hecho!", {
           description: "Carrito validado correctamente.",
           icon: createElement(ShoppingBag),
           className: "text-emerald-500",
         });
       }
-      return response.response.token;
+
+      return token;
     } catch (error) {
       toast("Ops!", {
         description: "Algo salio mal, por favor intenta de nuevo",
@@ -32,6 +32,20 @@ export const usePayment = () => {
       return null;
     }
   };
+
+  // const handleValidatePayment = async (resp) => {
+  //   return await validatePaymentMutation(resp);
+
+  // axios.post(`${server}/validatePayment`, resp).then(({ data }) => {
+  //   if (data === "Valid Payment") {
+  //     setIsShow(false);
+  //     alert("Pago Satisfactorio");
+  //   } else {
+  //     alert("Pago Inválido");
+  //   }
+  // });
+  // return false;
+  // };
 
   return { generatePaymentToken };
 };
