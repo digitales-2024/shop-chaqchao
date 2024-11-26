@@ -1,4 +1,4 @@
-import { CartItem, CreateCart } from "@/types";
+import { CartItem, CheckoutCart, CreateCart } from "@/types";
 import { createApi } from "@reduxjs/toolkit/query/react";
 
 import baseQueryWithReauth from "./baseQuery";
@@ -82,7 +82,19 @@ export const cartApi = createApi({
     }),
 
     // Completar la compra del carrito y crear una orden
-    checkout: build.mutation<void, { cartId: string }>({
+    completeCart: build.mutation<void, { cartId: string; data: CheckoutCart }>({
+      query: ({ cartId, data }) => ({
+        url: `/cart/${cartId}/complete`,
+        method: "POST",
+        body: data,
+        credentials: "include",
+      }),
+
+      invalidatesTags: ["Cart"],
+    }),
+
+    // Realizar el pago y actualizar el estado de la orden
+    checkoutCart: build.mutation<void, { cartId: string }>({
       query: ({ cartId }) => ({
         url: `/cart/${cartId}/checkout`,
         method: "POST",
@@ -124,4 +136,6 @@ export const {
   useRemoveItemFromCartMutation,
   useValidateActiveCartQuery,
   useCartByTempIdMutation,
+  useCompleteCartMutation,
+  useCheckoutCartMutation,
 } = cartApi;
