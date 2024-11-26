@@ -38,10 +38,10 @@ interface BillingDeytails {
 }
 
 interface ShoppingCart {
-  cartItemInfo: CartItemInfo[];
+  cartItemInfo?: CartItemInfo[];
 }
 
-interface CartItemInfo {
+export interface CartItemInfo {
   productLabel?: string;
   productType?: ProductType;
   productQty?: number;

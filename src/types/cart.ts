@@ -13,3 +13,14 @@ export type CreateCart = {
   tempId?: string;
   clientId?: string;
 };
+
+export type CheckoutCart = {
+  customerName: string;
+  customerLastName: string;
+  customerEmail: string;
+  customerPhone: string;
+  someonePickup: boolean;
+  comments?: string;
+  pickupTime: Date;
+  clientId?: string;
+};
