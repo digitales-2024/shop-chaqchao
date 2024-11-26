@@ -288,7 +288,6 @@ export const useCart = () => {
           customerEmail: contact.email,
           customerPhone: contact.phone,
           someonePickup: someonePickup,
-          comments: "",
           pickupTime: new Date(dateOrder.fullDate),
           clientId,
         },
