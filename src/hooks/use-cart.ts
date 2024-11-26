@@ -2,6 +2,8 @@ import { ShoppingDelete } from "@/assets/icons";
 import {
   useAddItemToCartMutation,
   useCartByTempIdMutation,
+  useCheckoutCartMutation,
+  useCompleteCartMutation,
   useCreateCartMutation,
   useRemoveItemFromCartMutation,
   useUpdateItemQuantityMutation,
@@ -17,6 +19,7 @@ import { toast } from "sonner";
 
 import { TypeUpdateItemQuantity } from "@/components/cart/EditItemQuantityButton";
 
+import useCartDetail from "./use-cart-detail";
 import { useProfile } from "./use-profile";
 
 export const useCart = () => {
@@ -37,6 +40,7 @@ export const useCart = () => {
   ] = useValidateCartMutation();
 
   const { clientData } = useProfile();
+  const { contact, dateOrder, someonePickup } = useCartDetail();
 
   const clientId = useMemo(() => clientData?.id, [clientData]);
 
@@ -45,6 +49,8 @@ export const useCart = () => {
   const [removeItemToCartMutation] = useRemoveItemFromCartMutation();
   const [updateItemQuantityMutation] = useUpdateItemQuantityMutation();
   const [cartByTempIdMutation] = useCartByTempIdMutation();
+  const [completeCartMutation] = useCompleteCartMutation();
+  const [checkoutCartMutation] = useCheckoutCartMutation();
 
   /**
    * Validar los productos seleccionados
@@ -258,6 +264,56 @@ export const useCart = () => {
     return useCartStore.getState().clearCart();
   };
 
+  /**
+   * Completar el pago y crear una orden
+   * @returns Si el pago fue completado
+   */
+  const completeCart = async () => {
+    await validateCart(cartItems);
+    if (cartItems.length === 0)
+      throw new Error("No hay productos en el carrito");
+
+    const cartId = cartIdFromStore;
+    if (!cartId) throw new Error("No se ha seleccionado un carrito");
+
+    if (dateOrder.fullDate === undefined)
+      throw new Error("No se ha seleccionado una fecha de entrega");
+
+    try {
+      await completeCartMutation({
+        cartId,
+        data: {
+          customerName: contact.name,
+          customerLastName: contact.lastName,
+          customerEmail: contact.email,
+          customerPhone: contact.phone,
+          someonePickup: someonePickup,
+          comments: "",
+          pickupTime: new Date(dateOrder.fullDate),
+          clientId,
+        },
+      }).unwrap();
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  /**
+   * Realizar el pago y actualizar el estado de la orden
+   */
+  const checkoutCart = async () => {
+    try {
+      const cartId = cartIdFromStore;
+      if (!cartId) {
+        return;
+      }
+
+      await checkoutCartMutation({ cartId });
+    } catch (error) {
+      toast.error(t("errors.checkout"), { position: "top-center" });
+    }
+  };
+
   return {
     validateCart,
     validateItem,
@@ -268,5 +324,7 @@ export const useCart = () => {
     removeItemCard,
     updateItemQuantity,
     clearCart,
+    completeCart,
+    checkoutCart,
   };
 };
