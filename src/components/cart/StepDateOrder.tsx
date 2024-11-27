@@ -88,23 +88,28 @@ export const StepDateOrder = () => {
       const horas = [];
       const now = new Date();
       const isToday = date && date.toDateString() === now.toDateString();
+      const currentMinutes = now.getMinutes();
+      const startHour = isToday
+        ? now.getHours() + (currentMinutes === 0 ? 1 : 2)
+        : openingHour + 1;
 
-      for (let i = openingHour; i <= closingHour; i++) {
+      for (let i = startHour; i <= closingHour; i++) {
         for (let j = 0; j < 60; j += 15) {
           if (i === openingHour && j < openingMinutes) continue;
           if (i === closingHour && j >= closingMinutes) break;
           if (
             isToday &&
-            (i < now.getHours() ||
-              (i === now.getHours() && j <= now.getMinutes()))
+            (i < now.getHours() + 1 ||
+              (i === now.getHours() + 1 && j <= now.getMinutes()))
           )
             continue;
           horas.push(`${i}:${j.toString().padStart(2, "0")}`);
         }
       }
+
       setHorasDisponibles(horas);
     }
-  }, [openingTime, closingTime]);
+  }, [openingTime, closingTime, date]);
 
   const handleConfirmDate = () => {
     if (date && hour) {
