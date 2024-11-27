@@ -933,15 +933,17 @@ export function Step7({
 
           {/* Checkbox para términos y condiciones */}
           <div className="mb-8 flex items-center space-x-3">
-            <input
-              type="checkbox"
-              checked={confirmed}
-              onChange={(e) => setConfirmed(e.target.checked)}
-              className="form-checkbox h-5 w-5 rounded border-primary text-primary"
-            />
-            <label className="text-xs text-gray-700 sm:text-sm">
-              {t("terms.accord")}
-              <span className="text-primary">{t("terms.terms")}</span>
+            <label className="flex cursor-pointer items-center text-xs text-gray-700 sm:text-sm">
+              <input
+                type="checkbox"
+                checked={confirmed}
+                onChange={(e) => setConfirmed(e.target.checked)}
+                className="form-checkbox mr-2 h-5 w-5 rounded border-primary text-primary"
+              />
+              <p className="text-left">
+                {t("terms.accord")}
+                <span className="text-primary">{t("terms.terms")}</span>
+              </p>
             </label>
           </div>
 

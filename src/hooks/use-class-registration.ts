@@ -73,7 +73,7 @@ export const useConfirmClassPayment = () => {
         await confirmPayment({ id, paypalData }).unwrap();
         setTimeout(
           () => showToast(t("toast.paymentConfirmed"), "success"),
-          1950,
+          2000,
         );
       } catch (error) {
         console.error("Error al confirmar el pago:", error);

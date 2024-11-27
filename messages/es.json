@@ -529,5 +529,30 @@
       "removeItemCart": "No pudimos eliminar el producto del carrito. Por favor, inténtalo de nuevo.",
       "updateItemQuantity": "No pudimos actualizar el producto en el carrito. Por favor, inténtalo de nuevo."
     }
+  },
+  "claims": {
+    "complaintsBook": "LIBRO DE RECLAMACIONES",
+    "day": "Día",
+    "month": "Mes",
+    "year": "Año",
+    "identificationConsumer": "1. IDENTIFICACIÓN DEL CONSUMIDOR RECLAMANTE",
+    "name": "Nombre",
+    "address": "Domicilio",
+    "identityCard": "DNI/CE",
+    "phone": "Teléfono",
+    "email": "Email",
+    "representative": "Padre o Madre (si aplica)",
+    "identificationAsset": "2. IDENTIFICACIÓN DEL BIEN CONTRATADO",
+    "product": "Producto",
+    "service": "Servicio",
+    "description": "Descripción",
+    "amountClaimed": "Monto Reclamado ($)",
+    "detailsComplaint": "3. DETALLE DE LA RECLAMACIÓN Y PEDIDO DEL CONSUMIDOR",
+    "detail": "Detalle",
+    "button": "Enviar Reclamación",
+    "messages": {
+      "success": "Reclamo registrado con éxito",
+      "error": "Ocurrió un error al enviar el reclamo"
+    }
   }
 }
