@@ -27,6 +27,7 @@ export {
   DocumentType,
   DocumentTypeInvoice,
   type Receipt,
+  type InvoiceCreate,
 } from "./invoice";
 
 export {

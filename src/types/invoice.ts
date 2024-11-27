@@ -33,14 +33,33 @@ export interface Receipt {
   state: string;
   city: string;
   codPostal: string;
-}
-export interface Invoice extends Receipt {
   nameBusiness?: string;
 }
+export type Invoice = Receipt;
 
 export interface ReceiptData extends Receipt {
   typeInvoice: InvoiceType;
 }
 export interface InvoiceData extends Invoice {
   typeInvoice: InvoiceType;
+}
+
+export interface InvoiceCreate {
+  billingDocumentType: InvoiceType;
+  typeDocument: string;
+  documentNumber: string;
+  address: string;
+  city: string;
+  state: string;
+  country: string;
+  postalCode: string;
+  paymentStatus: PaymentStatus;
+  businessName?: string;
+}
+
+export enum PaymentStatus {
+  PAID = "PAID",
+  RUNNING = "RUNNING",
+  UNPAID = "UNPAID",
+  ABANDONED = "ABANDONED",
 }
