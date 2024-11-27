@@ -430,6 +430,7 @@
     },
     "dateOrder": {
       "title": "¿Para cuando deseas tu pedido?",
+      "fullDate": "Fecha de recogida",
       "date": "Selecciona la fecha de recogida",
       "hour": "Selecciona la hora de recogida",
       "label": "Recogerás tu pedido el",
@@ -443,6 +444,8 @@
       }
     },
     "invoice": {
+      "title": "Datos de facturación",
+      "typeInvoice": "Documento de Facturación",
       "RECEIPT": "Boleta",
       "INVOICE": "Factura",
       "typeDoc": "Tipo de documento",
@@ -450,9 +453,10 @@
       "name": "Nombre",
       "nameBusiness": "Nombre o razon social",
       "address": "Dirección",
-      "codPostal": "Código Postal",
       "country": "País",
+      "state": "Estado",
       "city": "Ciudad",
+      "codPostal": "Código Postal",
       "button": "Continuar",
 
       "errors": {

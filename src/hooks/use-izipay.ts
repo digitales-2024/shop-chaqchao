@@ -12,7 +12,7 @@ const useIzipay = (token: string | null) => {
     script.src = process.env.NEXT_PUBLIC_IZIPAY_SDK_URL ?? "";
     script.async = true;
     script.onload = () => {
-      console.log("Izipay SDK loaded");
+      // Izipay SDK script loaded successfully.
     };
     document.body.appendChild(script);
 

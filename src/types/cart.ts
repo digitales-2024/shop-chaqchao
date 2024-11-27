@@ -11,4 +11,5 @@ export interface CartItem extends Product {
 
 export type CreateCart = {
   tempId?: string;
+  clientId?: string;
 };

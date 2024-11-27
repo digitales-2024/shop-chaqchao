@@ -4,10 +4,12 @@ import { CustomErrorData } from "@/types";
 import { toast } from "sonner";
 
 import { useAuth } from "./use-auth";
+import { useCart } from "./use-cart";
 
 export const useLogout = () => {
   const [logout, { isLoading, error }] = useLogoutMutation();
   const { clearClient } = useAuth();
+  const { clearCart } = useCart();
 
   const signOut = async () => {
     const handleLogout = async () => {
@@ -32,6 +34,8 @@ export const useLogout = () => {
       window.location.reload();
       return result;
     };
+
+    clearCart();
 
     toast.promise(handleLogout(), {
       loading: "Cerrando sesión...",

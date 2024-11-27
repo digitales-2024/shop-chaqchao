@@ -1,6 +1,5 @@
 import { PayPalButtonProps } from "@/types/paypal";
 import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
-import { useEffect } from "react";
 
 const PayPalButton: React.FC<PayPalButtonProps> = ({
   getTransactionData,
@@ -9,12 +8,6 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({
   onCancel,
 }) => {
   const clientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || "";
-
-  useEffect(() => {
-    if (!clientId) {
-      console.log("Paypal Client ID is missing");
-    }
-  }, [clientId]);
 
   return (
     <PayPalScriptProvider

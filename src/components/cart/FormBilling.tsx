@@ -38,16 +38,16 @@ export const FormBilling = ({ form }: FormBillingProps) => {
       <FormField
         control={form.control}
         name="country"
-        render={({ field }) => (
+        render={({}) => (
           <FormItem>
             <FormLabel>{t("country")}</FormLabel>
             <FormControl>
               <LocationSelector
                 onCountryChange={(country) => {
-                  form.setValue(field.name, country?.name || "");
+                  form.setValue("country", country?.iso2 || "");
                 }}
                 onStateChange={(state) => {
-                  form.setValue(field.name, state?.name || "");
+                  form.setValue("state", state?.name || "");
                 }}
               />
             </FormControl>
@@ -56,7 +56,7 @@ export const FormBilling = ({ form }: FormBillingProps) => {
         )}
       />
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <FormField
           control={form.control}
           name="city"

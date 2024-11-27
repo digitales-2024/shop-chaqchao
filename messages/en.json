@@ -429,6 +429,7 @@
     },
     "dateOrder": {
       "title": "For when do you want your order?",
+      "fullDate": "Full date",
       "date": "Select the date of collection",
       "hour": "Select the time of collection",
       "label": "You will pick up your order on",
@@ -442,16 +443,19 @@
       }
     },
     "invoice": {
+      "title": "Invoice information",
+      "typeInvoice": "Type of Invoice",
       "RECEIPT": "Receipt",
       "INVOICE": "Invoice",
       "typeDoc": "Type of document",
       "doc": "Document number",
       "name": "Name",
       "nameBusiness": "Name or business name",
-      "address": "Dirección",
-      "city": "Ciudad",
-      "codPostal": "Código Postal",
-      "country": "País",
+      "address": "Address",
+      "country": "Country",
+      "state": "State",
+      "city": "City",
+      "codPostal": "Postal code",
       "button": "Continue",
       "errors": {
         "typeDoc": "The type of document is required",
