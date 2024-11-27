@@ -86,10 +86,19 @@ export const StepDateOrder = () => {
       const [closingHour, closingMinutes] = closingTime.split(":").map(Number);
 
       const horas = [];
-      for (let i = openingHour; i < closingHour; i++) {
+      const now = new Date();
+      const isToday = date && date.toDateString() === now.toDateString();
+
+      for (let i = openingHour; i <= closingHour; i++) {
         for (let j = 0; j < 60; j += 15) {
           if (i === openingHour && j < openingMinutes) continue;
           if (i === closingHour && j >= closingMinutes) break;
+          if (
+            isToday &&
+            (i < now.getHours() ||
+              (i === now.getHours() && j <= now.getMinutes()))
+          )
+            continue;
           horas.push(`${i}:${j.toString().padStart(2, "0")}`);
         }
       }
