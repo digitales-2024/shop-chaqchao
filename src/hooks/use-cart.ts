@@ -10,8 +10,10 @@ import {
   useValidateCartMutation,
 } from "@/redux/services/cartApi";
 import useCartStore from "@/redux/store/cart";
-import { CartItem, Product } from "@/types";
+import { CartItem, InvoiceCreate, Product } from "@/types";
 import { ErrorData } from "@/types/error";
+import { PaymentStatus } from "@/types/invoice";
+import { getCodeCountry } from "@/utils/getCodeCountry";
 import { ShoppingBag } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { createElement, useCallback, useMemo } from "react";
@@ -40,8 +42,7 @@ export const useCart = () => {
   ] = useValidateCartMutation();
 
   const { clientData } = useProfile();
-  const { contact, dateOrder, someonePickup } = useCartDetail();
-
+  const { contact, dateOrder, someonePickup, invoice } = useCartDetail();
   const clientId = useMemo(() => clientData?.id, [clientData]);
 
   const [createCartMutation] = useCreateCartMutation();
@@ -300,14 +301,30 @@ export const useCart = () => {
   /**
    * Realizar el pago y actualizar el estado de la orden
    */
-  const checkoutCart = async () => {
+  const checkoutCart = async (status: string) => {
     try {
       const cartId = cartIdFromStore;
       if (!cartId) {
         return;
       }
 
-      await checkoutCartMutation({ cartId });
+      const invoiceCreate: InvoiceCreate = {
+        billingDocumentType: invoice.typeInvoice,
+        typeDocument: invoice.documentType,
+        documentNumber: invoice.number,
+        address: invoice.address,
+        city: invoice.city,
+        state: invoice.state,
+        country: getCodeCountry(invoice.country),
+        postalCode: invoice.codPostal,
+        businessName: invoice.nameBusiness ?? "",
+        paymentStatus: status as PaymentStatus,
+      };
+
+      await checkoutCartMutation({
+        cartId,
+        invoice: invoiceCreate,
+      });
     } catch (error) {
       toast.error(t("errors.checkout"), { position: "top-center" });
     }

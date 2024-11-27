@@ -1,4 +1,4 @@
-import { CartItem, CheckoutCart, CreateCart } from "@/types";
+import { CartItem, CheckoutCart, CreateCart, InvoiceCreate } from "@/types";
 import { createApi } from "@reduxjs/toolkit/query/react";
 
 import baseQueryWithReauth from "./baseQuery";
@@ -94,10 +94,14 @@ export const cartApi = createApi({
     }),
 
     // Realizar el pago y actualizar el estado de la orden
-    checkoutCart: build.mutation<void, { cartId: string }>({
-      query: ({ cartId }) => ({
+    checkoutCart: build.mutation<
+      void,
+      { cartId: string; invoice: InvoiceCreate }
+    >({
+      query: ({ cartId, invoice }) => ({
         url: `/cart/${cartId}/checkout`,
         method: "POST",
+        body: invoice,
         credentials: "include",
       }),
 
