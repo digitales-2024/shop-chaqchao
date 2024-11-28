@@ -48,7 +48,7 @@ export function MenuList() {
         </NavigationMenuItem>
         <NavigationMenuItem>
           <Link
-            href="/class"
+            href="/class-register"
             legacyBehavior
             passHref
             className="bg-transparent"

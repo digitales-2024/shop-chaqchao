@@ -107,7 +107,7 @@ export function Footer() {
         E.I.R.L. / 20558285550 - {t("copyrigth")}
       </p>
       <div className="inline-flex w-full justify-end">
-        <Link href="">
+        <Link href="/complaints-book">
           <span className="sr-only">Libro de reclamaciones</span>
           <LibroReclamaciones className="w-16" />
         </Link>
