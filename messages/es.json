@@ -535,9 +535,16 @@
       "updateItemQuantity": "No pudimos actualizar el producto en el carrito. Por favor, inténtalo de nuevo."
     },
     "pay": {
+      "ok": "!Bien hecho!",
       "title": "!Pago realizado con éxito!",
       "success": "Tu pedido ha sido confirmado y se encuentra en proceso de preparación. Recibirás un correo electrónico con la confirmación de tu pedido.",
-      "canceled": "Tu pago ha sido cancelado. Si tienes alguna duda, por favor contáctanos."
+      "canceled": "Tu pago ha sido cancelado. Si tienes alguna duda, por favor contáctanos.",
+      "valid": "Carrito validado correctamente."
     }
+  },
+  "payment": {
+    "title": "!Pago realizado con éxito!",
+    "success": "Tu pedido ha sido confirmado y se encuentra en proceso de preparación. Recibirás un correo electrónico con la confirmación de tu pedido.",
+    "accept": "Aceptar"
   }
 }

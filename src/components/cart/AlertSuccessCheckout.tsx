@@ -1,6 +1,7 @@
 import confetti from "canvas-confetti";
 import { AnimatePresence, motion } from "framer-motion";
 import { CheckCircle } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 
 import {
@@ -23,6 +24,7 @@ export const AlertSuccessCheckout = ({
   isOpen,
   setIsOpen,
 }: AlertDialogProps) => {
+  const t = useTranslations("payment");
   const handleClose = () => {
     setIsOpen(false);
     window.location.href = "/";
@@ -50,10 +52,10 @@ export const AlertSuccessCheckout = ({
                 <CheckCircle className="mx-auto h-16 w-16 text-emerald-500" />
               </motion.div>
               <AlertDialogTitle className="mt-4 text-center text-2xl font-bold text-emerald-500">
-                ¡Pago Realizado con Éxito!
+                {t("title")}
               </AlertDialogTitle>
               <AlertDialogDescription className="text-center text-gray-600">
-                Su pago ha sido procesado correctamente. ¡Gracias por su compra!
+                {t("success")}
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter className="flex justify-center">
@@ -61,7 +63,7 @@ export const AlertSuccessCheckout = ({
                 onClick={handleClose}
                 className="rounded-full bg-emerald-500 px-6 py-2 font-bold text-white shadow-md hover:bg-emerald-500"
               >
-                Aceptar
+                {t("accept")}
               </Button>
             </AlertDialogFooter>
           </AlertDialogContent>
