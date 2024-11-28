@@ -1,8 +1,6 @@
 "use client";
 import { ChaqchaoCharacter } from "@/assets/images/ChaqchaoCharacter";
 import { useMediaQuery } from "@/hooks/use-media-query";
-import { Locale } from "@/i18n/config";
-import { useLocale } from "next-intl";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -10,15 +8,12 @@ import { CartSheet } from "@/components/cart/CartSheet";
 
 import { cn } from "@/lib/utils";
 
-import { LanguageSelector } from "./LanguageSelector";
 import { MenuList } from "./MenuList";
-import { SearchBar } from "./SearchBar";
+import { NavList } from "./NavList";
 import { SheetMenuMobil } from "./SheetMenuMobil";
 import { UserLogin } from "./UserLogin";
 
 export function Navbar() {
-  const locale = useLocale();
-
   const [navBackground, setNavBackground] = useState(false);
   useEffect(() => {
     const handleScroll = () => {
@@ -41,36 +36,31 @@ export function Navbar() {
     return (
       <nav
         className={cn(
-          "sticky top-0 z-50 flex w-full items-center justify-between p-4 backdrop-blur-sm transition-all duration-300 lg:px-6",
+          "sticky top-6 z-[999] mx-auto flex items-center rounded-full bg-[hsla(0,0%,93%,0.72)] px-6 backdrop-blur-lg transition-all duration-500",
           {
-            "bg-white": navBackground,
-            "bg-primary-foreground": !navBackground,
+            "h-20 w-[70rem]": !navBackground,
+            "h-16 w-[50rem]": navBackground,
           },
         )}
       >
-        <div className="container mx-auto grid w-full grid-cols-3 items-center justify-center">
+        <div className="container mx-auto grid w-full grid-cols-3 items-center justify-between">
           <div className="flex w-full">
             <Link
               href="/"
               prefetch={true}
-              className="mr-2 flex w-full items-center justify-center md:w-auto lg:mr-6"
+              className="flex w-full items-center justify-center md:w-auto lg:mr-6"
             >
               <ChaqchaoCharacter
                 className={cn("transition-all duration-300", {
-                  "h-24": !navBackground,
-                  "h-16": navBackground,
+                  "h-20": !navBackground,
+                  "h-14": navBackground,
                 })}
               />
             </Link>
           </div>
-          <div className="inline-flex justify-center">
-            <MenuList />
-          </div>
-          <div className="flex items-center justify-end gap-6">
-            <SearchBar />
-            <CartSheet />
-            <UserLogin />
-            <LanguageSelector defaultValue={locale as Locale} />
+          <MenuList />
+          <div className="inline-flex justify-end">
+            <NavList />
           </div>
         </div>
       </nav>

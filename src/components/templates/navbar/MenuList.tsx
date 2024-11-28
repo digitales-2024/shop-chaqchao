@@ -1,94 +1,54 @@
 "use client";
 
-import { useCategory } from "@/hooks/use-category";
+import { AnimatePresence, motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import * as React from "react";
+import { useState } from "react";
 
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
-
-import { cn } from "@/lib/utils";
-
-export function MenuList() {
-  const { dataCategories, isLoadingCategories } = useCategory();
-
+export const MenuList = () => {
   const t = useTranslations("navbar");
 
-  return (
-    <NavigationMenu>
-      <NavigationMenuList>
-        <NavigationMenuItem>
-          <NavigationMenuTrigger
-            disabled={isLoadingCategories}
-            className="bg-transparent font-bold transition-all duration-300 hover:scale-105 hover:bg-transparent focus:bg-transparent"
-          >
-            {t("products")}
-          </NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-              {dataCategories?.map((component) => (
-                <ListItem
-                  key={component.id}
-                  title={component.name}
-                  href={component.name}
-                >
-                  {component.description}
-                </ListItem>
-              ))}
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <Link
-            href="/class-register"
-            legacyBehavior
-            passHref
-            className="bg-transparent"
-          >
-            <NavigationMenuLink
-              className={`${navigationMenuTriggerStyle()} bg-transparent transition-all duration-300 hover:scale-105 hover:bg-transparent focus:bg-transparent`}
-            >
-              <span className="font-bold">{t("classes")}</span>
-            </NavigationMenuLink>
-          </Link>
-        </NavigationMenuItem>
-      </NavigationMenuList>
-    </NavigationMenu>
-  );
-}
+  const dataButtons = [
+    { label: t("products"), href: "/categories" },
+    { label: t("classes"), href: "/class-register" },
+  ];
+  const [elementFocused, setElementFocused] = useState<number | null>(null);
 
-const ListItem = React.forwardRef<
-  React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a">
->(({ className, title, children, ...props }, ref) => {
+  const handleHoverLink = (index: number | null) => {
+    setElementFocused(index);
+  };
+
   return (
-    <li className="bg-transparent">
-      <NavigationMenuLink asChild>
-        <a
-          ref={ref}
-          className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            className,
-          )}
-          {...props}
+    <nav
+      className="flex flex-col items-center justify-center sm:flex-row"
+      onMouseLeave={() => {
+        handleHoverLink(null);
+      }}
+    >
+      {dataButtons.map((link, index) => (
+        <Link
+          href={link.href}
+          className="relative inline-flex w-fit whitespace-nowrap rounded px-2 py-1 text-sm font-medium"
+          key={link.label}
+          onMouseEnter={() => handleHoverLink(index)}
+          type="button"
         >
-          <div className="text-sm font-medium capitalize leading-none">
-            {title}
-          </div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-            {children}
-          </p>
-        </a>
-      </NavigationMenuLink>
-    </li>
+          {link.label}
+          <AnimatePresence>
+            {elementFocused === index && (
+              <motion.div
+                animate={{ opacity: 1, scale: 1 }}
+                className="absolute bottom-0 left-0 right-0 top-0 -z-10 rounded-md bg-neutral-200 dark:bg-neutral-800"
+                exit={{ opacity: 0, scale: 0.9 }}
+                initial={{ opacity: 0, scale: 0.95 }}
+                layout={true}
+                layoutId="focused-element"
+                transition={{ duration: 0.2 }}
+              />
+            )}
+          </AnimatePresence>
+        </Link>
+      ))}
+    </nav>
   );
-});
-ListItem.displayName = "ListItem";
+};

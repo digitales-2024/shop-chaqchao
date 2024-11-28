@@ -34,7 +34,7 @@ export const UserLogin = () => {
     return (
       <Link
         href="/sign-in"
-        className="inline-flex size-10 shrink-0 items-center justify-center rounded-full transition-all duration-300 hover:scale-105 hover:bg-background"
+        className="inline-flex size-10 shrink-0 items-center justify-center rounded-full transition-all duration-300 hover:scale-105"
       >
         <span className="sr-only">Iniciar sesión</span>
         <UserRound className="shrink-0" />
