@@ -40,6 +40,7 @@ export const ConfirmCheckout = ({ validateCart }: ConfirmCheckoutProps) => {
   const [openAlertDialog, setOpenAlertDialog] = useState<boolean>(false);
 
   const t = useTranslations("checkout.summary");
+  const e = useTranslations("errors");
   const confirmCheckoutSchema = z.object({
     terms: z.boolean().refine(
       (value) => {
@@ -144,10 +145,8 @@ export const ConfirmCheckout = ({ validateCart }: ConfirmCheckoutProps) => {
       setToken(tokenResponse.token ?? "");
       payment(tokenResponse.token ?? "");
     } catch (error) {
-      toast("Ops!", {
-        description:
-          (error as any)?.data?.message ??
-          "Algo salió mal, por favor intenta de nuevo.",
+      toast(e("cart.title"), {
+        description: (error as any)?.data?.message ?? e("network"),
         icon: <ShoppingDelete />,
         className: "text-rose-500",
       });
@@ -160,8 +159,8 @@ export const ConfirmCheckout = ({ validateCart }: ConfirmCheckoutProps) => {
   const handlePaymentSuccess = async (status: string) => {
     await checkoutCart(status);
 
-    toast("¡Pago realizado con éxito!", {
-      description: "Gracias por tu compra.",
+    toast(e("pay.title"), {
+      description: e("pay.success"),
       icon: <ShoppingCheck />,
       className: "text-green-500",
     });
@@ -173,8 +172,8 @@ export const ConfirmCheckout = ({ validateCart }: ConfirmCheckoutProps) => {
   };
 
   const handlePaymentError = () => {
-    toast("Ops!", {
-      description: "Algo salió mal, por favor intenta de nuevo.",
+    toast(e("cart.title"), {
+      description: e("network"),
       icon: <ShoppingDelete />,
       className: "text-rose-500",
     });
@@ -224,8 +223,8 @@ export const ConfirmCheckout = ({ validateCart }: ConfirmCheckoutProps) => {
       });
 
       await KR.onPopinClosed(() => {
-        toast("¡Pago cancelado!", {
-          description: "El pago ha sido cancelado.",
+        toast(e("cart.title"), {
+          description: e("pay.canceled"),
           icon: <ShoppingDelete />,
           className: "text-rose-500",
         });
@@ -246,8 +245,8 @@ export const ConfirmCheckout = ({ validateCart }: ConfirmCheckoutProps) => {
         "#formPayment",
       ); /* Render the payment form into myPaymentForm div*/
     } catch (error) {
-      toast("Ops!", {
-        description: "Algo salió mal, por favor intenta de nuevo.",
+      toast(e("cart.title"), {
+        description: e("network"),
         icon: <ShoppingDelete />,
         className: "text-rose-500",
       });
