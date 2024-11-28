@@ -36,6 +36,12 @@ export default async function RootLayout({
   return (
     <ViewTransitions>
       <html lang={locale}>
+        <head>
+          <link
+            rel="stylesheet"
+            href="https://api.micuentaweb.pe/static/js/krypton-client/V4.0/ext/classic-reset.min.css"
+          />
+        </head>
         <body
           className={`${comingSoon.variable} ${geistSans.variable} font-nunito antialiased`}
         >

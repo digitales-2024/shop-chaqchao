@@ -52,8 +52,8 @@
     --sidebar-accent-foreground: 240 5.9% 10%;
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
-    --izipay: 359 100% 63%;
-    --izipay-foreground: 0 100% 73%;
+    --izipay: 178 63% 53%;
+    --izipay-foreground: 178 63% 93%;
   }
   .dark {
     --background: 240 10% 3.9%;
@@ -98,4 +98,61 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Izipay */
+
+.kr-popin-button {
+  @apply bg-izipay hover:scale-105 !important;
+  @apply transition-transform duration-300 !important;
+  @apply text-white !important;
+  @apply w-full !important;
+  @apply rounded-3xl !important;
+  @apply font-bold !important;
+  @apply h-16 !important;
+}
+
+.kr-card-form {
+  @apply w-[30rem] !important;
+  @apply shadow-lg !important;
+}
+
+.kr-popin-wrapper {
+  @apply bg-white/10 backdrop-blur-sm !important;
+}
+
+.kr-popin-modal-header-background {
+  @apply bg-izipay !important;
+  @apply border-none !important;
+}
+
+.kr-field-element {
+  @apply text-foreground !important;
+  @apply rounded-md !important;
+}
+
+.kr-payment-button {
+  @apply bg-izipay !important;
+  @apply text-white !important;
+  @apply rounded-md !important;
+  @apply text-center font-bold !important;
+}
+
+.kr-header-logo {
+  @apply bg-white !important;
+}
+.kr-popin-modal-header-image .kr-header-logo {
+  content: url("../assets/images/logo-chaqchao.webp") !important;
+}
+.kr-installment-number,
+.kr-first-installment-delay {
+  @apply hidden !important;
+}
+.kr-form-error-visible {
+  @apply bg-rose-500 !important;
+  @apply rounded-xl !important;
+}
+
+.kr-form-error span > span {
+  @apply text-rose-500 !important;
 }

@@ -404,6 +404,7 @@
     "next": "Next",
     "continue": "Continue",
     "edit": "Edit",
+    "pay": "Pay",
     "summary": {
       "title": "Summary",
       "address": "Address ",
@@ -537,7 +538,19 @@
       "addItemCart": "We couldn't add the product to the cart. Please try again.",
       "removeItemCart": "We couldn't remove the product from the cart. Please try again.",
       "updateItemQuantity": "We couldn't update the product in the cart. Please try again."
+    },
+    "pay": {
+      "ok": "Well done!",
+      "title": "Payment successful!",
+      "success": "Your order has been confirmed and is being prepared. You will receive an email with the confirmation of your order.",
+      "canceled": "Payment canceled",
+      "valid": "Cart validated successfully."
     }
+  },
+  "payment": {
+    "title": "Payment successful!",
+    "success": "Your order has been confirmed and is being prepared. You will receive an email with the confirmation of your order.",
+    "accept": "Accept"
   },
   "claims": {
     "complaintsBook": "COMPLAINTS BOOK",

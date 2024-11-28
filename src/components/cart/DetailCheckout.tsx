@@ -6,7 +6,7 @@ import { InvoiceType } from "@/types";
 import { getCodeCountry } from "@/utils/getCodeCountry";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 import { BusinessInfoCart } from "../business/BusinessInfoCart";
 import { Card, CardContent, CardHeader } from "../ui/card";
@@ -21,6 +21,7 @@ export const DetailCheckout = () => {
 
   const { dateOrder, invoice, contact, someonePickup } = useCartDetail();
   const t = useTranslations("checkout");
+  const locale = useLocale();
 
   const { validateCart, validateItem, errorValidate } = useCart();
 
@@ -202,7 +203,9 @@ export const DetailCheckout = () => {
               </span>
               <span className="font-bold">
                 {dateOrder.fullDate ? (
-                  format(dateOrder.fullDate, "PPPp", { locale: es })
+                  format(dateOrder.fullDate, "PPPp", {
+                    locale: locale === "es" ? es : undefined,
+                  })
                 ) : (
                   <Skeleton className="h-8 w-full" />
                 )}
@@ -214,7 +217,9 @@ export const DetailCheckout = () => {
               <span className="text-xs text-gray-400">
                 {t("dateOrder.quest")}:
               </span>
-              <span className="font-bold">{someonePickup ? "Si" : "No"}</span>
+              <span className="font-bold">
+                {someonePickup ? (locale === "es" ? "Si" : "Yes") : "No"}
+              </span>
             </div>
           </div>
         </div>

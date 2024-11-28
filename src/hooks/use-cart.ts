@@ -1,16 +1,19 @@
 import { ShoppingDelete } from "@/assets/icons";
 import {
   useAddItemToCartMutation,
+  useCartByTempIdMutation,
+  useCheckoutCartMutation,
+  useCompleteCartMutation,
   useCreateCartMutation,
-  useMergeCartsMutation,
   useRemoveItemFromCartMutation,
   useUpdateItemQuantityMutation,
-  useValidateActiveCartQuery,
   useValidateCartMutation,
 } from "@/redux/services/cartApi";
 import useCartStore from "@/redux/store/cart";
-import { CartItem, Product } from "@/types";
+import { CartItem, InvoiceCreate, Product } from "@/types";
 import { ErrorData } from "@/types/error";
+import { PaymentStatus } from "@/types/invoice";
+import { getCodeCountry } from "@/utils/getCodeCountry";
 import { ShoppingBag } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { createElement, useCallback, useMemo } from "react";
@@ -18,6 +21,7 @@ import { toast } from "sonner";
 
 import { TypeUpdateItemQuantity } from "@/components/cart/EditItemQuantityButton";
 
+import useCartDetail from "./use-cart-detail";
 import { useProfile } from "./use-profile";
 
 export const useCart = () => {
@@ -38,15 +42,16 @@ export const useCart = () => {
   ] = useValidateCartMutation();
 
   const { clientData } = useProfile();
-
+  const { contact, dateOrder, someonePickup, invoice } = useCartDetail();
   const clientId = useMemo(() => clientData?.id, [clientData]);
 
   const [createCartMutation] = useCreateCartMutation();
   const [addItemToCartMutation] = useAddItemToCartMutation();
-  const [mergeCartsMutation] = useMergeCartsMutation();
   const [removeItemToCartMutation] = useRemoveItemFromCartMutation();
   const [updateItemQuantityMutation] = useUpdateItemQuantityMutation();
-  const { data: isActiveCartClient } = useValidateActiveCartQuery();
+  const [cartByTempIdMutation] = useCartByTempIdMutation();
+  const [completeCartMutation] = useCompleteCartMutation();
+  const [checkoutCartMutation] = useCheckoutCartMutation();
 
   /**
    * Validar los productos seleccionados
@@ -96,12 +101,21 @@ export const useCart = () => {
     async (item: Product, quantity?: number) => {
       const itemCart = cartItems.find((item) => item.id === item.id);
       try {
-        addItemToCart(item, quantity);
         let cartId = cartIdFromStore;
+        addItemToCart(item, quantity);
 
         if (!cartId) {
           cartId = createCart();
           await createCartMutation({ tempId: cartId, clientId }).unwrap();
+        } else {
+          const cartDB = await cartByTempIdMutation(cartId).unwrap();
+          // Si el carrito no existe en la base de datos, se crea
+          if (!cartDB) {
+            clearCart();
+            cartId = createCart();
+            addItemToCart(item, quantity);
+            await createCartMutation({ tempId: cartId, clientId }).unwrap();
+          }
         }
 
         await addItemToCartMutation({
@@ -133,6 +147,7 @@ export const useCart = () => {
       cartItems,
       t,
       clientId,
+      cartByTempIdMutation,
     ],
   );
 
@@ -175,25 +190,6 @@ export const useCart = () => {
       clientId,
     ],
   );
-
-  /**
-   * Fusionar carritos
-   * @param anonCartId ID del carrito anónimo
-   * @returns Si los carritos fueron fusionados
-   */
-  const mergeCart = async (anonCartId: string) => {
-    try {
-      await mergeCartsMutation({ anonCartId }).unwrap();
-    } catch (error) {
-      toast(t("cart.title"), {
-        description:
-          "No pudimos fusionar los carritos. Por favor, inténtalo de nuevo.",
-        closeButton: true,
-        className: "text-rose-500",
-        icon: createElement(ShoppingBag),
-      });
-    }
-  };
 
   /**
    * Actualizar la cantidad de un producto en el carrito
@@ -269,6 +265,71 @@ export const useCart = () => {
     return useCartStore.getState().clearCart();
   };
 
+  /**
+   * Completar el pago y crear una orden
+   * @returns Si el pago fue completado
+   */
+  const completeCart = async () => {
+    await validateCart(cartItems);
+    if (cartItems.length === 0)
+      throw new Error("No hay productos en el carrito");
+
+    const cartId = cartIdFromStore;
+    if (!cartId) throw new Error("No se ha seleccionado un carrito");
+
+    if (dateOrder.fullDate === undefined)
+      throw new Error("No se ha seleccionado una fecha de entrega");
+
+    try {
+      await completeCartMutation({
+        cartId,
+        data: {
+          customerName: contact.name,
+          customerLastName: contact.lastName,
+          customerEmail: contact.email,
+          customerPhone: contact.phone,
+          someonePickup: someonePickup,
+          pickupTime: new Date(dateOrder.fullDate),
+          clientId,
+        },
+      }).unwrap();
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  /**
+   * Realizar el pago y actualizar el estado de la orden
+   */
+  const checkoutCart = async (status: string) => {
+    try {
+      const cartId = cartIdFromStore;
+      if (!cartId) {
+        return;
+      }
+
+      const invoiceCreate: InvoiceCreate = {
+        billingDocumentType: invoice.typeInvoice,
+        typeDocument: invoice.documentType,
+        documentNumber: invoice.number,
+        address: invoice.address,
+        city: invoice.city,
+        state: invoice.state,
+        country: getCodeCountry(invoice.country),
+        postalCode: invoice.codPostal,
+        businessName: invoice.nameBusiness ?? "",
+        paymentStatus: status as PaymentStatus,
+      };
+
+      await checkoutCartMutation({
+        cartId,
+        invoice: invoiceCreate,
+      });
+    } catch (error) {
+      toast.error(t("errors.checkout"), { position: "top-center" });
+    }
+  };
+
   return {
     validateCart,
     validateItem,
@@ -277,9 +338,9 @@ export const useCart = () => {
     errorValidate,
     addItemCard,
     removeItemCard,
-    mergeCart,
     updateItemQuantity,
     clearCart,
-    isActiveCartClient,
+    completeCart,
+    checkoutCart,
   };
 };

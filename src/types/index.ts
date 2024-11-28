@@ -16,7 +16,7 @@ export type { Category, Product } from "./catalog";
 export type { ClassClient } from "./classes";
 export type { Business } from "./business";
 
-export type { CartItem, CreateCart } from "./cart";
+export type { CartItem, CreateCart, CheckoutCart } from "./cart";
 
 export {
   INVOICES,
@@ -27,6 +27,11 @@ export {
   DocumentType,
   DocumentTypeInvoice,
   type Receipt,
+  type InvoiceCreate,
 } from "./invoice";
 
-export { type CreatePayment, type ResponsePayment } from "./payment";
+export {
+  type CreatePayment,
+  type ResponsePayment,
+  type CartItemInfo,
+} from "./payment";
