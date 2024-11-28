@@ -551,5 +551,30 @@
     "title": "Payment successful!",
     "success": "Your order has been confirmed and is being prepared. You will receive an email with the confirmation of your order.",
     "accept": "Accept"
+  },
+  "claims": {
+    "complaintsBook": "COMPLAINTS BOOK",
+    "day": "Day",
+    "month": "Month",
+    "year": "Year",
+    "identificationConsumer": "1. IDENTIFICATION OF THE COMPLAINING CONSUMER",
+    "name": "Name",
+    "address": "Address",
+    "identityCard": "DNI/CE",
+    "phone": "Phone",
+    "email": "Email",
+    "representative": "Father or Mother (if applicable)",
+    "identificationAsset": "2. IDENTIFICATION OF THE CONTRACTED GOOD OR SERVICE",
+    "product": "Product",
+    "service": "Service",
+    "description": "Description",
+    "amountClaimed": "Amount Claimed ($)",
+    "detailsComplaint": "3. DETAILS OF THE COMPLAINT AND THE CONSUMER'S REQUEST",
+    "detail": "Detail",
+    "button": "Send Claim",
+    "messages": {
+      "success": "Claim registered successfully",
+      "error": "An error occurred while submitting the claim"
+    }
   }
 }

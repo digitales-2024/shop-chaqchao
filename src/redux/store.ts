@@ -6,6 +6,7 @@ import { businessApi } from "./services/businessApi";
 import { cartApi } from "./services/cartApi";
 import { catalogApi } from "./services/catalogApi";
 import { categoryApi } from "./services/categoryApi";
+import { claimApi } from "./services/claimApi";
 import { classApi } from "./services/classApi";
 import { clientApi } from "./services/clientApi";
 import { orderApi } from "./services/orderApi";
@@ -19,6 +20,7 @@ export const store = configureStore({
     [catalogApi.reducerPath]: catalogApi.reducer,
     [orderApi.reducerPath]: orderApi.reducer,
     [classApi.reducerPath]: classApi.reducer,
+    [claimApi.reducerPath]: claimApi.reducer,
     [businessApi.reducerPath]: businessApi.reducer,
     [cartApi.reducerPath]: cartApi.reducer,
     [paymentApi.reducerPath]: paymentApi.reducer,
@@ -31,6 +33,7 @@ export const store = configureStore({
       .concat(catalogApi.middleware)
       .concat(orderApi.middleware)
       .concat(classApi.middleware)
+      .concat(claimApi.middleware)
       .concat(businessApi.middleware)
       .concat(cartApi.middleware)
       .concat(paymentApi.middleware),

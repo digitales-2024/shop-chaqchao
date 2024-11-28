@@ -1,5 +1,4 @@
 import { PayPalButtonProps } from "@/types/paypal";
-import { showToast } from "@/utils/helpers";
 import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
 
 const PayPalButton: React.FC<PayPalButtonProps> = ({
@@ -48,7 +47,7 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({
           onClick={() => {
             const transactionData = getTransactionData();
             if (parseFloat(transactionData.paypalAmount) <= 0) {
-              console.warn("Intento de pago con monto cero");
+              console.warn("Payment attempt with zero amount");
             }
           }}
           onApprove={async (_data, actions) => {
@@ -70,7 +69,6 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({
             }
           }}
           onCancel={() => {
-            showToast("Pago cancelado", "error");
             if (onCancel) onCancel();
           }}
           onError={(err) => console.error("Error en el pago de PayPal", err)}
