@@ -1,5 +1,8 @@
 import { ShoppingDelete } from "@/assets/icons";
-import { useGeneratePaymentTokenMutation } from "@/redux/services/paymentApi";
+import {
+  useGeneratePaymentTokenMutation,
+  useValidatePaymentMutation,
+} from "@/redux/services/paymentApi";
 import { CreatePayment } from "@/types";
 import { ShoppingBag } from "lucide-react";
 import { createElement } from "react";
@@ -9,6 +12,7 @@ type UsePayment = CreatePayment;
 
 export const usePayment = () => {
   const [generatePaymentTokenMutation] = useGeneratePaymentTokenMutation();
+  const [validatePaymentMutation] = useValidatePaymentMutation();
 
   const generatePaymentToken = async (data: UsePayment) => {
     try {
@@ -33,19 +37,9 @@ export const usePayment = () => {
     }
   };
 
-  // const handleValidatePayment = async (resp) => {
-  //   return await validatePaymentMutation(resp);
+  const handleValidatePayment = async (resp: any) => {
+    return await validatePaymentMutation(resp);
+  };
 
-  // axios.post(`${server}/validatePayment`, resp).then(({ data }) => {
-  //   if (data === "Valid Payment") {
-  //     setIsShow(false);
-  //     alert("Pago Satisfactorio");
-  //   } else {
-  //     alert("Pago Inválido");
-  //   }
-  // });
-  // return false;
-  // };
-
-  return { generatePaymentToken };
+  return { generatePaymentToken, handleValidatePayment };
 };

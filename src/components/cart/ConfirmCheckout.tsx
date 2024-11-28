@@ -77,7 +77,7 @@ export const ConfirmCheckout = ({ validateCart }: ConfirmCheckoutProps) => {
   const [orderInfo, setOrderInfo] = useState<CreatePayment | null>(null);
   const [isLoadingGenerateToken, setIsLoadingGenerateToken] = useState(false);
 
-  const { generatePaymentToken } = usePayment();
+  const { generatePaymentToken, handleValidatePayment } = usePayment();
 
   const onConfirm = async () => {
     try {
@@ -135,7 +135,7 @@ export const ConfirmCheckout = ({ validateCart }: ConfirmCheckoutProps) => {
       // Generar el token de pago
       const tokenResponse = await generatePaymentToken(newOrderInfo);
       if (!tokenResponse) {
-        throw new Error("Error al generar token");
+        throw new Error("Error");
       }
 
       setIsLoadingGenerateToken(false);
@@ -145,7 +145,9 @@ export const ConfirmCheckout = ({ validateCart }: ConfirmCheckoutProps) => {
       payment(tokenResponse.token ?? "");
     } catch (error) {
       toast("Ops!", {
-        description: "Algo salió mal, por favor intenta de nuevo.",
+        description:
+          (error as any)?.data?.message ??
+          "Algo salió mal, por favor intenta de nuevo.",
         icon: <ShoppingDelete />,
         className: "text-rose-500",
       });
@@ -155,8 +157,8 @@ export const ConfirmCheckout = ({ validateCart }: ConfirmCheckoutProps) => {
     }
   };
 
-  const handlePaymentSuccess = async () => {
-    await checkoutCart();
+  const handlePaymentSuccess = async (status: string) => {
+    await checkoutCart(status);
 
     toast("¡Pago realizado con éxito!", {
       description: "Gracias por tu compra.",
@@ -229,9 +231,11 @@ export const ConfirmCheckout = ({ validateCart }: ConfirmCheckoutProps) => {
         });
       });
 
-      await KR.onSubmit((paymentData) => {
-        if (paymentData.clientAnswer.orderStatus === "PAID") {
-          handlePaymentSuccess();
+      await KR.onSubmit(async (paymentData) => {
+        const response = await handleValidatePayment(paymentData);
+
+        if (response.data && response.data.isValid) {
+          handlePaymentSuccess(paymentData.clientAnswer.orderStatus ?? "");
         }
         setOpenAlertDialog(true);
         KR.closePopin("#formPayment"); // Close the popin after payment
