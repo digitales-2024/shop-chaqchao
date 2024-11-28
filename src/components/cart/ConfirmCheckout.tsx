@@ -271,11 +271,17 @@ export const ConfirmCheckout = ({ validateCart }: ConfirmCheckoutProps) => {
                       id="terms"
                       checked={field.value}
                       onCheckedChange={field.onChange}
+                      aria-label="terms"
                     />
-                    <FormLabel htmlFor="terms">
+                    <FormLabel htmlFor="terms" aria-label="terms">
                       <>
                         {t("terms")}{" "}
-                        <a href="/" className="text-primary" target="_blank">
+                        <a
+                          href="/"
+                          className="text-primary"
+                          target="_blank"
+                          aria-label="privacy"
+                        >
                           {t("termsLink")}
                         </a>
                       </>
@@ -298,11 +304,17 @@ export const ConfirmCheckout = ({ validateCart }: ConfirmCheckoutProps) => {
                       id="privacy"
                       checked={field.value}
                       onCheckedChange={field.onChange}
+                      aria-label="privacy"
                     />
-                    <FormLabel htmlFor="privacy">
+                    <FormLabel htmlFor="privacy" aria-label="privacy">
                       <>
                         {t("privacy")}{" "}
-                        <a href="/" className="text-primary" target="_blank">
+                        <a
+                          href="/"
+                          className="text-primary"
+                          target="_blank"
+                          aria-label="privacy"
+                        >
                           {t("privacyLink")}
                         </a>
                       </>
