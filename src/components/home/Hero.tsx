@@ -7,15 +7,16 @@ import Product03 from "@/assets/images/product_03.webp";
 import Product04 from "@/assets/images/product_04.webp";
 import Product05 from "@/assets/images/product_05.webp";
 import { motion } from "framer-motion";
-import { ChevronLeft, ChevronRight, CircleArrowRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image, { StaticImageData } from "next/image";
-import Link from "next/link";
 import { Autoplay, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
+
 import { SeparateSection } from "../common/SeparateSection";
+import { ButtonProducts } from "./ButtonProducts";
 
 interface CarouselItem {
   image: StaticImageData;
@@ -38,8 +39,9 @@ export const Hero = () => {
   const t = useTranslations("hero");
 
   return (
-    <section className="relative flex w-full flex-col items-start justify-center bg-primary-foreground p-10">
-      <div className="container mx-auto grid h-full w-full grid-cols-1 justify-center sm:grid-cols-2">
+    <section className="relative flex w-full flex-col items-start justify-center p-10">
+      <div className="absolute bottom-0 right-0 top-0 h-full w-full bg-gradient-to-br" />
+      <div className="container z-10 mx-auto grid h-full w-full grid-cols-1 justify-center sm:grid-cols-2">
         <motion.div
           initial="hidden"
           animate="show"
@@ -88,16 +90,7 @@ export const Hero = () => {
             className="mx-auto mt-6 flex items-center justify-center space-x-5"
             variants={FADE_DOWN_ANIMATION_VARIANTS}
           >
-            <Link
-              href="/categories"
-              className="group/see text-md inline-flex items-center justify-center gap-2 rounded-full bg-primary/90 py-2 pl-8 pr-3 text-white transition-all duration-300 hover:scale-105 hover:bg-primary sm:text-xl"
-            >
-              <span className="truncate">{t("button")}</span>
-              <CircleArrowRight
-                className="size-10 -rotate-45 transition-all duration-300 group-hover/see:rotate-0 sm:size-16"
-                strokeWidth={0.5}
-              />
-            </Link>
+            <ButtonProducts href="/products">{t("button")}</ButtonProducts>
           </motion.div>
         </motion.div>
         <div className="relative hidden aspect-square shrink-0 items-center justify-center overflow-hidden rounded-full bg-primary/10 sm:flex">
