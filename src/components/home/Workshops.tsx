@@ -1,128 +1,66 @@
 "use client";
-import ChaqchaoWorkshop01 from "@/assets/images/workshop_01.webp";
-import ChaqchaoWorkshop02 from "@/assets/images/workshop_02.webp";
-import ChaqchaoWorkshop03 from "@/assets/images/workshop_03.webp";
+import { ChevronRight, Notebook } from "lucide-react";
 import { useTranslations } from "next-intl";
-import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-} from "@/components/ui/carousel";
 
 import { cn } from "@/lib/utils";
 
-import { LineTitle } from "../common/LineTitle";
+import { AnimatedGradientText } from "../common/AnimatedGradientText";
+import SparklesText from "../common/SparklesText";
+import { InView } from "../core/InView";
+import { ClassWorkshop } from "./ClassWorkshop";
 
 export const Workshops = () => {
   const t = useTranslations("workshops");
   return (
     <section className="container mx-auto flex flex-col gap-16 py-20">
-      <header className="grid grid-cols-1 items-center justify-center gap-x-2 sm:grid-cols-3">
-        <LineTitle className="hidden text-primary sm:flex" />
-        <h2 className="text-balance text-center text-3xl font-semibold">
-          {t("title")}
+      <header className="flex flex-col items-start justify-center gap-6">
+        <h2 className="truncate text-balance text-start text-[5rem] font-black">
+          <InView
+            variants={{
+              hidden: {
+                opacity: 0,
+                scale: 0.95,
+              },
+              visible: {
+                opacity: 1,
+                scale: 1,
+              },
+            }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            viewOptions={{ margin: "0px 0px -350px 0px" }}
+            className="overflow-hidden"
+          >
+            {t("title.start")}
+            <SparklesText
+              text={
+                <span className="animate-gradient-animation bg-gradient-to-r from-orange-700 via-secondary to-orange-400 bg-clip-text uppercase text-transparent">
+                  {t("title.resalt")}
+                </span>
+              }
+            />
+            {t("title.end")}
+          </InView>
         </h2>
-        <LineTitle className="hidden rotate-180 text-primary sm:flex" />
-      </header>
-      <WorkshopCarousel />
-    </section>
-  );
-};
-
-interface WorkshopItem {
-  title: string;
-  image: StaticImageData;
-  href: string;
-}
-
-const workshopItems: WorkshopItem[] = [
-  {
-    title: "Chocolates",
-    image: ChaqchaoWorkshop03,
-    href: "/",
-  },
-  {
-    title: "Workshops",
-    image: ChaqchaoWorkshop01,
-    href: "/",
-  },
-  {
-    title: "Cuidado Personal",
-    image: ChaqchaoWorkshop02,
-    href: "/",
-  },
-  {
-    title: "Chocolates",
-    image: ChaqchaoWorkshop03,
-    href: "/",
-  },
-  {
-    title: "Workshops",
-    image: ChaqchaoWorkshop01,
-    href: "/",
-  },
-  {
-    title: "Cuidado Personal",
-    image: ChaqchaoWorkshop02,
-    href: "/",
-  },
-];
-
-const WorkshopCarousel = () => {
-  const [isFocused, setIsFocused] = useState(false);
-  const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
-
-  return (
-    <Carousel
-      className="relative grid h-fit grid-cols-[1fr_10rem]"
-      opts={{
-        loop: true,
-      }}
-      tw="md:grid-cols-[repeat(2,1fr)] lg:grid-cols-[repeat(3,1fr)]"
-    >
-      <CarouselContent>
-        {workshopItems.map((item, index) => (
-          <CarouselItem key={index} className="sm:basis-1/2 lg:basis-1/3">
-            <Link
-              href={item.href}
-              className="group/work z-0 flex size-fit flex-col items-center justify-center gap-4 overflow-hidden"
-              onMouseEnter={() => {
-                setIsFocused(true);
-                setFocusedIndex(index);
-              }}
-              onMouseLeave={() => {
-                setIsFocused(false);
-                setFocusedIndex(0);
-              }}
+        <p className="text-2xl text-gray-500">{t("subtitle")}</p>
+        <Link href="/workshops">
+          <AnimatedGradientText>
+            <Notebook className="text-secondary" />{" "}
+            <hr className="mx-2 h-4 w-px shrink-0 bg-gray-300" />{" "}
+            <span
+              className={cn(
+                `inline animate-gradient bg-gradient-to-r from-[#ffaa40] via-secondary to-[#ffaa40] bg-[length:var(--bg-size)_100%] bg-clip-text text-xl text-transparent`,
+              )}
             >
-              <div className="overflow-hidden rounded-2xl">
-                <Image
-                  src={item.image.src}
-                  alt={item.title}
-                  width={400}
-                  height={400}
-                  className={cn(
-                    "h-full object-cover transition-all duration-700 group-hover/work:scale-105",
-                    {
-                      "opacity-60": isFocused && focusedIndex !== index,
-                    },
-                  )}
-                  quality={100}
-                />
-              </div>
-              <h3 className="font-commingSoon text-xl font-bold text-terciary">
-                {item.title}
-              </h3>
-            </Link>
-          </CarouselItem>
-        ))}
-      </CarouselContent>
-      <CarouselNext className="absolute right-0 size-20 border-terciary bg-transparent text-terciary" />
-    </Carousel>
+              {t("button")}
+            </span>
+            <ChevronRight className="ml-1 size-5 text-secondary transition-transform duration-300 ease-in-out group-hover:translate-x-0.5" />
+          </AnimatedGradientText>
+        </Link>
+      </header>
+      <div className="pointer-events-none -translate-y-1/3">
+        <ClassWorkshop />
+      </div>
+    </section>
   );
 };
