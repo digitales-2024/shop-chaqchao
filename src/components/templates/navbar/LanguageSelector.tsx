@@ -4,17 +4,16 @@ import { TextMorph } from "@/hooks/text-morph";
 import { useWindowScrollPosition } from "@/hooks/use-window-scroll-position";
 import { Locale } from "@/i18n/config";
 import { setUserLocale } from "@/services/locale";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
 
 import AnimatedBackground from "@/components/core/AnimateBackground";
 
-interface Props {
-  defaultValue: Locale;
-}
-
-export function LanguageSelector({ defaultValue }: Props) {
+export function LanguageSelector() {
   const t = useTranslations("navbar.languages");
+
+  const locale = useLocale() as Locale;
+
   const ITEMS = [
     {
       id: "es",
@@ -28,10 +27,9 @@ export function LanguageSelector({ defaultValue }: Props) {
     },
   ];
 
-  const [selectedLocale, setSelectedLocale] = useState<Locale>(defaultValue);
+  const [selectedLocale, setSelectedLocale] = useState<Locale>(locale);
 
   function onChange(value: string) {
-    console.log("🚀 ~ onChange ~ value:", value);
     const locale = value as Locale;
     setSelectedLocale(locale); // Update the selected locale
     setUserLocale(locale);
@@ -43,7 +41,7 @@ export function LanguageSelector({ defaultValue }: Props) {
     <div className="sticky bottom-8 left-8 w-fit">
       <div className="flex w-full space-x-2 rounded-full border border-zinc-950/10 bg-white p-2">
         <AnimatedBackground
-          defaultValue={defaultValue}
+          defaultValue={locale}
           onValueChange={(value) => onChange(value as string)}
           className="rounded-full bg-zinc-100"
           transition={{
