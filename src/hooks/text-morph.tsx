@@ -22,13 +22,13 @@ export function TextMorph({
   const characters = useMemo(() => {
     const charCounts: Record<string, number> = {};
 
-    return children.split("").map((char, index) => {
-      const lowerChar = char.toLowerCase();
+    return children.split("").map((char) => {
+      const lowerChar = char;
       charCounts[lowerChar] = (charCounts[lowerChar] || 0) + 1;
 
       return {
         id: `${uniqueId}-${lowerChar}${charCounts[lowerChar]}`,
-        label: index === 0 ? char.toUpperCase() : lowerChar,
+        label: lowerChar,
       };
     });
   }, [children, uniqueId]);
