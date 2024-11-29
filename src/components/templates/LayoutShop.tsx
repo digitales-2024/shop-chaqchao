@@ -1,5 +1,3 @@
-import { Locale } from "@/i18n/config";
-import { useLocale } from "next-intl";
 import { ReactNode } from "react";
 
 import { Footer } from "./footer/Footer";
@@ -11,13 +9,11 @@ interface LayoutShopProps {
 }
 
 export function LayoutShop({ children }: LayoutShopProps) {
-  const locale = useLocale();
-
   return (
     <>
       <Navbar />
       <main>{children}</main>
-      <LanguageSelector defaultValue={locale as Locale} />
+      <LanguageSelector />
       <Footer />
     </>
   );
