@@ -36,7 +36,7 @@ export function Navbar() {
     return (
       <nav
         className={cn(
-          "sticky top-6 z-[999] mx-auto flex items-center rounded-full bg-[hsla(0,0%,93%,0.72)] px-6 backdrop-blur-lg transition-all duration-500",
+          "sticky top-6 z-50 mx-auto flex items-center rounded-full bg-[hsla(0,0%,93%,0.72)] px-6 backdrop-blur-lg transition-all duration-500",
           {
             "h-20 w-[70rem]": !navBackground,
             "h-16 w-[50rem]": navBackground,
