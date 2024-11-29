@@ -1,84 +1,84 @@
-import "@/styles/button-hero.css";
-import { Package } from "lucide-react";
+"use client";
+
+import {
+  motion,
+  type AnimationProps,
+  type HTMLMotionProps,
+} from "framer-motion";
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
-import type { ComponentProps } from "react";
+import React from "react";
 
 import { cn } from "@/lib/utils";
-export const ButtonProducts = ({
-  href,
-  children,
-  className,
-  ...props
-}: Readonly<{
-  children?: string;
-  href: string;
+
+const animationProps = {
+  initial: { "--x": "100%", scale: 0.8 },
+  animate: { "--x": "-100%", scale: 1 },
+  whileTap: { scale: 0.95 },
+  transition: {
+    repeat: Infinity,
+    repeatType: "loop",
+    repeatDelay: 1,
+    type: "spring",
+    stiffness: 20,
+    damping: 15,
+    mass: 2,
+    scale: {
+      type: "spring",
+      stiffness: 200,
+      damping: 5,
+      mass: 0.5,
+    },
+  },
+} as AnimationProps;
+
+interface ButtonProductsProps extends HTMLMotionProps<"div"> {
+  children: React.ReactNode;
   className?: string;
-}> &
-  ComponentProps<"a">) => {
-  return (
-    <Link
-      href={href}
-      className={cn("group relative rounded-full bg-secondary p-px", className)}
-      {...props}
-    >
-      <span
-        className="absolute inset-0 overflow-hidden rounded-full"
-        style={{ transform: "translateZ(0)" }}
+  href: string;
+}
+
+const ButtonProducts = React.forwardRef<HTMLDivElement, ButtonProductsProps>(
+  ({ children, href, className, ...props }, ref) => {
+    return (
+      <Link
+        href={href}
+        className="group/products transition-all duration-300 hover:scale-105"
       >
-        <span
-          className="pointer-events-none absolute inset-0 select-none"
-          style={{
-            animation: "10s ease-in-out infinite alternate border-translate",
-          }}
+        <motion.div
+          ref={ref}
+          {...animationProps}
+          {...props}
+          className={cn(
+            "relative rounded-full px-10 py-6 backdrop-blur-xl transition-shadow duration-300 ease-in-out",
+            className,
+          )}
         >
           <span
-            className="block size-24 -translate-x-1/2 -translate-y-1/3 blur-xl"
+            className="relative inline-flex size-full items-center justify-center gap-2 font-black uppercase tracking-wide text-[rgb(0,0,0,65%)] dark:font-light dark:text-[rgb(255,255,255,90%)]"
             style={{
-              background: "linear-gradient(135deg, #7A69F9, #F26378, #F5833F)",
+              maskImage:
+                "linear-gradient(-75deg,hsl(var(--primary)) calc(var(--x) + 20%),transparent calc(var(--x) + 30%),hsl(var(--primary)) calc(var(--x) + 100%))",
             }}
-          />
-        </span>
-      </span>
-      <span
-        className="pointer-events-none absolute inset-0 select-none"
-        style={{
-          animation: "10s ease-in-out infinite alternate border-glow-translate",
-        }}
-      >
-        <span
-          className="z-0 block h-full w-12 -translate-x-1/2 rounded-full blur-xl"
-          style={{
-            animation: "10s ease-in-out infinite alternate border-glow-scale",
-            background: "linear-gradient(135deg, #7A69F9, #F26378, #F5833F)",
-          }}
-        />
-      </span>
-
-      <span className="relative z-[1] flex w-full items-center justify-center gap-1 rounded-full bg-primary px-4 py-2 pl-2">
-        <span className="relative transition-transform group-hover:rotate-[360deg] group-hover:scale-105">
-          <Package
-            className="text-white dark:opacity-100"
-            style={{
-              animation:
-                "14s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite alternate star-rotate",
-            }}
-          />
-          <span
-            className="absolute left-1/2 top-1/2 size-11 -translate-x-1/2 -translate-y-1/2 rounded-full opacity-0 blur-lg dark:opacity-30"
-            style={{
-              animation: "14s ease-in-out infinite alternate star-shine",
-              background:
-                "linear-gradient(135deg, #3BC4F2, #7A69F9, #F26378, #F5833F)",
-            }}
-          />
-        </span>
-
-        {children && (
-          <span className="ml-1.5 transform-gpu truncate text-3xl text-transparent text-white transition group-hover:scale-105">
+          >
             {children}
+            <span className="aspect-square shrink-0 -rotate-45 rounded-full bg-primary-foreground p-2 transition-all duration-300 group-hover/products:rotate-0">
+              <ArrowRight className="size-4" strokeWidth={4} />
+            </span>
           </span>
-        )}
-      </span>
-    </Link>
-  );
-};
+          <span
+            style={{
+              mask: "linear-gradient(rgb(0,0,0), rgb(0,0,0)) content-box,linear-gradient(rgb(0,0,0), rgb(0,0,0))",
+              maskComposite: "exclude",
+            }}
+            className="absolute inset-0 z-10 block rounded-[inherit] bg-[linear-gradient(-75deg,hsl(var(--primary)/10%)_calc(var(--x)+20%),hsl(var(--primary)/50%)_calc(var(--x)+25%),hsl(var(--primary)/10%)_calc(var(--x)+100%))] p-px"
+          ></span>
+        </motion.div>
+      </Link>
+    );
+  },
+);
+
+ButtonProducts.displayName = "ButtonProducts";
+
+export default ButtonProducts;
