@@ -62,7 +62,7 @@ export const Hero = () => {
             <ChaqchaoName className="h-32 sm:h-56" />
           </motion.h1>
           <motion.p
-            className="mt-6 flex flex-col text-balance text-center text-gray-300 md:text-2xl"
+            className="mt-6 flex flex-col text-balance text-center text-gray-600 md:text-2xl"
             variants={FADE_DOWN_ANIMATION_VARIANTS}
           >
             <span className="inline-flex gap-2">
