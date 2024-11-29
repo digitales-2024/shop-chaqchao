@@ -1,7 +1,11 @@
 {
   "navbar": {
     "products": "Productos",
-    "classes": "Clases"
+    "classes": "Clases",
+    "languages": {
+      "es": "Español",
+      "en": "Inglés"
+    }
   },
   "hero": {
     "textfirst": "Descubre nuestros",
