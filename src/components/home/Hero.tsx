@@ -15,7 +15,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
 
-import { SeparateSection } from "../common/SeparateSection";
 import ButtonProducts from "./ButtonProducts";
 
 interface CarouselItem {
@@ -147,7 +146,6 @@ export const Hero = () => {
           </Swiper>
         </div>
       </div>
-      <SeparateSection className="absolute left-0 top-full text-primary-foreground" />
     </section>
   );
 };
