@@ -10,7 +10,7 @@ export const MenuList = () => {
 
   const dataButtons = [
     { label: t("products"), href: "/categories" },
-    { label: t("classes"), href: "/class-register" },
+    { label: t("classes"), href: "/workshops" },
   ];
   const [elementFocused, setElementFocused] = useState<number | null>(null);
 
