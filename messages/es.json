@@ -18,7 +18,9 @@
       "start": "¡Descubre cómo crear",
       "resalt": "chocolates",
       "end": "que dejan huella!"
-    }
+    },
+    "subtitle": "No dejes pasar esta oportunidad de aprender el arte del chocolate.",
+    "button": "¡Regístrate ahora!"
   },
   "recommendations": {
     "title": "Explora nuestros productos recomendados",
