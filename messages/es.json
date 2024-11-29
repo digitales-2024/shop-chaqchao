@@ -14,7 +14,11 @@
     "button": "Explora nuestros productos"
   },
   "workshops": {
-    "title": "¿Qué estás buscando hoy?"
+    "title": {
+      "start": "¡Descubre cómo crear",
+      "resalt": "chocolates",
+      "end": "que dejan huella!"
+    }
   },
   "recommendations": {
     "title": "Explora nuestros productos recomendados",
