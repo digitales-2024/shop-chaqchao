@@ -82,7 +82,7 @@ const config: Config = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         rainbow: "rainbow var(--speed, 2s) infinite linear",
-        "gradient-animation": "gradient-animation 10s ease-in-out infinite",
+        gradient: "gradient 10s ease-in-out infinite",
         "background-position-spin":
           "background-position-spin 3000ms infinite alternate",
       },
@@ -91,10 +91,10 @@ const config: Config = {
           "0%": { backgroundPosition: "top center" },
           "100%": { backgroundPosition: "bottom center" },
         },
-        "gradient-animation": {
-          "0%": { "background-position": "0% 50%" },
-          "50%": { "background-position": "100% 50%" },
-          "100%": { "background-position": "0% 50%" },
+        gradient: {
+          "0%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
+          "100%": { backgroundPosition: "0% 50%" },
         },
         rainbow: {
           "0%": { "background-position": "0%" },
