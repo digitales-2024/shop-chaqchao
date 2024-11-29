@@ -16,7 +16,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 
 import { SeparateSection } from "../common/SeparateSection";
-import { ButtonProducts } from "./ButtonProducts";
+import ButtonProducts from "./ButtonProducts";
 
 interface CarouselItem {
   image: StaticImageData;
@@ -63,7 +63,7 @@ export const Hero = () => {
             <ChaqchaoName className="h-32 sm:h-56" />
           </motion.h1>
           <motion.p
-            className="mt-6 flex flex-col text-balance text-center md:text-2xl"
+            className="mt-6 flex flex-col text-balance text-center text-gray-300 md:text-2xl"
             variants={FADE_DOWN_ANIMATION_VARIANTS}
           >
             <span className="inline-flex gap-2">
@@ -92,7 +92,7 @@ export const Hero = () => {
             className="mx-auto mt-6 flex items-center justify-center space-x-5"
             variants={FADE_DOWN_ANIMATION_VARIANTS}
           >
-            <ButtonProducts href="/products">{t("button")}</ButtonProducts>
+            <ButtonProducts href="/categories">{t("button")}</ButtonProducts>
           </motion.div>
         </motion.div>
         <div className="relative hidden aspect-square shrink-0 items-center justify-center overflow-hidden rounded-full bg-primary/10 sm:flex">
