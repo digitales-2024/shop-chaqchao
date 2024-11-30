@@ -45,7 +45,7 @@ export const CartItem = React.forwardRef<HTMLDivElement, CartItemProps>(
                     <DialogImage
                       src={product.image}
                       alt={`chaqchao ${product.name}`}
-                      className="rounded object-cover transition-all duration-500 group-hover/product:scale-105"
+                      className="object-cover"
                     />
                     <p className="absolute left-5 top-5 rounded-xl bg-white px-3 py-1 text-center text-sm font-bold capitalize text-terciary">
                       {product.category.name}
