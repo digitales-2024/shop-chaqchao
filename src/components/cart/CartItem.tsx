@@ -5,7 +5,6 @@ import React from "react";
 
 import {
   Dialog,
-  DialogClose,
   DialogContainer,
   DialogContent,
   DialogDescription,
@@ -83,7 +82,6 @@ export const CartItem = React.forwardRef<HTMLDivElement, CartItemProps>(
           <DialogContainer>
             <DialogContent className="h-full max-h-[90vh] overflow-hidden rounded-xl border bg-white sm:max-w-[90vw] md:max-w-[80vw] lg:max-w-[1000px]">
               <ProductDialog product={product} />
-              <DialogClose className="text-zinc-500" />
             </DialogContent>
           </DialogContainer>
         </Dialog>

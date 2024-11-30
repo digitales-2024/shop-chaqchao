@@ -6,6 +6,7 @@ import { useState } from "react";
 
 import { BusinessInfoCart } from "../business/BusinessInfoCart";
 import {
+  DialogClose,
   DialogDescription,
   DialogImage,
   DialogSubtitle,
@@ -118,6 +119,7 @@ export const ProductDialog = ({ product }: ProductDialogProps) => {
           <BusinessInfoCart />
         </div>
       </div>
+      <DialogClose />
     </ScrollArea>
   );
 };
