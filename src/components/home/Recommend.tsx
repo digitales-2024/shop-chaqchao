@@ -5,7 +5,6 @@ import { useTranslations } from "next-intl";
 import { CartItem } from "../cart/CartItem";
 import { CartSkeleton } from "../cart/CartSkeleton";
 import { LineTitle } from "../common/LineTitle";
-import { SeparateSection } from "../common/SeparateSection";
 
 interface RecommendHeaderProps {
   children: React.ReactNode;
@@ -15,7 +14,7 @@ const RecommendHeader: React.FC<RecommendHeaderProps> = ({ children }) => {
   const t = useTranslations("recommendations");
 
   return (
-    <section className="relative flex w-full flex-col bg-primary-foreground py-40">
+    <section className="relative flex w-full flex-col py-40">
       <div className="container mx-auto flex w-full flex-col gap-40">
         <div className="grid grid-cols-1 items-center gap-6 sm:grid-cols-[1fr_auto_1fr]">
           <LineTitle className="hidden text-primary sm:flex" />
@@ -29,8 +28,6 @@ const RecommendHeader: React.FC<RecommendHeaderProps> = ({ children }) => {
           {children}
         </div>
       </div>
-      <SeparateSection className="absolute bottom-full left-0 rotate-180 text-primary-foreground" />
-      <SeparateSection className="absolute left-0 top-full text-primary-foreground" />
     </section>
   );
 };
@@ -49,7 +46,7 @@ export const Recommend = () => {
 
   return (
     <RecommendHeader>
-      {productRecommend?.map((product) => (
+      {productRecommend.map((product) => (
         <CartItem key={product.id} product={product} />
       ))}
     </RecommendHeader>
