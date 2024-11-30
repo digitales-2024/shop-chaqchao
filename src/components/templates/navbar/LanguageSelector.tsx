@@ -5,7 +5,7 @@ import { useWindowScrollPosition } from "@/hooks/use-window-scroll-position";
 import { Locale } from "@/i18n/config";
 import { setUserLocale } from "@/services/locale";
 import { useLocale, useTranslations } from "next-intl";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import AnimatedBackground from "@/components/core/AnimateBackground";
 
@@ -36,6 +36,17 @@ export function LanguageSelector() {
   }
 
   const { y } = useWindowScrollPosition();
+
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    // Esto asegura que el componente se renderice después de que se haya montado
+    setMounted(true);
+    setSelectedLocale(locale); // Inicializa el locale después de que el componente se haya montado
+  }, [locale]);
+
+  if (!mounted) {
+    return null; // O podrías retornar un "loading..." si prefieres una indicación visual
+  }
 
   return (
     <div className="sticky bottom-8 left-8 w-fit">
