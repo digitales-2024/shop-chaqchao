@@ -21,6 +21,20 @@
     "button": "Send email",
     "login": "Back to login"
   },
+  "token-expired": {
+    "title": "Your token has expired. ",
+    "description": "Please request a new password reset link."
+  },
+  "reset-password": {
+    "title": "Reset Password",
+    "subtitle": "Enter your new password",
+    "newPassword": "New password",
+    "description": "Minimum 8 characters, including uppercase, lowercase, and numbers.",
+    "confirmPassword": "Confirm password",
+    "button": "Reset password",
+    "loading": "Resetting password...",
+    "login": "Back to login"
+  },
   "workshops": {
     "title": {
       "start": "Discover how to create",

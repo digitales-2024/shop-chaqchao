@@ -21,6 +21,20 @@
     "button": "Enviar",
     "login": "Regresar al inicio de sesión"
   },
+  "token-expired": {
+    "title": "Token expirado",
+    "description": "Solicite un nuevo enlace de restablecimiento de contraseña."
+  },
+  "reset-password": {
+    "title": "Restablecer Contraseña",
+    "subtitle": "Ingrese su nueva contraseña",
+    "newPassword": "Nueva Contraseña",
+    "description": "Mínimo 8 caracteres, incluyendo mayúsculas, minúsculas y números.",
+    "confirmPassword": "Confirmar Contraseña",
+    "button": "Reestablecer Contraseña",
+    "loading": "Restableciendo contraseña...",
+    "login": "Regresar al inicio de sesión"
+  },
   "workshops": {
     "title": {
       "start": "¡Descubre cómo crear",
