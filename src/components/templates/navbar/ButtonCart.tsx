@@ -1,4 +1,5 @@
 import "@/styles/button-hero.css";
+import useCartStore from "@/redux/store/cart";
 import { ShoppingBag } from "lucide-react";
 import type { ComponentProps } from "react";
 
@@ -14,6 +15,7 @@ export const ButtonCart = ({
   className?: string;
 }> &
   ComponentProps<"button">) => {
+  const { cartItems } = useCartStore();
   return (
     <button
       onClick={onClick}
@@ -36,7 +38,7 @@ export const ButtonCart = ({
           <span
             className="block size-24 -translate-x-1/2 -translate-y-1/3 blur-xl"
             style={{
-              background: "linear-gradient(135deg, #cccccc, #F26378, #F5833F)",
+              background: "linear-gradient(135deg, #cccccc, #f5833f, #F5833F)",
             }}
           />
         </span>
@@ -51,21 +53,15 @@ export const ButtonCart = ({
           className="z-0 block h-full w-12 -translate-x-1/2 rounded-full blur-xl"
           style={{
             animation: "10s ease-in-out infinite alternate border-glow-scale",
-            background: "linear-gradient(135deg, #cccccc, #F26378, #F5833F)",
+            background: "linear-gradient(135deg, #cccccc, #f5833f, #F5833F)",
           }}
         />
       </span>
 
-      <div className="absolute -bottom-2 right-1 z-10">
+      <div className="absolute -bottom-2 -right-2 z-10">
         <span className="relative transition-transform group-hover:rotate-[360deg] group-hover:scale-105">
-          <Badge
-            className="inline-flex size-5 shrink-0 items-center justify-center"
-            style={{
-              animation:
-                "14s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite alternate star-rotate",
-            }}
-          >
-            1
+          <Badge className="inline-flex size-5 shrink-0 items-center justify-center">
+            {cartItems.reduce((acc, item) => acc + item.quantity, 0)}
           </Badge>
           <span
             className="absolute left-1/2 top-1/2 size-11 -translate-x-1/2 -translate-y-1/2 rounded-full opacity-0 blur-lg dark:opacity-30"
