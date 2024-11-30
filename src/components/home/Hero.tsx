@@ -128,7 +128,7 @@ export const Hero = () => {
                     alt="chaqchao"
                     width={500}
                     height={500}
-                    className="relative z-10 mx-auto size-[calc(100%_-_10rem)] bg-transparent object-cover object-center"
+                    className="relative z-10 mx-auto size-[calc(100%_-_10rem)] bg-transparent object-cover object-center [filter:_drop-shadow(2px_10px_10px_#818182);]"
                     priority={index === 0}
                     quality={100}
                   />

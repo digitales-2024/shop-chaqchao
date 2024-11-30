@@ -19,6 +19,7 @@ import { Card, CardContent, CardFooter } from "../ui/card";
 import { AddToCartButton } from "./AddToCartButton";
 import { OutStock } from "./OutStock";
 import { ProductDialog } from "./ProductDialog";
+
 interface CartItemProps {
   product: Product;
 }
@@ -39,13 +40,13 @@ export const CartItem = React.forwardRef<HTMLDivElement, CartItemProps>(
               className="group/item m-0 h-[40rem] w-[22rem] overflow-hidden rounded-3xl border border-secondary/10 bg-transparent p-0 transition-all duration-300 hover:bg-transparent hover:shadow-md"
               disabled={!product.isAvailable}
             >
-              <Card className="group/product bg-transparento grid h-full w-full grid-rows-[1fr_200px] border-none p-2 shadow-none transition-all duration-500 hover:bg-white hover:shadow-sm">
+              <Card className="group/product grid h-full w-full grid-rows-[1fr_200px] border-none bg-transparent p-2 shadow-none transition-all duration-500 hover:bg-white hover:shadow-sm">
                 <CardContent className="flex h-full w-full flex-col items-center justify-start gap-4 p-0">
-                  <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-2xl bg-primary-foreground p-10">
+                  <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-2xl bg-primary-foreground/50 p-10 group-hover/item:bg-secondary/5">
                     <DialogImage
                       src={product.image}
                       alt={`chaqchao ${product.name}`}
-                      className="object-cover"
+                      className="object-cover [filter:_drop-shadow(2px_10px_10px_#818182);]"
                     />
                     <p className="absolute left-5 top-5 rounded-xl bg-white px-3 py-1 text-center text-sm font-bold capitalize text-terciary">
                       {product.category.name}

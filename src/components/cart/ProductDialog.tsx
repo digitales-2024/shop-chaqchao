@@ -31,11 +31,11 @@ export const ProductDialog = ({ product }: ProductDialogProps) => {
   return (
     <ScrollArea className="h-full max-h-[90vh]">
       <div className="grid h-full gap-x-10 md:grid-cols-2">
-        <div className="flex items-center justify-center rounded-md bg-primary-foreground">
+        <div className="flex items-center justify-center rounded-md bg-secondary/5">
           <DialogImage
             src={product.image}
             alt={`producto ${product.name}`}
-            className="object-cover"
+            className="object-cover [filter:_drop-shadow(2px_10px_10px_#818182);]"
           />
         </div>
         <div className="space-y-6 px-8 py-20">
