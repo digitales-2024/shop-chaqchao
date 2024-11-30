@@ -5,7 +5,6 @@ import { ChaqchaoLogo } from "@/assets/images/ChaqchaoLogo";
 import Bg from "@/assets/images/login/singin.webp";
 import { useLogin } from "@/hooks/use-login";
 import { useRegister } from "@/hooks/use-register";
-import { Locale } from "@/i18n/config";
 import {
   CreateClientsSchema,
   CreateClientInputSchema,
@@ -14,7 +13,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { Link } from "next-view-transitions";
 import Image from "next/image";
 import React, { startTransition } from "react";
@@ -73,15 +72,13 @@ export default function AuthComponent() {
     });
   }
 
-  const locale = useLocale();
-
   const t = useTranslations("register");
 
   return (
     <div className="grid h-screen grid-cols-1 p-2 font-nunito md:grid-cols-2">
       {/* Formulario */}
       <div className="flex flex-col items-end justify-end p-0 sm:p-10">
-        <LanguageSelector defaultValue={locale as Locale} />
+        <LanguageSelector />
         <div className="flex h-full w-full items-center justify-center">
           <Card className="w-full max-w-[35rem] border-none shadow-none">
             <CardHeader className="mb-10 text-center">
@@ -373,7 +370,7 @@ export default function AuthComponent() {
         </div>
       </div>
 
-      <div className="relative hidden h-full items-start overflow-hidden rounded-3xl bg-secondary p-6 text-white [view-transition-name:_signin] md:flex">
+      <div className="relative hidden h-full items-start overflow-hidden rounded-3xl bg-primary p-6 text-white [view-transition-name:_signin] md:flex">
         <Image
           src={Bg}
           alt="chaqchao factory"

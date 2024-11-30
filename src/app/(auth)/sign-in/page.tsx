@@ -2,9 +2,8 @@
 
 import { ChaqchaoLogo } from "@/assets/images/ChaqchaoLogo";
 import Bg from "@/assets/images/login/singin.webp";
-import { Locale } from "@/i18n/config";
 import { motion } from "framer-motion";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { Link } from "next-view-transitions";
 import Image from "next/image";
 
@@ -12,14 +11,12 @@ import { FormLogin } from "@/components/account/login/FormLogin";
 import { LanguageSelector } from "@/components/templates/navbar/LanguageSelector";
 
 export default function AuthCards() {
-  const locale = useLocale();
-
   const t = useTranslations("login");
 
   return (
     <div className="grid h-screen grid-cols-1 p-2 font-nunito md:grid-cols-2">
       {/* Mensaje a la izquierda (oculto en pantallas pequeñas) */}
-      <div className="relative hidden h-full items-start justify-start overflow-hidden rounded-3xl bg-secondary p-6 [view-transition-name:_signin] md:flex">
+      <div className="relative hidden h-full items-start justify-start overflow-hidden rounded-3xl bg-primary p-6 [view-transition-name:_signin] md:flex">
         <Image
           src={Bg}
           alt="chaqchao factory"
@@ -53,7 +50,7 @@ export default function AuthCards() {
 
       {/* Formulario a la derecha */}
       <div className="flex flex-col items-end justify-end p-0 sm:p-10">
-        <LanguageSelector defaultValue={locale as Locale} />
+        <LanguageSelector />
         <FormLogin />
       </div>
     </div>
