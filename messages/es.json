@@ -13,6 +13,14 @@
     "textsecond": " hecho con los mejores ingredientes.",
     "button": "Explora nuestros productos"
   },
+  "forgot-password": {
+    "title": "Recuperar Contraseña",
+    "subtitle": "Ingrese su correo electrónico y le enviaremos un enlace para restablecer su contraseña.",
+    "email": "Correo Electrónico",
+    "description": "Ingrese su correo electrónico asociado a su cuenta",
+    "button": "Enviar",
+    "login": "Regresar al inicio de sesión"
+  },
   "workshops": {
     "title": {
       "start": "¡Descubre cómo crear",
