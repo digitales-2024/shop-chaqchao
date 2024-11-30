@@ -35,13 +35,13 @@ export const CartItem = React.forwardRef<HTMLDivElement, CartItemProps>(
             damping: 24,
           }}
         >
-          <DialogTrigger>
-            <Button
-              className="group/item m-0 h-[40rem] w-[22rem] overflow-hidden rounded-3xl border border-secondary/10 bg-transparent p-0 transition-all duration-300 hover:bg-transparent hover:shadow-md"
-              disabled={!product.isAvailable}
-            >
+          <Button
+            className="group/item m-0 h-[40rem] w-[22rem] overflow-hidden rounded-3xl border border-secondary/10 bg-transparent p-0 transition-all duration-300 hover:bg-transparent hover:shadow-md"
+            disabled={!product.isAvailable}
+          >
+            <DialogTrigger className="h-full w-full">
               <Card className="group/product grid h-full w-full grid-rows-[1fr_200px] border-none bg-transparent p-2 shadow-none transition-all duration-500 hover:bg-white hover:shadow-sm">
-                <CardContent className="flex h-full w-full flex-col items-center justify-start gap-4 p-0">
+                <CardContent className="flex h-full w-full flex-col items-center justify-start gap-4 border-none p-0">
                   <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-2xl bg-primary-foreground/50 p-10 group-hover/item:bg-secondary/5">
                     <DialogImage
                       src={product.image}
@@ -78,8 +78,8 @@ export const CartItem = React.forwardRef<HTMLDivElement, CartItemProps>(
                   </div>
                 </CardFooter>
               </Card>
-            </Button>
-          </DialogTrigger>
+            </DialogTrigger>
+          </Button>
           <DialogContainer>
             <DialogContent className="h-full max-h-[90vh] overflow-hidden rounded-xl border bg-white sm:max-w-[90vw] md:max-w-[80vw] lg:max-w-[1000px]">
               <ProductDialog product={product} />
