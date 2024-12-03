@@ -23,12 +23,12 @@ export function TextMorph({
     const charCounts: Record<string, number> = {};
 
     return children.split("").map((char) => {
-      const lowerChar = char;
+      const lowerChar = char === " " ? "space" : char;
       charCounts[lowerChar] = (charCounts[lowerChar] || 0) + 1;
 
       return {
         id: `${uniqueId}-${lowerChar}${charCounts[lowerChar]}`,
-        label: lowerChar,
+        label: char === " " ? "\u00A0" : char, // Use non-breaking space for spaces
       };
     });
   }, [children, uniqueId]);
