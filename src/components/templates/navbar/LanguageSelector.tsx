@@ -49,7 +49,7 @@ export function LanguageSelector() {
   }
 
   return (
-    <div className="sticky bottom-8 left-8 w-fit">
+    <div className="fixed bottom-8 left-8 w-fit">
       <div className="flex w-full space-x-2 rounded-full border border-zinc-950/10 bg-white p-2">
         <AnimatedBackground
           defaultValue={locale}
