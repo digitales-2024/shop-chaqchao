@@ -1,14 +1,14 @@
-import { useGetClassesByClientQuery } from "@/redux/services/classApi";
+import { useClassByDateMutation } from "@/redux/services/classApi";
 
 export const useClass = () => {
-  const { data, isLoading, refetch } = useGetClassesByClientQuery({
-    refetchOnMountOrArgChange: true,
-    refetchOnReconnect: true,
-  });
+  const [
+    findClassByDate,
+    { isLoading: isLoadingFindClassByDate, data: dataFindClassByDate },
+  ] = useClassByDateMutation();
 
   return {
-    data,
-    isLoading,
-    refetch,
+    findClassByDate,
+    dataFindClassByDate,
+    isLoadingFindClassByDate,
   };
 };
