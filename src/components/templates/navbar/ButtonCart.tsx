@@ -1,23 +1,26 @@
 import "@/styles/button-hero.css";
 import useCartStore from "@/redux/store/cart";
 import { ShoppingBag } from "lucide-react";
+import React, { forwardRef } from "react";
 import type { ComponentProps } from "react";
 
 import { Badge } from "@/components/ui/badge";
 
 import { cn } from "@/lib/utils";
-export const ButtonCart = ({
-  onClick,
-  className,
-  ...props
-}: Readonly<{
-  onClick?: () => void;
-  className?: string;
-}> &
-  ComponentProps<"button">) => {
+
+export const ButtonCart = forwardRef<
+  HTMLButtonElement,
+  Readonly<{
+    onClick?: () => void;
+    className?: string;
+  }> &
+    ComponentProps<"button">
+>(({ onClick, className, ...props }, ref) => {
   const { cartItems } = useCartStore();
+
   return (
     <button
+      ref={ref}
       onClick={onClick}
       className={cn(
         "group/cart group relative size-10 rounded-full bg-neutral-200 p-px",
@@ -79,4 +82,7 @@ export const ButtonCart = ({
       </span>
     </button>
   );
-};
+});
+
+// Establecer un nombre legible para debug
+ButtonCart.displayName = "ButtonCart";
