@@ -23,5 +23,5 @@ export const useSchedules = () => {
     }
   }, [schedules, isLoading]);
 
-  return { scheduleOptions, isLoading, error };
+  return { scheduleOptions, isLoading, error, schedules };
 };
