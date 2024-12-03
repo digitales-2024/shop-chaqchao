@@ -10,11 +10,11 @@ interface LayoutShopProps {
 
 export function LayoutShop({ children }: LayoutShopProps) {
   return (
-    <>
+    <div className="overflow-hidden rounded-2xl bg-white">
       <Navbar />
       <main>{children}</main>
       <LanguageSelector />
       <Footer />
-    </>
+    </div>
   );
 }
