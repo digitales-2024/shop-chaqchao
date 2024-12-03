@@ -42,7 +42,7 @@ export const AlertSuccessPayment = ({
     <AnimatePresence>
       {isOpen && (
         <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
-          <AlertDialogContent tabIndex={undefined}>
+          <AlertDialogContent tabIndex={undefined} className="z-[999]">
             <AlertDialogHeader>
               <motion.div
                 initial={{ scale: 0 }}

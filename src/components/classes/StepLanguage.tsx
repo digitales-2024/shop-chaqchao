@@ -6,9 +6,10 @@ import { useReservation } from "@/hooks/use-reservation";
 import { ArrowLeftIcon } from "lucide-react";
 import { AnimatePresence, MotionConfig, motion } from "motion/react";
 import { useTranslations } from "next-intl";
-import { useRef, useState, useEffect, useId } from "react";
+import { useRef, useState, useEffect, useId, useMemo } from "react";
 
 import PulsatingDots from "../common/PulsatingDots";
+import { Button } from "../ui/button";
 
 const TRANSITION = {
   type: "spring",
@@ -20,7 +21,7 @@ export const StepLanguage = () => {
   const { languages, isLoading, error } = useLanguages();
   const { reservation, setReservation } = useReservation();
 
-  const { findClassByDate } = useClass();
+  const { findClassByDate, dataFindClassByDate } = useClass();
 
   useEffect(() => {
     if (reservation.date && reservation.time) {
@@ -29,6 +30,7 @@ export const StepLanguage = () => {
         schedule: reservation.time,
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reservation.date, reservation.time]);
 
   const t = useTranslations("class.step4");
@@ -57,6 +59,16 @@ export const StepLanguage = () => {
     }
   });
 
+  useMemo(() => {
+    if (dataFindClassByDate) {
+      setReservation({
+        ...reservation,
+        language: dataFindClassByDate.languageClass,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataFindClassByDate]);
+
   return (
     <div className="flex flex-col gap-4">
       <div className="">
@@ -67,9 +79,9 @@ export const StepLanguage = () => {
         ) : languages && languages.length > 0 ? (
           <div className="flex flex-wrap justify-center gap-4">
             {languages.map((language, index) => (
-              <button
+              <Button
                 key={index}
-                className={`rounded-full border px-6 py-2 text-sm transition-all sm:text-lg ${
+                className={`rounded-full border bg-white px-6 py-2 text-sm transition-all sm:text-lg ${
                   reservation.language === language.languageName
                     ? "bg-primary text-white"
                     : "border-primary text-primary"
@@ -80,9 +92,10 @@ export const StepLanguage = () => {
                     language: language.languageName,
                   })
                 }
+                disabled={!!dataFindClassByDate?.languageClass}
               >
                 {t(`languages.${language.languageName}`)}
-              </button>
+              </Button>
             ))}
           </div>
         ) : (
