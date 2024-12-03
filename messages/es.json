@@ -206,30 +206,32 @@
     }
   },
   "class": {
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "confirm": "Confirmar",
     "step1": {
-      "title": "Registra una clase",
-      "description": "¡Puede reservar nuestra clase en nuestra tienda o reservarla con anticipación simplemente rellenando el siguiente formulario y pagando a través de PayPal! Nuestro equipo confirmará su reserva y pago por correo electrónico.",
-      "button": "Registrar"
-    },
-    "step2": {
       "title": "Información de contacto",
-      "toast": {
-        "fullFields": "Por favor, complete todos los campos para continuar.",
-        "emailValidation": "Por favor, ingrese un correo electrónico válido."
+      "errors": {
+        "name": "Debe ingresar su nombre completo.",
+        "email": "Debe ingresar un correo electrónico válido.",
+        "phone": "Debe ingresar un número de teléfono válido."
       },
-      "placeholder": {
+      "label": {
         "name": "Nombre Completo",
-        "email": "Correo Electrónico"
+        "email": "Correo Electrónico",
+        "phone": "Número de Teléfono"
       },
       "button": {
         "back": "Atras",
         "next": "Siguiente"
       }
     },
-    "step3": {
-      "title": "Escoja el día",
-      "toast": {
-        "fullFields": "Por favor, selecciona una fecha para continuar"
+    "step2": {
+      "title": "Fecha y hora de la clase",
+      "subtitle": "Seleccione la fecha y hora en la que desea tomar la clase",
+      "description": "Seleccione la hora de la clase",
+      "errors": {
+        "date": "Por favor, selecciona una fecha para continuar"
       },
       "moreDates": "MÁS FECHAS",
       "days": {
@@ -261,34 +263,32 @@
         "next": "Siguiente"
       }
     },
-    "step4": {
-      "title": "Horarios disponibles",
+    "step3": {
+      "title": "Cantidad de participantes",
+      "subtitle": "Seleccione la cantidad de participantes para la clase",
+      "adults": "Adultos",
+      "children": "Niños",
       "toast": {
-        "fullFields": "Por favor, selecciona un horario para continuar."
+        "fullFields": "Por favor, seleccione la cantidad de adultos para continuar."
       },
-      "dateNotSelected": "Fecha no seleccionada.",
-      "subTitle": "Escoja el horario",
-      "schedule": {
-        "loading": "Cargando horarios...",
-        "loadingError": "Error al cargar los horarios",
-        "notAvailable": "No hay horarios disponibles"
-      },
+      "dateNotSelected": "Fecha no seleccionada",
       "button": {
         "back": "Atras",
         "next": "Siguiente"
       }
     },
-    "step5": {
-      "title": "Seleccione el idioma",
-      "subTitle": "Idiomas disponibles",
+    "step4": {
+      "title": "Idioma y comentarios",
+      "subtitle": "Seleccione el idioma en el que desea tomar la clase",
       "languages": {
-        "spanish": "ESPAÑOL",
-        "english": "INGLES"
+        "español": "ESPAÑOL",
+        "ingles": "INGLES"
       },
       "toast": {
         "fullFields": "Por favor, seleccione un idioma para continuar."
       },
-      "dateNotSelected": "Fecha no seleccionada",
+      "comments": "¿Desea agregar algún comentario?",
+      "addComments": "Agregar comentarios",
       "language": {
         "loading": "Cargando idiomas...",
         "loadingError": "Error al cargar los idiomas",
@@ -299,58 +299,15 @@
         "next": "Siguiente"
       }
     },
-    "step6": {
-      "title": "Cantidad de adultos",
-      "toast": {
-        "fullFields": "Por favor, seleccione la cantidad de adultos para continuar."
-      },
-      "dateNotSelected": "Fecha no seleccionada",
-      "button": {
-        "back": "Atras",
-        "next": "Siguiente"
-      }
-    },
-    "step7": {
-      "title": "Personalice su experiencia",
-      "toast": {
-        "noPlaceAvailable": "No hay más cupos disponibles, Por favor escoja otra fecha u horario.",
-        "invalidNumberParticipantsRange": "Número invalido de participantes, El número minimo de participantes debe ser 2.",
-        "invalidNumberParticipants": "Número invalido de participantes, El número minimo de participantes debe ser 1.",
-        "classIsClose": "La clase esta cerrada, Por favor escoja otra fecha u horario.",
-        "registrationIsClose": "La inscripción esta cerrada, Por favor eliga otra fecha u horario.",
-        "invalidClassDate": "Fecha invalida, Por favor elige otra fecha u horario.",
-        "classRegisterSuccessfully": "Clase registrada exitosamente. Proceda con el pago.",
-        "errorRegisterClass": "Error al registrar la clase. Inténtalo de nuevo.",
-        "paymentConfirmed": "Pago confirmado y clase registrada con éxito.",
-        "errorConfirmPayment": "Error al confirmar el pago. Inténtalo de nuevo.",
-        "acceptTerms": "Acepte los terminos y politicas para continuar",
-        "timeOut": "El tiempo para realizar el pago ha expirado y su cupo fue cancelado.",
-        "paymentCancelled": "Pago cancelado"
-      },
+    "step5": {
+      "title": "Resumen de la reserva",
+      "people": "Personas",
       "remainingTime": "Tiempo restante para realizar el pago: ",
-      "children": {
-        "detail": "Niños mayores de 14 años",
-        "detailPay": "Ya pagan como adulto*"
-      },
-      "symbols": {
-        "+": "+",
-        "-": "-"
+      "errors": {
+        "terms": "Debes aceptar los términos y condiciones"
       },
       "totalParticipants": {
         "people": "Personas"
-      },
-      "allergies": {
-        "title": "Alergias o restricciones alimentarias",
-        "placeholder": "Especifique que alergias",
-        "button": {
-          "si": "Si",
-          "no": "No"
-        }
-      },
-      "abstract": {
-        "title": "Resumen de la reserva",
-        "workshops": "WORKSHOP, ",
-        "people": "PERSONAS - "
       },
       "subtotalDetail": {
         "title": "Subtotal",
@@ -363,6 +320,7 @@
         "terms": "Términos y Políticas de Privacidad"
       },
       "buttons": {
+        "loading": "Confirmando registro",
         "back": "Atras",
         "register": "Registrar Clase"
       }
@@ -421,6 +379,19 @@
       "languageClass": "Idioma: ",
       "participantsClass": "Participantes: ",
       "userAllergies": "Alergias: "
+    },
+    "errors": {
+      "name": "Por favor ingrese su nombre completo.",
+      "email": "Por favor ingrese un correo electrónico válido.",
+      "phone": "Por favor ingrese un número de teléfono válido.",
+      "date": "Por favor seleccione una fecha para continuar.",
+      "time": "Por favor seleccione la hora de la clase para continuar.",
+      "language": "Por favor seleccione un idioma para continuar."
+    },
+    "success": {
+      "title": "¡Registro confirmado!",
+      "description": "Tu registro ha sido confirmado y se encuentra en proceso de validación. Recibirás un correo electrónico con la confirmación de tu registro.",
+      "accept": "Aceptar"
     }
   },
   "checkout": {
