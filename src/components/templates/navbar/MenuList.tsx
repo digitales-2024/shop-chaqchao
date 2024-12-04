@@ -20,7 +20,7 @@ export const MenuList = () => {
 
   return (
     <nav
-      className="flex flex-col items-center justify-center sm:flex-row"
+      className="flex flex-col items-center justify-center gap-9 sm:flex-row"
       onMouseLeave={() => {
         handleHoverLink(null);
       }}
@@ -28,7 +28,7 @@ export const MenuList = () => {
       {dataButtons.map((link, index) => (
         <Link
           href={link.href}
-          className="relative inline-flex w-fit whitespace-nowrap rounded px-2 py-1 text-sm font-medium"
+          className="relative inline-flex w-auto justify-center whitespace-nowrap rounded p-4 text-center text-2xl font-normal lowercase transition-all duration-300 hover:font-bold"
           key={link.label}
           onMouseEnter={() => handleHoverLink(index)}
           type="button"
@@ -38,7 +38,7 @@ export const MenuList = () => {
             {elementFocused === index && (
               <motion.div
                 animate={{ opacity: 1, scale: 1 }}
-                className="absolute bottom-0 left-0 right-0 top-0 -z-10 rounded-md bg-neutral-200 dark:bg-neutral-800"
+                className="absolute bottom-0 left-0 right-0 top-0 -z-10 rounded-full bg-neutral-200"
                 exit={{ opacity: 0, scale: 0.9 }}
                 initial={{ opacity: 0, scale: 0.95 }}
                 layout={true}
