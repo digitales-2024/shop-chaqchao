@@ -59,13 +59,13 @@ export const Hero = () => {
             className="font-display text-center text-4xl font-bold tracking-[-0.02em] drop-shadow-sm md:text-7xl md:leading-[5rem]"
             variants={FADE_DOWN_ANIMATION_VARIANTS}
           >
-            <ChaqchaoName className="h-32 sm:h-56" />
+            <ChaqchaoName className="h-32 sm:h-40 md:h-52" />
           </motion.h1>
           <motion.p
             className="mt-6 flex flex-col text-balance text-center text-gray-600 md:text-2xl"
             variants={FADE_DOWN_ANIMATION_VARIANTS}
           >
-            <span className="inline-flex gap-2">
+            <span className="inline-flex gap-2 truncate">
               {t("textfirst")}{" "}
               <span className="relative inline-flex text-primary">
                 {t("textresalt")}
