@@ -1,4 +1,5 @@
 "use client";
+
 import { OrderUpdateContext } from "@/contexts/OrderUpdateContext";
 import { useLogout } from "@/hooks/use-logout";
 import { useProfile } from "@/hooks/use-profile";
@@ -14,6 +15,7 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useContext } from "react";
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -48,7 +50,7 @@ export const UserLogin = () => {
         <DropdownMenuTrigger asChild>
           <Button
             variant="ghost"
-            className="relative size-10 rounded-full border-primary bg-background font-nunito text-lg font-black capitalize outline outline-primary ring-0 ring-offset-0 transition-all duration-300 hover:scale-105 focus:ring-0 focus:ring-offset-0 focus-visible:border-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+            className="relative size-9 rounded-full bg-white text-lg font-semibold capitalize outline-none ring-0"
           >
             {hasOrderUpdates && (
               <div className="absolute -right-1 -top-0">
@@ -58,7 +60,11 @@ export const UserLogin = () => {
                 </span>
               </div>
             )}
-            {getFirstLetter(clientData.name)}
+
+            <Avatar>
+              <AvatarImage src={clientData.image} />
+              <AvatarFallback>{getFirstLetter(clientData.name)}</AvatarFallback>
+            </Avatar>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56" align="end">

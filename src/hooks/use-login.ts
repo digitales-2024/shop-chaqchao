@@ -60,7 +60,6 @@ export const useLogin = () => {
       "_blank",
       `width=${width},height=${height},top=${top},left=${left}`,
     );
-
     // Verificar si la ventana se ha cerrado
     const checkWindowClosed = setInterval(() => {
       if (googleAuthWindow && googleAuthWindow.closed) {

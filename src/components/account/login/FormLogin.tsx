@@ -154,7 +154,7 @@ export const FormLogin = () => {
           >
             <Button
               variant="outline"
-              className="flex w-full items-center justify-center rounded-lg border bg-white py-6"
+              className="flex w-full items-center justify-center rounded-full border bg-white py-6"
               onClick={googleLogin}
               disabled={isLoading}
             >
