@@ -43,7 +43,7 @@ export default async function RootLayout({
           />
         </head>
         <body
-          className={`${comingSoon.variable} ${geistSans.variable} bg-foreground p-2 font-nunito`}
+          className={`${comingSoon.variable} ${geistSans.variable} font-nunito`}
         >
           <NextIntlClientProvider messages={messages}>
             <Toaster
