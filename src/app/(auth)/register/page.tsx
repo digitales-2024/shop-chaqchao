@@ -75,7 +75,7 @@ export default function AuthComponent() {
   const t = useTranslations("register");
 
   return (
-    <div className="grid h-screen grid-cols-1 p-2 font-nunito md:grid-cols-2">
+    <div className="grid h-[98vh] grid-cols-1 overflow-hidden rounded-3xl bg-white font-nunito md:grid-cols-2">
       {/* Formulario */}
       <div className="flex flex-col items-end justify-end p-0 sm:p-10">
         <LanguageSelector />
@@ -343,7 +343,7 @@ export default function AuthComponent() {
               >
                 <Button
                   variant="outline"
-                  className="flex w-full items-center justify-center rounded-lg border bg-white py-6"
+                  className="flex w-full items-center justify-center rounded-full border bg-white py-6"
                   onClick={googleLogin}
                 >
                   <GoogleIcon />

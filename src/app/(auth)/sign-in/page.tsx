@@ -14,7 +14,7 @@ export default function AuthCards() {
   const t = useTranslations("login");
 
   return (
-    <div className="grid h-screen grid-cols-1 p-2 font-nunito md:grid-cols-2">
+    <div className="grid h-[98vh] grid-cols-1 overflow-hidden rounded-3xl bg-white font-nunito md:grid-cols-2">
       {/* Mensaje a la izquierda (oculto en pantallas pequeñas) */}
       <div className="relative hidden h-full items-start justify-start overflow-hidden rounded-3xl bg-primary p-6 [view-transition-name:_signin] md:flex">
         <Image
