@@ -36,10 +36,10 @@ export const UserLogin = () => {
     return (
       <Link
         href="/sign-in"
-        className="inline-flex size-10 shrink-0 items-center justify-center rounded-full transition-all duration-300 hover:scale-105"
+        className="inline-flex h-full w-full shrink-0 items-center justify-center rounded-full"
       >
         <span className="sr-only">Iniciar sesión</span>
-        <UserRound className="shrink-0" />
+        <UserRound className="size-7" strokeWidth={1} />
       </Link>
     );
   }
