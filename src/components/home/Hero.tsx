@@ -1,6 +1,5 @@
 "use client";
 import BgHero from "@/assets/images/bg_hero.webp";
-import { ChaqchaoName } from "@/assets/images/ChaqchaoName";
 import Product01 from "@/assets/images/product_01.webp";
 import Product02 from "@/assets/images/product_02.webp";
 import Product03 from "@/assets/images/product_03.webp";
@@ -56,13 +55,13 @@ export const Hero = () => {
           className="flex h-full flex-col items-center justify-center space-y-20"
         >
           <motion.h1
-            className="font-display text-center text-4xl font-bold tracking-[-0.02em] drop-shadow-sm md:text-7xl md:leading-[5rem]"
+            className="font-display text-4xl font-black uppercase tracking-[-0.02em] drop-shadow-sm md:text-7xl md:leading-[5rem]"
             variants={FADE_DOWN_ANIMATION_VARIANTS}
           >
-            <ChaqchaoName className="h-32 sm:h-40 md:h-52" />
+            Hola mundo
           </motion.h1>
           <motion.p
-            className="mt-6 flex flex-col text-balance text-center text-gray-600 md:text-2xl"
+            className="mt-6 flex flex-col text-balance text-start text-gray-600 md:text-2xl"
             variants={FADE_DOWN_ANIMATION_VARIANTS}
           >
             <span className="inline-flex gap-2 truncate">
