@@ -50,7 +50,7 @@ export function LanguageSelector() {
 
   return (
     <div className="fixed bottom-8 left-8 w-fit">
-      <div className="flex w-full space-x-2 rounded-full border border-zinc-950/10 bg-white p-2">
+      <div className="flex w-full space-x-2 rounded-full border border-zinc-950/10 bg-white/60 p-2 backdrop-blur-md">
         <AnimatedBackground
           defaultValue={locale}
           onValueChange={(value) => onChange(value as string)}
