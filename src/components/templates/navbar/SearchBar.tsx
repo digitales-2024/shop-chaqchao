@@ -11,10 +11,10 @@ export function SearchBar() {
       href={`/categories`}
       aria-label="Buscar"
       className={cn(
-        "relative z-10 flex size-10 cursor-pointer items-center justify-center rounded-full transition-all duration-300 hover:scale-105",
+        "relative z-10 flex h-full w-full cursor-pointer items-center justify-center rounded-full",
       )}
     >
-      <Search />
+      <Search className="size-7" strokeWidth={1} />
     </Link>
   );
 }
