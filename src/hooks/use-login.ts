@@ -20,7 +20,7 @@ export const useLogin = () => {
             typeof result.error === "object" &&
             "data" in result.error
           ) {
-            const error = (result.error.data as CustomErrorData).message;
+            const error = (result.error.data as CustomErrorData).error;
             const message = error as string;
             reject(new Error(message));
           }

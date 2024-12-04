@@ -44,7 +44,7 @@ export const useRegister = () => {
       loading: t("loading"),
       success: t("success"),
       error: (error) => {
-        return t(error.message) || error.message;
+        return error.message === "email" ? t(error.message) : error.message;
       },
     });
   };
