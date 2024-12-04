@@ -17,14 +17,14 @@ export function Navbar() {
     <header className="flex items-center justify-center">
       <nav
         className={cn(
-          "fixed top-6 z-50 mx-auto rounded-full bg-primary-foreground/50 px-6 backdrop-blur-md transition-all duration-500",
+          "fixed top-0 z-50 mx-auto bg-primary-foreground/50 px-6 backdrop-blur-md transition-all duration-500 sm:top-6 sm:rounded-full",
           {
-            "h-20 w-[70rem]": !isScrolling,
-            "h-16 w-[50rem]": isScrolling,
+            "h-16 w-full sm:h-20 sm:max-w-[70rem]": !isScrolling,
+            "h-14 w-full sm:h-16 sm:max-w-[50rem]": isScrolling,
           },
         )}
       >
-        <div className="grid w-full grid-cols-3 items-center justify-between">
+        <div className="hidden w-full grid-cols-3 items-center justify-between sm:grid">
           <div className="flex w-full">
             <Link
               href="/"
@@ -43,6 +43,21 @@ export function Navbar() {
           <div className="inline-flex justify-end">
             <NavList />
           </div>
+        </div>
+        <div className="flex w-full flex-row items-center justify-between sm:hidden">
+          <Link
+            href="/"
+            prefetch={true}
+            className="flex items-center justify-center sm:w-auto lg:mr-6"
+          >
+            <ChaqchaoCharacter
+              className={cn("transition-all duration-300", {
+                "h-14": !isScrolling,
+                "h-10": isScrolling,
+              })}
+            />
+          </Link>
+          <NavList />
         </div>
       </nav>
     </header>
