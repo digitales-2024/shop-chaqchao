@@ -1,9 +1,12 @@
 "use client";
 
+import { useOpenMenu } from "@/hooks/use-open-menu";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useState } from "react";
+
+import { cn } from "@/lib/utils";
 
 export const MenuList = () => {
   const t = useTranslations("navbar");
@@ -18,9 +21,12 @@ export const MenuList = () => {
     setElementFocused(index);
   };
 
+  const { open } = useOpenMenu();
   return (
     <nav
-      className="flex flex-col items-center justify-center gap-9 sm:flex-row"
+      className={cn("flex flex-row items-center justify-center gap-x-9", {
+        "flex-col items-end": open,
+      })}
       onMouseLeave={() => {
         handleHoverLink(null);
       }}
@@ -28,7 +34,12 @@ export const MenuList = () => {
       {dataButtons.map((link, index) => (
         <Link
           href={link.href}
-          className="relative inline-flex w-auto justify-center whitespace-nowrap rounded p-4 text-center text-2xl font-normal lowercase transition-all duration-300 hover:font-bold"
+          className={cn(
+            "relative inline-flex w-auto justify-center whitespace-nowrap rounded p-4 text-center text-2xl font-normal lowercase transition-all duration-300 hover:font-bold",
+            {
+              "text-end uppercase": open,
+            },
+          )}
           key={link.label}
           onMouseEnter={() => handleHoverLink(index)}
           type="button"
