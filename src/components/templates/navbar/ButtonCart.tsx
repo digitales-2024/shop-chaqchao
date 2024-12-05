@@ -1,4 +1,5 @@
 import "@/styles/button-hero.css";
+import { useOpenMenu } from "@/hooks/use-open-menu";
 import useCartStore from "@/redux/store/cart";
 import { ShoppingBag } from "lucide-react";
 import React, { forwardRef } from "react";
@@ -13,21 +14,30 @@ export const ButtonCart = forwardRef<
     ComponentProps<"button">
 >(({ onClick }, ref) => {
   const { cartItems } = useCartStore();
+  const { open } = useOpenMenu();
 
   return (
     <button
       ref={ref}
       onClick={onClick}
-      className="group/cart group relative inline-flex size-full items-center justify-center rounded-full bg-transparent text-neutral-900"
+      className="group/cart group relative inline-flex size-full items-center justify-center rounded-full bg-transparent"
     >
-      <span className="sr-only">Abrir carrito de compras</span>
-      <ShoppingBag
-        className="size-7 group-hover/cart:animate-tada"
-        strokeWidth={1}
-      />
-      <span className="absolute right-1 top-1 inline-flex size-5 shrink-0 items-center justify-center">
-        {cartItems.reduce((acc, item) => acc + item.quantity, 0)}
-      </span>
+      {open ? (
+        <span className="p-4 uppercase">
+          Cart ({cartItems.reduce((acc, item) => acc + item.quantity, 0)})
+        </span>
+      ) : (
+        <>
+          <span className="sr-only">Abrir carrito de compras</span>
+          <ShoppingBag
+            className="size-7 group-hover/cart:animate-tada"
+            strokeWidth={1}
+          />
+          <span className="absolute right-1 top-1 inline-flex size-5 shrink-0 items-center justify-center text-sm">
+            {cartItems.reduce((acc, item) => acc + item.quantity, 0)}
+          </span>
+        </>
+      )}
     </button>
   );
 });

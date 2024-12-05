@@ -2,6 +2,7 @@
 
 import { OrderUpdateContext } from "@/contexts/OrderUpdateContext";
 import { useLogout } from "@/hooks/use-logout";
+import { useOpenMenu } from "@/hooks/use-open-menu";
 import { useProfile } from "@/hooks/use-profile";
 import { getFirstLetter } from "@/utils/getFirstLetter";
 import {
@@ -32,6 +33,9 @@ export const UserLogin = () => {
   const { signOut } = useLogout();
   const hasOrderUpdates = useContext(OrderUpdateContext);
   const { clientData, isLoading } = useProfile();
+
+  const { open } = useOpenMenu();
+
   if (isLoading || !clientData) {
     return (
       <Link
@@ -39,7 +43,11 @@ export const UserLogin = () => {
         className="inline-flex h-full w-full shrink-0 items-center justify-center rounded-full"
       >
         <span className="sr-only">Iniciar sesión</span>
-        <UserRound className="size-7" strokeWidth={1} />
+        {open ? (
+          <span className="p-4 uppercase">Login</span>
+        ) : (
+          <UserRound className="size-7" strokeWidth={1} />
+        )}
       </Link>
     );
   }
