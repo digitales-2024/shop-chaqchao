@@ -23,7 +23,7 @@ export function Navbar() {
   const { open, onOpenChange } = useOpenMenu();
 
   const variants = {
-    open: { height: "100%" },
+    open: { height: "60%" },
     closed: { height: "96px" },
   };
 
@@ -107,7 +107,8 @@ const MenuList = () => {
   const { open, onClose } = useOpenMenu();
 
   return (
-    <nav
+    <motion.nav
+      layout
       className={cn("flex flex-row items-center justify-center gap-x-2", {
         "flex-col-reverse items-end": open,
       })}
@@ -117,65 +118,97 @@ const MenuList = () => {
     >
       {dataButtons.map((link, index) =>
         link.type === "link" ? (
-          <Link
-            href={link.href ?? "/"}
-            className={cn(
-              "relative hidden w-auto justify-center whitespace-nowrap rounded p-4 text-center text-2xl font-normal lowercase transition-all duration-300 hover:font-bold sm:inline-flex",
-              {
-                "inline-flex uppercase": open,
-              },
-            )}
+          <motion.div
             key={link.label}
-            onMouseEnter={() => handleHoverLink(index)}
-            type="button"
-            onClick={onClose}
+            layout
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{
+              opacity: { duration: 0.2 },
+              layout: {
+                type: "spring",
+                bounce: 0.4,
+                duration: 0.6,
+              },
+            }}
           >
-            {link.label}
-            <AnimatePresence>
-              {elementFocused === index && (
-                <motion.div
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="absolute bottom-0 left-0 right-0 top-0 -z-10 rounded-full bg-neutral-200"
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  layout={true}
-                  layoutId="focused-element"
-                  transition={{ duration: 0.2 }}
-                />
+            <Link
+              href={link.href ?? "/"}
+              className={cn(
+                "relative hidden w-auto justify-center whitespace-nowrap rounded p-4 text-center text-2xl font-normal lowercase transition-all duration-300 hover:font-bold sm:inline-flex",
+                {
+                  "inline-flex uppercase": open,
+                },
               )}
-            </AnimatePresence>
-          </Link>
+              key={link.label}
+              onMouseEnter={() => handleHoverLink(index)}
+              type="button"
+              onClick={onClose}
+            >
+              {link.label}
+              <AnimatePresence>
+                {elementFocused === index && (
+                  <motion.div
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="absolute bottom-0 left-0 right-0 top-0 -z-10 rounded-full bg-neutral-200"
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    layout={true}
+                    layoutId="focused-element"
+                    transition={{ duration: 0.2 }}
+                  />
+                )}
+              </AnimatePresence>
+            </Link>
+          </motion.div>
         ) : (
-          <div
-            className={cn(
-              "relative inline-flex w-fit items-center justify-center whitespace-nowrap rounded-full text-2xl transition-all duration-300 hover:font-bold",
-              {
-                uppercase: open,
-                "aspect-square size-16 shrink-0": !open,
-              },
-            )}
+          <motion.div
             key={link.label}
-            onMouseEnter={() => handleHoverLink(index)}
-            onClick={onClose}
+            layout
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{
+              opacity: { duration: 0.2 },
+              layout: {
+                type: "spring",
+                bounce: 0.4,
+                duration: 0.6,
+              },
+            }}
           >
-            {link.component}
-            <AnimatePresence>
-              {elementFocused === index && (
-                <motion.div
-                  animate={{ opacity: 1, scale: 1 }}
-                  className="absolute bottom-0 left-0 right-0 top-0 -z-10 rounded-full bg-neutral-200"
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  layout={true}
-                  layoutId="focused-element"
-                  transition={{ duration: 0.2 }}
-                />
+            <div
+              className={cn(
+                "relative inline-flex w-fit items-center justify-center whitespace-nowrap rounded-full text-2xl transition-all duration-300 hover:font-bold",
+                {
+                  uppercase: open,
+                  "aspect-square size-16 shrink-0": !open,
+                },
               )}
-            </AnimatePresence>
-          </div>
+              key={link.label}
+              onMouseEnter={() => handleHoverLink(index)}
+              onClick={onClose}
+            >
+              {link.component}
+              <AnimatePresence>
+                {elementFocused === index && (
+                  <motion.div
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="absolute bottom-0 left-0 right-0 top-0 -z-10 rounded-full bg-neutral-200"
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    layout={true}
+                    layoutId="focused-element"
+                    transition={{ duration: 0.2 }}
+                  />
+                )}
+              </AnimatePresence>
+            </div>
+          </motion.div>
         ),
       )}
-    </nav>
+    </motion.nav>
   );
 };
 
