@@ -37,7 +37,7 @@ export const Hero = () => {
   const t = useTranslations("hero");
 
   return (
-    <section className="relative flex w-full flex-col items-start justify-center py-40">
+    <section className="relative flex w-full flex-col items-start justify-center">
       <div className="absolute bottom-0 right-0 top-0 h-full w-full bg-gradient-to-br" />
       <div className="container z-10 mx-auto grid h-full w-full grid-cols-1 justify-center gap-10 sm:grid-cols-2">
         <motion.div

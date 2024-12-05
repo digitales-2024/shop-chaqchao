@@ -12,7 +12,7 @@ export function LayoutShop({ children }: LayoutShopProps) {
   return (
     <div className="overflow-hidden rounded-2xl bg-white">
       <Navbar />
-      <main>{children}</main>
+      <main className="py-40">{children}</main>
       <LanguageSelector />
       <Footer />
     </div>
