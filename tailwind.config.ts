@@ -12,6 +12,7 @@ const config: Config = {
       fontFamily: {
         commingSoon: ["var(--font-coming-soon)"],
         nunito: ["var(--font-nunito-variable)"],
+        pacifico: ["var(--font-pacifico)"],
       },
       colors: {
         background: "hsl(var(--background))",

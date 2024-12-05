@@ -32,6 +32,7 @@
 :root {
   --font-family-sans: "ComingSoon", sans-serif;
   --font-nunito-variable: "Nunito Variable", sans-serif;
+  --font-pacifico: "Pacifico", cursive;
 }
 
 @layer base {
