@@ -6,41 +6,19 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 import { AnimatedGradientText } from "../common/AnimatedGradientText";
-import SparklesText from "../common/SparklesText";
-import { InView } from "../core/InView";
 import { ClassWorkshop } from "./ClassWorkshop";
 
 export const Workshops = () => {
   const t = useTranslations("workshops");
+
   return (
     <section className="container mx-auto flex flex-col gap-16 py-20">
       <header className="flex flex-col items-start justify-center gap-6">
-        <h2 className="truncate text-balance text-start text-[5rem] font-black">
-          <InView
-            variants={{
-              hidden: {
-                opacity: 0,
-                scale: 0.95,
-              },
-              visible: {
-                opacity: 1,
-                scale: 1,
-              },
-            }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            viewOptions={{ margin: "0px 0px -350px 0px" }}
-            className="overflow-hidden"
-          >
-            {t("title.start")}
-            <SparklesText
-              text={
-                <span className="animate-gradient-animation bg-gradient-to-r from-orange-700 via-secondary to-orange-400 bg-clip-text uppercase text-transparent">
-                  {t("title.resalt")}
-                </span>
-              }
-            />
-            {t("title.end")}
-          </InView>
+        <h2 className="truncate text-balance text-start text-[5rem] font-black uppercase">
+          del
+          <span>cafe</span>
+          al
+          <span>chocolate</span>
         </h2>
         <p className="text-2xl text-gray-500">{t("subtitle")}</p>
         <Link href="/workshops">
