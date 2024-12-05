@@ -181,3 +181,8 @@
 .kr-form-error span > span {
   @apply text-rose-500 !important;
 }
+
+.hero {
+  background-image: url("../assets/images/pattern.svg");
+  background-size: 60rem;
+}
