@@ -55,7 +55,7 @@ const ButtonProducts = React.forwardRef<HTMLDivElement, ButtonProductsProps>(
           )}
         >
           <span
-            className="relative inline-flex size-full items-center justify-center gap-2 font-black uppercase tracking-wide text-[rgb(0,0,0,65%)] dark:font-light dark:text-[rgb(255,255,255,90%)]"
+            className="relative inline-flex size-full items-center justify-center gap-2 text-xl font-black uppercase tracking-wide text-primary dark:font-light"
             style={{
               maskImage:
                 "linear-gradient(-75deg,hsl(var(--primary)) calc(var(--x) + 20%),transparent calc(var(--x) + 30%),hsl(var(--primary)) calc(var(--x) + 100%))",

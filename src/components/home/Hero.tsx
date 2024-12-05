@@ -55,7 +55,7 @@ export const Hero = () => {
               },
             },
           }}
-          className="flex h-full flex-col items-start justify-center"
+          className="flex h-full flex-col items-start justify-center gap-10"
         >
           <motion.h1 variants={FADE_DOWN_ANIMATION_VARIANTS}>
             <span className="sr-only">Chaqchao</span>
