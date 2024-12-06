@@ -297,6 +297,7 @@
       }
     },
     "step3": {
+      "empty": "No places available",
       "title": "Number of Participants",
       "subtitle": "Select the number of participants for the class",
       "adults": "Adults",

@@ -1,10 +1,11 @@
 import { useClass } from "@/hooks/use-class";
 import { useReservation } from "@/hooks/use-reservation";
 import { AnimatePresence, motion } from "framer-motion";
-import { Baby, Minus, Plus, UserRound } from "lucide-react";
+import { Baby, Minus, Plus, TriangleAlert, UserRound } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
+import { BadgeCustom } from "../common/BadgeCustom";
 import { Button } from "../ui/button";
 
 const MAX_PEOPLE = 8;
@@ -60,11 +61,18 @@ export const StepParticipants = () => {
 
   return (
     <div className="flex flex-col gap-10">
-      <div>
-        {t("message.start")}{" "}
-        {MAX_PEOPLE - (dataFindClassByDate?.totalParticipants ?? 0)}{" "}
-        {t("message.end")}
-      </div>
+      {MAX_PEOPLE - (dataFindClassByDate?.totalParticipants ?? 0) > 0 ? (
+        <div>
+          {t("message.start")}{" "}
+          {MAX_PEOPLE - (dataFindClassByDate?.totalParticipants ?? 0)}{" "}
+          {t("message.end")}
+        </div>
+      ) : (
+        <BadgeCustom>
+          <TriangleAlert />
+          {t("empty")}
+        </BadgeCustom>
+      )}
       <div className="flex flex-col gap-10">
         <div className="flex flex-wrap items-center justify-between">
           <div className="relative flex flex-col items-start justify-center">
