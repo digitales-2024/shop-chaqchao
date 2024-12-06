@@ -54,7 +54,7 @@ export function LanguageSelector() {
         <AnimatedBackground
           defaultValue={locale}
           onValueChange={(value) => onChange(value as string)}
-          className="rounded-full bg-zinc-100"
+          className="rounded-full bg-primary/10"
           transition={{
             type: "spring",
             bounce: 0.2,
