@@ -69,9 +69,9 @@ export const CartItem = React.forwardRef<HTMLDivElement, CartItemProps>(
                       <AddToCartButton
                         product={product}
                         size="icon"
-                        className="group/add scale-0 transition-all duration-300 group-hover/item:scale-105"
+                        className="group/add aspect-square size-16 shrink-0 scale-0 transition-all duration-300 group-hover/item:scale-105"
                       >
-                        <ShoppingBag className="group-hover/add:animate-tada" />
+                        <ShoppingBag className="size-14 group-hover/add:animate-tada" />
                       </AddToCartButton>
                     </DialogDescription>
                   </div>
