@@ -56,8 +56,6 @@ export const OrderDetail = ({ order }: OrderDisplayProps) => {
     isLoadingOrder,
     onDownloadPdf,
   } = useOrders(order?.id);
-  console.log("🚀 ~ OrderDetail ~ orderDetail:", orderDetail);
-
   const locale = useLocale();
 
   if (isLoadingOrder) {
