@@ -15,9 +15,9 @@ const config: Config = {
         pacifico: ["var(--font-pacifico)"],
       },
       colors: {
+        textColor: "hsl(var(--text))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        text: "hsl(var(--text))",
         izipay: {
           DEFAULT: "hsl(var(--izipay))",
           foreground: "hsl(var(--izipay-foreground))",
