@@ -184,9 +184,11 @@ export function DisclosureContent({
   );
 }
 
-export default {
+const DisclosureModule = {
   Disclosure,
   DisclosureProvider,
   DisclosureTrigger,
   DisclosureContent,
 };
+
+export default DisclosureModule;

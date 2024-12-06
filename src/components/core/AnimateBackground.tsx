@@ -47,6 +47,7 @@ export default function AnimatedBackground({
     }
   }, [defaultValue]);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return Children.map(children, (child: any, index) => {
     const id = child.props["data-id"];
 

@@ -43,6 +43,7 @@ export function ProfileForm() {
         birthDate: new Date(clientData.birthDate),
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clientData]);
 
   function onSubmit(data: Partial<ClientDataUpdate>) {

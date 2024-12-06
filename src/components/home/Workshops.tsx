@@ -114,11 +114,13 @@ export const Workshops = () => {
                   {
                     scale: 1,
                     "--shimmer-button-x": "-100%",
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   } as any
                 }
                 animate={
                   {
                     "--shimmer-button-x": "200%",
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   } as any
                 }
                 transition={{

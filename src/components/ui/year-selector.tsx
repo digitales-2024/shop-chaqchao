@@ -94,6 +94,7 @@ export default function DatePickerWithYearNavigation({
 
   const months = React.useMemo(() => {
     return locale === "es" ? monthsEs : monthsEn;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [locale]);
 
   const handleYearChange = (year: string) => {

@@ -146,6 +146,7 @@ export const ConfirmCheckout = ({ validateCart }: ConfirmCheckoutProps) => {
       payment(tokenResponse.token ?? "");
     } catch (error) {
       toast(e("cart.title"), {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         description: (error as any)?.data?.message ?? e("network"),
         icon: <ShoppingDelete />,
         className: "text-rose-500",
