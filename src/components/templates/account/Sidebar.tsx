@@ -1,6 +1,7 @@
 "use client";
 
 import { BookOpen, LucideIcon, ShoppingBag, User } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -14,26 +15,27 @@ interface Items {
   icon: LucideIcon;
 }
 type SidebarNavProps = React.HTMLAttributes<HTMLElement>;
-const sidebarNavItems: Items[] = [
-  {
-    title: "Profile",
-    href: "/account",
-    icon: User,
-  },
-  {
-    title: "Pedidos",
-    href: "/account/orders",
-    icon: ShoppingBag,
-  },
-  {
-    title: "Clases",
-    href: "/account/classes",
-    icon: BookOpen,
-  },
-];
 
 export function Sidebar({ className, ...props }: SidebarNavProps) {
   const pathname = usePathname();
+  const t = useTranslations("account");
+  const sidebarNavItems: Items[] = [
+    {
+      title: t("profile.title"),
+      href: "/account",
+      icon: User,
+    },
+    {
+      title: t("orders.title"),
+      href: "/account/orders",
+      icon: ShoppingBag,
+    },
+    {
+      title: t("classes.title"),
+      href: "/account/classes",
+      icon: BookOpen,
+    },
+  ];
 
   return (
     <nav

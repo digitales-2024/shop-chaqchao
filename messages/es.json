@@ -129,6 +129,10 @@
   },
 
   "account": {
+    "setting": {
+      "title": "Configuración de la cuenta",
+      "description": "Administre la configuración de su cuenta personal"
+    },
     "title": "Mi cuenta",
     "subtitle": "Administra tu información personal",
     "signout": "Cerrar sesión",
