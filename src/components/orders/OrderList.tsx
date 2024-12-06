@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 
 import { Badge } from "../ui/badge";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
-import { statusColors, translateStatus } from "./OrderDetail";
+import { statusColors } from "./OrderDetail";
 
 interface OrdersListProps {
   items: OrderClient[];
@@ -25,7 +25,7 @@ export function OrdersList({
   const lang = useLocale();
 
   return (
-    <ScrollArea className="h-full sm:h-screen">
+    <ScrollArea className="h-full">
       <div className="flex gap-2 p-4 pt-0 sm:flex-col">
         {items?.map((item) => (
           <button
@@ -54,9 +54,7 @@ export function OrdersList({
                     className={cn(statusColors[item.orderStatus] ?? "")}
                   >
                     <span className="uppercase">
-                      {t(
-                        `status.${translateStatus[item.orderStatus] ?? "pending"}`,
-                      )}
+                      {t(`status.${item.orderStatus ?? "CONFIRMED"}`)}
                     </span>
                   </Badge>
                 </div>
