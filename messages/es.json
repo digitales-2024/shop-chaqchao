@@ -161,10 +161,38 @@
       "empty": "No tienes pedidos realizados",
       "download": "Descargar",
       "status": {
-        "pending": "Pendiente",
-        "ready": "Listo",
-        "completed": "Completado",
-        "canceled": "Cancelado"
+        "CONFIRMED": "Confirmado",
+        "PROCESSING": "Procesando",
+        "COMPLETED": "Completado",
+        "CANCELED": "Cancelado"
+      },
+      "details": {
+        "boleta": "Boleta",
+        "factura": "Factura",
+        "order": "Pedido",
+        "client": {
+          "title": "Información del cliente",
+          "name": "Nombre",
+          "email": "Correo electrónico",
+          "phone": "Teléfono",
+          "typeDoc": "Tipo de documento",
+          "doc": "Número de documento",
+          "address": "Dirección",
+          "state": "Estado",
+          "city": "Ciudad",
+          "postalCode": "Código Postal",
+          "country": "País",
+          "businessName": "Razon Social"
+        },
+        "cart": {
+          "title": "Detalles del pedido",
+          "product": "Producto",
+          "quantity": "Cant.",
+          "price": "P.U",
+          "subTotal": "Sub Total",
+          "total": "Total venta",
+          "pay": "Forma de Pago"
+        }
       }
     },
     "classes": {
