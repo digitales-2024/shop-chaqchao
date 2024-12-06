@@ -22,7 +22,7 @@ export const ReservationSummary: React.FC = () => {
   const { reservation } = useReservation();
 
   return (
-    <div className="relative z-10 h-full bg-white p-6 sm:p-8">
+    <div className="relative z-10 h-full bg-transparent p-6 sm:p-8">
       {/* Encabezado */}
       <div className="mb-6 text-start">
         <h3 className="text-2xl font-bold text-gray-800 sm:text-3xl">
