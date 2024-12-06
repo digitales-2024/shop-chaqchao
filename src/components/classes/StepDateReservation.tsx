@@ -12,6 +12,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
+import { cn } from "@/lib/utils";
+
 import PulsatingDots from "../common/PulsatingDots";
 import { Button } from "../ui/button";
 import { Calendar } from "../ui/calendar";
@@ -76,10 +78,10 @@ export const StepDateReservation = () => {
                 : t(`days.${format(day, "EEE").toLowerCase()}`)}
             </span>
             <div
-              className={`flex h-10 w-10 cursor-pointer items-center justify-center rounded-full transition-all duration-300 sm:h-14 sm:w-14 ${
+              className={`group/day flex h-10 w-10 cursor-pointer items-center justify-center rounded-full transition-all duration-300 sm:h-14 sm:w-14 ${
                 reservation.date && isSameDay(reservation.date, day)
                   ? "bg-primary text-white"
-                  : "bg-primary-foreground text-primary hover:bg-primary hover:text-white"
+                  : "bg-primary-foreground hover:bg-primary hover:text-white"
               } h-14 w-14 rounded sm:h-16 sm:w-16`}
               onClick={() =>
                 setReservation({
@@ -88,7 +90,14 @@ export const StepDateReservation = () => {
                 })
               }
             >
-              <span className="text-base font-bold sm:text-xl">
+              <span
+                className={cn(
+                  "font-bold group-hover/day:text-white sm:text-xl",
+                  reservation.date &&
+                    isSameDay(reservation.date, day) &&
+                    "text-white",
+                )}
+              >
                 {format(day, "d", { locale: es })}
               </span>
             </div>
@@ -101,7 +110,7 @@ export const StepDateReservation = () => {
       <div className="flex flex-col items-center">
         <Popover>
           <PopoverTrigger asChild>
-            <button className="mb-4 mt-8 flex items-center rounded-full border-2 border-primary px-6 py-2 text-primary transition-all hover:bg-primary hover:text-white">
+            <button className="mb-4 mt-8 flex items-center rounded-full border-2 border-primary px-6 py-2 text-primary transition-all hover:bg-primary/50 hover:text-white">
               <span>
                 {reservation.date
                   ? format(reservation.date, "PPP", {
