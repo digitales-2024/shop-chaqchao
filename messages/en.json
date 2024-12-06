@@ -270,6 +270,10 @@
       "toast": {
         "fullFields": "Please select the number of adults to continue."
       },
+      "message": {
+        "start": "There are",
+        "end": "seats available"
+      },
       "dateNotSelected": "Date not Selected",
       "button": {
         "back": "Back",

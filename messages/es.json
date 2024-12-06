@@ -271,6 +271,10 @@
       "toast": {
         "fullFields": "Por favor, seleccione la cantidad de adultos para continuar."
       },
+      "message": {
+        "start": "Quedan",
+        "end": "lugares disponibles"
+      },
       "dateNotSelected": "Fecha no seleccionada",
       "button": {
         "back": "Atras",
