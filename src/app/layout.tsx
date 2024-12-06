@@ -53,6 +53,7 @@ export default async function RootLayout({
               toastOptions={{
                 style: {
                   backgroundColor: "#fff",
+                  borderRadius: "2rem",
                 },
               }}
             />
