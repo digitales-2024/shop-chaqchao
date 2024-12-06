@@ -11,6 +11,13 @@ export type { ForgotPassword } from "./forgotPassword";
 
 export type { ResetPassword } from "./resetPassword";
 
+export type {
+  BillingDocumentType,
+  Cart,
+  OrderClient,
+  OrderDetails,
+} from "./order";
+
 export type { CustomErrorData, ErrorFormData } from "./error";
 export type { Category, Product } from "./catalog";
 export type { ClassClient, ClassesData, ClassesDataAdmin } from "./classes";
