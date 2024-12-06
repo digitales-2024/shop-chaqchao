@@ -74,6 +74,7 @@
     --sidebar-ring: 217.2 91.2% 59.8%;
     --izipay: 178 63% 53%;
     --izipay-foreground: 178 63% 93%;
+    --text: 0 0% 13%;
   }
   .dark {
     --background: 240 10% 3.9%;
@@ -120,6 +121,7 @@
 @layer base {
   * {
     @apply border-border;
+    @apply text-text;
   }
   body {
     @apply bg-background text-foreground;

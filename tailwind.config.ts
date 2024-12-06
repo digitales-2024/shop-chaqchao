@@ -17,6 +17,7 @@ const config: Config = {
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        text: "hsl(var(--text))",
         izipay: {
           DEFAULT: "hsl(var(--izipay))",
           foreground: "hsl(var(--izipay-foreground))",
