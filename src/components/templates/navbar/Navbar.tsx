@@ -41,14 +41,15 @@ export function Navbar() {
           visualDuration: 0.3,
         }}
         className={cn(
-          "container fixed top-0 z-50 mx-auto flex items-center justify-center transition-all duration-500 sm:top-3 sm:rounded-[3rem]",
+          "container fixed top-0 z-50 mx-auto flex items-center justify-center outline-none transition-all duration-500 sm:top-3 sm:rounded-[3rem]",
           {
             "w-full": !isScrolling,
-            "w-full bg-primary-foreground/80 backdrop-blur-sm sm:max-w-[60rem]":
+            "w-full bg-primary-foreground/80 outline outline-primary/5 backdrop-blur-sm sm:max-w-[60rem]":
               isScrolling,
           },
           {
-            "bg-primary-foreground/80 backdrop-blur-sm": open,
+            "bg-primary-foreground/80 outline outline-primary/5 backdrop-blur-sm":
+              open,
           },
         )}
       >
