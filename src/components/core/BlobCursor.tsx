@@ -42,7 +42,7 @@ const BlobCursor = ({ blobType = "circle", fillColor = "#6f320c" }) => {
 
   // Si no se mueve mouse entonces se hacer pequeño el blob
   const handleMouseLeave = useCallback(() => {
-    api.start({ xy: [200, 710] });
+    api.start({ xy: [200, 680] });
   }, [api]);
 
   useEffect(() => {
