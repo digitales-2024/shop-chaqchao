@@ -62,10 +62,10 @@ export function Footer() {
             <p className="text-md max-w-xs leading-6">{t("description")}</p>
           </div>
           {/* Navigations */}
-          <div className="mt-16 grid grid-cols-2 gap-14 md:grid-cols-[auto_1fr] lg:mt-0 xl:col-span-2">
+          <div className="mt-16 grid grid-cols-1 gap-14 md:grid-cols-[auto_1fr] lg:mt-0 xl:col-span-2">
             <div className="md:mt-0">
               <h3 className="text-sm font-semibold leading-6">{t("social")}</h3>
-              <div className="mt-6 space-y-4">
+              <div className="mt-6 flex flex-row justify-center gap-4 sm:flex-col">
                 {SOCIAL_MEDIA.map((item) => (
                   <div
                     key={item.label}
