@@ -1,6 +1,6 @@
 "use client";
 
-import { BookOpen, LucideIcon, ShoppingBag, User } from "lucide-react";
+import { LucideIcon, ShoppingBag, User } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -29,11 +29,6 @@ export function Sidebar({ className, ...props }: SidebarNavProps) {
       title: t("orders.title"),
       href: "/account/orders",
       icon: ShoppingBag,
-    },
-    {
-      title: t("classes.title"),
-      href: "/account/classes",
-      icon: BookOpen,
     },
   ];
 
