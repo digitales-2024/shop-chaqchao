@@ -612,5 +612,10 @@
       "success": "Reclamo registrado con éxito",
       "error": "Ocurrió un error al enviar el reclamo"
     }
+  },
+  "notfound": {
+    "title": "¡Página no encontrada!",
+    "description": "La página que buscas no existe o ha sido eliminada.",
+    "button": "Volver al inicio"
   }
 }
