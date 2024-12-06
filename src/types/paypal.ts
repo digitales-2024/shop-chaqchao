@@ -14,4 +14,5 @@ export interface PaypalTransactionData {
   paypalOrderStatus: string;
   paypalDate: string;
   paypalCurrency: string;
+  id?: string;
 }

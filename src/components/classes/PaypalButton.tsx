@@ -60,7 +60,6 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({ transactionData }) => {
             onApprove={async (_data, actions) => {
               if (actions && actions.order) {
                 const details = await actions.order.capture();
-                console.log("🚀 ~ details:", details);
                 const finalTransactionData = {
                   ...transactionData,
                   paypalOrderId: String(details.id),
@@ -71,23 +70,28 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({ transactionData }) => {
                       "USD",
                   ),
                 };
-                console.log(
-                  "🚀 ~ onApprove={ ~ finalTransactionData:",
-                  finalTransactionData,
-                );
-
                 try {
                   const response = await confirmPayment({
-                    id: finalTransactionData.id,
+                    id: finalTransactionData.id || "",
                     paypalData: finalTransactionData,
-                  }).unwrap();
+                  });
 
-                  if (response.statusCode === 200) {
+                  if (response.data) {
                     setOpen(true);
+                  } else if (response.error) {
+                    const errorMessage =
+                      (response.error as { message?: string }).message ||
+                      "Error desconocido";
+                    toast("Ocurrió un error al confirmar el pago", {
+                      description: errorMessage,
+                    });
                   }
                 } catch (error) {
+                  const errorMessage =
+                    (error as { message?: string }).message ||
+                    "Error desconocido";
                   toast("Ocurrió un error al confirmar el pago", {
-                    description: error.message || "Error desconocido",
+                    description: errorMessage,
                   });
                 }
               }

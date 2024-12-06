@@ -29,7 +29,6 @@ export const useRegisterClaim = () => {
         showToast(t("messages.success"), "success");
         router.push("/");
       } catch (error) {
-        console.log("Error al registrar el reclamo:", error);
         showToast(t("messages.error"), "error");
       }
     },
