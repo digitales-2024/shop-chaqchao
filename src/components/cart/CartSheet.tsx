@@ -61,9 +61,9 @@ export function CartSheet() {
       <SheetTrigger asChild>
         <ButtonCart />
       </SheetTrigger>
-      <SheetContent>
+      <SheetContent className="m-2 rounded-3xl border border-secondary/10 sm:max-w-[30rem]">
         <SheetHeader>
-          <SheetTitle>{t("title")}</SheetTitle>
+          <SheetTitle className="text-3xl font-bold">{t("title")}</SheetTitle>
           <SheetDescription asChild>
             <div>
               {cartItems.length === 0 ? (
@@ -171,7 +171,10 @@ export function CartSheet() {
             <div className="py-4 text-sm">
               <div className="mb-3 flex items-center justify-between border-b border-neutral-200 pb-1 pt-1">
                 <p className="text-lg font-bold">Total</p>
-                <Price className="text-right text-base" amount={amountTotal} />
+                <Price
+                  className="text-right text-base font-black"
+                  amount={amountTotal}
+                />
               </div>
             </div>
           )}
