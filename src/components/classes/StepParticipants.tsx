@@ -61,8 +61,9 @@ export const StepParticipants = () => {
   return (
     <div className="flex flex-col gap-10">
       <div>
-        Quedan {MAX_PEOPLE - (dataFindClassByDate?.totalParticipants ?? 0)}{" "}
-        lugares disponibles
+        {t("message.start")}{" "}
+        {MAX_PEOPLE - (dataFindClassByDate?.totalParticipants ?? 0)}{" "}
+        {t("message.end")}
       </div>
       <div className="flex flex-col gap-10">
         <div className="flex flex-wrap items-center justify-between">
