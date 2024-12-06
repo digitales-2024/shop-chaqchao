@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
 import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 import { cn } from "@/lib/utils";
@@ -50,8 +51,6 @@ export const StepConfirm = () => {
 
   const [dataTransaction, setDataTransaction] =
     useState<PaypalTransactionData>();
-  console.log("🚀 ~ StepConfirm ~ dataTransaction:", dataTransaction);
-
   const handleClassRegister = async () => {
     const payload = {
       userName: reservation.userName,
@@ -75,7 +74,9 @@ export const StepConfirm = () => {
       if (response.statusCode === 201)
         setDataTransaction({ ...payload, ...response.data });
     } catch (error) {
-      console.error("Error al registrar la clase:", error);
+      const errorMessage = (error as { data: { message: string } }).data
+        .message;
+      toast.error(errorMessage);
     }
   };
   const formSchema = z.object({
