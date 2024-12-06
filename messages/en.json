@@ -54,7 +54,9 @@
   },
   "footer": {
     "title": "Store information",
-    "copyrigth": "All rights reserved"
+    "copyrigth": "All rights reserved",
+    "description": "Discover our products and enjoy the best quality!",
+    "social": "Connect"
   },
   "categories": {
     "title": "All our products",

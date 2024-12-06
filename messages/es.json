@@ -54,7 +54,9 @@
   },
   "footer": {
     "title": "Información de la tienda",
-    "copyrigth": "Todos los derechos reservados"
+    "copyrigth": "Todos los derechos reservados",
+    "description": "¡Descubre nuestros productos y disfruta de la mejor calidad!",
+    "social": "Conéctate"
   },
   "categories": {
     "title": "Todos nuestro productos",
