@@ -21,7 +21,7 @@ const BlobCursor = ({ blobType = "circle", fillColor = "#6f320c" }) => {
       const rect = ref.current.getBoundingClientRect();
       return { left: rect.left, top: rect.top };
     }
-    return { left: 0, top: 0 };
+    return { left: 100, top: 100 };
   }, []);
 
   interface Position {
@@ -39,6 +39,23 @@ const BlobCursor = ({ blobType = "circle", fillColor = "#6f320c" }) => {
       ((e as TouchEvent).touches && (e as TouchEvent).touches[0].clientY);
     api.start({ xy: [x - left, y - top] });
   };
+
+  // Si no se mueve mouse entonces se hacer pequeño el blob
+  const handleMouseLeave = useCallback(() => {
+    api.start({ xy: [200, 710] });
+  }, [api]);
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.addEventListener("mouseleave", handleMouseLeave);
+    }
+    return () => {
+      if (ref.current) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        ref.current.removeEventListener("mouseleave", handleMouseLeave);
+      }
+    };
+  }, [handleMouseLeave]);
 
   useEffect(() => {
     const handleResize = () => {
