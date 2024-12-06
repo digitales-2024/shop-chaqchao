@@ -7,6 +7,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 import { ViewTransitions } from "next-view-transitions";
 import localFont from "next/font/local";
+import NextTopLoader from "nextjs-toploader";
 import "./globals.css";
 import { Toaster } from "sonner";
 
@@ -57,7 +58,10 @@ export default async function RootLayout({
                 },
               }}
             />
-            <Providers>{children}</Providers>
+            <Providers>
+              <NextTopLoader color="#ffaa40" />
+              {children}
+            </Providers>
           </NextIntlClientProvider>
         </body>
       </html>
