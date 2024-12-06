@@ -102,7 +102,7 @@ export default function ResetPasswordPage() {
 
   if (!token)
     return (
-      <div className="flex min-h-screen w-full items-center justify-center">
+      <div className="flex min-h-full w-full items-center justify-center">
         <PulsatingDots />
       </div>
     );

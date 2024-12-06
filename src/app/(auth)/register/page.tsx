@@ -19,7 +19,6 @@ import Image from "next/image";
 import React, { startTransition } from "react";
 import { useForm } from "react-hook-form";
 
-import { LanguageSelector } from "@/components/templates/navbar/LanguageSelector";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -75,10 +74,9 @@ export default function AuthComponent() {
   const t = useTranslations("register");
 
   return (
-    <div className="grid h-[98vh] grid-cols-1 overflow-hidden rounded-3xl bg-white font-nunito md:grid-cols-2">
+    <div className="grid h-full grid-cols-1 overflow-hidden rounded-3xl bg-white font-nunito md:grid-cols-2">
       {/* Formulario */}
       <div className="flex flex-col items-end justify-end p-0 sm:p-10">
-        <LanguageSelector />
         <div className="flex h-full w-full items-center justify-center">
           <Card className="w-full max-w-[35rem] border-none shadow-none">
             <CardHeader className="mb-10 text-center">

@@ -45,8 +45,9 @@ export const FormLogin = () => {
             className="mb-6 text-center text-3xl font-bold"
           >
             <p className="text-5xl font-bold">{t("title")}</p>
-            <span className="inline-flex justify-center gap-1 text-2xl">
-              {t("subtitle")} <h1 className="text-primary"> Chaqchao</h1>
+            <span className="inline-flex flex-wrap justify-center gap-1 text-2xl">
+              <span className="truncate">{t("subtitle")}</span>
+              <h1 className="text-primary"> Chaqchao</h1>
             </span>
           </motion.div>
         </CardHeader>
