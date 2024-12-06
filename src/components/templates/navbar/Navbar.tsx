@@ -12,6 +12,7 @@ import { CartSheet } from "@/components/cart/CartSheet";
 
 import { cn } from "@/lib/utils";
 
+import { Logout } from "./Logout";
 import { MenuToogle } from "./MenuToogle";
 import { UserLogin } from "./UserLogin";
 
@@ -93,6 +94,7 @@ const MenuList = () => {
     href?: string;
     component?: JSX.Element;
   }[] = [
+    { type: "component", label: "Logout", component: <Logout /> },
     { type: "link", label: t("products"), href: "/categories" },
     { type: "link", label: t("classes"), href: "/workshops" },
     { type: "component", label: "Login", component: <UserLogin /> },
