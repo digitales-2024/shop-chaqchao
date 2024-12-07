@@ -5,13 +5,7 @@ import { useLogout } from "@/hooks/use-logout";
 import { useOpenMenu } from "@/hooks/use-open-menu";
 import { useProfile } from "@/hooks/use-profile";
 import { getFirstLetter } from "@/utils/getFirstLetter";
-import {
-  LogOut,
-  NotebookPen,
-  ShoppingBag,
-  User,
-  UserRound,
-} from "lucide-react";
+import { LogOut, ShoppingBag, User, UserRound } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useContext } from "react";
@@ -113,12 +107,6 @@ export const UserLogin = () => {
                       </span>
                     </div>
                   )}
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link href="/account/classes" className="cursor-pointer">
-                  <NotebookPen className="mr-2 h-4 w-4" />
-                  <span>{t("classes.title")}</span>
                 </Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
