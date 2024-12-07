@@ -619,5 +619,8 @@
     "title": "¡Página no encontrada!",
     "description": "La página que buscas no existe o ha sido eliminada.",
     "button": "Volver al inicio"
+  },
+  "whatsapp": {
+    "text": "Hola, me gustaría obtener más información."
   }
 }
