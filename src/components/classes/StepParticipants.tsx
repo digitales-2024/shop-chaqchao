@@ -1,11 +1,19 @@
 import { useClass } from "@/hooks/use-class";
 import { useReservation } from "@/hooks/use-reservation";
 import { AnimatePresence, motion } from "framer-motion";
-import { Baby, Minus, Plus, TriangleAlert, UserRound } from "lucide-react";
+import {
+  Baby,
+  Info,
+  Minus,
+  Plus,
+  TriangleAlert,
+  UserRound,
+} from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
 import { BadgeCustom } from "../common/BadgeCustom";
+import { Alert, AlertDescription } from "../ui/alert";
 import { Button } from "../ui/button";
 
 const MAX_PEOPLE = 8;
@@ -123,6 +131,10 @@ export const StepParticipants = () => {
             </Button>
           </div>
         </div>
+        <Alert className="border-emerald-500 bg-emerald-50/50 text-emerald-500">
+          <Info className="h-4 w-4 stroke-emerald-500" />
+          <AlertDescription>{t("childrenPay")}</AlertDescription>
+        </Alert>
         <div className="flex flex-wrap items-center justify-between">
           <div className="relative flex flex-col items-start justify-center">
             <h4 className="text-lg font-semibold">{t("children")}</h4>
