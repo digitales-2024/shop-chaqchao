@@ -309,7 +309,7 @@
         "start": "There are",
         "end": "seats available"
       },
-      "childrenPay": "Children over 5 years pay",
+      "childrenPay": "Children over 14 years pay",
       "dateNotSelected": "Date not Selected",
       "button": {
         "back": "Back",
@@ -639,5 +639,8 @@
     "title": "Page not found",
     "description": "The page you are looking for does not exist",
     "button": "Back to home"
+  },
+  "whatsapp": {
+    "text": "Hello! I need help with my order."
   }
 }

@@ -5,3 +5,4 @@ export { GoogleIcon } from "./GoogleIcon";
 export { ShoppingDelete } from "./shopping/ShoppingDelete";
 export { ShoppingCheck } from "./shopping/ShoppingCheck";
 export { Izipay } from "./Izipay";
+export { WhatsApp } from "./Whatsapp";

@@ -1,5 +1,7 @@
 import { ReactNode } from "react";
 
+import WhatsAppButton from "@/components/social/Whatsapp";
+
 import { Footer } from "./footer/Footer";
 import { LanguageSelector } from "./navbar/LanguageSelector";
 import { Navbar } from "./navbar/Navbar";
@@ -16,6 +18,7 @@ export function LayoutShop({ children }: LayoutShopProps) {
       <main className="py-40">{children}</main>
       <LanguageSelector />
       <Footer />
+      <WhatsAppButton />
     </div>
   );
 }
