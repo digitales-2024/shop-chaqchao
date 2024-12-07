@@ -39,6 +39,7 @@ export const usePayment = () => {
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleValidatePayment = async (resp: any) => {
     return await validatePaymentMutation(resp);
   };

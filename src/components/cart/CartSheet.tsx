@@ -4,7 +4,6 @@ import { useCart } from "@/hooks/use-cart";
 import useCartSheet from "@/hooks/use-cart-sheet";
 import useCartStore from "@/redux/store/cart";
 import { motion, AnimatePresence } from "framer-motion";
-import { ShoppingBag } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
@@ -23,7 +22,7 @@ import {
 
 import { cn } from "@/lib/utils";
 
-import { Badge } from "../ui/badge";
+import { ButtonCart } from "../templates/navbar/ButtonCart";
 import { ScrollArea } from "../ui/scroll-area";
 import { AlertValidate } from "./AlertValidate";
 import { ButtonCheckout } from "./ButtonCheckout";
@@ -60,20 +59,11 @@ export function CartSheet() {
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetTrigger asChild>
-        <div className="group/cart relative flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full hover:bg-background">
-          <span className="sr-only">Abrir carrito de pedidos</span>
-          <ShoppingBag className="flex-shrink-0 transition-transform duration-300 group-hover/cart:animate-tada" />
-          <Badge
-            variant="default"
-            className="absolute -bottom-0 right-0 flex size-5 items-center justify-center p-2 text-xs text-black"
-          >
-            {cartItems.length}
-          </Badge>
-        </div>
+        <ButtonCart />
       </SheetTrigger>
-      <SheetContent>
+      <SheetContent className="m-2 rounded-3xl border border-secondary/10 sm:max-w-[30rem]">
         <SheetHeader>
-          <SheetTitle>{t("title")}</SheetTitle>
+          <SheetTitle className="text-3xl font-bold">{t("title")}</SheetTitle>
           <SheetDescription asChild>
             <div>
               {cartItems.length === 0 ? (
@@ -181,7 +171,10 @@ export function CartSheet() {
             <div className="py-4 text-sm">
               <div className="mb-3 flex items-center justify-between border-b border-neutral-200 pb-1 pt-1">
                 <p className="text-lg font-bold">Total</p>
-                <Price className="text-right text-base" amount={amountTotal} />
+                <Price
+                  className="text-right text-base font-black"
+                  amount={amountTotal}
+                />
               </div>
             </div>
           )}

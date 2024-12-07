@@ -20,6 +20,7 @@ export const paymentApi = createApi({
     }),
 
     // Validate payment datos del pago
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     validatePayment: build.mutation<{ isValid: boolean }, any>({
       query: (body) => ({
         url: `/payment/validate`,

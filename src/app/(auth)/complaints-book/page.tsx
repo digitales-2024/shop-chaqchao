@@ -32,7 +32,7 @@ export default function ReclamationForm() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center">
+    <div className="flex h-full items-center justify-center">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="mx-auto w-full max-w-4xl rounded-md border border-gray-300 bg-white p-4 md:p-6 lg:p-8"

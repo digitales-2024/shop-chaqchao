@@ -104,6 +104,7 @@ export const FormInvoice = () => {
       form.setValue("nameBusiness", "");
       form.setValue("address", "");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form.watch("number")]);
 
   return (

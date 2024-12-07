@@ -5,9 +5,12 @@ import {
   ForgotPasswordSchema,
 } from "@/schemas/forgotPassword";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { Key } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
+import { useForm } from "react-hook-form";
 
+import { LanguageSelector } from "@/components/templates/navbar/LanguageSelector";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -45,47 +48,55 @@ export default function ForgotPasswordPage() {
     }
   }
 
+  const t = useTranslations("forgot-password");
+
   return (
-    <div className="grid h-screen grid-cols-1 items-center justify-items-center">
-      <Card className="max-w-[35rem]">
-        <CardHeader>
-          <CardTitle>Recuperar Contraseña</CardTitle>
-          <CardDescription>
-            Te enviaremos un correo electrónico a tu bandeja de entrada sobre
-            cómo restablecer tu contraseña. Recuerda revisar tu carpeta de spam.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Correo Electrónico</FormLabel>
-                    <FormControl>
-                      <Input placeholder="tu@email.com" {...field} />
-                    </FormControl>
-                    <FormDescription>
-                      Ingresa el correo asociado a tu cuenta.
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button type="submit">Recuperar Contraseña</Button>
-            </form>
-          </Form>
-        </CardContent>
-        <CardFooter>
-          <p className="text-center text-base">
-            <Link href="/sign-in" className="text-secondary hover:underline">
-              Inicia Sesión
-            </Link>
-          </p>
-        </CardFooter>
-      </Card>
-    </div>
+    <>
+      <div className="relative grid h-full grid-cols-1 items-center justify-items-center">
+        <Card className="max-w-[35rem] border-none shadow-none">
+          <CardHeader className="space-y-6 text-center">
+            <div className="mx-auto rounded-full bg-secondary/10 p-4">
+              <Key size={48} className="text-secondary" />
+            </div>
+            <CardTitle>{t("title")}</CardTitle>
+            <CardDescription className="text-balance">
+              {t("subtitle")}
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-8"
+              >
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>{t("email")}</FormLabel>
+                      <FormControl>
+                        <Input placeholder="chaqchao@email.com" {...field} />
+                      </FormControl>
+                      <FormDescription>{t("description")}</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button className="rounded-full text-lg">{t("button")}</Button>
+              </form>
+            </Form>
+          </CardContent>
+          <CardFooter>
+            <p className="text-center text-base">
+              <Link href="/sign-in" className="text-secondary">
+                {t("login")}
+              </Link>
+            </p>
+          </CardFooter>
+        </Card>
+      </div>
+      <LanguageSelector />
+    </>
   );
 }

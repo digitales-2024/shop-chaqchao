@@ -20,7 +20,7 @@ export const useLogin = () => {
             typeof result.error === "object" &&
             "data" in result.error
           ) {
-            const error = (result.error.data as CustomErrorData).message;
+            const error = (result.error.data as CustomErrorData).error;
             const message = error as string;
             reject(new Error(message));
           }
@@ -60,7 +60,6 @@ export const useLogin = () => {
       "_blank",
       `width=${width},height=${height},top=${top},left=${left}`,
     );
-
     // Verificar si la ventana se ha cerrado
     const checkWindowClosed = setInterval(() => {
       if (googleAuthWindow && googleAuthWindow.closed) {

@@ -14,23 +14,5 @@ export interface PaypalTransactionData {
   paypalOrderStatus: string;
   paypalDate: string;
   paypalCurrency: string;
-}
-
-export interface PayPalButtonProps {
-  getTransactionData: () => {
-    userName: string;
-    userEmail: string;
-    userPhone: string;
-    scheduleClass: string;
-    languageClass: string;
-    dateClass: string;
-    totalAdults: number;
-    totalChildren: number;
-    typeCurrency: string;
-    comments: string;
-    paypalAmount: string;
-  };
-  onNext: () => void;
-  onPaymentSuccess: (data: PaypalTransactionData) => void;
-  onCancel: () => void;
+  id?: string;
 }

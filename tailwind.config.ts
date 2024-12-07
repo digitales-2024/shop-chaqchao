@@ -12,8 +12,10 @@ const config: Config = {
       fontFamily: {
         commingSoon: ["var(--font-coming-soon)"],
         nunito: ["var(--font-nunito-variable)"],
+        pacifico: ["var(--font-pacifico)"],
       },
       colors: {
+        textColor: "hsl(var(--text))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         izipay: {
@@ -81,8 +83,40 @@ const config: Config = {
         tada: "tada 1s ease-in-out",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        rainbow: "rainbow var(--speed, 2s) infinite linear",
+        gradient: "gradient 10s ease-in-out infinite",
+        "background-position-spin":
+          "background-position-spin 3000ms infinite alternate",
+        meteor: "meteor 5s linear infinite",
+        "border-beam": "border-beam calc(var(--duration)*1s) infinite linear",
       },
       keyframes: {
+        "border-beam": {
+          "100%": {
+            "offset-distance": "100%",
+          },
+        },
+        meteor: {
+          "0%": { transform: "rotate(215deg) translateX(0)", opacity: "1" },
+          "70%": { opacity: "1" },
+          "100%": {
+            transform: "rotate(215deg) translateX(-100vh)",
+            opacity: "0",
+          },
+        },
+        "background-position-spin": {
+          "0%": { backgroundPosition: "top center" },
+          "100%": { backgroundPosition: "bottom center" },
+        },
+        gradient: {
+          "0%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
+          "100%": { backgroundPosition: "0% 50%" },
+        },
+        rainbow: {
+          "0%": { "background-position": "0%" },
+          "100%": { "background-position": "200%" },
+        },
         tada: {
           "0%": {
             transform: "scale(1)",
@@ -134,6 +168,11 @@ const config: Config = {
             height: "0",
           },
         },
+      },
+      backgroundImage: {
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+        "gradient-conic":
+          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
     },
   },

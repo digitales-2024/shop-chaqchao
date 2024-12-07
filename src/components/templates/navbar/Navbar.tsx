@@ -1,108 +1,245 @@
 "use client";
 import { ChaqchaoCharacter } from "@/assets/images/ChaqchaoCharacter";
-import { useMediaQuery } from "@/hooks/use-media-query";
-import { Locale } from "@/i18n/config";
-import { useLocale } from "next-intl";
+import { useOpenMenu } from "@/hooks/use-open-menu";
+import { useWindowScrollPosition } from "@/hooks/use-window-scroll-position";
+import { AnimatePresence, motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 
 import { CartSheet } from "@/components/cart/CartSheet";
 
 import { cn } from "@/lib/utils";
 
-import { LanguageSelector } from "./LanguageSelector";
-import { MenuList } from "./MenuList";
-import { SearchBar } from "./SearchBar";
-import { SheetMenuMobil } from "./SheetMenuMobil";
+import { Logout } from "./Logout";
+import { MenuToogle } from "./MenuToogle";
 import { UserLogin } from "./UserLogin";
 
 export function Navbar() {
-  const locale = useLocale();
+  const { y } = useWindowScrollPosition();
 
-  const [navBackground, setNavBackground] = useState(false);
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 1) {
-        setNavBackground(true);
-      } else {
-        setNavBackground(false);
-      }
-    };
+  const isScrolling = y > 1;
 
-    window.addEventListener("scroll", handleScroll);
+  const { open, onOpenChange } = useOpenMenu();
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  const variants = {
+    open: { height: "60%" },
+    closed: { height: "96px" },
+  };
 
-  const isDesktop = useMediaQuery("(max-width: 800px)");
-  if (!isDesktop) {
-    return (
-      <nav
+  return (
+    <header className="flex items-center justify-center">
+      <motion.nav
+        initial="closed"
+        animate={open ? "open" : "closed"}
+        variants={variants}
+        transition={{
+          duration: 0.3,
+          type: "spring",
+          stiffness: 260,
+          damping: 20,
+          visualDuration: 0.3,
+        }}
         className={cn(
-          "sticky top-0 z-50 flex w-full items-center justify-between p-4 backdrop-blur-sm transition-all duration-300 lg:px-6",
+          "container fixed top-0 z-50 mx-auto flex items-center justify-center outline-none transition-all duration-500 sm:top-3 sm:rounded-[3rem]",
           {
-            "bg-white": navBackground,
-            "bg-primary-foreground": !navBackground,
+            "w-full": !isScrolling,
+            "w-full bg-primary-foreground/80 outline outline-primary/5 backdrop-blur-sm sm:max-w-[60rem]":
+              isScrolling,
+          },
+          {
+            "bg-primary-foreground/80 outline outline-primary/5 backdrop-blur-sm":
+              open,
           },
         )}
       >
-        <div className="container mx-auto grid w-full grid-cols-3 items-center justify-center">
-          <div className="flex w-full">
+        <div
+          className={cn(
+            "flex h-full w-full flex-row items-start justify-between p-4",
+            {
+              "items-start": open,
+            },
+          )}
+        >
+          <div className="flex w-fit">
             <Link
               href="/"
               prefetch={true}
-              className="mr-2 flex w-full items-center justify-center md:w-auto lg:mr-6"
+              className="flex w-full items-center justify-center"
             >
-              <ChaqchaoCharacter
-                className={cn("transition-all duration-300", {
-                  "h-24": !navBackground,
-                  "h-16": navBackground,
-                })}
-              />
+              <ChaqchaoCharacter className="h-16 transition-all duration-300" />
             </Link>
           </div>
-          <div className="inline-flex justify-center">
-            <MenuList />
-          </div>
-          <div className="flex items-center justify-end gap-6">
-            <SearchBar />
-            <CartSheet />
-            <UserLogin />
-            <LanguageSelector defaultValue={locale as Locale} />
-          </div>
-        </div>
-      </nav>
-    );
-  }
-
-  return (
-    <nav
-      className={cn(
-        "sticky top-0 z-50 flex w-full items-center justify-between p-4 backdrop-blur-sm transition-all duration-300 lg:px-6",
-        {
-          "bg-white": navBackground,
-          "bg-primary-foreground": !navBackground,
-        },
-      )}
-    >
-      <div className="container mx-auto grid w-full grid-cols-[auto_1fr] items-center justify-center">
-        <div className="flex w-full">
-          <Link
-            href="/"
-            prefetch={true}
-            className="mr-2 flex w-full items-center justify-center md:w-auto lg:mr-6"
+          <div
+            className={cn("flex w-full flex-row items-center justify-end", {
+              "flex-col-reverse items-end": open,
+            })}
           >
-            <ChaqchaoCharacter className="h-10" />
-          </Link>
+            <MenuList />
+            <MenuToogle />
+          </div>
         </div>
-        <div className="flex items-center justify-end gap-6">
-          <CartSheet />
-          <UserLogin />
-          <SheetMenuMobil />
-        </div>
-      </div>
-    </nav>
+      </motion.nav>
+      {open && <MenuDialog open={open} onToggle={onOpenChange} />}
+    </header>
   );
 }
+
+const MenuList = () => {
+  const t = useTranslations("navbar");
+  const dataButtons: {
+    label: string;
+    type: "link" | "component";
+    href?: string;
+    component?: JSX.Element;
+  }[] = [
+    { type: "component", label: "Logout", component: <Logout /> },
+    { type: "link", label: t("products"), href: "/categories" },
+    { type: "link", label: t("classes"), href: "/workshops" },
+    { type: "component", label: "Login", component: <UserLogin /> },
+    { type: "component", label: "Cart", component: <CartSheet /> },
+  ];
+
+  const [elementFocused, setElementFocused] = useState<number | null>(null);
+
+  const handleHoverLink = (index: number | null) => {
+    setElementFocused(index);
+  };
+
+  const { open, onClose } = useOpenMenu();
+
+  return (
+    <motion.nav
+      layout
+      className={cn("flex flex-row items-center justify-center gap-x-2", {
+        "flex-col-reverse items-end": open,
+      })}
+      onMouseLeave={() => {
+        handleHoverLink(null);
+      }}
+    >
+      {dataButtons.map((link, index) =>
+        link.type === "link" ? (
+          <motion.div
+            key={link.label}
+            layout
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{
+              opacity: { duration: 0.2 },
+              layout: {
+                type: "spring",
+                bounce: 0.4,
+                duration: 0.6,
+              },
+            }}
+          >
+            <Link
+              href={link.href ?? "/"}
+              className={cn(
+                "relative hidden w-auto justify-center whitespace-nowrap rounded p-4 text-center text-2xl font-normal lowercase transition-all duration-300 hover:font-bold sm:inline-flex",
+                {
+                  "inline-flex uppercase": open,
+                },
+              )}
+              key={link.label}
+              onMouseEnter={() => handleHoverLink(index)}
+              type="button"
+              onClick={onClose}
+            >
+              {link.label}
+              <AnimatePresence>
+                {elementFocused === index && (
+                  <motion.div
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="absolute bottom-0 left-0 right-0 top-0 -z-10 rounded-full bg-neutral-200"
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    layout={true}
+                    layoutId="focused-element"
+                    transition={{ duration: 0.2 }}
+                  />
+                )}
+              </AnimatePresence>
+            </Link>
+          </motion.div>
+        ) : link.label !== "Logout" || open ? (
+          <motion.div
+            key={link.label}
+            layout
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            transition={{
+              opacity: { duration: 0.2 },
+              layout: {
+                type: "spring",
+                bounce: 0.4,
+                duration: 0.6,
+              },
+            }}
+          >
+            <div
+              className={cn(
+                "relative inline-flex w-fit items-center justify-center whitespace-nowrap rounded-full text-2xl transition-all duration-300 hover:font-bold",
+                {
+                  uppercase: open,
+                  "aspect-square size-16 shrink-0": !open,
+                },
+              )}
+              key={link.label}
+              onMouseEnter={() => handleHoverLink(index)}
+              onClick={onClose}
+            >
+              {link.component}
+              <AnimatePresence>
+                {elementFocused === index && (
+                  <motion.div
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="absolute bottom-0 left-0 right-0 top-0 -z-10 rounded-full bg-neutral-200"
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    layout={true}
+                    layoutId="focused-element"
+                    transition={{ duration: 0.2 }}
+                  />
+                )}
+              </AnimatePresence>
+            </div>
+          </motion.div>
+        ) : null,
+      )}
+    </motion.nav>
+  );
+};
+
+const MenuDialog = ({
+  open,
+  onToggle,
+}: {
+  open: boolean;
+  onToggle: () => void;
+}) => {
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [open]);
+
+  if (!open) return null; // Si no está abierto, no renderizamos nada
+  return createPortal(
+    <div
+      className="fixed inset-0 z-40 flex items-center justify-center bg-white/10 backdrop-blur-sm"
+      onClick={onToggle}
+    ></div>,
+    document.body,
+  );
+};

@@ -1,4 +1,5 @@
 import "@fontsource-variable/nunito";
+import "@fontsource/pacifico";
 import "./globals.css";
 import { Providers } from "@/redux/providers";
 import type { Metadata } from "next";
@@ -6,6 +7,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 import { ViewTransitions } from "next-view-transitions";
 import localFont from "next/font/local";
+import NextTopLoader from "nextjs-toploader";
 import "./globals.css";
 import { Toaster } from "sonner";
 
@@ -43,7 +45,7 @@ export default async function RootLayout({
           />
         </head>
         <body
-          className={`${comingSoon.variable} ${geistSans.variable} font-nunito antialiased`}
+          className={`${comingSoon.variable} ${geistSans.variable} font-nunito`}
         >
           <NextIntlClientProvider messages={messages}>
             <Toaster
@@ -52,10 +54,14 @@ export default async function RootLayout({
               toastOptions={{
                 style: {
                   backgroundColor: "#fff",
+                  borderRadius: "2rem",
                 },
               }}
             />
-            <Providers>{children}</Providers>
+            <Providers>
+              <NextTopLoader color="#ffaa40" />
+              {children}
+            </Providers>
           </NextIntlClientProvider>
         </body>
       </html>

@@ -1,94 +1,65 @@
 "use client";
 
-import { useCategory } from "@/hooks/use-category";
+import { useOpenMenu } from "@/hooks/use-open-menu";
+import { AnimatePresence, motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import * as React from "react";
-
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
+import { useState } from "react";
 
 import { cn } from "@/lib/utils";
 
-export function MenuList() {
-  const { dataCategories, isLoadingCategories } = useCategory();
-
+export const MenuList = () => {
   const t = useTranslations("navbar");
 
-  return (
-    <NavigationMenu>
-      <NavigationMenuList>
-        <NavigationMenuItem>
-          <NavigationMenuTrigger
-            disabled={isLoadingCategories}
-            className="bg-transparent font-bold transition-all duration-300 hover:scale-105 hover:bg-transparent focus:bg-transparent"
-          >
-            {t("products")}
-          </NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-              {dataCategories?.map((component) => (
-                <ListItem
-                  key={component.id}
-                  title={component.name}
-                  href={component.name}
-                >
-                  {component.description}
-                </ListItem>
-              ))}
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <Link
-            href="/class-register"
-            legacyBehavior
-            passHref
-            className="bg-transparent"
-          >
-            <NavigationMenuLink
-              className={`${navigationMenuTriggerStyle()} bg-transparent transition-all duration-300 hover:scale-105 hover:bg-transparent focus:bg-transparent`}
-            >
-              <span className="font-bold">{t("classes")}</span>
-            </NavigationMenuLink>
-          </Link>
-        </NavigationMenuItem>
-      </NavigationMenuList>
-    </NavigationMenu>
-  );
-}
+  const dataButtons = [
+    { label: t("products"), href: "/categories" },
+    { label: t("classes"), href: "/workshops" },
+  ];
+  const [elementFocused, setElementFocused] = useState<number | null>(null);
 
-const ListItem = React.forwardRef<
-  React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a">
->(({ className, title, children, ...props }, ref) => {
+  const handleHoverLink = (index: number | null) => {
+    setElementFocused(index);
+  };
+
+  const { open } = useOpenMenu();
   return (
-    <li className="bg-transparent">
-      <NavigationMenuLink asChild>
-        <a
-          ref={ref}
+    <nav
+      className={cn("flex flex-row items-center justify-center gap-x-9", {
+        "flex-col items-end": open,
+      })}
+      onMouseLeave={() => {
+        handleHoverLink(null);
+      }}
+    >
+      {dataButtons.map((link, index) => (
+        <Link
+          href={link.href}
           className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            className,
+            "relative inline-flex w-auto justify-center whitespace-nowrap rounded p-4 text-center text-2xl font-normal lowercase transition-all duration-300 hover:font-bold",
+            {
+              "text-end uppercase": open,
+            },
           )}
-          {...props}
+          key={link.label}
+          onMouseEnter={() => handleHoverLink(index)}
+          type="button"
         >
-          <div className="text-sm font-medium capitalize leading-none">
-            {title}
-          </div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-            {children}
-          </p>
-        </a>
-      </NavigationMenuLink>
-    </li>
+          {link.label}
+          <AnimatePresence>
+            {elementFocused === index && (
+              <motion.div
+                animate={{ opacity: 1, scale: 1 }}
+                className="absolute bottom-0 left-0 right-0 top-0 -z-10 rounded-full bg-neutral-200"
+                exit={{ opacity: 0, scale: 0.9 }}
+                initial={{ opacity: 0, scale: 0.95 }}
+                layout={true}
+                layoutId="focused-element"
+                transition={{ duration: 0.2 }}
+              />
+            )}
+          </AnimatePresence>
+        </Link>
+      ))}
+    </nav>
   );
-});
-ListItem.displayName = "ListItem";
+};

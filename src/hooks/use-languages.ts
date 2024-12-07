@@ -23,5 +23,5 @@ export const useLanguages = () => {
     }
   }, [languages, isLoading]);
 
-  return { languageOptions, isLoading, error };
+  return { languageOptions, isLoading, languages, error };
 };

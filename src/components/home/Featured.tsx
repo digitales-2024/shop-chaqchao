@@ -2,8 +2,8 @@
 import { useCatalog } from "@/hooks/use-catalog";
 import { useTranslations } from "next-intl";
 
+import { CartItem } from "../cart/CartItem";
 import { CartSkeleton } from "../cart/CartSkeleton";
-import { MerchItem } from "../cart/MerchItem";
 import { LineTitle } from "../common/LineTitle";
 
 interface FeaturedHeaderProps {
@@ -51,7 +51,7 @@ export const Featured = () => {
   return (
     <FeaturedHeader>
       {productMerch.map((product, index) => (
-        <MerchItem key={index} product={product} />
+        <CartItem key={index} product={product} />
       ))}
     </FeaturedHeader>
   );

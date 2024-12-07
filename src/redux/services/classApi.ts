@@ -2,6 +2,7 @@ import {
   CreateClassSchema,
   RegisterClassResponse,
 } from "@/schemas/classRegisterSchema";
+import { ClassesDataAdmin } from "@/types";
 import { PaypalTransactionData } from "@/types/paypal";
 import { createApi } from "@reduxjs/toolkit/query/react";
 
@@ -90,6 +91,19 @@ export const classApi = createApi({
       }),
       providesTags: ["Class"],
     }),
+
+    // Ver si hay una clase registrada para una fecha y hora específica
+    classByDate: build.mutation<
+      ClassesDataAdmin,
+      { date: string; schedule: string }
+    >({
+      query: ({ date, schedule }) => ({
+        url: `/classes/check?schedule=${schedule}&date=${date}`,
+        method: "POST",
+        credentials: "include",
+      }),
+      invalidatesTags: ["Class"],
+    }),
   }),
 });
 
@@ -101,4 +115,5 @@ export const {
   useSchedulesQuery,
   usePricesQuery,
   useGetClassesByClientQuery,
+  useClassByDateMutation,
 } = classApi;

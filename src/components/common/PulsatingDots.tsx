@@ -1,49 +1,12 @@
 "use client";
-import { motion } from "framer-motion";
 
 export default function PulsatingDots() {
   return (
-    <div className="flex items-center justify-center">
-      <div className="flex space-x-2">
-        <motion.div
-          className="h-3 w-3 rounded-full bg-primary"
-          animate={{
-            scale: [1, 1.5, 1],
-            opacity: [0.5, 1, 0.5],
-          }}
-          transition={{
-            duration: 1,
-            ease: "easeInOut",
-            repeat: Infinity,
-          }}
-        />
-        <motion.div
-          className="h-3 w-3 rounded-full bg-primary"
-          animate={{
-            scale: [1, 1.5, 1],
-            opacity: [0.5, 1, 0.5],
-          }}
-          transition={{
-            duration: 1,
-            ease: "easeInOut",
-            repeat: Infinity,
-            delay: 0.3,
-          }}
-        />
-        <motion.div
-          className="h-3 w-3 rounded-full bg-primary"
-          animate={{
-            scale: [1, 1.5, 1],
-            opacity: [0.5, 1, 0.5],
-          }}
-          transition={{
-            duration: 1,
-            ease: "easeInOut",
-            repeat: Infinity,
-            delay: 0.6,
-          }}
-        />
-      </div>
+    <div className="flex items-center justify-center space-x-2 dark:invert">
+      <span className="sr-only">Loading...</span>
+      <div className="size-4 animate-bounce rounded-full bg-secondary [animation-delay:-0.3s]" />
+      <div className="size-4 animate-bounce rounded-full bg-secondary [animation-delay:-0.15s]" />
+      <div className="size-4 animate-bounce rounded-full bg-secondary" />
     </div>
   );
 }

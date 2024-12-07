@@ -1,16 +1,48 @@
 {
   "navbar": {
     "products": "Products",
-    "classes": "Class"
+    "classes": "Class",
+    "languages": {
+      "es": "Spanish",
+      "en": "English"
+    }
   },
   "hero": {
     "textfirst": "Discover our",
-    "textresalt": "handmade chocolates",
-    "textsecond": ", made with the best ingredients.",
+    "textresalt": "handmade chocolates,",
+    "textsecond": " made with the best ingredients.",
     "button": "Explore our products"
   },
+  "forgot-password": {
+    "title": "Recover Password",
+    "subtitle": "Enter your email and we will send you a link to reset your password.",
+    "email": "Email",
+    "description": "Enter your email associated with your account",
+    "button": "Send email",
+    "login": "Back to login"
+  },
+  "token-expired": {
+    "title": "Your token has expired. ",
+    "description": "Please request a new password reset link."
+  },
+  "reset-password": {
+    "title": "Reset Password",
+    "subtitle": "Enter your new password",
+    "newPassword": "New password",
+    "description": "Minimum 8 characters, including uppercase, lowercase, and numbers.",
+    "confirmPassword": "Confirm password",
+    "button": "Reset password",
+    "loading": "Resetting password...",
+    "login": "Back to login"
+  },
   "workshops": {
-    "title": "What are you looking for today?"
+    "title": {
+      "start": "from",
+      "resalt": "coffe",
+      "end": "to"
+    },
+    "subtitle": "The magic transforms in your hands.",
+    "button": "Register now!"
   },
   "recommendations": {
     "title": "Explore our recommended products",
@@ -22,7 +54,9 @@
   },
   "footer": {
     "title": "Store information",
-    "copyrigth": "All rights reserved"
+    "copyrigth": "All rights reserved",
+    "description": "Discover our products and enjoy the best quality!",
+    "social": "Connect"
   },
   "categories": {
     "title": "All our products",
@@ -94,6 +128,10 @@
     }
   },
   "account": {
+    "setting": {
+      "title": "Settings",
+      "description": "Manage your account settings"
+    },
     "title": "My account",
     "subtitle": "Manage your personal information",
     "signout": "Sign out",
@@ -122,10 +160,38 @@
       "download": "Download",
       "empty": "You don't have any orders",
       "status": {
-        "pending": "Pending",
-        "ready": "Ready",
-        "completed": "Completed",
-        "canceled": "Canceled"
+        "CONFIRMED": "Confirmado",
+        "PROCESSING": "Procesando",
+        "COMPLETED": "Completed",
+        "CANCELED": "Canceled"
+      },
+      "details": {
+        "boleta": "Receipt",
+        "factura": "Invoice",
+        "order": "Order",
+        "client": {
+          "title": "Client information",
+          "name": "Name",
+          "email": "Email",
+          "phone": "Phone",
+          "typeDoc": "Type of document",
+          "doc": "Document number",
+          "address": "Address",
+          "state": "State",
+          "city": "City",
+          "postalCode": "Postal code",
+          "country": "Country",
+          "businessName": "Business name"
+        },
+        "cart": {
+          "title": "Order details",
+          "product": "Product",
+          "quantity": "Quantity",
+          "price": "P.U",
+          "subTotal": "Subtotal",
+          "total": "Total sale",
+          "pay": "Payment method"
+        }
       }
     },
     "classes": {
@@ -173,30 +239,32 @@
     }
   },
   "class": {
+    "previous": "Previous",
+    "next": "Next",
+    "confirm": "Confirm",
     "step1": {
-      "title": "Register a Class",
-      "description": "You can book our class in our shop or reserve it in advance by simply filling out the form below and paying via PayPal! Our team will confirm your booking and payment via email.",
-      "button": "Register"
-    },
-    "step2": {
       "title": "Contact Information",
-      "toast": {
-        "fullFields": "Please complete all fields to continue.",
-        "emailValidation": "Please enter a valid email."
+      "errors": {
+        "name": "Full name is required",
+        "email": "Email is required",
+        "phone": "Phone is required"
       },
-      "placeholder": {
+      "label": {
         "name": "Full Name",
-        "email": "Email"
+        "email": "Email",
+        "phone": "Phone"
       },
       "button": {
         "back": "Back",
         "next": "Next"
       }
     },
-    "step3": {
-      "title": "Choose the day",
-      "toast": {
-        "fullFields": "Please select a date to continue."
+    "step2": {
+      "title": "Date and hour of the Class",
+      "subtitle": "Select the date and hour you want to take the class",
+      "description": "Select the time of the class",
+      "errors": {
+        "date": "Please select a date to continue."
       },
       "moreDates": "MORE DATES",
       "days": {
@@ -228,34 +296,38 @@
         "next": "Next"
       }
     },
-    "step4": {
-      "title": "Available Times",
+    "step3": {
+      "empty": "No places available",
+      "title": "Number of Participants",
+      "subtitle": "Select the number of participants for the class",
+      "adults": "Adults",
+      "children": "Children",
       "toast": {
-        "fullFields": "Please select a time to continue."
+        "fullFields": "Please select the number of adults to continue."
       },
-      "dateNotSelected": "Date not Selected.",
-      "subTitle": "Choose the Schedule",
-      "schedule": {
-        "loading": "Loading Schedules...",
-        "loadingError": "Error loading Schedules",
-        "notAvailable": "There are no available times"
+      "message": {
+        "start": "There are",
+        "end": "seats available"
       },
+      "childrenPay": "Children over 5 years pay",
+      "dateNotSelected": "Date not Selected",
       "button": {
         "back": "Back",
         "next": "Next"
       }
     },
-    "step5": {
-      "title": "Select language",
-      "subTitle": "Available Languages",
+    "step4": {
+      "title": "Language and comments",
+      "subtitle": "Select the language you want to take the class",
       "languages": {
-        "spanish": "SPANISH",
-        "english": "ENGLISH"
+        "español": "SPANISH",
+        "ingles": "ENGLISH"
       },
       "toast": {
         "fullFields": "Please select a language to continue."
       },
-      "dateNotSelected": "Date not Selected",
+      "comments": "Would you like to add any comments?",
+      "addComments": "Add comments",
       "language": {
         "loading": "Loading languages...",
         "loadingError": "Error loading languages",
@@ -266,19 +338,12 @@
         "next": "Next"
       }
     },
-    "step6": {
-      "title": "Number of Adults",
-      "toast": {
-        "fullFields": "Please select the number of adults to continue."
+    "step5": {
+      "title": "Booking Summary",
+      "people": "People",
+      "errors": {
+        "terms": "Accept the terms and policies to continue"
       },
-      "dateNotSelected": "Date not Selected",
-      "button": {
-        "back": "Back",
-        "next": "Next"
-      }
-    },
-    "step7": {
-      "title": "Personalize your experience",
       "toast": {
         "noPlaceAvailable": "There are no more places available, please choose another date or time.",
         "invalidNumberParticipantsRange": "Invalid number of participants, The minimum number of participants must be 2.",
@@ -295,29 +360,8 @@
         "paymentCancelled": "Payment cancelled"
       },
       "remainingTime": "Time remaining to make payment: ",
-      "children": {
-        "detail": "Children over 14 years old",
-        "detailPay": "Pay as adults*"
-      },
-      "symbols": {
-        "+": "+",
-        "-": "-"
-      },
       "totalParticipants": {
         "people": "People"
-      },
-      "allergies": {
-        "title": "Food allergies or restrictions",
-        "placeholder": "Please specify which allergies",
-        "button": {
-          "si": "Yes",
-          "no": "No"
-        }
-      },
-      "abstract": {
-        "title": "Booking Summary",
-        "workshops": "WORKSHOP, ",
-        "people": "PEOPLE - "
       },
       "subtotalDetail": {
         "title": "Subtotal",
@@ -330,6 +374,7 @@
         "terms": "Terms and Privacy Policy"
       },
       "buttons": {
+        "loading": "Confirming registration",
         "back": "Back",
         "register": "Register Class"
       }
@@ -388,6 +433,19 @@
       "scheduleClass": "Schedule: ",
       "participantsClass": "Participants: ",
       "userAllergies": "Allergies: "
+    },
+    "errors": {
+      "name": "Please enter your full name",
+      "email": "Please enter a valid email address",
+      "phone": "Please enter a valid phone number",
+      "date": "Please select a date to continue",
+      "time": "Please select the time of the class to continue",
+      "language": "Please select a language to continue"
+    },
+    "success": {
+      "title": "Registration confirmed!",
+      "description": "Your registration has been confirmed and is in the process of validation. You will receive an email with the confirmation of your registration.",
+      "accept": "Accept"
     }
   },
   "checkout": {
@@ -576,5 +634,10 @@
       "success": "Claim registered successfully",
       "error": "An error occurred while submitting the claim"
     }
+  },
+  "notfound": {
+    "title": "Page not found",
+    "description": "The page you are looking for does not exist",
+    "button": "Back to home"
   }
 }

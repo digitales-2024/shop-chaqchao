@@ -6,15 +6,21 @@ import {
   ResetPasswordSchema,
 } from "@/schemas/client/resetPasswordSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { ClockAlert, RectangleEllipsis } from "lucide-react";
+import { useTranslations } from "next-intl";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
+import PulsatingDots from "@/components/common/PulsatingDots";
+import { LanguageSelector } from "@/components/templates/navbar/LanguageSelector";
 import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -34,6 +40,8 @@ import { decodeToken } from "@/lib/jwt/decodeToken";
 export default function ResetPasswordPage() {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
+  const ex = useTranslations("token-expired");
+  const t = useTranslations("reset-password");
   const [isExpired, setIsExpired] = useState(false);
   const [validToken, setValidToken] = useState(false);
 
@@ -92,68 +100,111 @@ export default function ResetPasswordPage() {
     }
   }, [isSuccessResetPassword, form]);
 
-  if (!token) return <p>Loading...</p>;
+  if (!token)
+    return (
+      <div className="flex min-h-full w-full items-center justify-center">
+        <PulsatingDots />
+      </div>
+    );
 
   if (isExpired) {
     return (
-      <div>
-        <p>Your token has expired. Please request a new password reset link.</p>
+      <div className="flex min-h-screen w-full items-center justify-center">
+        <Card className="w-fit border-none shadow-none">
+          <CardHeader className="space-y-6 text-center">
+            <div className="mx-auto rounded-full bg-rose-500/10 p-4">
+              <ClockAlert size={48} className="text-rose-500" />
+            </div>
+            <CardTitle className="text-rose-500">{ex("title")}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <CardDescription className="mt-2 text-rose-500">
+              {ex("description")}
+            </CardDescription>
+          </CardContent>
+        </Card>
       </div>
     );
   }
 
-  if (!validToken) return <p>Loading...</p>;
+  if (!validToken)
+    return (
+      <div className="flex min-h-screen w-full items-center justify-center">
+        <PulsatingDots />
+      </div>
+    );
 
   return (
-    <Card className="w-[350px]">
-      <CardHeader>
-        <CardTitle>Restablecer Contraseña</CardTitle>
-        <CardDescription>Ingresa tu nueva contraseña.</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(handleResetPassword)}
-            className="space-y-8"
-          >
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Nueva Contraseña</FormLabel>
-                  <FormControl>
-                    <Input type="password" placeholder="********" {...field} />
-                  </FormControl>
-                  <FormDescription>
-                    Mínimo 8 caracteres, incluyendo mayúsculas, minúsculas y
-                    números.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="confirmPassword"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Confirmar Contraseña</FormLabel>
-                  <FormControl>
-                    <Input type="password" placeholder="********" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button type="submit" disabled={isLoadingResetPassword}>
-              {isLoadingResetPassword
-                ? "Restableciendo..."
-                : "Restablecer Contraseña"}
-            </Button>
-          </form>
-        </Form>
-      </CardContent>
-    </Card>
+    <>
+      <div className="relative inline-flex h-full min-h-screen w-full items-center justify-center">
+        <Card className="w-[350px] border-none shadow-none">
+          <CardHeader className="space-y-6 text-center">
+            <div className="mx-auto rounded-full bg-secondary/10 p-4">
+              <RectangleEllipsis size={48} className="text-secondary" />
+            </div>
+            <CardTitle>{t("title")}</CardTitle>
+            <CardDescription>{t("subtitle")}</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(handleResetPassword)}
+                className="space-y-8"
+              >
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>{t("newPassword")}</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="password"
+                          placeholder="********"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormDescription>{t("description")}</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="confirmPassword"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>{t("confirmPassword")}</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="password"
+                          placeholder="********"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button
+                  className="rounded-full text-lg"
+                  disabled={isLoadingResetPassword}
+                >
+                  {isLoadingResetPassword ? t("loading") : t("button")}
+                </Button>
+              </form>
+            </Form>
+          </CardContent>
+          <CardFooter>
+            <p className="text-center text-base">
+              <Link href="/sign-in" className="text-secondary">
+                {t("login")}
+              </Link>
+            </p>
+          </CardFooter>
+        </Card>
+      </div>
+      <LanguageSelector />
+    </>
   );
 }

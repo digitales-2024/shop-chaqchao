@@ -1,128 +1,154 @@
 "use client";
 import ChaqchaoWorkshop01 from "@/assets/images/workshop_01.webp";
 import ChaqchaoWorkshop02 from "@/assets/images/workshop_02.webp";
-import ChaqchaoWorkshop03 from "@/assets/images/workshop_03.webp";
+import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-} from "@/components/ui/carousel";
-
-import { cn } from "@/lib/utils";
-
-import { LineTitle } from "../common/LineTitle";
+import BlobCursor from "../core/BlobCursor";
+import { Cursor } from "../core/Cursor";
+import { InView } from "../core/InView";
+import { ClassWorkshop } from "./ClassWorkshop";
 
 export const Workshops = () => {
   const t = useTranslations("workshops");
-  return (
-    <section className="container mx-auto flex flex-col gap-16 py-20">
-      <header className="grid grid-cols-1 items-center justify-center gap-x-2 sm:grid-cols-3">
-        <LineTitle className="hidden text-primary sm:flex" />
-        <h2 className="text-balance text-center text-3xl font-semibold">
-          {t("title")}
-        </h2>
-        <LineTitle className="hidden rotate-180 text-primary sm:flex" />
-      </header>
-      <WorkshopCarousel />
-    </section>
-  );
-};
 
-interface WorkshopItem {
-  title: string;
-  image: StaticImageData;
-  href: string;
-}
+  const variants1 = {
+    hidden: { filter: "blur(10px)", opacity: 0 },
+    visible: { filter: "blur(0px)", opacity: 1 },
+  };
 
-const workshopItems: WorkshopItem[] = [
-  {
-    title: "Chocolates",
-    image: ChaqchaoWorkshop03,
-    href: "/",
-  },
-  {
-    title: "Workshops",
-    image: ChaqchaoWorkshop01,
-    href: "/",
-  },
-  {
-    title: "Cuidado Personal",
-    image: ChaqchaoWorkshop02,
-    href: "/",
-  },
-  {
-    title: "Chocolates",
-    image: ChaqchaoWorkshop03,
-    href: "/",
-  },
-  {
-    title: "Workshops",
-    image: ChaqchaoWorkshop01,
-    href: "/",
-  },
-  {
-    title: "Cuidado Personal",
-    image: ChaqchaoWorkshop02,
-    href: "/",
-  },
-];
-
-const WorkshopCarousel = () => {
-  const [isFocused, setIsFocused] = useState(false);
-  const [focusedIndex, setFocusedIndex] = useState<number | null>(null);
+  const variants2 = {
+    hidden: { opacity: 0, x: -20 },
+    visible: { opacity: 1, x: 0 },
+  };
 
   return (
-    <Carousel
-      className="relative grid h-fit grid-cols-[1fr_10rem]"
-      opts={{
-        loop: true,
-      }}
-      tw="md:grid-cols-[repeat(2,1fr)] lg:grid-cols-[repeat(3,1fr)]"
-    >
-      <CarouselContent>
-        {workshopItems.map((item, index) => (
-          <CarouselItem key={index} className="sm:basis-1/2 lg:basis-1/3">
-            <Link
-              href={item.href}
-              className="group/work z-0 flex size-fit flex-col items-center justify-center gap-4 overflow-hidden"
-              onMouseEnter={() => {
-                setIsFocused(true);
-                setFocusedIndex(index);
-              }}
-              onMouseLeave={() => {
-                setIsFocused(false);
-                setFocusedIndex(0);
-              }}
-            >
-              <div className="overflow-hidden rounded-2xl">
-                <Image
-                  src={item.image.src}
-                  alt={item.title}
-                  width={400}
-                  height={400}
-                  className={cn(
-                    "h-full object-cover transition-all duration-700 group-hover/work:scale-105",
-                    {
-                      "opacity-60": isFocused && focusedIndex !== index,
-                    },
-                  )}
-                  quality={100}
-                />
-              </div>
-              <h3 className="font-commingSoon text-xl font-bold text-terciary">
-                {item.title}
-              </h3>
+    <section className="relative flex w-full flex-col items-center justify-center">
+      <BlobCursor />
+      <div className="container mx-auto flex flex-col gap-16 py-20">
+        <div className="grid h-[620px] grid-cols-1 items-start justify-start gap-8 px-4 sm:grid-cols-2 sm:px-0">
+          <div className="flex w-full flex-col items-start justify-center gap-6 space-y-4">
+            <h2 className="flex w-fit flex-col gap-y-14">
+              <span className="relative inline-flex h-auto w-fit">
+                <span className="absolute -top-12 h-auto text-5xl font-bold capitalize">
+                  {t("title.start")}
+                </span>
+                <span className="relative h-auto font-pacifico text-[6rem] font-bold capitalize sm:text-[8rem]">
+                  <Cursor
+                    attachToParent
+                    variants={{
+                      initial: { height: 0, opacity: 0, scale: 0.3 },
+                      animate: { height: "auto", opacity: 1, scale: 1 },
+                      exit: { height: 0, opacity: 0, scale: 0.3 },
+                    }}
+                    transition={{
+                      type: "spring",
+                      duration: 0.3,
+                      bounce: 0.1,
+                    }}
+                    className="overflow-hidden"
+                    springConfig={{
+                      bounce: 0.01,
+                    }}
+                  >
+                    <Image
+                      src={ChaqchaoWorkshop01}
+                      alt="Christian Church, Eastern Europe"
+                      className="h-40 w-auto rounded-xl"
+                    />
+                  </Cursor>
+                  <InView
+                    variants={variants1}
+                    viewOptions={{ margin: "0px 0px -200px 0px" }}
+                    transition={{ duration: 1, ease: "easeInOut" }}
+                  >
+                    {t("title.resalt")}
+                  </InView>
+                </span>
+              </span>
+              <span className="relative ml-0 inline-flex h-auto w-fit gap-2 whitespace-normal sm:ml-20">
+                <span className="absolute right-1/2 top-0 text-5xl font-bold">
+                  {t("title.end")}
+                </span>
+                <span className="font-pacifico text-[5rem] font-extrabold capitalize sm:text-[9rem]">
+                  <Cursor
+                    attachToParent
+                    variants={{
+                      initial: { height: 0, opacity: 0, scale: 0.3 },
+                      animate: { height: "auto", opacity: 1, scale: 1 },
+                      exit: { height: 0, opacity: 0, scale: 0.3 },
+                    }}
+                    transition={{
+                      type: "spring",
+                      duration: 0.3,
+                      bounce: 0.1,
+                    }}
+                    className="overflow-hidden"
+                    springConfig={{
+                      bounce: 0.01,
+                    }}
+                  >
+                    <Image
+                      src={ChaqchaoWorkshop02}
+                      alt="Christian Church, Eastern Europe"
+                      className="h-40 w-auto rounded-xl"
+                    />
+                  </Cursor>
+                  <InView
+                    variants={variants2}
+                    viewOptions={{ margin: "0px 0px -200px 0px" }}
+                    transition={{ duration: 1, ease: "easeInOut" }}
+                  >
+                    Chocolate
+                  </InView>
+                </span>
+              </span>
+            </h2>
+            <p className="text-2xl text-gray-500">{t("subtitle")}</p>
+            <Link href="/workshops">
+              <motion.span
+                className="inline-flex overflow-hidden rounded-full bg-[linear-gradient(120deg,#FFf_calc(var(--shimmer-button-x)-25%),#ffb31c_var(--shimmer-button-x),#f38e1b_calc(var(--shimmer-button-x)+25%))] [--shimmer-button-x:0%]"
+                initial={
+                  {
+                    scale: 1,
+                    "--shimmer-button-x": "-100%",
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  } as any
+                }
+                animate={
+                  {
+                    "--shimmer-button-x": "200%",
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  } as any
+                }
+                transition={{
+                  stiffness: 500,
+                  damping: 20,
+                  type: "spring",
+                  "--shimmer-button-x": {
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: [0.445, 0.05, 0.55, 0.95],
+                  },
+                }}
+                whileTap={{
+                  scale: 0.95,
+                }}
+                whileHover={{
+                  scale: 1.05,
+                }}
+              >
+                <span className="m-[0.125rem] rounded-full bg-secondary px-8 py-4 text-2xl font-semibold backdrop-blur-sm">
+                  {t("button")}
+                </span>
+              </motion.span>
             </Link>
-          </CarouselItem>
-        ))}
-      </CarouselContent>
-      <CarouselNext className="absolute right-0 size-20 border-terciary bg-transparent text-terciary" />
-    </Carousel>
+          </div>
+          <ClassWorkshop />
+        </div>
+      </div>
+    </section>
   );
 };

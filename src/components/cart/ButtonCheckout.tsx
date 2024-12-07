@@ -1,11 +1,9 @@
-import { ShoppingCheck } from "@/assets/icons";
 import { RefreshCcw } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { cn } from "@/lib/utils";
 
-import { Button, buttonVariants } from "../ui/button";
-
+import { Button } from "../ui/button";
 interface ButtonCheckoutProps {
   isLoading: boolean;
   validate: () => void;
@@ -19,11 +17,14 @@ export const ButtonCheckout = ({
 
   return (
     <Button
-      className={cn("font-bold", buttonVariants({}))}
+      variant="default"
+      className={cn(
+        "h-16 rounded-full px-8 text-xl font-bold text-white [&_svg]:size-6 [&_svg]:shrink-0",
+      )}
       onClick={validate}
       disabled={isLoading}
     >
-      {isLoading ? <RefreshCcw className="animate-spin" /> : <ShoppingCheck />}
+      {isLoading && <RefreshCcw className="animate-spin" />}
       {t("button")}
     </Button>
   );

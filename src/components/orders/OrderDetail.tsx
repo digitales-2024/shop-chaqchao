@@ -1,10 +1,32 @@
 "use client";
-import { OrderClient } from "@/types/order";
-import { Download, MoreVertical } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { Izipay } from "@/assets/icons";
+import { useOrders } from "@/hooks/use-orders";
+import { BillingDocumentType, OrderClient } from "@/types/order";
+import { numberToLetter } from "@/utils/numberToLetter";
+import { format } from "date-fns";
+import { es } from "date-fns/locale";
+import {
+  Download,
+  Mail,
+  MessageCircleMore,
+  MoreVertical,
+  PackageOpen,
+  Phone,
+} from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
 
-import { cn } from "@/lib/utils";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
+import { Line } from "../common/Line";
+import PulsatingDots from "../common/PulsatingDots";
 import { Button } from "../ui/button";
 import {
   DropdownMenu,
@@ -12,6 +34,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 import { Separator } from "../ui/separator";
 
 interface OrderDisplayProps {
@@ -19,51 +42,44 @@ interface OrderDisplayProps {
 }
 
 export const statusColors: Record<OrderClient["orderStatus"], string> = {
-  CONFIRMED: "border-slate-300 text-slate-300",
-  READY: "border-cyan-500 text-cyan-500",
+  CONFIRMED: "border-blue-300 text-blue-300",
+  PROCESSING: "border-cyan-500 text-cyan-500",
   COMPLETED: "border-green-500 text-green-500",
   CANCELLED: "border-rose-500 text-rose-500",
-};
-
-export const translateStatus: Record<OrderClient["orderStatus"], string> = {
-  CONFIRMED: "pending",
-  READY: "ready",
-  COMPLETED: "completed",
-  CANCELLED: "canceled",
 };
 
 export const OrderDetail = ({ order }: OrderDisplayProps) => {
   const t = useTranslations("account.orders");
 
+  const {
+    order: orderDetail,
+    isLoadingOrder,
+    onDownloadPdf,
+  } = useOrders(order?.id);
+  const locale = useLocale();
+
+  if (isLoadingOrder) {
+    return <PulsatingDots />;
+  }
+
   return (
     <div className="flex h-full flex-col">
-      <div className="flex w-full items-center justify-between p-2">
-        <div>
-          {order && (
-            <span className="font-bold">
-              {order.pickupCode} -{" "}
-              <span
-                className={cn(
-                  statusColors[order.orderStatus ?? ""] ?? "",
-                  "uppercase",
-                )}
-              >
-                {t(`status.${translateStatus[order.orderStatus] ?? "pending"}`)}
-              </span>
-            </span>
-          )}
-        </div>
+      <div className="flex w-full items-center justify-end p-2">
         <div className="inline-flex items-center justify-center gap-1">
           <Separator orientation="vertical" className="mx-2 h-6" />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" disabled={!order}>
+              <Button variant="ghost" size="icon" disabled={!orderDetail}>
                 <MoreVertical className="h-4 w-4" />
                 <span className="sr-only">More</span>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem>
+              <DropdownMenuItem
+                onSelect={() =>
+                  order?.id && onDownloadPdf(order.id, order.pickupCode)
+                }
+              >
                 <Download className="mr-2 h-4 w-4" />
                 {t("download")}
               </DropdownMenuItem>
@@ -71,28 +87,239 @@ export const OrderDetail = ({ order }: OrderDisplayProps) => {
           </DropdownMenu>
         </div>
       </div>
-      <Separator />
+      <Line className="border-dashed" />
       {order ? (
-        <div className="flex flex-1 flex-col">
-          <div className="flex items-start p-4">
-            <div className="flex items-start gap-4 text-sm">
-              <div className="grid gap-1">
-                <div className="font-semibold">asdasd</div>
-                <div className="line-clamp-1 text-xs">asdasd</div>
-                <div className="line-clamp-1 text-xs">
-                  <span className="font-medium">Reply-To:</span>
-                </div>
+        <ScrollArea>
+          <div className="space-y-6 px-10">
+            <div className="flex w-full flex-col items-center justify-center gap-1">
+              <div>
+                {orderDetail?.billingDocument.billingDocumentType ===
+                ("INVOICE" as unknown as BillingDocumentType)
+                  ? t("details.factura")
+                  : t("details.boleta")}{" "}
+              </div>
+              <div className="group relative flex w-fit items-center gap-2 text-lg">
+                <span className="font-thin uppercase text-slate-500">
+                  {t("details.order")} #{" "}
+                </span>
+                <span className="truncate">{orderDetail?.pickupCode}</span>
               </div>
             </div>
-            {/* {order.date && (
-              <div className="ml-auto text-xs text-muted-foreground">
-                {format(new Date(order.date), "PPpp")}
+            <Line className="border-dashed" />
+            <div className="grid w-full gap-3 text-sm">
+              <div className="font-semibold">{t("details.client.title")}</div>
+              <dl className="grid grid-cols-2 gap-3">
+                <div className="flex flex-col items-start">
+                  <dt className="text-xs font-thin text-gray-500">
+                    {t("details.client.name")}
+                  </dt>
+                  <dd className="font-normal capitalize">
+                    {orderDetail?.client.name} {orderDetail?.client.lastName}{" "}
+                  </dd>
+                </div>
+                <div className="flex flex-col items-start">
+                  <dt className="text-xs font-thin text-gray-500">
+                    {t("details.client.email")}
+                  </dt>
+                  <dd className="group/email font-normal">
+                    {orderDetail?.client.email}
+                    <Button
+                      size="icon"
+                      variant="outline"
+                      className="h-6 w-6 opacity-0 transition-opacity group-hover/email:opacity-100"
+                    >
+                      <span className="sr-only">Email client</span>
+                      <a href={`mailto: ${orderDetail?.client.email}`}>
+                        <Mail className="h-3 w-3" />
+                      </a>
+                    </Button>
+                  </dd>
+                </div>
+                <div className="flex flex-col items-start">
+                  <dt className="text-xs font-thin text-gray-500">
+                    {t("details.client.phone")}
+                  </dt>
+                  <dd className="group/phone space-x-2 font-normal">
+                    {orderDetail?.client.phone}
+                    {orderDetail?.client.phone && (
+                      <>
+                        <Button
+                          size="icon"
+                          variant="outline"
+                          className="h-6 w-6 opacity-0 transition-opacity group-hover/phone:opacity-100"
+                        >
+                          <span className="sr-only">Phone client</span>
+                          <a href={`tel:${orderDetail?.client.phone}`}>
+                            <Phone className="h-3 w-3" />
+                          </a>
+                        </Button>
+                        <Button
+                          size="icon"
+                          variant="outline"
+                          className="h-6 w-6 opacity-0 transition-opacity group-hover/phone:opacity-100"
+                        >
+                          <span className="sr-only">Phone client</span>
+                          <a
+                            href={`https://wa.me/${orderDetail?.client.phone.replace(/\s+/g, "")}`}
+                            target="_blank"
+                          >
+                            <MessageCircleMore className="h-3 w-3" />
+                          </a>
+                        </Button>
+                      </>
+                    )}
+                  </dd>
+                </div>
+                <div></div>
+                <div className="flex flex-col items-start">
+                  <dt className="text-xs font-thin text-gray-500">
+                    {t("details.client.typeDoc")}
+                  </dt>
+                  <dd className="font-normal capitalize">
+                    {orderDetail?.billingDocument.typeDocument}
+                  </dd>
+                </div>
+                <div className="flex flex-col items-start">
+                  <dt className="text-xs font-thin text-gray-500">
+                    {t("details.client.doc")}
+                  </dt>
+                  <dd className="font-normal capitalize">
+                    {orderDetail?.billingDocument.documentNumber}
+                  </dd>
+                </div>
+                <div className="flex flex-col items-start">
+                  <dt className="text-xs font-thin text-gray-500">
+                    {t("details.client.address")}
+                  </dt>
+                  <dd className="font-normal capitalize">
+                    {orderDetail?.billingDocument.address}
+                  </dd>
+                </div>
+                <div className="flex flex-col items-start">
+                  <dt className="text-xs font-thin text-gray-500">
+                    {t("details.client.country")}
+                  </dt>
+                  <dd className="font-normal capitalize">
+                    {orderDetail?.billingDocument.country}
+                  </dd>
+                </div>
+                <div className="flex flex-col items-start">
+                  <dt className="text-xs font-thin text-gray-500">
+                    {t("details.client.state")}
+                  </dt>
+                  <dd className="font-normal capitalize">
+                    {orderDetail?.billingDocument.state}
+                  </dd>
+                </div>
+                <div className="flex flex-col items-start">
+                  <dt className="text-xs font-thin text-gray-500">
+                    {t("details.client.city")}
+                  </dt>
+                  <dd className="font-normal capitalize">
+                    {orderDetail?.billingDocument.city}
+                  </dd>
+                </div>
+                {orderDetail?.billingDocument.businessName !== "" && (
+                  <div className="flex flex-col items-start">
+                    <dt className="text-xs font-thin text-gray-500">
+                      {t("details.client.businessName")}
+                    </dt>
+                    <dd className="font-normal capitalize">
+                      {orderDetail?.billingDocument.businessName}
+                    </dd>
+                  </div>
+                )}
+              </dl>
+            </div>
+            <Line className="border-dashed" />
+            <div className="w-full text-center text-xs font-thin">
+              {format(
+                orderDetail ? orderDetail?.pickupTime : new Date(),
+                "dd/MM/yyyy HH:mm:ss",
+                {
+                  locale: locale === "es" ? es : undefined,
+                },
+              )}
+            </div>
+            <Line className="border-dashed" />
+            <div className="flex-1 px-0 py-2 sm:px-6">
+              <div className="space-y-4">
+                <div className="text-sm font-semibold">
+                  {t("details.cart.title")}
+                </div>
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="max-w-40">
+                        {t("details.cart.product")}
+                      </TableHead>
+                      <TableHead>{t("details.cart.quantity")}</TableHead>
+                      <TableHead>P.U</TableHead>
+                      <TableHead className="text-right">
+                        {t("details.cart.subTotal")}
+                      </TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {orderDetail?.cart.products.map((product) => (
+                      <TableRow key={product.id}>
+                        <TableCell className="flex items-center gap-2 truncate">
+                          <Avatar className="rounded-md bg-slate-100">
+                            <AvatarImage
+                              src={product.image}
+                              alt={product.name}
+                            />
+                            <AvatarFallback>
+                              <PackageOpen />
+                            </AvatarFallback>
+                          </Avatar>
+                          <span className="text-muted-foreground">
+                            {product.name}
+                          </span>
+                        </TableCell>
+                        <TableCell>{product.quantity}</TableCell>
+                        <TableCell>{product.price.toFixed(2)}</TableCell>
+                        <TableCell className="text-right">
+                          {(product.price * product.quantity).toFixed(2)}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+                <ul className="grid gap-3">
+                  <li className="flex items-center justify-between font-semibold">
+                    <span className="font-thin">{t("details.cart.total")}</span>
+                    <span>S/. {(order?.totalAmount ?? 0).toFixed(2)}</span>
+                  </li>
+                </ul>
               </div>
-            )} */}
+              <div className="mt-10 flex flex-col gap-2">
+                {locale === "es" && (
+                  <p className="text-center text-xs">
+                    Son{" "}
+                    {numberToLetter(
+                      Number((order?.totalAmount ?? 0).toFixed(2)),
+                    )}{" "}
+                  </p>
+                )}
+                <div className="grid grid-cols-3 items-center gap-3">
+                  <Line className="w-full border-dashed" />
+                  <span className="text-center text-xs">
+                    {t("details.cart.pay")}
+                  </span>
+                  <Line className="border-dashed" />
+                </div>
+                <li className="flex items-center justify-between font-semibold">
+                  <span className="font-thin">
+                    <Izipay className="h-4" />
+                  </span>
+                  <span>S/. {(order?.totalAmount ?? 0).toFixed(2)}</span>
+                </li>
+              </div>
+              <ScrollBar orientation="horizontal" />
+            </div>
           </div>
-          <Separator />
-          <div className="flex-1 whitespace-pre-wrap p-4 text-sm">asdasd</div>
-        </div>
+        </ScrollArea>
       ) : (
         <div className="p-8 text-center text-muted-foreground">
           {t("empty")}

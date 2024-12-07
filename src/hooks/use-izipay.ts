@@ -2,6 +2,7 @@ import { useEffect } from "react";
 
 declare global {
   interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     Izipay: any;
   }
 }
@@ -21,6 +22,7 @@ const useIzipay = (token: string | null) => {
     };
   }, []);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const loadIzipayForm = (config: any, callback: (response: any) => void) => {
     if (token && window.Izipay) {
       try {
@@ -31,6 +33,7 @@ const useIzipay = (token: string | null) => {
           keyRSA: "RSA",
           callbackResponse: callback,
         });
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
         console.error(error.message, error.Errors, error.date);
       }
