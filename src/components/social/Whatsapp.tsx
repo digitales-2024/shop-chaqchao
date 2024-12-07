@@ -3,7 +3,7 @@ import { WhatsApp } from "@/assets/icons";
 import { useTranslations } from "next-intl";
 
 export default function WhatsAppButton() {
-  const phoneNumber = "123456789"; // Reemplaza esto con tu número de WhatsApp
+  const phoneNumber = "958086581"; // Reemplaza esto con tu número de WhatsApp
   const t = useTranslations("whatsapp");
 
   const handleClick = () => {
