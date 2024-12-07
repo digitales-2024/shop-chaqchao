@@ -165,7 +165,7 @@ const MenuList = () => {
               </AnimatePresence>
             </Link>
           </motion.div>
-        ) : (
+        ) : link.label !== "Logout" || open ? (
           <motion.div
             key={link.label}
             layout
@@ -209,7 +209,7 @@ const MenuList = () => {
               </AnimatePresence>
             </div>
           </motion.div>
-        ),
+        ) : null,
       )}
     </motion.nav>
   );
