@@ -20,7 +20,7 @@ const RecommendHeader: React.FC<RecommendHeaderProps> = ({ children }) => {
           <LineTitle className="hidden text-primary sm:flex" />
           <h2 className="text-center text-3xl font-semibold">
             <span className="text-balance">{t("title")}</span>
-            <p className="text-lg text-secondary">{t("subtitle")}</p>
+            <p className="text-lg text-primary">{t("subtitle")}</p>
           </h2>
           <LineTitle className="hidden rotate-180 text-primary sm:flex" />
         </div>

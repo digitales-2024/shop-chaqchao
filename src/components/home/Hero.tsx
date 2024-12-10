@@ -67,7 +67,7 @@ export const Hero = () => {
           >
             <span className="flex flex-wrap gap-2">
               <span className="truncate">{t("textfirst")} </span>
-              <span className="relative inline-flex truncate font-bold text-secondary">
+              <span className="relative inline-flex truncate font-bold text-primary">
                 {t("textresalt")}
                 <motion.svg
                   fill="none"

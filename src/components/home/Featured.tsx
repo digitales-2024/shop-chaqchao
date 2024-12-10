@@ -20,9 +20,7 @@ const FeaturedHeader: React.FC<FeaturedHeaderProps> = ({ children }) => {
         <h2 className="flex-col gap-2 text-center text-3xl font-semibold">
           <span className="text-balance">
             {t("title")}{" "}
-            <span className="font-black uppercase text-secondary">
-              chaqchao
-            </span>
+            <span className="font-black uppercase text-primary">chaqchao</span>
           </span>
           <p className="text-balance text-lg">{t("subtitle")}</p>
         </h2>
