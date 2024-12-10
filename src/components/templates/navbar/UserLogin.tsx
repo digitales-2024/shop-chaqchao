@@ -59,6 +59,7 @@ export const UserLogin = () => {
               variant="ghost"
               className="relative h-full w-full shrink-0 rounded-full p-0 outline-none ring-0 hover:bg-transparent"
             >
+              <span className="sr-only">Open user menu</span>
               {hasOrderUpdates && (
                 <div className="absolute -right-1 -top-0">
                   <span className="relative flex h-3 w-3">
@@ -68,7 +69,7 @@ export const UserLogin = () => {
                 </div>
               )}
               <Avatar>
-                <AvatarImage src={clientData.image} />
+                <AvatarImage src={clientData.image} alt={clientData.name} />
                 <AvatarFallback>
                   {getFirstLetter(clientData.name)}
                 </AvatarFallback>
