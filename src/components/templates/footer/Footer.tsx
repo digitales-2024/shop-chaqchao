@@ -75,6 +75,7 @@ export function Footer() {
                       {cloneElement(item.icon, {
                         className: "size-6",
                       })}
+                      <span className="sr-only">{item.label}</span>
                     </a>
                   </div>
                 ))}
