@@ -55,7 +55,7 @@ export const Workshops = () => {
                   >
                     <Image
                       src={ChaqchaoWorkshop03}
-                      alt="Christian Church, Eastern Europe"
+                      alt="Coffe Workshop at Chaqchao, Arequipa Peru"
                       className="h-40 w-auto rounded-xl"
                     />
                   </Cursor>
@@ -92,7 +92,7 @@ export const Workshops = () => {
                   >
                     <Image
                       src={ChaqchaoWorkshop04}
-                      alt="Christian Church, Eastern Europe"
+                      alt="Chocolate Workshop at Chaqchao, Arequipa Peru"
                       className="h-40 w-auto rounded-xl"
                     />
                   </Cursor>

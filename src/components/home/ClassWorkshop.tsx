@@ -54,7 +54,7 @@ export const ClassWorkshop = () => {
         >
           <Image
             src={ChaqchaoWorkshop01}
-            alt="Christian Church, Eastern Europe"
+            alt="Workshop at Chaqchao, Arequipa Peru"
             className="h-full w-full rounded-3xl object-cover"
           />
         </InView>
@@ -77,7 +77,7 @@ export const ClassWorkshop = () => {
         >
           <Image
             src={ChaqchaoWorkshop02}
-            alt="Christian Church, Eastern Europe"
+            alt="Workshop at Chaqchao, Arequipa Peru"
             className="h-full w-full rounded-3xl object-cover object-right"
           />
         </InView>
