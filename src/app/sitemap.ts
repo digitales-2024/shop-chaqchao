@@ -7,7 +7,7 @@ const baseUrl = process.env.NEXT_PUBLIC_WEB_CHAQCHAO
 export const dynamic = "force-dynamic";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const routesMap = [""].map((route) => ({
+  const routesMap = ["", "/categories", "/workshops"].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date().toISOString(),
   }));
