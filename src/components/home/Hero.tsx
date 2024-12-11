@@ -20,14 +20,30 @@ import ButtonProducts from "./ButtonProducts";
 
 interface CarouselItem {
   image: StaticImageData;
+  alt: string;
 }
 
 const carouselItems: CarouselItem[] = [
-  { image: Product01 },
-  { image: Product02 },
-  { image: Product03 },
-  { image: Product04 },
-  { image: Product05 },
+  {
+    image: Product01,
+    alt: "Organic Cacao Nibs from Chaqchao Chocolates. Selected cacao from the Andean valleys of Peru.",
+  },
+  {
+    image: Product02,
+    alt: "Organic Cacao Tea from Chaqchao Chocolates. A delicate and flavorful tea from the Andes of Peru.",
+  },
+  {
+    image: Product03,
+    alt: "Organic Cacao Powder from Chaqchao Chocolates. Premium quality cacao powder sourced from the Andean regions of Peru.",
+  },
+  {
+    image: Product04,
+    alt: "Organic Cacao Butter from Chaqchao Chocolates. High-quality cacao butter for culinary and cosmetic uses, sourced from the Andean regions of Peru.",
+  },
+  {
+    image: Product05,
+    alt: "Organic Panela from Chaqchao Chocolates. The real raw sugar, minimally processed and full of natural flavor.",
+  },
 ];
 
 export const Hero = () => {
@@ -118,7 +134,7 @@ export const Hero = () => {
                 >
                   <Image
                     src={item.image.src}
-                    alt="chaqchao"
+                    alt={item.alt}
                     width={400}
                     height={600}
                     className="relative z-10 mx-auto h-[20rem] w-auto bg-transparent object-contain object-center [filter:_drop-shadow(2px_10px_10px_#adadad);] md:h-[40rem]"
