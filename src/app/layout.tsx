@@ -11,6 +11,10 @@ import NextTopLoader from "nextjs-toploader";
 import "./globals.css";
 import { Toaster } from "sonner";
 
+const baseUrl = process.env.NEXT_PUBLIC_WEB_CHAQCHAO
+  ? `https://${process.env.NEXT_PUBLIC_WEB_CHAQCHAO}`
+  : "http://localhost:3001";
+
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -41,14 +45,14 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://chaqchao.com",
+    url: `${baseUrl}`,
     siteName: "Chaqchao Chocolates",
     title: "Chaqchao Chocolates | Store",
     description:
       "Welcome to Chaqchao Chocolates, the best chocolates in Peru, made with organic cacao from the Andes.",
     images: [
       {
-        url: "https://chaqchao.com/images/og-image.jpg",
+        url: `${baseUrl}/images/og-image.jpg`,
         width: 800,
         height: 600,
         alt: "Chaqchao Chocolates",
@@ -60,7 +64,7 @@ export const metadata: Metadata = {
     title: "Chaqchao Chocolates",
     description:
       "Welcome to Chaqchao Chocolates, the best chocolates in Peru, made with organic cacao from the Andes.",
-    images: ["https://chaqchao.com/images/og-image.jpg"],
+    images: [`${baseUrl}/images/og-image.jpg`],
   },
   icons: {
     icon: "/favicon.ico",
