@@ -24,8 +24,57 @@ const comingSoon = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Chaqchao Chocolate Factory",
-  description: "Somos una tienda que ofrece el mejor chocolate del mundo.",
+  title: "Chaqchao Chocolates | Store",
+  description:
+    "Welcome to Chaqchao Chocolates, the best chocolates in Peru, made with organic cacao from the Andes.",
+  robots: {
+    index: true,
+    follow: true,
+    nocache: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      nocache: true,
+      noimageindex: true,
+    },
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://chaqchao.com",
+    siteName: "Chaqchao Chocolates",
+    title: "Chaqchao Chocolates | Store",
+    description:
+      "Welcome to Chaqchao Chocolates, the best chocolates in Peru, made with organic cacao from the Andes.",
+    images: [
+      {
+        url: "https://chaqchao.com/images/og-image.jpg",
+        width: 800,
+        height: 600,
+        alt: "Chaqchao Chocolates",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Chaqchao Chocolates",
+    description:
+      "Welcome to Chaqchao Chocolates, the best chocolates in Peru, made with organic cacao from the Andes.",
+    images: ["https://chaqchao.com/images/og-image.jpg"],
+  },
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon-16x16.png",
+    apple: "/apple-touch-icon.png",
+  },
+  manifest: "/site.webmanifest",
+  viewport: "width=device-width, initial-scale=1",
+  keywords: "chocolates, cacao, peru, organic, fair trade, bean to bar",
+  generator: "Next.js",
+  publisher: "Chaqchao Chocolates",
+  referrer: "origin-when-cross-origin",
+  classification: "chocolates",
+  category: "chocolates",
 };
 
 export default async function RootLayout({
