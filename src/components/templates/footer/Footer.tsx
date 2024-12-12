@@ -1,7 +1,9 @@
 import { Facebook, Instagram, TripAdvisor } from "@/assets/icons";
 import { ChaqchaoLogo } from "@/assets/images/ChaqchaoLogo";
+import { LibroReclamaciones } from "@/assets/images/LibroReclamaciones";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 import { cloneElement } from "react";
 
 interface Info {
@@ -103,12 +105,18 @@ export function Footer() {
             </div>
           </div>
         </div>
-        <div className="mt-16 border-t border-gray-900/10 pt-8 dark:border-gray-100/10 sm:mt-20 lg:mt-24">
+        <div className="relative mt-16 border-t border-gray-900/10 pt-8 dark:border-gray-100/10 sm:mt-20 lg:mt-24">
           <p className="text-xs leading-5 text-gray-700 dark:text-gray-300">
             © {new Date().getFullYear()}
             <span className="px-2 font-commingSoon">CHAQCHAO</span>
             E.I.R.L. / 20558285550 - {t("copyrigth")}
           </p>
+          <div className="absolute bottom-0 right-0 inline-flex w-full justify-end">
+            <Link href="/complaints-book">
+              <span className="sr-only">Libro de reclamaciones</span>
+              <LibroReclamaciones className="w-8 sm:w-16" />
+            </Link>
+          </div>
         </div>
       </div>
     </div>
