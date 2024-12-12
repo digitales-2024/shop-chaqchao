@@ -1,6 +1,6 @@
 "use client";
-import ChaqchaoWorkshop01 from "@/assets/images/workshop_01.webp";
-import ChaqchaoWorkshop02 from "@/assets/images/workshop_02.webp";
+import ChaqchaoWorkshop03 from "@/assets/images/workshop_03.webp";
+import ChaqchaoWorkshop04 from "@/assets/images/workshop_04.webp";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
@@ -27,8 +27,8 @@ export const Workshops = () => {
   return (
     <section className="relative flex w-full flex-col items-center justify-center">
       <BlobCursor />
-      <div className="container mx-auto flex flex-col gap-16 py-20">
-        <div className="grid h-[620px] grid-cols-1 items-start justify-start gap-8 px-4 sm:grid-cols-2 sm:px-0">
+      <div className="container mx-auto flex h-full flex-col gap-16 py-20">
+        <div className="grid max-h-[700px] grid-cols-1 items-start justify-start gap-8 px-4 sm:grid-cols-2 sm:px-0">
           <div className="flex w-full flex-col items-start justify-center gap-6 space-y-4">
             <h2 className="flex w-fit flex-col gap-y-14">
               <span className="relative inline-flex h-auto w-fit">
@@ -54,8 +54,8 @@ export const Workshops = () => {
                     }}
                   >
                     <Image
-                      src={ChaqchaoWorkshop01}
-                      alt="Christian Church, Eastern Europe"
+                      src={ChaqchaoWorkshop03}
+                      alt="Coffe Workshop at Chaqchao, Arequipa Peru"
                       className="h-40 w-auto rounded-xl"
                     />
                   </Cursor>
@@ -91,8 +91,8 @@ export const Workshops = () => {
                     }}
                   >
                     <Image
-                      src={ChaqchaoWorkshop02}
-                      alt="Christian Church, Eastern Europe"
+                      src={ChaqchaoWorkshop04}
+                      alt="Chocolate Workshop at Chaqchao, Arequipa Peru"
                       className="h-40 w-auto rounded-xl"
                     />
                   </Cursor>

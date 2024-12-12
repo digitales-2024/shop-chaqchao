@@ -18,10 +18,14 @@ import { UserLogin } from "./UserLogin";
 
 export function Navbar() {
   const { y } = useWindowScrollPosition();
-
-  const isScrolling = y > 1;
-
+  const [isMounted, setIsMounted] = useState(false);
   const { open, onOpenChange } = useOpenMenu();
+
+  const isScrolling = isMounted && y > 1;
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const variants = {
     open: { height: "60%" },

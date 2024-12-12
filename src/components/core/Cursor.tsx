@@ -1,4 +1,5 @@
 "use client";
+
 import {
   motion,
   SpringOptions,
@@ -35,16 +36,16 @@ export function Cursor({
   transition,
   onPositionChange,
 }: CursorProps) {
-  const cursorX = useMotionValue(
-    typeof window !== "undefined" ? window.innerWidth / 2 : 0,
-  );
-  const cursorY = useMotionValue(
-    typeof window !== "undefined" ? window.innerHeight / 2 : 0,
-  );
+  const cursorX = useMotionValue(0);
+  const cursorY = useMotionValue(0);
   const cursorRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(!attachToParent);
 
   useEffect(() => {
+    // Actualiza la posición inicial en el cliente
+    cursorX.set(window.innerWidth / 2);
+    cursorY.set(window.innerHeight / 2);
+
     if (!attachToParent) {
       document.body.style.cursor = "none";
     } else {
@@ -62,8 +63,7 @@ export function Cursor({
     return () => {
       document.removeEventListener("mousemove", updatePosition);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cursorX, cursorY, onPositionChange]);
+  }, [attachToParent, cursorX, cursorY, onPositionChange]);
 
   const cursorXSpring = useSpring(cursorX, springConfig || { duration: 0 });
   const cursorYSpring = useSpring(cursorY, springConfig || { duration: 0 });
