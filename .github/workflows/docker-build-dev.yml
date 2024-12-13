@@ -51,6 +51,7 @@ jobs:
             NEXT_PUBLIC_IZIPAY_PAYMENT_PASSWORD=${{ secrets.NEXT_PUBLIC_IZIPAY_PAYMENT_PASSWORD }}
             NEXT_PUBLIC_IZIPAY_PAYMENT_ENDPOINT=${{ secrets.NEXT_PUBLIC_IZIPAY_PAYMENT_ENDPOINT }}
             NEXT_PUBLIC_IZIPAY_PAYMENT_PUBLIC_KEY=${{ secrets.NEXT_PUBLIC_IZIPAY_PAYMENT_PUBLIC_KEY }}
+            NEXT_PUBLIC_WEB_CHAQCHAO=${{ secrets.NEXT_PUBLIC_WEB_CHAQCHAO }}
           platforms: linux/amd64
           push: true
           tags: |
