@@ -52,7 +52,7 @@ export const metadata: Metadata = {
       "Welcome to Chaqchao Chocolates, the best chocolates in Peru, made with organic cacao from the Andes.",
     images: [
       {
-        url: `/images/og-image.jpg`,
+        url: `${baseUrl}/images/og-image.jpg`,
         width: 800,
         height: 600,
         alt: "Chaqchao Chocolates",
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
     title: "Chaqchao Chocolates",
     description:
       "Welcome to Chaqchao Chocolates, the best chocolates in Peru, made with organic cacao from the Andes.",
-    images: [`/images/og-image.jpg`],
+    images: [`${baseUrl}/images/og-image.jpg`],
   },
   icons: {
     icon: "/favicon.ico",
