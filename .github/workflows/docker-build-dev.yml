@@ -2,7 +2,7 @@ name: Docker Build and Deploy
 
 on:
   push:
-    branches: [develop, feature/ci]
+    branches: [develop]
     paths-ignore:
       - '**.md'
 
