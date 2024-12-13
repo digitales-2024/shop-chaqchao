@@ -54,7 +54,7 @@ export const ProductsFilters = () => {
         </aside>
         <main className="flex-1">
           <motion.div
-            className="grid justify-items-center gap-6 gap-y-16 sm:grid-cols-2 lg:grid-cols-3"
+            className="grid grid-cols-[repeat(auto-fill,_minmax(22rem,_1fr))] justify-items-center gap-6 gap-y-16"
             initial="hidden"
             animate="visible"
             variants={{

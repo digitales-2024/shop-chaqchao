@@ -28,14 +28,14 @@ export const Workshops = () => {
     <section className="relative flex w-full flex-col items-center justify-center">
       <BlobCursor />
       <div className="container mx-auto flex h-full flex-col gap-16 py-20">
-        <div className="grid max-h-[700px] grid-cols-1 items-start justify-start gap-8 px-4 sm:grid-cols-2 sm:px-0">
+        <div className="grid h-full min-h-[700px] grid-cols-1 grid-rows-1 items-start justify-start gap-8 px-4 sm:px-0 xl:grid-cols-2 xl:grid-rows-2">
           <div className="flex w-full flex-col items-start justify-center gap-6 space-y-4">
-            <h2 className="flex w-fit flex-col gap-y-14">
+            <h2 className="flex w-full flex-col gap-y-14">
               <span className="relative inline-flex h-auto w-fit">
                 <span className="absolute -top-12 h-auto text-5xl font-bold capitalize">
                   {t("title.start")}
                 </span>
-                <span className="relative h-auto font-pacifico text-[6rem] font-bold capitalize sm:text-[8rem]">
+                <span className="relative h-auto font-pacifico text-[6rem] font-bold capitalize md:text-[8rem]">
                   <Cursor
                     attachToParent
                     variants={{
@@ -68,11 +68,11 @@ export const Workshops = () => {
                   </InView>
                 </span>
               </span>
-              <span className="relative ml-0 inline-flex h-auto w-fit gap-2 whitespace-normal sm:ml-20">
-                <span className="absolute right-1/2 top-0 text-5xl font-bold">
+              <span className="relative inline-flex h-auto w-full justify-end gap-2 whitespace-normal">
+                <span className="absolute -top-12 right-1/3 text-5xl font-bold">
                   {t("title.end")}
                 </span>
-                <span className="font-pacifico text-[5rem] font-extrabold capitalize sm:text-[9rem]">
+                <span className="font-pacifico text-[5rem] font-extrabold capitalize sm:text-[7rem] md:text-[9rem]">
                   <Cursor
                     attachToParent
                     variants={{
