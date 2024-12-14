@@ -28,7 +28,7 @@ export const Workshops = () => {
     <section className="relative flex w-full flex-col items-center justify-center">
       <BlobCursor />
       <div className="container mx-auto flex h-full flex-col gap-16 py-20">
-        <div className="bg grid h-full min-h-[700px] grid-cols-1 grid-rows-1 items-start justify-start gap-8 px-4 sm:px-0 xl:grid-cols-2">
+        <div className="grid h-full min-h-[700px] grid-cols-1 grid-rows-1 items-start justify-start gap-8 px-4 sm:px-0 xl:grid-cols-2">
           <div className="flex w-full flex-col items-start justify-center gap-6 space-y-4">
             <h2 className="flex w-full flex-col gap-y-14">
               <span className="relative inline-flex h-auto w-fit">
