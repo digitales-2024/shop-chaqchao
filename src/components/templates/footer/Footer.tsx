@@ -19,7 +19,7 @@ interface SocialMedia {
 
 const INFO: Info[] = [
   {
-    label: "Calle sanca catalina 204, Arequipa, Perú",
+    label: "Calle Santa Catalina 204, Arequipa, Perú",
     icon: <MapPin />,
   },
   {
