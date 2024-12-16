@@ -38,7 +38,7 @@ export const UserLogin = () => {
       >
         <span className="sr-only">Iniciar sesión</span>
         {open ? (
-          <span className="p-4 uppercase">Login</span>
+          <span className="p-4 text-xl uppercase">Login</span>
         ) : (
           <UserRound className="size-7" strokeWidth={1} />
         )}

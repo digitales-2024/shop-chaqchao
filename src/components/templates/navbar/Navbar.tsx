@@ -143,7 +143,7 @@ const MenuList = () => {
             <Link
               href={link.href ?? "/"}
               className={cn(
-                "relative hidden w-auto justify-center whitespace-nowrap rounded p-4 text-center text-2xl font-normal lowercase transition-all duration-300 hover:font-bold sm:inline-flex",
+                "relative hidden w-auto justify-center whitespace-nowrap rounded p-4 text-center text-xl font-normal uppercase transition-all duration-300 hover:font-bold sm:inline-flex",
                 {
                   "inline-flex uppercase": open,
                 },

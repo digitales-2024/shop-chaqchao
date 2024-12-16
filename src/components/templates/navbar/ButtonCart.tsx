@@ -23,7 +23,7 @@ export const ButtonCart = forwardRef<
       className="group/cart group relative inline-flex size-full items-center justify-center rounded-full bg-transparent"
     >
       {open ? (
-        <span className="p-4 uppercase">
+        <span className="p-4 text-xl uppercase">
           Cart ({cartItems.reduce((acc, item) => acc + item.quantity, 0)})
         </span>
       ) : (
