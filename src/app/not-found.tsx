@@ -1,6 +1,6 @@
 import { NotFoundC } from "@/components/not-found/NotFound";
 
-import LayoutShop from "./(shop)/layout";
+import { LayoutShop } from "@/components/templates/LayoutShop";
 
 export default function NotFound() {
   return (

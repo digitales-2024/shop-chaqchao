@@ -13,6 +13,7 @@ const config: Config = {
         commingSoon: ["var(--font-coming-soon)"],
         nunito: ["var(--font-nunito-variable)"],
         pacifico: ["var(--font-pacifico)"],
+        riddle: ["var(--font-riddle)"],
       },
       colors: {
         textColor: "hsl(var(--text))",

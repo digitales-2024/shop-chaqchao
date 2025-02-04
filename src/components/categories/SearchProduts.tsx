@@ -25,7 +25,7 @@ export const SearchProducts = ({
     <div className="w-full py-4">
       <div
         className={cn(
-          "relative flex w-full items-center justify-center rounded-full bg-primary-foreground transition-all duration-300",
+          "relative flex w-full items-center justify-center rounded-2xl border border-primary-foreground bg-primary-foreground/10 transition-all duration-300",
         )}
       >
         <Search
