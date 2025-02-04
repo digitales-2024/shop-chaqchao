@@ -6,8 +6,9 @@ import {
   SelectItem,
   SelectTrigger,
 } from "@/components/ui/select";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { setUserLocale } from "@/services/locale";
+import { Locale } from "@/i18n/config";
 
 export function LanguageSelector() {
   const t = useTranslations("navbar.languages");
@@ -28,12 +29,13 @@ export function LanguageSelector() {
   const handleLanguageChange = (language: "es" | "en") => {
     setUserLocale(language);
   };
+  const locale = useLocale() as Locale;
 
   return (
     <div className="relative inline-block text-left">
       <Select onValueChange={handleLanguageChange}>
         <SelectTrigger className="inline-flex items-center gap-4">
-          <span className="block truncate uppercase">{languages[0].label}</span>
+          <span className="block truncate uppercase">{locale}</span>
         </SelectTrigger>
         <SelectContent>
           {languages.map((language) => (
