@@ -27,16 +27,16 @@ export const ButtonCart = forwardRef<
           Cart ({cartItems.reduce((acc, item) => acc + item.quantity, 0)})
         </span>
       ) : (
-        <>
+        <div className="relative">
           <span className="sr-only">Abrir carrito de compras</span>
           <ShoppingBag
             className="size-7 group-hover/cart:animate-tada"
             strokeWidth={1}
           />
-          <span className="absolute right-1 top-1 inline-flex size-5 shrink-0 items-center justify-center text-sm">
+          <span className="absolute -bottom-2 -right-2 inline-flex size-5 shrink-0 items-center justify-center rounded-full bg-primary text-sm text-white">
             {cartItems.reduce((acc, item) => acc + item.quantity, 0)}
           </span>
-        </>
+        </div>
       )}
     </button>
   );

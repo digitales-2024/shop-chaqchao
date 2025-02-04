@@ -27,12 +27,6 @@ const comingSoon = localFont({
   weight: "100 900",
 });
 
-const riddle = localFont({
-  src: "./fonts/RiddleUpright.woff2",
-  variable: "--font-riddle",
-  weight: "100 900",
-});
-
 export const metadata: Metadata = {
   title: "Chaqchao Chocolates | Store",
   description:
@@ -104,7 +98,7 @@ export default async function RootLayout({
           />
         </head>
         <body
-          className={`${comingSoon.variable} ${geistSans.variable} ${riddle.variable} font-nunito`}
+          className={`${comingSoon.variable} ${geistSans.variable} font-nunito`}
         >
           <NextIntlClientProvider messages={messages}>
             <Toaster
