@@ -1,0 +1,646 @@
+{
+  "navbar": {
+    "products": "Products",
+    "classes": "Class",
+    "languages": {
+      "es": "Spanish",
+      "en": "English"
+    }
+  },
+  "hero": {
+    "textfirst": "Discover our",
+    "textresalt": "handmade chocolates,",
+    "textsecond": " made with the best ingredients.",
+    "button": "Explore our products"
+  },
+  "forgot-password": {
+    "title": "Recover Password",
+    "subtitle": "Enter your email and we will send you a link to reset your password.",
+    "email": "Email",
+    "description": "Enter your email associated with your account",
+    "button": "Send email",
+    "login": "Back to login"
+  },
+  "token-expired": {
+    "title": "Your token has expired. ",
+    "description": "Please request a new password reset link."
+  },
+  "reset-password": {
+    "title": "Reset Password",
+    "subtitle": "Enter your new password",
+    "newPassword": "New password",
+    "description": "Minimum 8 characters, including uppercase, lowercase, and numbers.",
+    "confirmPassword": "Confirm password",
+    "button": "Reset password",
+    "loading": "Resetting password...",
+    "login": "Back to login"
+  },
+  "workshops": {
+    "title": {
+      "start": "from",
+      "resalt": "coffe",
+      "end": "to"
+    },
+    "subtitle": "The magic transforms in your hands.",
+    "button": "Register now!"
+  },
+  "recommendations": {
+    "title": "Explore our recommended products",
+    "subtitle": "Our varied options of chocolates, creams, lipbalm, among others."
+  },
+  "features": {
+    "title": "Special products of",
+    "subtitle": "Check out our special products you can get!"
+  },
+  "footer": {
+    "title": "Store information",
+    "copyrigth": "All rights reserved",
+    "description": "Discover our products and enjoy the best quality!",
+    "social": "Connect"
+  },
+  "categories": {
+    "title": "All our products",
+    "description": "Choose from our variety of products and enjoy the best quality.",
+    "search": "Search our product catalog",
+    "filters": {
+      "name": "Name",
+      "button": "Filters",
+      "categories": "Categories",
+      "price": "Price",
+      "preciseInput": "Enter precise",
+      "clearFilters": "Clear filters"
+    },
+    "metadata": {
+      "title": "Product categories",
+      "description": "Choose from our variety of products and enjoy the best quality."
+    }
+  },
+  "cartItem": {
+    "detail": "Product detail",
+    "addToCart": "Add to cart",
+    "quantity": "Quantity",
+    "outOfStock": "Out of stock"
+  },
+  "login": {
+    "title": "Hello",
+    "subtitle": "Welcome back to",
+    "email": "Email",
+    "password": "Password",
+    "button": "Log in",
+    "google": "Log in with Google",
+    "register": "Don't have an account?",
+    "registerButton": "Sign up",
+    "forgot": "Forgot your password?",
+    "terms": "By logging in, I declare that I agree with the",
+    "termsLink": "Terms and Privacy Policy"
+  },
+  "register": {
+    "title": "Welcome",
+    "subtitle": "Sign up to",
+    "name": "Name",
+    "placeholderName": "Enter your name",
+    "lastName": "Last name",
+    "placeholderLast": "Enter your last name",
+    "email": "Email",
+    "placeholderEmail": "Enter your email",
+    "password": "Password",
+    "placeholderPassword": "Enter your password",
+    "phone": "Phone",
+    "birthdate": "Birthdate",
+    "placeholderBirthDate": "Select your birthdate",
+    "button": "Sign up",
+    "google": "Sign up with Google",
+    "login": "Already have an account?",
+    "loginButton": "Log in",
+    "terms": "I declare that I agree with the",
+    "termsLink": "Terms and Privacy Policy",
+    "tooltip": {
+      "description": "The password must contain at least 6 characters",
+      "upper": "One uppercase letter",
+      "lower": "One lowercase letter",
+      "number": "One number"
+    },
+    "messages": {
+      "loading": "Creating user...",
+      "success": "User created successfully",
+      "error": "Error creating user",
+      "email": "Email already in use"
+    }
+  },
+  "account": {
+    "setting": {
+      "title": "Settings",
+      "description": "Manage your account settings"
+    },
+    "title": "My account",
+    "subtitle": "Manage your personal information",
+    "signout": "Sign out",
+    "profile": {
+      "profile": "Profile",
+      "title": "My profile",
+      "subtitle": " Update your personal information",
+      "name": "Name",
+      "nameDescription": "This is the name that will be displayed on your profile and in emails.",
+      "lastName": "Last name",
+      "email": "Email",
+      "phone": "Phone",
+      "phoneDescription": "We will use this number to keep you updated on your orders.",
+      "birthdate": "Birthdate",
+      "button": "Save changes",
+      "delete": "Delete account",
+      "deleteText": "Are you sure you want to delete your account?",
+      "deleteButton": "Delete account"
+    },
+    "orders": {
+      "title": "My orders",
+      "subtitle": "Check the status of your orders",
+      "order": "Order",
+      "date": "Date",
+      "detail": "Detail",
+      "download": "Download",
+      "empty": "You don't have any orders",
+      "status": {
+        "CONFIRMED": "Confirmado",
+        "PROCESSING": "Procesando",
+        "COMPLETED": "Completed",
+        "CANCELED": "Canceled"
+      },
+      "details": {
+        "boleta": "Receipt",
+        "factura": "Invoice",
+        "order": "Order",
+        "client": {
+          "title": "Client information",
+          "name": "Name",
+          "email": "Email",
+          "phone": "Phone",
+          "typeDoc": "Type of document",
+          "doc": "Document number",
+          "address": "Address",
+          "state": "State",
+          "city": "City",
+          "postalCode": "Postal code",
+          "country": "Country",
+          "businessName": "Business name"
+        },
+        "cart": {
+          "title": "Order details",
+          "product": "Product",
+          "quantity": "Quantity",
+          "price": "P.U",
+          "subTotal": "Subtotal",
+          "total": "Total sale",
+          "pay": "Payment method"
+        }
+      }
+    },
+    "classes": {
+      "title": "My classes",
+      "subtitle": "Check the classes you have taken",
+      "class": "Class",
+      "date": "Date",
+      "status": "Status",
+      "detail": "Detail",
+      "empty": "You don't have any classes",
+      "participant": "Participant",
+      "download": "Download",
+      "schedule": "Schedule",
+      "language": "Language",
+      "adults": "Adults",
+      "children": "Children"
+    }
+  },
+  "business": {
+    "buttonOpen": "View collection point",
+    "buttonClose": "Hide location",
+    "address": "Collection point",
+    "schedule": "Schedule",
+    "see": "See how to get there",
+    "days": {
+      "SUNDAY": "Sunday",
+      "MONDAY": "Monday",
+      "TUESDAY": "Tuesday",
+      "WEDNESDAY": "Wednesday",
+      "THURSDAY": "Thursday",
+      "FRIDAY": "Friday",
+      "SATURDAY": "Saturday"
+    }
+  },
+  "cart": {
+    "title": "My cart",
+    "description": {
+      "pre": "You have",
+      "product": "product",
+      "post": "in your cart"
+    },
+    "empty": {
+      "title": "Your cart is empty",
+      "description": "Explore our products and find what you need!"
+    }
+  },
+  "class": {
+    "previous": "Previous",
+    "next": "Next",
+    "confirm": "Confirm",
+    "step1": {
+      "title": "Contact Information",
+      "errors": {
+        "name": "Full name is required",
+        "email": "Email is required",
+        "phone": "Phone is required"
+      },
+      "label": {
+        "name": "Full Name",
+        "email": "Email",
+        "phone": "Phone"
+      },
+      "button": {
+        "back": "Back",
+        "next": "Next"
+      }
+    },
+    "step2": {
+      "title": "Date and hour of the Class",
+      "subtitle": "Select the date and hour you want to take the class",
+      "description": "Select the time of the class",
+      "errors": {
+        "date": "Please select a date to continue."
+      },
+      "moreDates": "MORE DATES",
+      "days": {
+        "today": "TODAY",
+        "mon": "MON",
+        "tue": "TUE",
+        "wed": "WED",
+        "thu": "THU",
+        "fri": "FRI",
+        "sat": "SAT",
+        "sun": "SUN"
+      },
+      "months": {
+        "jan": "JAN",
+        "feb": "FEB",
+        "mar": "MAR",
+        "apr": "APR",
+        "may": "MAY",
+        "jun": "JUN",
+        "jul": "JUL",
+        "aug": "AUG",
+        "sep": "SEP",
+        "oct": "OCT",
+        "nov": "NOV",
+        "dec": "DEC"
+      },
+      "button": {
+        "back": "Back",
+        "next": "Next"
+      }
+    },
+    "step3": {
+      "empty": "No places available",
+      "title": "Number of Participants",
+      "subtitle": "Select the number of participants for the class",
+      "adults": "Adults",
+      "children": "Children",
+      "toast": {
+        "fullFields": "Please select the number of adults to continue."
+      },
+      "message": {
+        "start": "There are",
+        "end": "seats available"
+      },
+      "childrenPay": "Children over 14 years pay",
+      "dateNotSelected": "Date not Selected",
+      "button": {
+        "back": "Back",
+        "next": "Next"
+      }
+    },
+    "step4": {
+      "title": "Language and comments",
+      "subtitle": "Select the language you want to take the class",
+      "languages": {
+        "español": "SPANISH",
+        "ingles": "ENGLISH"
+      },
+      "toast": {
+        "fullFields": "Please select a language to continue."
+      },
+      "comments": "Would you like to add any comments?",
+      "addComments": "Add comments",
+      "language": {
+        "loading": "Loading languages...",
+        "loadingError": "Error loading languages",
+        "notAvailable": "No languages ​​available"
+      },
+      "button": {
+        "back": "Back",
+        "next": "Next"
+      }
+    },
+    "step5": {
+      "title": "Booking Summary",
+      "people": "People",
+      "errors": {
+        "terms": "Accept the terms and policies to continue"
+      },
+      "toast": {
+        "noPlaceAvailable": "There are no more places available, please choose another date or time.",
+        "invalidNumberParticipantsRange": "Invalid number of participants, The minimum number of participants must be 2.",
+        "invalidNumberParticipants": "Invalid number of participants, The minimum number of participants must be 1.",
+        "classIsClose": "The class is closed, please choose another date or time.",
+        "registrationIsClose": "Registration is closed, please choose another date or time.",
+        "invalidClassDate": "Invalid date, Please choose another date or time.",
+        "classRegisterSuccessfully": "Class registered successfully. Proceed with payment.",
+        "errorRegisterClass": "Error registering class. Please try again.",
+        "paymentConfirmed": "Payment confirmed and class registered successfully.",
+        "errorConfirmPayment": "Error confirming payment. Please try again.",
+        "acceptTerms": "Accept the terms and policies to continue",
+        "timeOut": "The time to make the payment has expired and your quota has been cancelled.",
+        "paymentCancelled": "Payment cancelled"
+      },
+      "remainingTime": "Time remaining to make payment: ",
+      "totalParticipants": {
+        "people": "People"
+      },
+      "subtotalDetail": {
+        "title": "Subtotal",
+        "adults": "Adults",
+        "children": "Childrens"
+      },
+      "total": "Total",
+      "terms": {
+        "accord": "I agree with the ",
+        "terms": "Terms and Privacy Policy"
+      },
+      "buttons": {
+        "loading": "Confirming registration",
+        "back": "Back",
+        "register": "Register Class"
+      }
+    },
+    "confirmation": {
+      "people": "People",
+      "confirmation": "Reservation Confirmed!",
+      "userName": "Names: ",
+      "userEmail": "Email: ",
+      "userPhone": "Phone: ",
+      "languageClass": "Language: ",
+      "dateClass": "Date: ",
+      "scheduleClass": "Schedule: ",
+      "participantsClass": "Participants: ",
+      "userAllergies": "Allergies: ",
+      "dateNotSelected": "Date not Selected",
+      "state": "State: ",
+      "detail": {
+        "title": "Booking Details",
+        "adults": "Adult(S)",
+        "children": "Children(S)",
+        "considerations": {
+          "title": "Considerations",
+          "message": "*Arrive 5 minutes early"
+        }
+      },
+      "allergies": {
+        "title": "Food allergies or restrictions",
+        "allergie": "Allergies: ",
+        "yes": "Si",
+        "none": "None"
+      },
+      "companyName": "Company Name: ",
+      "phone": "Phone: ",
+      "description": "Description",
+      "quantity": "Quantity",
+      "price": "Price / Unit",
+      "typeCurrency": "type Currency",
+      "amount": "Amount",
+      "numberAdults": "Number of Adults",
+      "numberChildren": "Number of Children"
+    },
+    "reservationSumary": {
+      "abstract": {
+        "title": "Booking Summary"
+      },
+      "languages": {
+        "spanish": "Spanish",
+        "english": "English"
+      },
+      "userName": "Name: ",
+      "userEmail": "Email: ",
+      "userPhone": "Phone: ",
+      "languageClass": "Language: ",
+      "dateClass": "Date: ",
+      "scheduleClass": "Schedule: ",
+      "participantsClass": "Participants: ",
+      "userAllergies": "Allergies: "
+    },
+    "errors": {
+      "name": "Please enter your full name",
+      "email": "Please enter a valid email address",
+      "phone": "Please enter a valid phone number",
+      "date": "Please select a date to continue",
+      "time": "Please select the time of the class to continue",
+      "language": "Please select a language to continue"
+    },
+    "success": {
+      "title": "Registration confirmed!",
+      "description": "Your registration has been confirmed and is in the process of validation. You will receive an email with the confirmation of your registration.",
+      "accept": "Accept"
+    }
+  },
+  "checkout": {
+    "checkout": {
+      "button": "Checkout",
+      "messages": {
+        "warning": {
+          "title": "Warning",
+          "description": "You must be logged in to continue with the purchase"
+        }
+      }
+    },
+    "back": "Back",
+    "next": "Next",
+    "continue": "Continue",
+    "edit": "Edit",
+    "pay": "Pay",
+    "summary": {
+      "title": "Summary",
+      "address": "Address ",
+      "date": "Date ",
+      "typeInvoice": "Type of document ",
+      "product": "Product",
+      "quantity": "Quantity",
+      "price": "Price",
+      "subTotal": "SubTotal",
+      "total": "Total to pay",
+      "terms": "I have read and accept the",
+      "termsLink": "Terms and Conditions",
+      "privacy": "By continuing, you agree to our",
+      "privacyLink": "Privacy Policy",
+      "button": "Confirm order",
+      "loading": "Processing order...",
+      "someone": "Someone else will pick up the order",
+      "errors": {
+        "terms": "You must accept the terms and conditions",
+        "privacy": "You must accept the privacy policy",
+        "empty": "You must add products to your cart"
+      }
+    },
+    "dateOrder": {
+      "title": "For when do you want your order?",
+      "fullDate": "Full date",
+      "date": "Select the date of collection",
+      "hour": "Select the time of collection",
+      "label": "You will pick up your order on",
+      "button": "Confirm",
+      "quest": "Will someone else pick up the order?",
+      "no": "No, I will pick up the order myself",
+      "yes": "Yes, someone else will pick up the order",
+      "messages": {
+        "date": "The date is required",
+        "hour": "The hour is required"
+      }
+    },
+    "invoice": {
+      "title": "Invoice information",
+      "typeInvoice": "Type of Invoice",
+      "RECEIPT": "Receipt",
+      "INVOICE": "Invoice",
+      "typeDoc": "Type of document",
+      "doc": "Document number",
+      "name": "Name",
+      "nameBusiness": "Name or business name",
+      "address": "Address",
+      "country": "Country",
+      "state": "State",
+      "city": "City",
+      "codPostal": "Postal code",
+      "button": "Continue",
+      "errors": {
+        "typeDoc": "The type of document is required",
+        "number": "The document number is required",
+        "dni": "The document number must have at least 8 digits",
+        "passport": "The document number must have at least 12 digits",
+        "ruc": "The document number must have at least 11 digits",
+        "address": "The address is required",
+        "name": "The name is required",
+        "nameBusiness": "The name or business name is required",
+        "country": "The country and state are required",
+        "city": "The city is required",
+        "postalCode": "The postal code is required and must have at least 5 digits"
+      }
+    },
+
+    "contact": {
+      "title": "Contact information",
+      "description": "Enter your contact information to continue with the order.",
+      "name": "Name",
+      "lastName": "Last name",
+      "email": "Email",
+      "phone": "Phone",
+      "descriptionPhone": "We will use this number to keep you updated on your orders.",
+      "descriptionEmail": "We will send you the order confirmation to this email.",
+      "button": "Confirm contact",
+      "loading": "Checking if you have an account...",
+      "alert": {
+        "title": "Hello! Welcome back",
+        "description": "We have found an account with your email, please log in to continue with your order."
+      },
+      "errors": {
+        "name": "The name is required",
+        "lastName": "The last name is required",
+        "email": "The email is required",
+        "phone": "The phone is required"
+      },
+      "account": {
+        "title": "Do you already have an account?",
+        "description": "Log in and keep enjoying your shopping!",
+        "button": "Sign in"
+      }
+    },
+    "steps": {
+      "contact": "Contact information",
+      "date": "Collection date",
+      "invoice": "Invoice",
+      "someone": "Order"
+    }
+  },
+  "errors": {
+    "name": {
+      "minlength": "Name is required"
+    },
+    "lastName": {
+      "minlength": "Last name is required"
+    },
+    "email": {
+      "email": "Email must be a valid email address",
+      "minlength": "Email is required"
+    },
+    "password": {
+      "password": "Password must be a valid password",
+      "minlength": "Password must be at least 6 characters long",
+      "regex": "Password must contain at least one uppercase letter, one lowercase letter, and one number"
+    },
+    "phone": {
+      "required": "Phone is required"
+    },
+    "birthdate": {
+      "required": "Birthdate is required"
+    },
+    "terms": {
+      "required": "You must accept the terms and conditions"
+    },
+    "network": "Network error, try again later",
+    "cart": {
+      "title": "Oops! Something went wrong",
+      "addItemCart": "We couldn't add the product to the cart. Please try again.",
+      "removeItemCart": "We couldn't remove the product from the cart. Please try again.",
+      "updateItemQuantity": "We couldn't update the product in the cart. Please try again."
+    },
+    "pay": {
+      "ok": "Well done!",
+      "title": "Payment successful!",
+      "success": "Your order has been confirmed and is being prepared. You will receive an email with the confirmation of your order.",
+      "canceled": "Payment canceled",
+      "valid": "Cart validated successfully."
+    }
+  },
+  "payment": {
+    "title": "Payment successful!",
+    "success": "Your order has been confirmed and is being prepared. You will receive an email with the confirmation of your order.",
+    "accept": "Accept"
+  },
+  "claims": {
+    "complaintsBook": "COMPLAINTS BOOK",
+    "day": "Day",
+    "month": "Month",
+    "year": "Year",
+    "identificationConsumer": "1. IDENTIFICATION OF THE COMPLAINING CONSUMER",
+    "name": "Name",
+    "address": "Address",
+    "identityCard": "DNI/CE",
+    "phone": "Phone",
+    "email": "Email",
+    "representative": "Father or Mother (if applicable)",
+    "identificationAsset": "2. IDENTIFICATION OF THE CONTRACTED GOOD OR SERVICE",
+    "product": "Product",
+    "service": "Service",
+    "description": "Description",
+    "amountClaimed": "Amount Claimed ($)",
+    "detailsComplaint": "3. DETAILS OF THE COMPLAINT AND THE CONSUMER'S REQUEST",
+    "detail": "Detail",
+    "button": "Send Claim",
+    "messages": {
+      "success": "Claim registered successfully",
+      "error": "An error occurred while submitting the claim"
+    }
+  },
+  "notfound": {
+    "title": "Page not found",
+    "description": "The page you are looking for does not exist",
+    "button": "Back to home"
+  },
+  "whatsapp": {
+    "text": "Hello! I need help with my order."
+  }
+}

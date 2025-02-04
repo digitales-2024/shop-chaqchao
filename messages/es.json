@@ -1,0 +1,626 @@
+{
+  "navbar": {
+    "products": "Productos",
+    "classes": "Clases",
+    "languages": {
+      "es": "Español",
+      "en": "Inglés"
+    }
+  },
+  "hero": {
+    "textfirst": "Descubre nuestros",
+    "textresalt": "chocolates artesanales,",
+    "textsecond": " hecho con los mejores ingredientes.",
+    "button": "Explora nuestros productos"
+  },
+  "forgot-password": {
+    "title": "Recuperar Contraseña",
+    "subtitle": "Ingrese su correo electrónico y le enviaremos un enlace para restablecer su contraseña.",
+    "email": "Correo Electrónico",
+    "description": "Ingrese su correo electrónico asociado a su cuenta",
+    "button": "Enviar",
+    "login": "Regresar al inicio de sesión"
+  },
+  "token-expired": {
+    "title": "Token expirado",
+    "description": "Solicite un nuevo enlace de restablecimiento de contraseña."
+  },
+  "reset-password": {
+    "title": "Restablecer Contraseña",
+    "subtitle": "Ingrese su nueva contraseña",
+    "newPassword": "Nueva Contraseña",
+    "description": "Mínimo 8 caracteres, incluyendo mayúsculas, minúsculas y números.",
+    "confirmPassword": "Confirmar Contraseña",
+    "button": "Reestablecer Contraseña",
+    "loading": "Restableciendo contraseña...",
+    "login": "Regresar al inicio de sesión"
+  },
+  "workshops": {
+    "title": {
+      "start": "Del",
+      "resalt": "cafe",
+      "end": "al"
+    },
+    "subtitle": "La magia se transforma en tus manos.",
+    "button": "¡Regístrate ahora!"
+  },
+  "recommendations": {
+    "title": "Explora nuestros productos recomendados",
+    "subtitle": " Nuestras opciones variadas de chocolates, cremas, lipbalm, entre otros."
+  },
+  "features": {
+    "title": "Productos especiales de",
+    "subtitle": "¡Vea nuestros productos especiales que puede obtener!"
+  },
+  "footer": {
+    "title": "Información de la tienda",
+    "copyrigth": "Todos los derechos reservados",
+    "description": "¡Descubre nuestros productos y disfruta de la mejor calidad!",
+    "social": "Conéctate"
+  },
+  "categories": {
+    "title": "Todos nuestro productos",
+    "description": "Elija entre nuestra variedad de productos y disfrute de la mejor calidad.",
+    "search": "Busca entre nuestro catálogo de productos",
+    "filters": {
+      "name": "Nombre",
+      "button": "Filtros",
+      "categories": "Categorías",
+      "price": "Precio",
+      "preciseInput": "Entrada precisa",
+      "clearFilters": "Limpiar filtros"
+    },
+    "metadata": {
+      "title": "Categorías de productos",
+      "description": "Elija entre nuestra variedad de productos y disfrute de la mejor calidad."
+    }
+  },
+  "cartItem": {
+    "detail": "Detalle del producto",
+    "addToCart": "Agregar al carrito",
+    "quantity": "Cantidad",
+    "outOfStock": "Producto Agotado"
+  },
+  "login": {
+    "title": "Hola",
+    "subtitle": "Bienvenido de nuevo a",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "button": "Iniciar sesión",
+    "google": "Iniciar sesión con Google",
+    "register": "¿No tienes una cuenta?",
+    "registerButton": "Regístrate",
+    "forgot": "¿Olvidaste tu contraseña?",
+    "terms": "Al iniciar sesión, declaro que estoy de acuerdo con los",
+    "termsLink": "Términos y Políticas de Privacidad"
+  },
+  "register": {
+    "title": "Bienvenido",
+    "subtitle": "Registrate y sé parte de",
+    "name": "Nombre",
+    "placeholderName": "Ingrese su nombre",
+    "lastName": "Apellido",
+    "placeholderLast": "Ingrese sus apellidos",
+    "email": "Correo electrónico",
+    "placeholderEmail": "Ingrese su correo electrónico",
+    "password": "Contraseña",
+    "placeholderPassword": "Ingrese su contraseña",
+    "phone": "Celular",
+    "birthdate": "Fecha de nacimiento",
+    "placeholderBirthDate": "Seleccione su fecha de nacimiento",
+    "button": "Registrarse",
+    "google": "Registrarse con Google",
+    "login": "¿Ya tienes una cuenta?",
+    "loginButton": "Iniciar sesión",
+    "terms": "Declaro que estoy de acuerdo con los",
+    "termsLink": "Términos y Políticas de Privacidad",
+    "tooltip": {
+      "description": "La contraseña debe contener al menos 6 caracteres",
+      "upper": "Una mayúscula",
+      "lower": "Una minúscula",
+      "number": "Un número"
+    },
+    "messages": {
+      "loading": "Creando usuario...",
+      "success": "¡Registro exitoso!",
+      "error": "¡Error al registrarse!",
+      "email": "El correo electrónico ya está en uso"
+    }
+  },
+
+  "account": {
+    "setting": {
+      "title": "Configuración de la cuenta",
+      "description": "Administre la configuración de su cuenta personal"
+    },
+    "title": "Mi cuenta",
+    "subtitle": "Administra tu información personal",
+    "signout": "Cerrar sesión",
+    "profile": {
+      "profile": "Perfil",
+      "title": "Mi perfil",
+      "subtitle": "Administra tu información personal",
+      "name": "Nombre",
+      "nameDescription": "Este es el nombre que se mostrará en su perfil y en correos electrónicos.",
+      "lastName": "Apellido",
+      "email": "Correo electrónico",
+      "phone": "Celular",
+      "phoneDescription": "Usaremos este número para mantenerlo actualizado sobre sus pedidos.",
+      "birthdate": "Fecha de nacimiento",
+      "button": "Guardar cambios",
+      "delete": "Eliminar cuenta",
+      "deleteText": "¿Estás seguro de que deseas eliminar tu cuenta?",
+      "deleteButton": "Eliminar cuenta"
+    },
+    "orders": {
+      "title": "Mis pedidos",
+      "subtitle": "Revisa el estado de tus pedidos",
+      "order": "Pedido",
+      "date": "Fecha",
+      "detail": "Detalle",
+      "empty": "No tienes pedidos realizados",
+      "download": "Descargar",
+      "status": {
+        "CONFIRMED": "Confirmado",
+        "PROCESSING": "Procesando",
+        "COMPLETED": "Completado",
+        "CANCELED": "Cancelado"
+      },
+      "details": {
+        "boleta": "Boleta",
+        "factura": "Factura",
+        "order": "Pedido",
+        "client": {
+          "title": "Información del cliente",
+          "name": "Nombre",
+          "email": "Correo electrónico",
+          "phone": "Teléfono",
+          "typeDoc": "Tipo de documento",
+          "doc": "Número de documento",
+          "address": "Dirección",
+          "state": "Estado",
+          "city": "Ciudad",
+          "postalCode": "Código Postal",
+          "country": "País",
+          "businessName": "Razon Social"
+        },
+        "cart": {
+          "title": "Detalles del pedido",
+          "product": "Producto",
+          "quantity": "Cant.",
+          "price": "P.U",
+          "subTotal": "Sub Total",
+          "total": "Total venta",
+          "pay": "Forma de Pago"
+        }
+      }
+    },
+    "classes": {
+      "title": "Mis clases",
+      "subtitle": "Revisa las clases que has tomado",
+      "class": "Clase",
+      "date": "Fecha",
+      "status": "Estado",
+      "detail": "Detalle",
+      "empty": "No tienes clases tomadas",
+      "participant": "Participante",
+      "download": "Descargar",
+      "schedule": "Horario",
+      "language": "Idioma",
+      "adults": "Adultos",
+      "children": "Niños"
+    }
+  },
+  "business": {
+    "buttonOpen": "Ver ubicación de recogida",
+    "buttonClose": "Ocultar ubicación",
+    "address": "Punto de recogida",
+    "schedule": "Horario",
+    "see": "Ver como llegar",
+    "days": {
+      "MONDAY": "Lunes",
+      "TUESDAY": "Martes",
+      "WEDNESDAY": "Miercoles",
+      "THURSDAY": "Jueves",
+      "FRIDAY": "Viernes",
+      "SATURDAY": "Sábado",
+      "SUNDAY": "Domingo"
+    }
+  },
+  "cart": {
+    "title": "Mi carrito",
+    "description": {
+      "pre": "Tienes",
+      "product": "producto",
+      "post": "en tu carrito"
+    },
+    "empty": {
+      "title": "Tu carrito está vacío",
+      "description": "¡Explora nuestros productos y encuentra lo que necesitas!"
+    }
+  },
+  "class": {
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "confirm": "Confirmar",
+    "step1": {
+      "title": "Información de contacto",
+      "errors": {
+        "name": "Debe ingresar su nombre completo.",
+        "email": "Debe ingresar un correo electrónico válido.",
+        "phone": "Debe ingresar un número de teléfono válido."
+      },
+      "label": {
+        "name": "Nombre Completo",
+        "email": "Correo Electrónico",
+        "phone": "Número de Teléfono"
+      },
+      "button": {
+        "back": "Atras",
+        "next": "Siguiente"
+      }
+    },
+    "step2": {
+      "title": "Fecha y hora de la clase",
+      "subtitle": "Seleccione la fecha y hora en la que desea tomar la clase",
+      "description": "Seleccione la hora de la clase",
+      "errors": {
+        "date": "Por favor, selecciona una fecha para continuar"
+      },
+      "moreDates": "MÁS FECHAS",
+      "days": {
+        "today": "HOY",
+        "mon": "LUN",
+        "tue": "MAR",
+        "wed": "MIÉ",
+        "thu": "JUE",
+        "fri": "VIE",
+        "sat": "SAB",
+        "sun": "DOM"
+      },
+      "months": {
+        "jan": "ENE",
+        "feb": "FEB",
+        "mar": "MAR",
+        "apr": "ABR",
+        "may": "MAY",
+        "jun": "JUN",
+        "jul": "JUL",
+        "aug": "AGO",
+        "sep": "SET",
+        "oct": "OCT",
+        "nov": "NOV",
+        "dec": "DIC"
+      },
+      "button": {
+        "back": "Atras",
+        "next": "Siguiente"
+      }
+    },
+    "step3": {
+      "empty": "No hay lugares disponibles",
+      "title": "Cantidad de participantes",
+      "subtitle": "Seleccione la cantidad de participantes para la clase",
+      "adults": "Adultos",
+      "children": "Niños",
+      "toast": {
+        "fullFields": "Por favor, seleccione la cantidad de adultos para continuar."
+      },
+      "message": {
+        "start": "Quedan",
+        "end": "lugares disponibles"
+      },
+      "childrenPay": "Los niños mayores de 14 años pagan",
+      "dateNotSelected": "Fecha no seleccionada",
+      "button": {
+        "back": "Atras",
+        "next": "Siguiente"
+      }
+    },
+    "step4": {
+      "title": "Idioma y comentarios",
+      "subtitle": "Seleccione el idioma en el que desea tomar la clase",
+      "languages": {
+        "español": "ESPAÑOL",
+        "ingles": "INGLES"
+      },
+      "toast": {
+        "fullFields": "Por favor, seleccione un idioma para continuar."
+      },
+      "comments": "¿Desea agregar algún comentario?",
+      "addComments": "Agregar comentarios",
+      "language": {
+        "loading": "Cargando idiomas...",
+        "loadingError": "Error al cargar los idiomas",
+        "notAvailable": "No hay idiomas disponibles"
+      },
+      "button": {
+        "back": "Atras",
+        "next": "Siguiente"
+      }
+    },
+    "step5": {
+      "title": "Resumen de la reserva",
+      "people": "Personas",
+      "remainingTime": "Tiempo restante para realizar el pago: ",
+      "errors": {
+        "terms": "Debes aceptar los términos y condiciones"
+      },
+      "totalParticipants": {
+        "people": "Personas"
+      },
+      "subtotalDetail": {
+        "title": "Subtotal",
+        "adults": "Adultos",
+        "children": "Niños"
+      },
+      "total": "Total",
+      "terms": {
+        "accord": "Estoy de acuerdo con los ",
+        "terms": "Términos y Políticas de Privacidad"
+      },
+      "buttons": {
+        "loading": "Confirmando registro",
+        "back": "Atras",
+        "register": "Registrar Clase"
+      }
+    },
+    "confirmation": {
+      "people": "Personas",
+      "confirmation": "!RESERVA CONFIRMADA!",
+      "userName": "Nombre: ",
+      "userEmail": "Correo: ",
+      "userPhone": "Teléfono: ",
+      "languageClass": "Idioma: ",
+      "dateClass": "Fecha: ",
+      "scheduleClass": "Horario: ",
+      "participantsClass": "Participantes: ",
+      "userAllergies": "Alergias: ",
+      "dateNotSelected": "Fecha no seleccionada",
+      "state": "Estado: ",
+      "detail": {
+        "title": "Detalles de la Reserva",
+        "adults": "ADULTO(S)",
+        "children": "NIÑO(S)",
+        "considerations": {
+          "title": "CONSIDERACIONES",
+          "message": "*Llegar 5 minutos antes"
+        }
+      },
+      "allergies": {
+        "title": "Alergias o restricciones alimentarias",
+        "allergie": "Alergias: ",
+        "yes": "Si",
+        "none": "Ninguna"
+      },
+      "companyName": "Nombre de la Empresa: ",
+      "phone": "Teléfono: ",
+      "description": "Descripción",
+      "quantity": "Cantidad",
+      "price": "Precio / Unidad",
+      "typeCurrency": "Tipo de Moneda",
+      "amount": "Monto",
+      "numberAdults": "Número de Adultos",
+      "numberChildren": "Número de Niños"
+    },
+    "reservationSumary": {
+      "abstract": {
+        "title": "Resumen de la Reserva"
+      },
+      "languages": {
+        "spanish": "Español",
+        "english": "Ingles"
+      },
+      "userName": "Nombre: ",
+      "userEmail": "Correo: ",
+      "userPhone": "Teléfono: ",
+      "dateClass": "Fecha: ",
+      "scheduleClass": "Horario: ",
+      "languageClass": "Idioma: ",
+      "participantsClass": "Participantes: ",
+      "userAllergies": "Alergias: "
+    },
+    "errors": {
+      "name": "Por favor ingrese su nombre completo.",
+      "email": "Por favor ingrese un correo electrónico válido.",
+      "phone": "Por favor ingrese un número de teléfono válido.",
+      "date": "Por favor seleccione una fecha para continuar.",
+      "time": "Por favor seleccione la hora de la clase para continuar.",
+      "language": "Por favor seleccione un idioma para continuar."
+    },
+    "success": {
+      "title": "¡Registro confirmado!",
+      "description": "Tu registro ha sido confirmado y se encuentra en proceso de validación. Recibirás un correo electrónico con la confirmación de tu registro.",
+      "accept": "Aceptar"
+    }
+  },
+  "checkout": {
+    "checkout": {
+      "button": "Verificar pedido",
+      "messages": {
+        "warning": {
+          "title": "¡Atención!",
+          "description": "Algunos productos ya no están disponibles, por favor revisa tu carrito"
+        }
+      }
+    },
+    "pay": "Pagar",
+    "back": "Atras",
+    "next": "Siguiente",
+    "continue": "Continuar",
+    "edit": "Editar",
+    "summary": {
+      "title": "Resumen",
+      "address": "Punto de recogida",
+      "date": "Fecha de recogida",
+      "typeInvoice": "Tipo de documento",
+      "product": "Producto",
+      "quantity": "Cantidad",
+      "price": "Precio",
+      "subTotal": "SubTotal",
+      "total": "Total a pagar",
+      "terms": "He leído y acepto los",
+      "termsLink": "Términos y Condiciones",
+      "privacy": "He leído y acepto la",
+      "privacyLink": "Política de Privacidad",
+      "button": "Confirmar pedido",
+      "loading": "Confirmando pedido...",
+      "someone": "Recogerá otra persona el pedido",
+      "errors": {
+        "terms": "Debes aceptar los términos y condiciones",
+        "privacy": "Debes aceptar la política de privacidad",
+        "empty": "No hay productos en tu carrito"
+      }
+    },
+    "dateOrder": {
+      "title": "¿Para cuando deseas tu pedido?",
+      "fullDate": "Fecha de recogida",
+      "date": "Selecciona la fecha de recogida",
+      "hour": "Selecciona la hora de recogida",
+      "label": "Recogerás tu pedido el",
+      "button": "Confirmar",
+      "quest": "¿Recogerá otra persona el pedido?",
+      "no": "No, recogeré el pedido yo mismo",
+      "yes": "Sí, otra persona recogerá el pedido",
+      "messages": {
+        "date": "Por favor selecciona una fecha",
+        "hour": "Por favor selecciona una hora"
+      }
+    },
+    "invoice": {
+      "title": "Datos de facturación",
+      "typeInvoice": "Documento de Facturación",
+      "RECEIPT": "Boleta",
+      "INVOICE": "Factura",
+      "typeDoc": "Tipo de documento",
+      "doc": "Número de documento",
+      "name": "Nombre",
+      "nameBusiness": "Nombre o razon social",
+      "address": "Dirección",
+      "country": "País",
+      "state": "Estado",
+      "city": "Ciudad",
+      "codPostal": "Código Postal",
+      "button": "Continuar",
+
+      "errors": {
+        "typeDoc": "El tipo de documento es requerido",
+        "number": "El número de documento es requerido",
+        "dni": "El número de documento debe tener al menos 8 caracteres",
+        "passport": "El número de documento debe tener al menos 12 caracteres",
+        "ruc": "El número de documento debe tener al menos 11 caracteres",
+        "address": "La dirección es requerida",
+        "name": "El nombre es requerido",
+        "nameBusiness": "El nombre o razón social es requerido",
+        "country": "El país y el estado son requerido",
+        "city": "La ciudad es requerida",
+        "postalCode": "El código postal debe tener al menos 5 dígitos"
+      }
+    },
+    "contact": {
+      "title": "Información de contacto",
+      "description": "Por favor, ingresa tu información de contacto para continuar con tu pedido.",
+      "name": "Nombre",
+      "lastName": "Apellido",
+      "email": "Correo electrónico",
+      "phone": "Celular",
+      "descriptionPhone": "Usaremos este número para mantenerte actualizado sobre tu pedido.",
+      "descriptionEmail": "Recibirás la confirmación de tu pedido en este correo electrónico.",
+      "button": "Confirmar información de contacto",
+      "loading": "Verificando información...",
+      "alert": {
+        "title": "¡Hola! Bienvenido de nuevo.",
+        "description": "Hemos encontrado una cuenta con tu correo electrónico, por favor inicia sesión para continuar con tu pedido."
+      },
+      "errors": {
+        "name": "El nombre es requerido",
+        "lastName": "El apellido es requerido",
+        "email": "Ingrese un correo electrónico válido",
+        "phone": "El número de celular es requerido"
+      },
+      "account": {
+        "title": "¿Ya tienes una cuenta?",
+        "description": "¡Inicia sesión y sigue disfrutando de tus compras!",
+        "button": "Iniciar sesión"
+      }
+    },
+    "steps": {
+      "contact": "Información de contacto",
+      "date": "Fecha de recogida",
+      "invoice": "Datos de facturación",
+      "someone": "Recogida de Pedido"
+    }
+  },
+  "errors": {
+    "name": {
+      "minlength": "El nombre es obligatorio"
+    },
+    "lastName": {
+      "minlength": "El apellido es obligatorio"
+    },
+    "email": {
+      "email": "Ingrese un correo electrónico válido",
+      "minlength": "El correo electrónico es obligatorio"
+    },
+    "password": {
+      "password": "Ingrese una contraseña válida",
+      "minlength": "La contraseña debe tener al menos 6 caracteres",
+      "regex": "La contraseña debe tener al menos una letra mayúscula, una letra minúscula y un número"
+    },
+    "phone": { "required": "Ingrese un número de celular válido" },
+    "birthdate": { "required": "Ingrese una fecha de nacimiento válida" },
+    "terms": { "required": "Debe aceptar los términos y condiciones" },
+    "network": "Ocurrió un error inesperado, por favor intenta de nuevo",
+    "cart": {
+      "title": "¡Ups! Algo salió mal",
+      "addItemCart": "No pudimos agregar el producto al carrito. Por favor, inténtalo de nuevo.",
+      "removeItemCart": "No pudimos eliminar el producto del carrito. Por favor, inténtalo de nuevo.",
+      "updateItemQuantity": "No pudimos actualizar el producto en el carrito. Por favor, inténtalo de nuevo."
+    },
+    "pay": {
+      "ok": "!Bien hecho!",
+      "title": "!Pago realizado con éxito!",
+      "success": "Tu pedido ha sido confirmado y se encuentra en proceso de preparación. Recibirás un correo electrónico con la confirmación de tu pedido.",
+      "canceled": "Tu pago ha sido cancelado. Si tienes alguna duda, por favor contáctanos.",
+      "valid": "Carrito validado correctamente."
+    }
+  },
+  "payment": {
+    "title": "!Pago realizado con éxito!",
+    "success": "Tu pedido ha sido confirmado y se encuentra en proceso de preparación. Recibirás un correo electrónico con la confirmación de tu pedido.",
+    "accept": "Aceptar"
+  },
+  "claims": {
+    "complaintsBook": "LIBRO DE RECLAMACIONES",
+    "day": "Día",
+    "month": "Mes",
+    "year": "Año",
+    "identificationConsumer": "1. IDENTIFICACIÓN DEL CONSUMIDOR RECLAMANTE",
+    "name": "Nombre",
+    "address": "Domicilio",
+    "identityCard": "DNI/CE",
+    "phone": "Teléfono",
+    "email": "Email",
+    "representative": "Padre o Madre (si aplica)",
+    "identificationAsset": "2. IDENTIFICACIÓN DEL BIEN CONTRATADO",
+    "product": "Producto",
+    "service": "Servicio",
+    "description": "Descripción",
+    "amountClaimed": "Monto Reclamado ($)",
+    "detailsComplaint": "3. DETALLE DE LA RECLAMACIÓN Y PEDIDO DEL CONSUMIDOR",
+    "detail": "Detalle",
+    "button": "Enviar Reclamación",
+    "messages": {
+      "success": "Reclamo registrado con éxito",
+      "error": "Ocurrió un error al enviar el reclamo"
+    }
+  },
+  "notfound": {
+    "title": "¡Página no encontrada!",
+    "description": "La página que buscas no existe o ha sido eliminada.",
+    "button": "Volver al inicio"
+  },
+  "whatsapp": {
+    "text": "Hola, me gustaría obtener más información."
+  }
+}

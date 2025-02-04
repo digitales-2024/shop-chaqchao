@@ -1,0 +1,26 @@
+{
+  "name": "Chaqchao Chocolates Arequipa Perú",
+  "short_name": "Chaqchao Chocolates",
+  "description": "The best chocolates in Arequipa, Peru. We are a family business that produces chocolates with the best cocoa beans in the region.",
+  "theme_color": "#6e3613",
+  "background_color": "#6e3613",
+  "display": "fullscreen",
+  "icons": [
+    {
+      "src": "/images/icons/favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/icons/favicon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/icons/favicon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
