@@ -409,6 +409,52 @@
       "numberAdults": "Número de Adultos",
       "numberChildren": "Número de Niños"
     },
+    "info": {
+      "title": "CHAQCHAO",
+      "subtitle": "Clase de Chocolate del grano a la barra",
+      "description": {
+        "text1": "Somos la primera y única tienda de chocolate orgánico “bean-to-bar” de Arequipa y nos apasiona compartir la historia del cacao peruano.",
+        "text2": "¡Únase a nosotros en una de nuestras clases de chocolate desde el grano hasta la barra para aprender más sobre el cacao y divertirse un poco!",
+        "text3": "Todas las edades son bienvenidas a nuestros talleres, incluidos los niños."
+      },
+      "learn": {
+        "title": "Lo que aprenderás:",
+        "learn1": "Historia y origen del cacao en Perú.",
+        "learn2": "Proceso de elaboración del chocolate desde el grano hasta la barra.",
+        "learn3": "Técnicas de templado del chocolate.",
+        "learn4": "Crea tus propias barras de chocolate."
+      },
+      "important": {
+        "title": "Información importante:",
+        "important1": "Duración: 2,5 horas.",
+        "important2": "Todo el material incluido.",
+        "important3": "No se admiten niños menores de 5 años.",
+        "important4": "Los niños deben estar acompañados por un adulto."
+      }
+    },
+    "schedule": {
+      "title": "Taller del grano a la barra",
+      "selectDate": "Seleccione la fecha y la hora del taller",
+      "participants": {
+        "title": "Participantes",
+        "age": "Edad",
+        "adults": "Adultos",
+        "children": "Niños"
+      },
+      "booknow": "Reservar ahora",
+      "experience": {
+        "title": "¿Busca una experiencia diferente?",
+        "private": {
+          "title": "Clases privadas",
+          "description": "Perfecto para ocasiones especiales, trabajo en equipo o una experiencia más personalizada"
+        },
+        "group": {
+          "title": "Clases grupales",
+          "description": "Únase a otros entusiastas del chocolate para disfrutar de un taller divertido e interactivo"
+        },
+        "contact": "Contáctenos para organizar su experiencia de chocolate perfecta"
+      }
+    },
     "reservationSumary": {
       "abstract": {
         "title": "Resumen de la Reserva"

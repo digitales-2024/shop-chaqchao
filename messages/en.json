@@ -423,6 +423,52 @@
       "numberAdults": "Number of Adults",
       "numberChildren": "Number of Children"
     },
+    "info": {
+      "title": "CHAQCHAO’S",
+      "subtitle": "Bean to bar Chocolate Class",
+      "description": {
+        "text1": "We’re Arequipa’s first and only organic bean-to-bar chocolate shop, and we’re passionate about sharing the story of Peruvian cacao.",
+        "text2": "Come and join us for one of our  bean-to-bar chocolate classes to learn more about cacao and have some fun!",
+        "text3": "All ages are welcome in our workshops, including children."
+      },
+      "learn": {
+        "title": "What you'll learn:",
+        "learn1": "The history and origin of cacao in Peru",
+        "learn2": "Bean-to-bar chocolate making process",
+        "learn3": "Chocolate tempering techniques",
+        "learn4": "Create your own chocolate bars"
+      },
+      "important": {
+        "title": "Important Information:",
+        "important1": "Duration: 2.5 hours",
+        "important2": "All materials included",
+        "important3": "Children under 5 are not permitted",
+        "important4": "Children must be accompanied by an adult"
+      }
+    },
+    "schedule": {
+      "title": "Bean to Bar Workshop",
+      "selectDate": "Select Date and hour of the workshop",
+      "participants": {
+        "title": "Participants",
+        "age": "Age",
+        "adults": "Adults",
+        "children": "Children"
+      },
+      "booknow": "Book Now",
+      "experience": {
+        "title": "Looking for a different Experience?",
+        "private": {
+          "title": "Private Classes",
+          "description": "Perfect for special occasions, team building, or a more personalized experience."
+        },
+        "group": {
+          "title": "Group Classes",
+          "description": "Join other chocolate enthusiasts for a fun and interactive workshop experience."
+        },
+        "contact": "Contact us to arrange your perfect chocolate experience"
+      }
+    },
     "reservationSumary": {
       "abstract": {
         "title": "Booking Summary"
