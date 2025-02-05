@@ -8,6 +8,18 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 
 import baseQueryWithReauth from "./baseQuery";
 
+interface Schedule {
+  GROUP: ScheduleType[];
+  NORMAL: ScheduleType[];
+  PRIVATE: ScheduleType[];
+}
+
+interface ScheduleType {
+  id: string;
+  startTime: string;
+  typeClass: string;
+}
+
 export const classApi = createApi({
   reducerPath: "classApi",
   baseQuery: baseQueryWithReauth,
@@ -47,7 +59,17 @@ export const classApi = createApi({
     // Endpoint para obtener horarios
     schedules: build.query<{ id: string; startTime: string }[], void>({
       query: () => ({
-        url: "/classes",
+        url: "/classess",
+        method: "GET",
+        credentials: "include",
+      }),
+      providesTags: ["Class"],
+    }),
+
+    // Endpoint para obtener horarios
+    schedulesAdmin: build.query<Schedule, void>({
+      query: () => ({
+        url: "/class-schedule",
         method: "GET",
         credentials: "include",
       }),
@@ -116,4 +138,5 @@ export const {
   usePricesQuery,
   useGetClassesByClientQuery,
   useClassByDateMutation,
+  useSchedulesAdminQuery,
 } = classApi;

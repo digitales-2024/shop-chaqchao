@@ -36,6 +36,9 @@ import {
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import Counter from "../ui/counter";
+import { useSchedulesAdminQuery } from "@/redux/services/classApi";
+import PulsatingDots from "../common/PulsatingDots";
+import { ButtonSelect, Option } from "../ui/button-select";
 
 const formSchema = z.object({
   date: z.date({
@@ -58,6 +61,8 @@ export default function WorkshopSelectDate() {
       children: 0,
     },
   });
+
+  const { isLoading, data } = useSchedulesAdminQuery();
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     console.log(values);
@@ -107,6 +112,32 @@ export default function WorkshopSelectDate() {
                       />
                     </PopoverContent>
                   </Popover>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="schedule"
+              render={({ field }) => (
+                <FormItem className="flex flex-col items-center">
+                  <FormLabel></FormLabel>
+                  <FormControl>
+                    {isLoading || !data ? (
+                      <PulsatingDots />
+                    ) : (
+                      <ButtonSelect
+                        name={field.name}
+                        control={form.control}
+                        options={data?.NORMAL.map((s) => {
+                          return {
+                            value: s.startTime,
+                            label: s.startTime,
+                          } as Option;
+                        })}
+                      />
+                    )}
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
