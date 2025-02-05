@@ -14,7 +14,7 @@ export function Navbar() {
   ];
   return (
     <header className="flex items-center justify-center">
-      <nav className="container fixed top-0 z-50 mx-auto flex items-center justify-center outline-none transition-all duration-500 sm:top-3 sm:rounded-[3rem]">
+      <nav className="fixed top-0 z-50 mx-auto flex w-full max-w-[1025px] items-center justify-center bg-white/60 backdrop-blur-sm">
         <div className="flex h-full w-full flex-row items-center justify-between p-4">
           <LanguageSelector />
           <div className="flex flex-row items-center gap-4">

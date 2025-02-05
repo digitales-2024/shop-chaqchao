@@ -97,7 +97,7 @@ export const ProductDialog = ({ product }: ProductDialogProps) => {
                 <AddToCartButton
                   product={product}
                   quantity={quantity}
-                  className="inline-flex w-full items-center justify-center gap-8 text-2xl"
+                  className="inline-flex h-16 w-full items-center justify-center text-xl"
                 >
                   {t("addToCart")} ({quantity})
                 </AddToCartButton>
