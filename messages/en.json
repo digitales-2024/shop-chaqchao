@@ -54,9 +54,15 @@
   },
   "footer": {
     "title": "Store information",
+    "visit": "Visitanos en",
+    "history": "Historic Center",
     "copyrigth": "All rights reserved",
     "description": "Discover our products and enjoy the best quality!",
-    "social": "Connect"
+    "social": "Connect",
+    "sunday": "Sunday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday"
   },
   "categories": {
     "title": "All our products",
