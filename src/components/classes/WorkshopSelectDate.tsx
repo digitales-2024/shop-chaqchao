@@ -173,7 +173,7 @@ export default function WorkshopSelectDate() {
                         </Button>
                       </FormControl>
                     </PopoverTrigger>
-                    <PopoverContent className="w-[40rem]">
+                    <PopoverContent className="w-full sm:w-[40rem]">
                       <TwoMonthCalendar
                         value={field.value}
                         onChange={(date) => {

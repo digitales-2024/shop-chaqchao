@@ -197,9 +197,11 @@ export default function PageRegisterClass() {
         </div>
 
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          <WorkshopSummary />
+          <div className="order-2 sm:order-1">
+            <WorkshopSummary />
+          </div>
 
-          <div className="p-6">
+          <div className="order-1 p-6 sm:order-1">
             <h2 className="mb-4 text-xl font-bold">
               {steps[currentStep].title}
             </h2>
