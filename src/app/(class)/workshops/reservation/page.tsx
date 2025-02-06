@@ -135,6 +135,7 @@ export default function PageRegisterClass() {
       } else if (currentStep === 2) {
         setReservation({ confirmed: true });
         // Aquí iría la lógica de envío final
+        console.log("Reserva confirmada!");
       }
     } catch (error) {
       console.error("Error en la validación:", error);

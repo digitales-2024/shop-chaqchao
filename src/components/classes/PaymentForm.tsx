@@ -8,7 +8,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useTranslations } from "next-intl";
-import { Izipay } from "@/assets/icons";
+import { Izipay, Paypal } from "@/assets/icons";
 
 export function PaymentForm() {
   const { control } = useFormContext();
@@ -34,7 +34,10 @@ export function PaymentForm() {
                   <FormControl>
                     <RadioGroupItem value="yape" />
                   </FormControl>
-                  <FormLabel className="font-normal">Paypal</FormLabel>
+                  <FormLabel className="inline-flex items-center gap-2 font-normal">
+                    Paypal
+                    <Paypal className="h-4 w-auto" />
+                  </FormLabel>
                 </FormItem>
                 <FormItem className="flex items-center space-x-3 space-y-0">
                   <FormControl>
