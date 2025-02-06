@@ -69,7 +69,7 @@ export const classApi = createApi({
     // Endpoint para obtener horarios
     schedulesAdmin: build.query<Schedule, void>({
       query: () => ({
-        url: "/class-schedule",
+        url: "/classes/schedule",
         method: "GET",
         credentials: "include",
       }),

@@ -16,7 +16,7 @@ export const useLanguages = () => {
     if (languages && !isLoading) {
       setLanguageOptions(
         languages.map((language: Language) => ({
-          value: language.id,
+          value: language.languageName,
           label: language.languageName,
         })),
       );
