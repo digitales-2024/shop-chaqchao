@@ -33,12 +33,15 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { format } from "date-fns";
+import { format, isSameDay } from "date-fns";
 import { cn } from "@/lib/utils";
 import Counter from "../ui/counter";
 import { useSchedulesAdminQuery } from "@/redux/services/classApi";
 import PulsatingDots from "../common/PulsatingDots";
 import { ButtonSelect, Option } from "../ui/button-select";
+import { useRouter } from "next/navigation";
+import { useReservation } from "@/hooks/use-reservation";
+import { useEffect, useState } from "react";
 
 const formSchema = z.object({
   date: z.date({
@@ -51,22 +54,78 @@ const formSchema = z.object({
   children: z.number(),
 });
 export default function WorkshopSelectDate() {
+  const { reservation, setReservation } = useReservation();
   const t = useTranslations("class.schedule");
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      date: undefined,
-      schedule: "",
-      adults: 1,
-      children: 0,
+      date: reservation.date || undefined,
+      schedule: reservation.schedule || "",
+      adults: reservation.adults || 1,
+      children: reservation.children || 0,
     },
   });
+  const { isLoading, data: schedules } = useSchedulesAdminQuery();
+  const [data, setData] = useState<Option[]>([]);
+  useEffect(() => {
+    if (schedules) {
+      setData(
+        schedules?.NORMAL.map((s) => {
+          return {
+            value: s.startTime,
+            label: s.startTime,
+            disabled: isToday(form.watch("date")) && compareTimes(s.startTime),
+          } as Option;
+        }),
+      );
+    }
+  }, [schedules, form.watch("date")]);
 
-  const { isLoading, data } = useSchedulesAdminQuery();
+  const router = useRouter();
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    setReservation({
+      date: values.date,
+      adults: values.adults,
+      children: values.children,
+      schedule: values.schedule,
+    });
+    router.push("/workshops/reservation");
   };
+
+  // Funcion para calcular si la fecha es hoy
+  const isToday = (date: Date) => {
+    const today = new Date();
+    return isSameDay(date, today);
+  };
+
+  // funcion para saber la hora actual formato 11:00
+  const getCurrentTime = () => {
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, "0");
+    const minutes = now.getMinutes().toString().padStart(2, "0");
+    return `${hours}:${minutes}`;
+  };
+
+  // Función para comparar si un horario es menor al actual por al menos 50 minutos
+  const compareTimes = (time1: string) => {
+    const [hour1, minute1] = time1.split(":").map(Number);
+    const [hour2, minute2] = getCurrentTime().split(":").map(Number);
+
+    // Convertir ambos horarios a minutos totales
+    const totalMinutes1 = hour1 * 60 + minute1;
+    const totalMinutes2 = hour2 * 60 + minute2;
+
+    // Verificar si el horario seleccionado es menor al actual + 50 minutos
+    return totalMinutes1 <= totalMinutes2 + 50;
+  };
+
+  useEffect(() => {
+    if (form.getValues("date")) {
+      form.setValue("schedule", "");
+    }
+  }, [form.getValues("date")]);
+
   return (
     <Card className="m-2 border-none shadow">
       <CardHeader>
@@ -127,14 +186,9 @@ export default function WorkshopSelectDate() {
                       <PulsatingDots />
                     ) : (
                       <ButtonSelect
-                        name={field.name}
-                        control={form.control}
-                        options={data?.NORMAL.map((s) => {
-                          return {
-                            value: s.startTime,
-                            label: s.startTime,
-                          } as Option;
-                        })}
+                        value={field.value}
+                        onChange={field.onChange}
+                        options={data}
                       />
                     )}
                   </FormControl>
