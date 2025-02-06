@@ -25,6 +25,30 @@ const calculateTotal = (
   return adults * adultPrice + children * childPrice;
 };
 
+interface SectionProps {
+  title: string;
+  children: React.ReactNode;
+}
+
+function Section({ title, children }: SectionProps) {
+  return (
+    <div>
+      <h3 className="mb-3 font-semibold text-primary">{title}</h3>
+      <div className="space-y-3">{children}</div>
+      <Separator className="my-4" />
+    </div>
+  );
+}
+
+function InfoRow({ label, value }: { label: string; value: string | number }) {
+  return (
+    <div className="grid grid-cols-2">
+      <p className="text-gray-600">{label}</p>
+      <p className="text-end font-bold">{value}</p>
+    </div>
+  );
+}
+
 export default function WorkshopSummary() {
   const t = useTranslations("class.summary");
   const locale = useLocale();
@@ -72,6 +96,13 @@ export default function WorkshopSummary() {
     );
   }
 
+  const hasPersonalInfo =
+    reservation.userName || reservation.userEmail || reservation.userPhone;
+  const hasAdditionalInfo =
+    reservation.language ||
+    reservation.occasion ||
+    reservation.restrictions ||
+    reservation.comments;
   const total = calculateTotal(
     reservation.adults,
     reservation.children,
@@ -87,34 +118,60 @@ export default function WorkshopSummary() {
         <CardDescription></CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        <Separator />
-        <div className="grid grid-cols-2">
-          <p className="text-gray-600">{t("date")}</p>
-          <p className="text-end font-bold">
-            {format(reservation.date, "PPP", {
+        <Section title={t("basicInfo")}>
+          <InfoRow
+            label={t("date")}
+            value={format(reservation.date, "PPP", {
               locale: locale === "es" ? es : undefined,
             })}
-          </p>
-        </div>
-        <div className="grid grid-cols-2">
-          <p className="text-gray-600">{t("schedule")}</p>
-          <p className="text-end font-bold">{reservation.schedule}</p>
-        </div>
-        <div className="grid grid-cols-2">
-          <p className="text-gray-600">{t("participants.title")}</p>
-          <div className="text-end font-bold">
-            <p>
-              {reservation.adults} {t("participants.adults")}
-            </p>
-            <p>
-              {reservation.children} {t("participants.children")}
-            </p>
+          />
+          <InfoRow label={t("schedule")} value={reservation.schedule} />
+          <div className="grid grid-cols-2">
+            <p className="text-gray-600">{t("participants.title")}</p>
+            <div className="text-end font-bold">
+              <p>
+                {reservation.adults} {t("participants.adults")}
+              </p>
+              <p>
+                {reservation.children} {t("participants.children")}
+              </p>
+            </div>
           </div>
-        </div>
-        <div className="grid grid-cols-2">
-          <p className="text-gray-600">{t("language")}</p>
-          <p className="text-end font-bold uppercase">{reservation.language}</p>
-        </div>
+        </Section>
+
+        {hasPersonalInfo && (
+          <Section title={t("personalInfo")}>
+            {reservation.userName && (
+              <InfoRow label={t("name")} value={reservation.userName} />
+            )}
+            {reservation.userEmail && (
+              <InfoRow label={t("email")} value={reservation.userEmail} />
+            )}
+            {reservation.userPhone && (
+              <InfoRow label={t("phone")} value={reservation.userPhone} />
+            )}
+          </Section>
+        )}
+
+        {hasAdditionalInfo && (
+          <Section title={t("additionalInfo")}>
+            {reservation.language && (
+              <InfoRow label={t("language")} value={reservation.language} />
+            )}
+            {reservation.occasion && (
+              <InfoRow label={t("occasion")} value={reservation.occasion} />
+            )}
+            {reservation.restrictions && (
+              <InfoRow
+                label={t("restrictions")}
+                value={reservation.restrictions}
+              />
+            )}
+            {reservation.comments && (
+              <InfoRow label={t("comments")} value={reservation.comments} />
+            )}
+          </Section>
+        )}
       </CardContent>
       <CardFooter>
         <div className="grid w-full grid-cols-2">

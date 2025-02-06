@@ -47,19 +47,19 @@ import { useReservation } from "@/hooks/use-reservation";
 import { useEffect, useState } from "react";
 import { Skeleton } from "../ui/skeleton";
 
-const formSchema = z.object({
-  date: z.date({
-    message: "Selecciona una fecha",
-  }),
-  schedule: z.string().min(1, {
-    message: "Selecciona un horario",
-  }),
-  adults: z.number(),
-  children: z.number(),
-});
 export default function WorkshopSelectDate() {
   const { reservation, setReservation } = useReservation();
   const t = useTranslations("class.schedule");
+  const formSchema = z.object({
+    date: z.date({
+      message: t("errorSelectDate"),
+    }),
+    schedule: z.string().min(1, {
+      message: t("errorSelectSchedule"),
+    }),
+    adults: z.number(),
+    children: z.number(),
+  });
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {

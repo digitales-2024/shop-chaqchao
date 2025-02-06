@@ -344,7 +344,9 @@
     "schedule": {
       "title": "Bean to Bar Workshop",
       "selectDate": "Select Date and hour of the workshop",
+      "errorSelectDate": "Please select a date",
       "pickDate": "Select a date",
+      "errorSelectSchedule": "Please select a schedule",
       "participants": {
         "title": "Participants",
         "age": "Age",
@@ -367,9 +369,18 @@
     },
     "summary": {
       "title": "CHAQCHAO’S BEAN TO BAR CHOCOLATE CLASS",
+      "basicInfo": "Basic Information",
+      "personalInfo": "Personal Information",
+      "additionalInfo": "Additional Information",
       "date": "Date",
       "schedule": "Schedule",
       "language": "Language",
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "occasion": "Occasion",
+      "restrictions": "Restrictions",
+      "comments": "Comments",
       "participants": {
         "title": "Participants",
         "adults": "Adults",

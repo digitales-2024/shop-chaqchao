@@ -345,7 +345,9 @@
     "schedule": {
       "title": "Taller del grano a la barra",
       "selectDate": "Seleccione la fecha y la hora del taller",
+      "errorSelectDate": "Por favor, seleccione una fecha",
       "pickDate": "Seleccione una fecha",
+      "errorSelectSchedule": "Por favor, seleccione un horario",
       "participants": {
         "title": "Participantes",
         "age": "Edad",
@@ -368,9 +370,18 @@
     },
     "summary": {
       "title": "CHAQCHAO CLASE DE CHOCOLATE DEL GRANO A LA BARRA",
+      "basicInfo": "Información básica",
+      "personalInfo": "Información personal",
+      "additionalInfo": "Información adicional",
       "date": "Fecha",
       "schedule": "Horario",
       "language": "Idioma",
+      "name": "Nombre",
+      "email": "Correo electrónico",
+      "phone": "Teléfono",
+      "occasion": "Ocasión",
+      "restrictions": "Restricciones dietéticas",
+      "comments": "Comentarios adicionales",
       "participants": {
         "title": "Participantes",
         "adults": "Adultos",

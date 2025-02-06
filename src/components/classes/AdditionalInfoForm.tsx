@@ -74,7 +74,7 @@ export function AdditionalInfoForm() {
     },
   ];
 
-  const allergyOptions = [
+  const restrictionOptions = [
     {
       label: t("class.steps.additional.form.restrictions.options.dairyFree"),
       value: "milk",
@@ -183,7 +183,9 @@ export function AdditionalInfoForm() {
                 <div className="space-y-2">
                   <ButtonSelect
                     value={
-                      allergyOptions.some((opt) => opt.value === field.value)
+                      restrictionOptions.some(
+                        (opt) => opt.value === field.value,
+                      )
                         ? field.value
                         : "other"
                     }
@@ -192,16 +194,20 @@ export function AdditionalInfoForm() {
                         field.onChange(value);
                       }
                     }}
-                    options={allergyOptions}
+                    options={restrictionOptions}
                   />
-                  {(!allergyOptions.some((opt) => opt.value === field.value) ||
+                  {(!restrictionOptions.some(
+                    (opt) => opt.value === field.value,
+                  ) ||
                     field.value === "other") && (
                     <TextareaAutosize
                       placeholder={t(
                         "class.steps.additional.form.restrictions.options.other",
                       )}
                       value={
-                        !allergyOptions.some((opt) => opt.value === field.value)
+                        !restrictionOptions.some(
+                          (opt) => opt.value === field.value,
+                        )
                           ? field.value
                           : ""
                       }

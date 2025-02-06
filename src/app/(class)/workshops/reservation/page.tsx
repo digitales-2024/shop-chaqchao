@@ -55,7 +55,7 @@ export default function PageRegisterClass() {
         .string()
         .min(1, { message: t("additional.form.language.error") }),
       occasion: z.string().optional(),
-      allergies: z.string().optional(),
+      restrictions: z.string().optional(),
       comment: z.string().optional(),
     }),
   });
@@ -92,8 +92,8 @@ export default function PageRegisterClass() {
       },
       additional: {
         language: reservation.language || "",
-        occasion: "",
-        allergies: "",
+        occasion: reservation.occasion || "",
+        restrictions: reservation.restrictions || "",
         comment: reservation.comments || "",
       },
       payment: {
@@ -129,6 +129,8 @@ export default function PageRegisterClass() {
       } else if (currentStep === 1) {
         setReservation({
           language: data.additional.language,
+          occasion: data.additional.occasion,
+          restrictions: data.additional.restrictions,
           comments: data.additional.comment,
         });
         setCurrentStep(2);

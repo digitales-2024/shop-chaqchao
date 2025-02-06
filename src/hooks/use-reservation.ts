@@ -12,6 +12,8 @@ export interface ReservationData {
   userEmail?: string;
   userPhone?: string;
   typeCurrency?: string;
+  occasion?: string;
+  restrictions?: string;
 }
 
 interface ReservationState {
@@ -32,6 +34,8 @@ export const useReservation = create<ReservationState>((set) => ({
     userEmail: "",
     userPhone: "",
     typeCurrency: "DOLAR",
+    occasion: "",
+    restrictions: "",
   },
   setReservation: (newData) =>
     set((state) => ({
