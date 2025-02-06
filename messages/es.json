@@ -345,6 +345,7 @@
     "schedule": {
       "title": "Taller del grano a la barra",
       "selectDate": "Seleccione la fecha y la hora del taller",
+      "pickDate": "Seleccione una fecha",
       "participants": {
         "title": "Participantes",
         "age": "Edad",

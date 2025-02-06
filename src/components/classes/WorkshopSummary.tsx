@@ -11,15 +11,72 @@ import { useReservation } from "@/hooks/use-reservation";
 import { format } from "date-fns";
 import { useLocale, useTranslations } from "next-intl";
 import { es } from "date-fns/locale";
+import { usePricesQuery } from "@/redux/services/classApi";
+
+const calculateTotal = (
+  adults: number,
+  children: number,
+  prices: { classTypeUser: string; price: number }[],
+) => {
+  const adultPrice =
+    prices.find((p) => p.classTypeUser === "ADULT")?.price ?? 0;
+  const childPrice =
+    prices.find((p) => p.classTypeUser === "CHILD")?.price ?? 0;
+  return adults * adultPrice + children * childPrice;
+};
 
 export default function WorkshopSummary() {
   const t = useTranslations("class.summary");
   const locale = useLocale();
   const { reservation } = useReservation();
+  const { data: prices, isLoading } = usePricesQuery({
+    typeCurrency: "DOLAR",
+    typeClass: "NORMAL",
+  });
 
   if (!reservation?.date) {
-    return null;
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-balance text-3xl font-black text-terciary">
+            {t("title")}
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="animate-pulse space-y-4">
+            <div className="h-6 rounded bg-gray-200"></div>
+            <div className="h-6 rounded bg-gray-200"></div>
+            <div className="h-6 rounded bg-gray-200"></div>
+          </div>
+        </CardContent>
+      </Card>
+    );
   }
+
+  if (isLoading || !prices) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-balance text-3xl font-black text-terciary">
+            {t("title")}
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="animate-pulse space-y-4">
+            <div className="h-6 rounded bg-gray-200"></div>
+            <div className="h-6 rounded bg-gray-200"></div>
+            <div className="h-6 rounded bg-gray-200"></div>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  const total = calculateTotal(
+    reservation.adults,
+    reservation.children,
+    prices,
+  );
 
   return (
     <Card>
@@ -62,9 +119,7 @@ export default function WorkshopSummary() {
       <CardFooter>
         <div className="grid w-full grid-cols-2">
           <p className="font-black">Total</p>
-          <p className="text-end font-bold">
-            S/. {reservation.adults + reservation.children}
-          </p>
+          <p className="text-end font-bold">$ {total.toFixed(2)}</p>
         </div>
       </CardFooter>
     </Card>

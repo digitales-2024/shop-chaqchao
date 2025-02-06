@@ -36,12 +36,16 @@ import {
 import { format, isSameDay } from "date-fns";
 import { cn } from "@/lib/utils";
 import Counter from "../ui/counter";
-import { useSchedulesAdminQuery } from "@/redux/services/classApi";
+import {
+  useSchedulesAdminQuery,
+  usePricesQuery,
+} from "@/redux/services/classApi";
 import PulsatingDots from "../common/PulsatingDots";
 import { ButtonSelect, Option } from "../ui/button-select";
 import { useRouter } from "next/navigation";
 import { useReservation } from "@/hooks/use-reservation";
 import { useEffect, useState } from "react";
+import { Skeleton } from "../ui/skeleton";
 
 const formSchema = z.object({
   date: z.date({
@@ -121,6 +125,11 @@ export default function WorkshopSelectDate() {
     return totalMinutes1 <= totalMinutes2 + 50;
   };
 
+  const { data: prices, isLoading: isLoadingPrices } = usePricesQuery({
+    typeCurrency: "DOLAR",
+    typeClass: "NORMAL",
+  });
+
   useEffect(() => {
     if (form.getValues("date")) {
       form.setValue("schedule", "");
@@ -158,7 +167,7 @@ export default function WorkshopSelectDate() {
                           {field.value ? (
                             format(field.value, "PPP")
                           ) : (
-                            <span>Pick a date</span>
+                            <span>{t("pickDate")}</span>
                           )}
                           <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                         </Button>
@@ -211,7 +220,13 @@ export default function WorkshopSelectDate() {
                     <span className="text-sm font-thin">
                       {t("participants.age")} 13 - 80
                     </span>
-                    <span className="text-sm font-black">$30</span>
+                    <span className="text-sm font-black">
+                      {isLoadingPrices ? (
+                        <Skeleton className="h-8 w-10" />
+                      ) : (
+                        `$${prices?.find((p) => p.classTypeUser === "ADULT")?.price || 0}`
+                      )}
+                    </span>
                   </div>
                   <FormField
                     control={form.control}
@@ -239,7 +254,13 @@ export default function WorkshopSelectDate() {
                     <span className="text-sm font-thin">
                       {t("participants.age")} 05 - 12
                     </span>
-                    <span className="text-sm font-black">$20</span>
+                    <span className="text-sm font-black">
+                      {isLoadingPrices ? (
+                        <Skeleton className="h-8 w-10" />
+                      ) : (
+                        `$${prices?.find((p) => p.classTypeUser === "CHILD")?.price || 0}`
+                      )}
+                    </span>
                   </div>
                   <FormField
                     control={form.control}

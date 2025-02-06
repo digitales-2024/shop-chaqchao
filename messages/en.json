@@ -344,6 +344,7 @@
     "schedule": {
       "title": "Bean to Bar Workshop",
       "selectDate": "Select Date and hour of the workshop",
+      "pickDate": "Select a date",
       "participants": {
         "title": "Participants",
         "age": "Age",

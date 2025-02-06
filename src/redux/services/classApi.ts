@@ -59,7 +59,7 @@ export const classApi = createApi({
     // Endpoint para obtener horarios
     schedules: build.query<{ id: string; startTime: string }[], void>({
       query: () => ({
-        url: "/classess",
+        url: "/classes",
         method: "GET",
         credentials: "include",
       }),
@@ -94,11 +94,15 @@ export const classApi = createApi({
         price: number;
         typeCurrency: string;
       }[],
-      void
+      { typeCurrency?: string; typeClass: "NORMAL" | "GROUP" | "PRIVATE" }
     >({
-      query: () => ({
-        url: "/classes/prices/dolar",
+      query: (args) => ({
+        url: "/classes/prices",
         method: "GET",
+        params: {
+          typeCurrency: args.typeCurrency || "DOLAR",
+          typeClass: args.typeClass,
+        },
         credentials: "include",
       }),
       providesTags: ["Class"],
