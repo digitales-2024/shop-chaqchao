@@ -67,6 +67,7 @@ export default function WorkshopSelectDate() {
   });
   const { isLoading, data: schedules } = useSchedulesAdminQuery();
   const [data, setData] = useState<Option[]>([]);
+  const [open, setOpen] = useState(false);
   useEffect(() => {
     if (schedules) {
       setData(
@@ -144,7 +145,7 @@ export default function WorkshopSelectDate() {
               render={({ field }) => (
                 <FormItem className="flex flex-col">
                   <FormLabel>{t("selectDate")}</FormLabel>
-                  <Popover>
+                  <Popover open={open} onOpenChange={setOpen}>
                     <PopoverTrigger asChild>
                       <FormControl>
                         <Button
@@ -166,7 +167,10 @@ export default function WorkshopSelectDate() {
                     <PopoverContent className="w-[40rem]">
                       <TwoMonthCalendar
                         value={field.value}
-                        onChange={field.onChange}
+                        onChange={(date) => {
+                          field.onChange(date);
+                          setOpen(false);
+                        }}
                         // classes={classesFutures}
                       />
                     </PopoverContent>
