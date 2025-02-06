@@ -1,30 +1,25 @@
-"use client";
-import { useController, type Control } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 export interface Option {
   value: string;
   label: string;
+  disabled?: boolean;
 }
 
-interface ButtonSelectProps {
-  name: string;
-  control: Control<any>;
+interface SimplifiedButtonSelectProps {
+  value: string;
+  onChange: (value: string) => void;
   options: Option[];
 }
 
-export function ButtonSelect({ name, control, options }: ButtonSelectProps) {
-  const {
-    field: { onChange, value },
-  } = useController({
-    name,
-    control,
-    defaultValue: options[0]?.value,
-  });
-
+export function ButtonSelect({
+  value,
+  onChange,
+  options,
+}: SimplifiedButtonSelectProps) {
   return (
-    <div className="flex flex-wrap gap-4">
+    <div className="flex flex-wrap gap-2">
       {options.map((option) => (
         <Button
           key={option.value}
@@ -35,6 +30,7 @@ export function ButtonSelect({ name, control, options }: ButtonSelectProps) {
             "transition-all",
             value === option.value && "ring-2 ring-primary ring-offset-2",
           )}
+          disabled={option.disabled}
         >
           {option.label}
         </Button>
