@@ -1,6 +1,6 @@
 import { Product } from "@/types";
 import { motion } from "framer-motion";
-import { Minus, Plus, ShoppingBag } from "lucide-react";
+import { Minus, Plus } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 
@@ -32,7 +32,7 @@ export const ProductDialog = ({ product }: ProductDialogProps) => {
   return (
     <ScrollArea className="h-full max-h-[90vh]">
       <div className="grid h-full gap-x-10 md:grid-cols-2">
-        <div className="flex items-center justify-center rounded-md bg-secondary/5">
+        <div className="flex items-center justify-center bg-secondary/5">
           <DialogImage
             src={product.image}
             alt={`producto ${product.name}`}
@@ -97,9 +97,8 @@ export const ProductDialog = ({ product }: ProductDialogProps) => {
                 <AddToCartButton
                   product={product}
                   quantity={quantity}
-                  className="inline-flex w-full items-center justify-center gap-8"
+                  className="inline-flex h-16 w-full items-center justify-center text-xl"
                 >
-                  <ShoppingBag />
                   {t("addToCart")} ({quantity})
                 </AddToCartButton>
               </DialogDescription>

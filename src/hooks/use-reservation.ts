@@ -2,21 +2,23 @@ import { create } from "zustand";
 
 export interface ReservationData {
   date: Date | undefined;
+  schedule: string;
   adults: number;
   children: number;
-  time: string;
-  comments: string;
-  confirmed: boolean;
-  language: string;
-  userName: string;
-  userEmail: string;
-  userPhone: string;
-  typeCurrency: string;
+  comments?: string;
+  confirmed?: boolean;
+  language?: string;
+  userName?: string;
+  userEmail?: string;
+  userPhone?: string;
+  typeCurrency?: string;
+  occasion?: string;
+  restrictions?: string;
 }
 
 interface ReservationState {
   reservation: ReservationData;
-  setReservation: (data: ReservationData) => void;
+  setReservation: (data: Partial<ReservationData>) => void;
 }
 
 export const useReservation = create<ReservationState>((set) => ({
@@ -24,7 +26,7 @@ export const useReservation = create<ReservationState>((set) => ({
     date: undefined,
     adults: 1,
     children: 0,
-    time: "",
+    schedule: "",
     comments: "",
     confirmed: false,
     language: "",
@@ -32,7 +34,11 @@ export const useReservation = create<ReservationState>((set) => ({
     userEmail: "",
     userPhone: "",
     typeCurrency: "DOLAR",
+    occasion: "",
+    restrictions: "",
   },
-  setReservation: (reservation: Partial<ReservationData>) =>
-    set((state) => ({ reservation: { ...state.reservation, ...reservation } })),
+  setReservation: (newData) =>
+    set((state) => ({
+      reservation: { ...state.reservation, ...newData },
+    })),
 }));

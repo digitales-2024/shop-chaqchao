@@ -8,6 +8,18 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 
 import baseQueryWithReauth from "./baseQuery";
 
+interface Schedule {
+  GROUP: ScheduleType[];
+  NORMAL: ScheduleType[];
+  PRIVATE: ScheduleType[];
+}
+
+interface ScheduleType {
+  id: string;
+  startTime: string;
+  typeClass: string;
+}
+
 export const classApi = createApi({
   reducerPath: "classApi",
   baseQuery: baseQueryWithReauth,
@@ -54,6 +66,16 @@ export const classApi = createApi({
       providesTags: ["Class"],
     }),
 
+    // Endpoint para obtener horarios
+    schedulesAdmin: build.query<Schedule, void>({
+      query: () => ({
+        url: "/classes/schedule",
+        method: "GET",
+        credentials: "include",
+      }),
+      providesTags: ["Class"],
+    }),
+
     // Endpoint para obtener los lenguajes
     languages: build.query<{ id: string; languageName: string }[], void>({
       query: () => ({
@@ -72,11 +94,15 @@ export const classApi = createApi({
         price: number;
         typeCurrency: string;
       }[],
-      void
+      { typeCurrency?: string; typeClass: "NORMAL" | "GROUP" | "PRIVATE" }
     >({
-      query: () => ({
-        url: "/classes/prices/dolar",
+      query: (args) => ({
+        url: "/classes/prices",
         method: "GET",
+        params: {
+          typeCurrency: args.typeCurrency || "DOLAR",
+          typeClass: args.typeClass,
+        },
         credentials: "include",
       }),
       providesTags: ["Class"],
@@ -116,4 +142,5 @@ export const {
   usePricesQuery,
   useGetClassesByClientQuery,
   useClassByDateMutation,
+  useSchedulesAdminQuery,
 } = classApi;

@@ -1,7 +1,7 @@
 {
   "navbar": {
     "products": "Productos",
-    "classes": "Clases",
+    "workshops": "Talleres",
     "languages": {
       "es": "Español",
       "en": "Inglés"
@@ -54,9 +54,16 @@
   },
   "footer": {
     "title": "Información de la tienda",
+    "visit": "Visitanos en",
+    "history": "Centro Histórico",
     "copyrigth": "Todos los derechos reservados",
     "description": "¡Descubre nuestros productos y disfruta de la mejor calidad!",
-    "social": "Conéctate"
+    "social": "Conéctate",
+    "monday": "Lunes",
+    "sunday": "Domingo",
+    "thursday": "Jueves",
+    "friday": "Viernes",
+    "saturday": "Sábado"
   },
   "categories": {
     "title": "Todos nuestro productos",
@@ -240,185 +247,146 @@
     }
   },
   "class": {
-    "previous": "Anterior",
-    "next": "Siguiente",
-    "confirm": "Confirmar",
-    "step1": {
-      "title": "Información de contacto",
-      "errors": {
-        "name": "Debe ingresar su nombre completo.",
-        "email": "Debe ingresar un correo electrónico válido.",
-        "phone": "Debe ingresar un número de teléfono válido."
+    "steps": {
+      "buttons": {
+        "back": "Atrás",
+        "next": "Siguiente",
+        "confirm": "Confirmar"
       },
-      "label": {
-        "name": "Nombre Completo",
-        "email": "Correo Electrónico",
-        "phone": "Número de Teléfono"
+      "personal": {
+        "title": "Información Personal",
+        "description": "Utilizaremos esta información para enviarle confirmación y actualizaciones sobre su reserva.",
+        "form": {
+          "name": {
+            "label": "Nombre completo",
+            "placeholder": "Ingresa tu nombre completo",
+            "error": "Ingresa tu nombre completo"
+          },
+          "email": {
+            "label": "Correo electronico",
+            "placeholder": "Ingresa tu correo electrónico",
+            "error": "Ingresa un correo electrónico válido"
+          },
+          "phone": {
+            "label": "Celular",
+            "placeholder": "Ingresa tu celular",
+            "error": "Ingresa un número válido"
+          }
+        }
       },
-      "button": {
-        "back": "Atras",
-        "next": "Siguiente"
+      "additional": {
+        "title": "Información adicional",
+        "description": "Por favor, completa esta información para continuar con tu pedido",
+        "form": {
+          "language": {
+            "label": "Selecciona el idioma con el que deseas tomar tu clase",
+            "es": "Español",
+            "en": "Ingles",
+            "error": "Selecciona un idioma"
+          },
+          "occasion": {
+            "label": "¿Cuál es la ocasion?",
+            "options": {
+              "tourism": "Turismo",
+              "birthday": "Cumpleaños",
+              "anniversary": "Aniversario",
+              "other": "Otra"
+            }
+          },
+          "restrictions": {
+            "label": "¿Alguna alergia o restricciones dietéticas?",
+            "options": {
+              "dairyFree": "Sin leche",
+              "glutenFree": "Sin gluten",
+              "sojaFree": "Alergia a la soja",
+              "other": "Otra alergia o restriccion"
+            }
+          },
+          "comments": {
+            "label": "¿Tienes alguna otra cosa que querias decirnos?",
+            "placeholder": "Ingresa tu comentario"
+          }
+        }
+      },
+      "payment": {
+        "title": "Información de pago",
+        "description": "Por favor, completa esta información para continuar con tu reserva",
+        "form": {
+          "payment": {
+            "label": "Selecciona el medio de pago",
+            "error": "Selecciona un medio de pago"
+          }
+        }
       }
     },
-    "step2": {
-      "title": "Fecha y hora de la clase",
-      "subtitle": "Seleccione la fecha y hora en la que desea tomar la clase",
-      "description": "Seleccione la hora de la clase",
-      "errors": {
-        "date": "Por favor, selecciona una fecha para continuar"
+    "info": {
+      "title": "CHAQCHAO",
+      "subtitle": "Clase de Chocolate del grano a la barra",
+      "description": {
+        "text1": "Somos la primera y única tienda de chocolate orgánico “bean-to-bar” de Arequipa y nos apasiona compartir la historia del cacao peruano.",
+        "text2": "¡Únase a nosotros en una de nuestras clases de chocolate desde el grano hasta la barra para aprender más sobre el cacao y divertirse un poco!",
+        "text3": "Todas las edades son bienvenidas a nuestros talleres, incluidos los niños."
       },
-      "moreDates": "MÁS FECHAS",
-      "days": {
-        "today": "HOY",
-        "mon": "LUN",
-        "tue": "MAR",
-        "wed": "MIÉ",
-        "thu": "JUE",
-        "fri": "VIE",
-        "sat": "SAB",
-        "sun": "DOM"
+      "learn": {
+        "title": "Lo que aprenderás:",
+        "learn1": "Historia y origen del cacao en Perú.",
+        "learn2": "Proceso de elaboración del chocolate desde el grano hasta la barra.",
+        "learn3": "Técnicas de templado del chocolate.",
+        "learn4": "Crea tus propias barras de chocolate."
       },
-      "months": {
-        "jan": "ENE",
-        "feb": "FEB",
-        "mar": "MAR",
-        "apr": "ABR",
-        "may": "MAY",
-        "jun": "JUN",
-        "jul": "JUL",
-        "aug": "AGO",
-        "sep": "SET",
-        "oct": "OCT",
-        "nov": "NOV",
-        "dec": "DIC"
-      },
-      "button": {
-        "back": "Atras",
-        "next": "Siguiente"
+      "important": {
+        "title": "Información importante:",
+        "important1": "Duración: 2,5 horas.",
+        "important2": "Todo el material incluido.",
+        "important3": "No se admiten niños menores de 5 años.",
+        "important4": "Los niños deben estar acompañados por un adulto."
       }
     },
-    "step3": {
-      "empty": "No hay lugares disponibles",
-      "title": "Cantidad de participantes",
-      "subtitle": "Seleccione la cantidad de participantes para la clase",
-      "adults": "Adultos",
-      "children": "Niños",
-      "toast": {
-        "fullFields": "Por favor, seleccione la cantidad de adultos para continuar."
-      },
-      "message": {
-        "start": "Quedan",
-        "end": "lugares disponibles"
-      },
-      "childrenPay": "Los niños mayores de 14 años pagan",
-      "dateNotSelected": "Fecha no seleccionada",
-      "button": {
-        "back": "Atras",
-        "next": "Siguiente"
-      }
-    },
-    "step4": {
-      "title": "Idioma y comentarios",
-      "subtitle": "Seleccione el idioma en el que desea tomar la clase",
-      "languages": {
-        "español": "ESPAÑOL",
-        "ingles": "INGLES"
-      },
-      "toast": {
-        "fullFields": "Por favor, seleccione un idioma para continuar."
-      },
-      "comments": "¿Desea agregar algún comentario?",
-      "addComments": "Agregar comentarios",
-      "language": {
-        "loading": "Cargando idiomas...",
-        "loadingError": "Error al cargar los idiomas",
-        "notAvailable": "No hay idiomas disponibles"
-      },
-      "button": {
-        "back": "Atras",
-        "next": "Siguiente"
-      }
-    },
-    "step5": {
-      "title": "Resumen de la reserva",
-      "people": "Personas",
-      "remainingTime": "Tiempo restante para realizar el pago: ",
-      "errors": {
-        "terms": "Debes aceptar los términos y condiciones"
-      },
-      "totalParticipants": {
-        "people": "Personas"
-      },
-      "subtotalDetail": {
-        "title": "Subtotal",
+    "schedule": {
+      "title": "Taller del grano a la barra",
+      "selectDate": "Seleccione la fecha y la hora del taller",
+      "errorSelectDate": "Por favor, seleccione una fecha",
+      "pickDate": "Seleccione una fecha",
+      "errorSelectSchedule": "Por favor, seleccione un horario",
+      "participants": {
+        "title": "Participantes",
+        "age": "Edad",
         "adults": "Adultos",
         "children": "Niños"
       },
-      "total": "Total",
-      "terms": {
-        "accord": "Estoy de acuerdo con los ",
-        "terms": "Términos y Políticas de Privacidad"
-      },
-      "buttons": {
-        "loading": "Confirmando registro",
-        "back": "Atras",
-        "register": "Registrar Clase"
+      "booknow": "Reservar ahora",
+      "experience": {
+        "title": "¿Busca una experiencia diferente?",
+        "private": {
+          "title": "Clases privadas",
+          "description": "Perfecto para ocasiones especiales, trabajo en equipo o una experiencia más personalizada"
+        },
+        "group": {
+          "title": "Clases grupales",
+          "description": "Únase a otros entusiastas del chocolate para disfrutar de un taller divertido e interactivo"
+        },
+        "contact": "Contáctenos para organizar su experiencia de chocolate perfecta"
       }
     },
-    "confirmation": {
-      "people": "Personas",
-      "confirmation": "!RESERVA CONFIRMADA!",
-      "userName": "Nombre: ",
-      "userEmail": "Correo: ",
-      "userPhone": "Teléfono: ",
-      "languageClass": "Idioma: ",
-      "dateClass": "Fecha: ",
-      "scheduleClass": "Horario: ",
-      "participantsClass": "Participantes: ",
-      "userAllergies": "Alergias: ",
-      "dateNotSelected": "Fecha no seleccionada",
-      "state": "Estado: ",
-      "detail": {
-        "title": "Detalles de la Reserva",
-        "adults": "ADULTO(S)",
-        "children": "NIÑO(S)",
-        "considerations": {
-          "title": "CONSIDERACIONES",
-          "message": "*Llegar 5 minutos antes"
-        }
-      },
-      "allergies": {
-        "title": "Alergias o restricciones alimentarias",
-        "allergie": "Alergias: ",
-        "yes": "Si",
-        "none": "Ninguna"
-      },
-      "companyName": "Nombre de la Empresa: ",
-      "phone": "Teléfono: ",
-      "description": "Descripción",
-      "quantity": "Cantidad",
-      "price": "Precio / Unidad",
-      "typeCurrency": "Tipo de Moneda",
-      "amount": "Monto",
-      "numberAdults": "Número de Adultos",
-      "numberChildren": "Número de Niños"
-    },
-    "reservationSumary": {
-      "abstract": {
-        "title": "Resumen de la Reserva"
-      },
-      "languages": {
-        "spanish": "Español",
-        "english": "Ingles"
-      },
-      "userName": "Nombre: ",
-      "userEmail": "Correo: ",
-      "userPhone": "Teléfono: ",
-      "dateClass": "Fecha: ",
-      "scheduleClass": "Horario: ",
-      "languageClass": "Idioma: ",
-      "participantsClass": "Participantes: ",
-      "userAllergies": "Alergias: "
+    "summary": {
+      "title": "CHAQCHAO CLASE DE CHOCOLATE DEL GRANO A LA BARRA",
+      "basicInfo": "Información básica",
+      "personalInfo": "Información personal",
+      "additionalInfo": "Información adicional",
+      "date": "Fecha",
+      "schedule": "Horario",
+      "language": "Idioma",
+      "name": "Nombre",
+      "email": "Correo electrónico",
+      "phone": "Teléfono",
+      "occasion": "Ocasión",
+      "restrictions": "Restricciones dietéticas",
+      "comments": "Comentarios adicionales",
+      "participants": {
+        "title": "Participantes",
+        "adults": "Adultos",
+        "children": "Niños"
+      }
     },
     "errors": {
       "name": "Por favor ingrese su nombre completo.",
