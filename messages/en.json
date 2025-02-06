@@ -60,6 +60,7 @@
     "description": "Discover our products and enjoy the best quality!",
     "social": "Connect",
     "sunday": "Sunday",
+    "monday": "Monday",
     "thursday": "Thursday",
     "friday": "Friday",
     "saturday": "Saturday"
@@ -245,183 +246,77 @@
     }
   },
   "class": {
-    "previous": "Previous",
-    "next": "Next",
-    "confirm": "Confirm",
-    "step1": {
-      "title": "Contact Information",
-      "errors": {
-        "name": "Full name is required",
-        "email": "Email is required",
-        "phone": "Phone is required"
-      },
-      "label": {
-        "name": "Full Name",
-        "email": "Email",
-        "phone": "Phone"
-      },
-      "button": {
-        "back": "Back",
-        "next": "Next"
-      }
-    },
-    "step2": {
-      "title": "Date and hour of the Class",
-      "subtitle": "Select the date and hour you want to take the class",
-      "description": "Select the time of the class",
-      "errors": {
-        "date": "Please select a date to continue."
-      },
-      "moreDates": "MORE DATES",
-      "days": {
-        "today": "TODAY",
-        "mon": "MON",
-        "tue": "TUE",
-        "wed": "WED",
-        "thu": "THU",
-        "fri": "FRI",
-        "sat": "SAT",
-        "sun": "SUN"
-      },
-      "months": {
-        "jan": "JAN",
-        "feb": "FEB",
-        "mar": "MAR",
-        "apr": "APR",
-        "may": "MAY",
-        "jun": "JUN",
-        "jul": "JUL",
-        "aug": "AUG",
-        "sep": "SEP",
-        "oct": "OCT",
-        "nov": "NOV",
-        "dec": "DEC"
-      },
-      "button": {
-        "back": "Back",
-        "next": "Next"
-      }
-    },
-    "step3": {
-      "empty": "No places available",
-      "title": "Number of Participants",
-      "subtitle": "Select the number of participants for the class",
-      "adults": "Adults",
-      "children": "Children",
-      "toast": {
-        "fullFields": "Please select the number of adults to continue."
-      },
-      "message": {
-        "start": "There are",
-        "end": "seats available"
-      },
-      "childrenPay": "Children over 14 years pay",
-      "dateNotSelected": "Date not Selected",
-      "button": {
-        "back": "Back",
-        "next": "Next"
-      }
-    },
-    "step4": {
-      "title": "Language and comments",
-      "subtitle": "Select the language you want to take the class",
-      "languages": {
-        "español": "SPANISH",
-        "ingles": "ENGLISH"
-      },
-      "toast": {
-        "fullFields": "Please select a language to continue."
-      },
-      "comments": "Would you like to add any comments?",
-      "addComments": "Add comments",
-      "language": {
-        "loading": "Loading languages...",
-        "loadingError": "Error loading languages",
-        "notAvailable": "No languages ​​available"
-      },
-      "button": {
-        "back": "Back",
-        "next": "Next"
-      }
-    },
-    "step5": {
-      "title": "Booking Summary",
-      "people": "People",
-      "errors": {
-        "terms": "Accept the terms and policies to continue"
-      },
-      "toast": {
-        "noPlaceAvailable": "There are no more places available, please choose another date or time.",
-        "invalidNumberParticipantsRange": "Invalid number of participants, The minimum number of participants must be 2.",
-        "invalidNumberParticipants": "Invalid number of participants, The minimum number of participants must be 1.",
-        "classIsClose": "The class is closed, please choose another date or time.",
-        "registrationIsClose": "Registration is closed, please choose another date or time.",
-        "invalidClassDate": "Invalid date, Please choose another date or time.",
-        "classRegisterSuccessfully": "Class registered successfully. Proceed with payment.",
-        "errorRegisterClass": "Error registering class. Please try again.",
-        "paymentConfirmed": "Payment confirmed and class registered successfully.",
-        "errorConfirmPayment": "Error confirming payment. Please try again.",
-        "acceptTerms": "Accept the terms and policies to continue",
-        "timeOut": "The time to make the payment has expired and your quota has been cancelled.",
-        "paymentCancelled": "Payment cancelled"
-      },
-      "remainingTime": "Time remaining to make payment: ",
-      "totalParticipants": {
-        "people": "People"
-      },
-      "subtotalDetail": {
-        "title": "Subtotal",
-        "adults": "Adults",
-        "children": "Childrens"
-      },
-      "total": "Total",
-      "terms": {
-        "accord": "I agree with the ",
-        "terms": "Terms and Privacy Policy"
-      },
+    "steps": {
       "buttons": {
-        "loading": "Confirming registration",
         "back": "Back",
-        "register": "Register Class"
-      }
-    },
-    "confirmation": {
-      "people": "People",
-      "confirmation": "Reservation Confirmed!",
-      "userName": "Names: ",
-      "userEmail": "Email: ",
-      "userPhone": "Phone: ",
-      "languageClass": "Language: ",
-      "dateClass": "Date: ",
-      "scheduleClass": "Schedule: ",
-      "participantsClass": "Participants: ",
-      "userAllergies": "Allergies: ",
-      "dateNotSelected": "Date not Selected",
-      "state": "State: ",
-      "detail": {
-        "title": "Booking Details",
-        "adults": "Adult(S)",
-        "children": "Children(S)",
-        "considerations": {
-          "title": "Considerations",
-          "message": "*Arrive 5 minutes early"
+        "next": "Next",
+        "confirm": "Confirm"
+      },
+      "personal": {
+        "title": "Contact Information",
+        "description": "We will use this information to send you confirmation and updates about your reservation.",
+        "form": {
+          "name": {
+            "label": "Name",
+            "placeholder": "Enter your full name",
+            "error": "Enter your full name"
+          },
+          "email": {
+            "label": "Email",
+            "placeholder": "Enter your email",
+            "error": "Enter a valid email"
+          },
+          "phone": {
+            "label": "Phone",
+            "placeholder": "Enter your phone number",
+            "error": "Enter a valid phone number"
+          }
         }
       },
-      "allergies": {
-        "title": "Food allergies or restrictions",
-        "allergie": "Allergies: ",
-        "yes": "Si",
-        "none": "None"
+      "additional": {
+        "title": "Additional Information",
+        "description": "Please complete this information to continue with your order",
+        "form": {
+          "language": {
+            "label": "Select the language in which you want to take the class",
+            "es": "Spanish",
+            "en": "English",
+            "error": "Select a language"
+          },
+          "occasion": {
+            "label": "What is the occasion?",
+            "options": {
+              "tourism": "Tourism",
+              "birthday": "Birthday",
+              "anniversary": "Anniversary",
+              "other": "Other"
+            }
+          },
+          "restrictions": {
+            "label": "Do you have any allergies or dietary restrictions?",
+            "options": {
+              "dairyFree": "Dairy-free",
+              "glutenFree": "Gluten-free",
+              "sojaFree": "Soja-free",
+              "other": "Other allergy or restriction"
+            }
+          },
+          "comments": {
+            "label": "Do you have any other things you want to tell us?",
+            "placeholder": "Enter your comment"
+          }
+        }
       },
-      "companyName": "Company Name: ",
-      "phone": "Phone: ",
-      "description": "Description",
-      "quantity": "Quantity",
-      "price": "Price / Unit",
-      "typeCurrency": "type Currency",
-      "amount": "Amount",
-      "numberAdults": "Number of Adults",
-      "numberChildren": "Number of Children"
+      "payment": {
+        "title": "Payment Information",
+        "description": "Please complete this information to continue with your reservation",
+        "form": {
+          "payment": {
+            "label": "Select the payment method",
+            "error": "Select the payment method"
+          }
+        }
+      }
     },
     "info": {
       "title": "CHAQCHAO’S",
@@ -469,22 +364,16 @@
         "contact": "Contact us to arrange your perfect chocolate experience"
       }
     },
-    "reservationSumary": {
-      "abstract": {
-        "title": "Booking Summary"
-      },
-      "languages": {
-        "spanish": "Spanish",
-        "english": "English"
-      },
-      "userName": "Name: ",
-      "userEmail": "Email: ",
-      "userPhone": "Phone: ",
-      "languageClass": "Language: ",
-      "dateClass": "Date: ",
-      "scheduleClass": "Schedule: ",
-      "participantsClass": "Participants: ",
-      "userAllergies": "Allergies: "
+    "summary": {
+      "title": "CHAQCHAO’S BEAN TO BAR CHOCOLATE CLASS",
+      "date": "Date",
+      "schedule": "Schedule",
+      "language": "Language",
+      "participants": {
+        "title": "Participants",
+        "adults": "Adults",
+        "children": "Children"
+      }
     },
     "errors": {
       "name": "Please enter your full name",
