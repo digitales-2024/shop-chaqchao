@@ -12,10 +12,47 @@ import { useTranslations } from "next-intl";
 import { ButtonSelect } from "../ui/button-select";
 import { useLanguages } from "@/hooks/use-languages";
 import PulsatingDots from "../common/PulsatingDots";
+import { useEffect, useRef } from "react";
+
+const TextareaAutosize = ({
+  value,
+  onChange,
+  placeholder,
+}: {
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  placeholder?: string;
+}) => {
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const adjustHeight = () => {
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.style.height = "auto";
+      textarea.style.height = `${textarea.scrollHeight}px`;
+    }
+  };
+
+  useEffect(() => {
+    adjustHeight();
+  }, [value]);
+
+  return (
+    <Textarea
+      ref={textareaRef}
+      value={value}
+      onChange={(e) => {
+        onChange(e);
+        adjustHeight();
+      }}
+      placeholder={placeholder}
+      rows={1}
+    />
+  );
+};
 
 export function AdditionalInfoForm() {
   const { control } = useFormContext();
-
   const t = useTranslations();
 
   const occasionOptions = [
@@ -98,11 +135,37 @@ export function AdditionalInfoForm() {
                 {t("class.steps.additional.form.occasion.label")}
               </FormLabel>
               <FormControl>
-                <ButtonSelect
-                  value={field.value}
-                  onChange={field.onChange}
-                  options={occasionOptions}
-                />
+                <div className="space-y-2">
+                  <ButtonSelect
+                    value={
+                      occasionOptions.some((opt) => opt.value === field.value)
+                        ? field.value
+                        : "other"
+                    }
+                    onChange={(value) => {
+                      if (value !== "other") {
+                        field.onChange(value);
+                      }
+                    }}
+                    options={occasionOptions}
+                  />
+                  {(!occasionOptions.some((opt) => opt.value === field.value) ||
+                    field.value === "other") && (
+                    <TextareaAutosize
+                      placeholder={t(
+                        "class.steps.additional.form.occasion.options.other",
+                      )}
+                      value={
+                        !occasionOptions.some(
+                          (opt) => opt.value === field.value,
+                        )
+                          ? field.value
+                          : ""
+                      }
+                      onChange={(e) => field.onChange(e.target.value)}
+                    />
+                  )}
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -117,14 +180,35 @@ export function AdditionalInfoForm() {
                 {t("class.steps.additional.form.restrictions.label")}
               </FormLabel>
               <FormControl>
-                <>
+                <div className="space-y-2">
                   <ButtonSelect
-                    value={field.value}
-                    onChange={field.onChange}
+                    value={
+                      allergyOptions.some((opt) => opt.value === field.value)
+                        ? field.value
+                        : "other"
+                    }
+                    onChange={(value) => {
+                      if (value !== "other") {
+                        field.onChange(value);
+                      }
+                    }}
                     options={allergyOptions}
                   />
-                  <Textarea value={field.value} onChange={field.onChange} />
-                </>
+                  {(!allergyOptions.some((opt) => opt.value === field.value) ||
+                    field.value === "other") && (
+                    <TextareaAutosize
+                      placeholder={t(
+                        "class.steps.additional.form.restrictions.options.other",
+                      )}
+                      value={
+                        !allergyOptions.some((opt) => opt.value === field.value)
+                          ? field.value
+                          : ""
+                      }
+                      onChange={(e) => field.onChange(e.target.value)}
+                    />
+                  )}
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -139,11 +223,12 @@ export function AdditionalInfoForm() {
                 {t("class.steps.additional.form.comments.label")}
               </FormLabel>
               <FormControl>
-                <Textarea
+                <TextareaAutosize
                   placeholder={t(
                     "class.steps.additional.form.comments.placeholder",
                   )}
-                  {...field}
+                  value={field.value || ""}
+                  onChange={(e) => field.onChange(e.target.value)}
                 />
               </FormControl>
               <FormMessage />
