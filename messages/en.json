@@ -414,6 +414,18 @@
       "title": "Registration confirmed!",
       "description": "Your registration has been confirmed and is in the process of validation. You will receive an email with the confirmation of your registration.",
       "accept": "Accept"
+    },
+    "confirmation": {
+      "title": "Reservation confirmed!",
+      "description": "Your reservation for the workshop has been confirmed successfully. We have sent you an email with the details.",
+      "details": {
+        "name": "Name",
+        "email": "Email",
+        "date": "Date",
+        "schedule": "Schedule",
+        "transaction": "Transaction ID"
+      },
+      "backButton": "Back to Workshops"
     }
   },
   "checkout": {

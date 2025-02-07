@@ -13,33 +13,37 @@ export type ReservationData = Omit<BaseReservationData, "date"> & {
 interface ReservationState {
   reservation: ReservationData;
   setReservation: (data: Partial<ReservationData>) => void;
+  resetReservation: () => void;
 }
 
+const initialReservation: ReservationData = {
+  date: undefined,
+  adults: 1,
+  participants: 1,
+  children: 0,
+  time: "",
+  schedule: "",
+  allergies: "",
+  comments: "",
+  confirmed: false,
+  language: "",
+  userName: "",
+  userEmail: "",
+  userPhone: "",
+  typeCurrency: "USD",
+  totalAmount: 0,
+  occasion: "",
+  restrictions: "",
+  paymentMethod: "",
+  paymentStatus: "pending",
+  transactionId: "",
+};
+
 export const useReservation = create<ReservationState>((set) => ({
-  reservation: {
-    date: undefined,
-    adults: 1,
-    participants: 1,
-    children: 0,
-    time: "",
-    schedule: "",
-    allergies: "",
-    comments: "",
-    confirmed: false,
-    language: "",
-    userName: "",
-    userEmail: "",
-    userPhone: "",
-    typeCurrency: "USD",
-    totalAmount: 0,
-    occasion: "",
-    restrictions: "",
-    paymentMethod: "",
-    paymentStatus: "pending",
-    transactionId: "",
-  },
+  reservation: initialReservation,
   setReservation: (newData) =>
     set((state) => ({
       reservation: { ...state.reservation, ...newData },
     })),
+  resetReservation: () => set({ reservation: initialReservation }),
 }));

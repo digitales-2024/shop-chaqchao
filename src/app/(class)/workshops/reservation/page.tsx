@@ -1,22 +1,31 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import WorkshopSummary from "@/components/classes/WorkshopSummary";
+import { useReservation } from "@/hooks/use-reservation";
+import { CreatePayment } from "@/types";
+import { getDataOrderDynamic } from "@/utils/getDataOrderDynamic";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ChevronRight } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { PersonalInfoForm } from "@/components/classes/PersonalInfoForm";
+import { isValidPhoneNumber } from "react-phone-number-input";
+import { toast } from "sonner";
+import { z } from "zod";
+
 import { AdditionalInfoForm } from "@/components/classes/AdditionalInfoForm";
 import { PaymentForm } from "@/components/classes/PaymentForm";
-import { ChevronRight } from "lucide-react";
+import { PersonalInfoForm } from "@/components/classes/PersonalInfoForm";
+import WorkshopSummary from "@/components/classes/WorkshopSummary";
+import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { useReservation } from "@/hooks/use-reservation";
-import { useRouter } from "next/navigation";
-import { useTranslations } from "next-intl";
-import { isValidPhoneNumber } from "react-phone-number-input";
+
+import { cn } from "@/lib/utils";
 
 export default function PageRegisterClass() {
+  const [orderInfo, setOrderInfo] = useState<CreatePayment | undefined>(
+    undefined,
+  );
   const t = useTranslations("class.steps");
   const [currentStep, setCurrentStep] = useState(0);
   const steps = [
@@ -32,9 +41,17 @@ export default function PageRegisterClass() {
     if (!reservation.date && !reservation.schedule) {
       router.push(`/workshops`);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reservation]);
 
-  // Esquemas separados para cada paso
+  // Limpiar el estado al desmontar
+  useEffect(() => {
+    return () => {
+      setOrderInfo(undefined);
+    };
+  }, []);
+
+  // Esquemas de validación
   const personalSchema = z.object({
     personal: z.object({
       name: z.string().min(2, {
@@ -68,7 +85,6 @@ export default function PageRegisterClass() {
     }),
   });
 
-  // Usar solo el esquema del paso actual
   const getCurrentSchema = () => {
     switch (currentStep) {
       case 0:
@@ -103,9 +119,28 @@ export default function PageRegisterClass() {
     mode: "onSubmit",
   });
 
+  const handlePaymentSuccess = async (status: string) => {
+    try {
+      setReservation({
+        paymentStatus: "completed",
+        transactionId: status,
+      });
+      toast.success(t("payment.success"));
+      router.push("/workshops/confirmation");
+    } catch (error) {
+      console.error("Error al procesar el éxito del pago:", error);
+      toast.error(t("payment.error"));
+    }
+  };
+
+  const handlePaymentError = () => {
+    setReservation({ paymentStatus: "failed" });
+    toast.error(t("payment.error"));
+    setOrderInfo(undefined);
+  };
+
   const onSubmit = async (data: any) => {
     try {
-      // Validar solo el paso actual
       const currentSchema = getCurrentSchema();
       const result = currentSchema.safeParse(data);
 
@@ -118,7 +153,6 @@ export default function PageRegisterClass() {
         return;
       }
 
-      // Actualizar el estado global según el paso actual
       if (currentStep === 0) {
         setReservation({
           userName: data.personal.name,
@@ -135,12 +169,40 @@ export default function PageRegisterClass() {
         });
         setCurrentStep(2);
       } else if (currentStep === 2) {
-        setReservation({ confirmed: true });
-        // Aquí iría la lógica de envío final
-        console.log("Reserva confirmada!");
+        const paymentMethod = data.payment.methodPayment;
+        setReservation({
+          paymentMethod,
+          confirmed: true,
+        });
+
+        const { orderNumber } = getDataOrderDynamic();
+
+        if (paymentMethod === "izipay") {
+          try {
+            const paymentData: CreatePayment = {
+              amount: reservation.totalAmount * 100, // Convertir a centavos
+              currency: "PEN",
+              orderId: `WS-${orderNumber}`,
+              customer: {
+                email: reservation.userEmail || "",
+                reference: reservation.userPhone,
+                billingDetails: {
+                  firstName: reservation.userName,
+                  lastName: "asdasd",
+                  phoneNumber: reservation.userPhone,
+                },
+              },
+            };
+            setOrderInfo(paymentData);
+          } catch (error) {
+            console.error("Error al preparar el pago:", error);
+            toast.error(t("payment.error"));
+          }
+        }
       }
     } catch (error) {
       console.error("Error en la validación:", error);
+      toast.error(t("payment.error"));
     }
   };
 
@@ -157,7 +219,13 @@ export default function PageRegisterClass() {
       case 1:
         return <AdditionalInfoForm />;
       case 2:
-        return <PaymentForm />;
+        return (
+          <PaymentForm
+            orderInfo={orderInfo}
+            onPaymentSuccess={handlePaymentSuccess}
+            onPaymentError={handlePaymentError}
+          />
+        );
       default:
         return null;
     }

@@ -415,6 +415,18 @@
       "title": "¡Registro confirmado!",
       "description": "Tu registro ha sido confirmado y se encuentra en proceso de validación. Recibirás un correo electrónico con la confirmación de tu registro.",
       "accept": "Aceptar"
+    },
+    "confirmation": {
+      "title": "¡Reserva Confirmada!",
+      "description": "Tu reserva para el taller ha sido confirmada exitosamente. Te hemos enviado un correo electrónico con los detalles.",
+      "details": {
+        "name": "Nombre",
+        "email": "Correo",
+        "date": "Fecha",
+        "schedule": "Horario",
+        "transaction": "ID de Transacción"
+      },
+      "backButton": "Volver a Talleres"
     }
   },
   "checkout": {
