@@ -11,6 +11,12 @@ export interface ReservationData {
   userName: string;
   userEmail: string;
   userPhone: string;
-  typeCurrency: string;
+  typeCurrency: "USD" | "PEN";
   totalAmount: number;
+  paymentMethod?: string;
+  paymentStatus?: "pending" | "completed" | "failed";
+  transactionId?: string;
+  occasion?: string;
+  restrictions?: string;
+  comments?: string;
 }

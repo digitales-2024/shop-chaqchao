@@ -1,3 +1,9 @@
+import { useReservation } from "@/hooks/use-reservation";
+import { usePricesQuery } from "@/redux/services/classApi";
+import { format } from "date-fns";
+import { es } from "date-fns/locale";
+import { useLocale, useTranslations } from "next-intl";
+
 import {
   Card,
   CardContent,
@@ -6,12 +12,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+
 import { Separator } from "../ui/separator";
-import { useReservation } from "@/hooks/use-reservation";
-import { format } from "date-fns";
-import { useLocale, useTranslations } from "next-intl";
-import { es } from "date-fns/locale";
-import { usePricesQuery } from "@/redux/services/classApi";
 
 const calculateTotal = (
   adults: number,

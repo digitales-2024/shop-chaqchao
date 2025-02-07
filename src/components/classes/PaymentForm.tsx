@@ -1,18 +1,40 @@
+import { Izipay, Paypal } from "@/assets/icons";
+import { CreatePayment } from "@/types";
+import { useTranslations } from "next-intl";
+import { useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+
 import {
   FormControl,
   FormField,
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { useTranslations } from "next-intl";
-import { Izipay, Paypal } from "@/assets/icons";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+
 import { cn } from "@/lib/utils";
 
-export function PaymentForm() {
+import { IzipayForm } from "../payment/IzipayForm";
+
+interface PaymentFormProps {
+  orderInfo?: CreatePayment;
+  onPaymentSuccess?: (status: string) => void;
+  onPaymentError?: () => void;
+}
+
+export function PaymentForm({
+  orderInfo,
+  onPaymentSuccess,
+  onPaymentError,
+}: PaymentFormProps) {
   const { control } = useFormContext();
   const t = useTranslations("class.steps.payment");
+  const [selectedMethod, setSelectedMethod] = useState<string>("");
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handlePaymentSuccess = (response: any) => {
+    onPaymentSuccess?.(response.clientAnswer?.orderStatus ?? "");
+  };
 
   return (
     <div className="space-y-6">
@@ -26,7 +48,10 @@ export function PaymentForm() {
           <FormItem>
             <FormControl>
               <RadioGroup
-                onValueChange={field.onChange}
+                onValueChange={(value) => {
+                  field.onChange(value);
+                  setSelectedMethod(value);
+                }}
                 defaultValue={field.value}
                 className="grid grid-cols-1 gap-4 md:grid-cols-2"
               >
@@ -92,6 +117,15 @@ export function PaymentForm() {
           </FormItem>
         )}
       />
+
+      {selectedMethod === "izipay" && orderInfo && (
+        <IzipayForm
+          paymentData={orderInfo}
+          onSuccess={handlePaymentSuccess}
+          onError={onPaymentError}
+          containerId="workshop-izipay-form"
+        />
+      )}
     </div>
   );
 }

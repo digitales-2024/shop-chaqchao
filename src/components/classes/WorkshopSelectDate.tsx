@@ -1,3 +1,23 @@
+import { useReservation } from "@/hooks/use-reservation";
+import {
+  useSchedulesAdminQuery,
+  usePricesQuery,
+} from "@/redux/services/classApi";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { format, isSameDay } from "date-fns";
+import {
+  Phone,
+  UserRoundPen,
+  UsersRound,
+  Calendar as CalendarIcon,
+} from "lucide-react";
+import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -7,25 +27,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { useTranslations } from "next-intl";
-import { Separator } from "../ui/separator";
-import {
-  Phone,
-  UserRoundPen,
-  UsersRound,
-  Calendar as CalendarIcon,
-} from "lucide-react";
-import { TwoMonthCalendar } from "./TwoMonthCalendar";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-
-import { Button } from "@/components/ui/button";
-import {
   Form,
   FormControl,
   FormField,
@@ -33,19 +34,20 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { format, isSameDay } from "date-fns";
-import { cn } from "@/lib/utils";
-import Counter from "../ui/counter";
 import {
-  useSchedulesAdminQuery,
-  usePricesQuery,
-} from "@/redux/services/classApi";
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+
+import { cn } from "@/lib/utils";
+
 import PulsatingDots from "../common/PulsatingDots";
 import { ButtonSelect, Option } from "../ui/button-select";
-import { useRouter } from "next/navigation";
-import { useReservation } from "@/hooks/use-reservation";
-import { useEffect, useState } from "react";
+import Counter from "../ui/counter";
+import { Separator } from "../ui/separator";
 import { Skeleton } from "../ui/skeleton";
+import { TwoMonthCalendar } from "./TwoMonthCalendar";
 
 export default function WorkshopSelectDate() {
   const { reservation, setReservation } = useReservation();
@@ -84,6 +86,7 @@ export default function WorkshopSelectDate() {
         }),
       );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [schedules, form.watch("date")]);
 
   const router = useRouter();
@@ -94,6 +97,11 @@ export default function WorkshopSelectDate() {
       adults: values.adults,
       children: values.children,
       schedule: values.schedule,
+      totalAmount:
+        values.adults *
+          (prices?.find((p) => p.classTypeUser === "ADULT")?.price || 0) +
+        values.children *
+          (prices?.find((p) => p.classTypeUser === "CHILD")?.price || 0),
     });
     router.push("/workshops/reservation");
   };
@@ -134,6 +142,7 @@ export default function WorkshopSelectDate() {
     if (form.getValues("date")) {
       form.setValue("schedule", "");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form.getValues("date")]);
 
   return (

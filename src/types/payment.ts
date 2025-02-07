@@ -1,6 +1,6 @@
 export interface CreatePayment {
   amount: number;
-  currency: string;
+  currency: "USD" | "PEN";
   orderId: string;
   customer: Customer;
   transactionOptions?: TransactionOptions;
@@ -21,14 +21,15 @@ interface SubMerchantDetails {
 interface Customer {
   reference?: string;
   email: string;
-  billingDetails?: BillingDeytails;
+  billingDetails?: BillingDetails;
   shoppingCart?: ShoppingCart;
 }
 
-interface BillingDeytails {
+interface BillingDetails {
   firstName?: string;
   lastName?: string;
   address?: string;
+  email?: string;
   phoneNumber?: string;
   country?: string; // PE
   state?: string;

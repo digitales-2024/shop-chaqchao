@@ -1,5 +1,8 @@
+import { useLanguages } from "@/hooks/use-languages";
+import { useTranslations } from "next-intl";
+import { useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
-import { Textarea } from "@/components/ui/textarea";
+
 import {
   FormControl,
   FormField,
@@ -7,12 +10,10 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Textarea } from "@/components/ui/textarea";
 
-import { useTranslations } from "next-intl";
-import { ButtonSelect } from "../ui/button-select";
-import { useLanguages } from "@/hooks/use-languages";
 import PulsatingDots from "../common/PulsatingDots";
-import { useEffect, useRef } from "react";
+import { ButtonSelect } from "../ui/button-select";
 
 const TextareaAutosize = ({
   value,
