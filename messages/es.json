@@ -1,4 +1,18 @@
 {
+  "izipay": {
+    "loading": "Procesando pago...",
+    "initialization": "Preparando formulario de pago...",
+    "pay": "Pagar con tarjeta",
+    "errors": {
+      "token": "Error al generar el token de pago",
+      "validation": "Error al validar el pago",
+      "initialization": "Error al inicializar el pago",
+      "generic": "Error en el proceso de pago",
+      "canceled": "El pago ha sido cancelado",
+      "network": "Error de conexión, por favor intenta de nuevo"
+    },
+    "success": "¡Pago realizado con éxito!"
+  },
   "navbar": {
     "products": "Productos",
     "workshops": "Talleres",
@@ -251,7 +265,8 @@
       "buttons": {
         "back": "Atrás",
         "next": "Siguiente",
-        "confirm": "Confirmar"
+        "confirm": "Confirmar",
+        "paypal": "Pagar con Paypal"
       },
       "personal": {
         "title": "Información Personal",
