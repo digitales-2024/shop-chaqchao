@@ -543,8 +543,11 @@
       "label": "Recogerás tu pedido el",
       "button": "Confirmar",
       "quest": "¿Recogerá otra persona el pedido?",
+      "quest2": "¿Enviará a otra ciudad el pedido?",
       "no": "No, recogeré el pedido yo mismo",
+      "no2": "No, recibiré el pedido aquí",
       "yes": "Sí, otra persona recogerá el pedido",
+      "yes2": "Sí, enviaré a otra ciudad el pedido",
       "messages": {
         "date": "Por favor selecciona una fecha",
         "hour": "Por favor selecciona una hora"
