@@ -20,7 +20,8 @@ import { TableCart } from "./TableCart";
 export const DetailCheckout = () => {
   const { amountTotal, cartItems } = useCartStore();
 
-  const { dateOrder, invoice, contact, someonePickup } = useCartDetail();
+  const { dateOrder, invoice, contact, someonePickup, shippingToAnotherCity } =
+    useCartDetail();
   const t = useTranslations("checkout");
   const locale = useLocale();
 
@@ -198,6 +199,11 @@ export const DetailCheckout = () => {
               </span>
               <span className="font-bold">
                 {someonePickup ? (locale === "es" ? "Si" : "Yes") : "No"}
+                {shippingToAnotherCity
+                  ? locale === "es"
+                    ? "Si"
+                    : "Yes"
+                  : "No"}
               </span>
             </div>
             <div className="flex flex-col">
