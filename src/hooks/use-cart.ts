@@ -42,7 +42,8 @@ export const useCart = () => {
   ] = useValidateCartMutation();
 
   const { clientData } = useProfile();
-  const { contact, dateOrder, someonePickup, invoice } = useCartDetail();
+  const { contact, dateOrder, someonePickup, invoice, shippingToAnotherCity } =
+    useCartDetail();
   const clientId = useMemo(() => clientData?.id, [clientData]);
 
   const [createCartMutation] = useCreateCartMutation();
@@ -289,6 +290,7 @@ export const useCart = () => {
           customerEmail: contact.email,
           customerPhone: contact.phone,
           someonePickup: someonePickup,
+          shippingToAnotherCity: shippingToAnotherCity,
           pickupTime: new Date(dateOrder.fullDate),
           clientId,
         },
