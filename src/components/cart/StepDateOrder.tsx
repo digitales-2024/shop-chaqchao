@@ -15,7 +15,9 @@ import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
 import { Calendar } from "../ui/calendar";
 import { Checkbox } from "../ui/checkbox";
+import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import LocationSelector from "../ui/location-input";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import {
   Select,
@@ -34,6 +36,7 @@ export const StepDateOrder = () => {
     setActiveStep,
     setSomeonePickup,
     someonePickup,
+    setshippingToAnotherCity,
     shippingToAnotherCity,
   } = useCartDetail();
 
@@ -122,6 +125,7 @@ export const StepDateOrder = () => {
         hour,
       });
       setSomeonePickup(someonePickup);
+      setshippingToAnotherCity(shippingToAnotherCity);
       handleStepComplete(2);
       setActiveStep(-1);
     }
@@ -225,21 +229,44 @@ export const StepDateOrder = () => {
             </div>
           </CardContent>
         </Card>
-        <div className="flex items-center justify-between space-x-2 py-4">
-          <Label
-            htmlFor="envio-otra-ciudad"
-            className="flex flex-col space-y-1"
-          >
-            <span>{t("quest2")}</span>
-            <span className="text-sm font-normal text-muted-foreground">
-              {shippingToAnotherCity ? t("yes2") : t("no2")}
-            </span>
-          </Label>
-          <Checkbox
-            id="envio-otra-ciudad"
-            checked={shippingToAnotherCity}
-            onCheckedChange={setSomeonePickup}
-          />
+        <div className="flex flex-col space-y-4">
+          <div className="flex items-center justify-between space-x-2 py-4">
+            <Label
+              htmlFor="envio-otra-ciudad"
+              className="flex flex-col space-y-1"
+            >
+              <span>{t("questShipping")}</span>
+              <span className="text-sm font-normal text-muted-foreground">
+                {shippingToAnotherCity ? t("yesShipping") : t("noShipping")}
+              </span>
+            </Label>
+            <Checkbox
+              id="envio-otra-ciudad"
+              checked={shippingToAnotherCity}
+              onCheckedChange={setshippingToAnotherCity}
+            />
+          </div>
+          {/* Sección de detalles de envío */}
+          {shippingToAnotherCity && (
+            <div className="rounded-lg border bg-gray-100 p-4 transition-all duration-300">
+              <h3 className="text-lg font-medium">{t("shippingDetails")}</h3>
+              <div className="mt-2 grid grid-cols-2 gap-4">
+                <LocationSelector />
+                <Input placeholder={t("postalCode")} />
+              </div>
+              {t("labelShipping")}{" "}
+              {dateOrder.location && (
+                <p className="text-sm text-muted-foreground">
+                  {t("addressLabel")}{" "}
+                  {dateOrder.location.cityInt &&
+                  dateOrder.location.stateInt &&
+                  dateOrder.location.countryInt
+                    ? `${dateOrder.location.cityInt}, ${dateOrder.location.stateInt}, ${dateOrder.location.countryInt} - ${dateOrder.location.codPostalInt}`
+                    : t("addressNotAvailable")}
+                </p>
+              )}
+            </div>
+          )}
         </div>
         <Button onClick={handleConfirmDate} disabled={!date || !hour}>
           {t("button")}
