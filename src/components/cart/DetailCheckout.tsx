@@ -206,26 +206,6 @@ export const DetailCheckout = () => {
                     : "Yes"
                   : "No"}
               </span>
-
-              <div className="flex flex-col">
-                <span className="text-xs text-gray-400">
-                  {t("dateOrder.shippingquest")}:
-                </span>
-                <span className="font-bold">
-                  {isShipping ? (locale === "es" ? "Si" : "Yes") : "No"}
-                </span>
-                {isShipping && dateOrder.shippingState && (
-                  <span className="ml-2 text-sm text-gray-600">
-                    ({dateOrder.shippingState}, {dateOrder.shippingCity},{" "}
-                    {dateOrder.shippingAddress})
-                  </span>
-                )}
-              </div>
-            </div>
-            <div className="flex flex-col">
-              <span className="text-xs text-gray-400">
-                {t("dateOrder.shippingquest")}:
-              </span>
             </div>
           </div>
         </div>
