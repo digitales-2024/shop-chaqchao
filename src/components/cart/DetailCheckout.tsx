@@ -214,12 +214,20 @@ export const DetailCheckout = () => {
               </span>
               <span className="font-bold">
                 {someonePickup ? (locale === "es" ? "Si" : "Yes") : "No"}
-                {shippingToAnotherCity
-                  ? locale === "es"
-                    ? "Si"
-                    : "Yes"
-                  : "No"}
               </span>
+
+              <div className="flex flex-col">
+                <span className="text-xs text-gray-400">
+                  {t("dateOrder.questShipping")}:
+                </span>
+                <span className="font-bold">
+                  {shippingToAnotherCity
+                    ? locale === "es"
+                      ? "Si"
+                      : "Yes"
+                    : "No"}
+                </span>
+              </div>
             </div>
           </div>
         </div>
