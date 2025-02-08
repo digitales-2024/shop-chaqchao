@@ -531,7 +531,6 @@
       "button": "Confirmar pedido",
       "loading": "Confirmando pedido...",
       "someone": "Recogerá otra persona el pedido",
-      "shipping": "Enviar a otra ciudad el pedido",
       "errors": {
         "terms": "Debes aceptar los términos y condiciones",
         "privacy": "Debes aceptar la política de privacidad",
