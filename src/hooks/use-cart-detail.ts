@@ -14,7 +14,7 @@ interface DateOrder {
   date: Date | undefined;
   hour: string | undefined;
   fullDate: Date | undefined; //agregar nuevos atributos
-  location: Location;
+  location?: Location;
 }
 
 interface Location {
@@ -32,7 +32,7 @@ interface CartDetailState {
   invoice: InvoiceData | ReceiptData;
   someonePickup: boolean;
   setSomeonePickup: (data: boolean) => void;
-  shippingToAnotherCity: boolean;
+  shippingToAnotherCity: boolean; //envios
   setshippingToAnotherCity: (data: boolean) => void;
   setInvoice: (data: InvoiceData) => void;
   activeStep: number;
