@@ -238,7 +238,7 @@ export const StepDateOrder = () => {
               htmlFor="envio-otra-ciudad"
               className="flex flex-col space-y-1"
             >
-              <span>{t("questShipping")}</span>
+              <span>{t("shippingquest")}</span>
               <span className="text-sm font-normal text-muted-foreground">
                 {shippingToAnotherCity ? t("yesShipping") : t("noShipping")}
               </span>
