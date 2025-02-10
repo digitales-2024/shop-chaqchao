@@ -1,5 +1,6 @@
 import { RegisterClassResponse } from "@/schemas/classRegisterSchema";
 import { ClassesDataAdmin, WorkshopRegistrationData } from "@/types";
+import { TypeClass } from "@/types/classes";
 import { PaypalTransactionData } from "@/types/paypal";
 import { createApi } from "@reduxjs/toolkit/query/react";
 
@@ -121,14 +122,47 @@ export const classApi = createApi({
     // Ver si hay una clase registrada para una fecha y hora específica
     classByDate: build.mutation<
       ClassesDataAdmin,
-      { date: string; schedule: string }
+      { date: string; schedule: string; typeClass: TypeClass }
     >({
-      query: ({ date, schedule }) => ({
-        url: `/classes/check?schedule=${schedule}&date=${date}`,
+      query: ({ date, schedule, typeClass = "NORMAL" }) => ({
+        url: `/classes/check?schedule=${schedule}&date=${date}&typeClass=${typeClass}`,
         method: "POST",
         credentials: "include",
       }),
       invalidatesTags: ["Class"],
+    }),
+
+    // Obtener las clases futuras
+    getClassesFutures: build.query<
+      ClassesDataAdmin[],
+      { typeClass?: TypeClass; schedule?: string }
+    >({
+      query: ({ typeClass, schedule }) => ({
+        url: "/classes/futures",
+        method: "GET",
+        params: { typeClass, schedule },
+        credentials: "include",
+      }),
+      providesTags: ["Class"],
+    }),
+
+    // Obtener capacidad de las clases
+    getClassesCapacity: build.query<
+      {
+        id: string;
+        typeClass: TypeClass;
+        minCapacity: number;
+        maxCapacity: number;
+      },
+      { typeClass?: TypeClass }
+    >({
+      query: ({ typeClass }) => ({
+        url: "/classes/capacity?typeClass=" + typeClass,
+        method: "GET",
+        params: { typeClass },
+        credentials: "include",
+      }),
+      providesTags: ["Class"],
     }),
   }),
 });
@@ -143,4 +177,6 @@ export const {
   useGetClassesByClientQuery,
   useClassByDateMutation,
   useSchedulesAdminQuery,
+  useGetClassesFuturesQuery,
+  useGetClassesCapacityQuery,
 } = classApi;

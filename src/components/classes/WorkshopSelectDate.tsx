@@ -2,7 +2,9 @@ import { useReservation } from "@/hooks/use-reservation";
 import {
   useSchedulesAdminQuery,
   usePricesQuery,
+  useGetClassesFuturesQuery,
 } from "@/redux/services/classApi";
+import { TypeClass } from "@/types/classes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format, isSameDay } from "date-fns";
 import {
@@ -133,6 +135,11 @@ export default function WorkshopSelectDate() {
     return totalMinutes1 <= totalMinutes2 + 50;
   };
 
+  const { data: classFutures, isLoading: isLoadingClassFutures } =
+    useGetClassesFuturesQuery({
+      typeClass: "NORMAL" as TypeClass,
+    });
+
   const { data: prices, isLoading: isLoadingPrices } = usePricesQuery({
     typeCurrency: "USD",
     typeClass: "NORMAL",
@@ -183,14 +190,18 @@ export default function WorkshopSelectDate() {
                       </FormControl>
                     </PopoverTrigger>
                     <PopoverContent className="w-full sm:w-[40rem]">
-                      <TwoMonthCalendar
-                        value={field.value}
-                        onChange={(date) => {
-                          field.onChange(date);
-                          setOpen(false);
-                        }}
-                        // classes={classesFutures}
-                      />
+                      {isLoadingClassFutures ? (
+                        <PulsatingDots />
+                      ) : (
+                        <TwoMonthCalendar
+                          value={field.value}
+                          onChange={(date) => {
+                            field.onChange(date);
+                            setOpen(false);
+                          }}
+                          classes={classFutures}
+                        />
+                      )}
                     </PopoverContent>
                   </Popover>
                   <FormMessage />
