@@ -134,7 +134,7 @@ export default function WorkshopSelectDate() {
   };
 
   const { data: prices, isLoading: isLoadingPrices } = usePricesQuery({
-    typeCurrency: "DOLAR",
+    typeCurrency: "USD",
     typeClass: "NORMAL",
   });
 

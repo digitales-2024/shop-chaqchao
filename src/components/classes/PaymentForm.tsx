@@ -215,34 +215,36 @@ export function PaymentForm() {
                 defaultValue={field.value}
                 className="grid grid-cols-1 gap-4 md:grid-cols-2"
               >
-                <FormItem className="m-0">
-                  <label
-                    htmlFor="PAYPAL"
-                    className={cn(
-                      "relative flex w-full cursor-pointer rounded-lg border-2 p-4 transition-all hover:bg-accent",
-                      field.value === "PAYPAL"
-                        ? "border-primary bg-accent"
-                        : "border-muted",
-                    )}
-                  >
-                    <FormControl>
-                      <RadioGroupItem
-                        value="PAYPAL"
-                        id="PAYPAL"
-                        className="sr-only"
-                      />
-                    </FormControl>
-                    <div className="flex w-full items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <span className="font-medium">Paypal</span>
-                        <Paypal className="h-5 w-auto" />
-                      </div>
-                      {field.value === "PAYPAL" && (
-                        <div className="h-2 w-2 rounded-full bg-primary" />
+                {currency === "USD" && (
+                  <FormItem className="m-0">
+                    <label
+                      htmlFor="PAYPAL"
+                      className={cn(
+                        "relative flex w-full cursor-pointer rounded-lg border-2 p-4 transition-all hover:bg-accent",
+                        field.value === "PAYPAL"
+                          ? "border-primary bg-accent"
+                          : "border-muted",
                       )}
-                    </div>
-                  </label>
-                </FormItem>
+                    >
+                      <FormControl>
+                        <RadioGroupItem
+                          value="PAYPAL"
+                          id="PAYPAL"
+                          className="sr-only"
+                        />
+                      </FormControl>
+                      <div className="flex w-full items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <span className="font-medium">Paypal</span>
+                          <Paypal className="h-5 w-auto" />
+                        </div>
+                        {field.value === "PAYPAL" && (
+                          <div className="h-2 w-2 rounded-full bg-primary" />
+                        )}
+                      </div>
+                    </label>
+                  </FormItem>
+                )}
 
                 {currency === "PEN" && (
                   <FormItem className="m-0">
@@ -303,7 +305,7 @@ export function PaymentForm() {
                     {t("form.terms.label")}
                     <Link
                       href="/terms-and-conditions"
-                      className="text-primary hover:underline"
+                      className="font-bold text-primary underline"
                       target="_blank"
                     >
                       {t("form.terms.link")}
@@ -339,7 +341,7 @@ export function PaymentForm() {
                     {t("form.politics.label")}
                     <Link
                       href="/politics"
-                      className="text-primary hover:underline"
+                      className="font-bold text-primary underline"
                       target="_blank"
                     >
                       {t("form.politics.link")}
@@ -352,15 +354,6 @@ export function PaymentForm() {
           </FormItem>
         )}
       />
-
-      {/* PayPal Button */}
-      {/* {isSuccessRegisterClass && dataTransaction && (
-        <PaypalPaymentMethod
-          transactionData={dataTransaction}
-          onPaymentSuccess={onPaymentSuccess}
-          onPaymentError={onPaymentError}
-        />
-      )} */}
     </div>
   );
 }
