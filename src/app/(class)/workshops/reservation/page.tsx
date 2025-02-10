@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
+import { useRegisterClass } from "@/hooks/use-class-registration";
 import { useReservation } from "@/hooks/use-reservation";
-import { CreatePayment } from "@/types";
-import { getDataOrderDynamic } from "@/utils/getDataOrderDynamic";
+import { PaypalTransactionData, WorkshopRegistrationData } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { format } from "date-fns";
 import { ChevronRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -15,6 +16,7 @@ import { z } from "zod";
 
 import { AdditionalInfoForm } from "@/components/classes/AdditionalInfoForm";
 import { PaymentForm } from "@/components/classes/PaymentForm";
+import PayPalButton from "@/components/classes/PaypalButton";
 import { PersonalInfoForm } from "@/components/classes/PersonalInfoForm";
 import WorkshopSummary from "@/components/classes/WorkshopSummary";
 import { Button } from "@/components/ui/button";
@@ -23,9 +25,6 @@ import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 
 export default function PageRegisterClass() {
-  const [orderInfo, setOrderInfo] = useState<CreatePayment | undefined>(
-    undefined,
-  );
   const t = useTranslations("class.steps");
   const [currentStep, setCurrentStep] = useState(0);
   const steps = [
@@ -35,21 +34,15 @@ export default function PageRegisterClass() {
   ];
 
   const { reservation, setReservation } = useReservation();
+  const { registerClass, isLoadingRegisterClass } = useRegisterClass();
   const router = useRouter();
 
   useEffect(() => {
-    if (!reservation.date && !reservation.schedule) {
+    if (!reservation.dateClass && !reservation.scheduleClass) {
       router.push(`/workshops`);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reservation]);
-
-  // Limpiar el estado al desmontar
-  useEffect(() => {
-    return () => {
-      setOrderInfo(undefined);
-    };
-  }, []);
 
   // Esquemas de validación
   const personalSchema = z.object({
@@ -72,16 +65,25 @@ export default function PageRegisterClass() {
         .string()
         .min(1, { message: t("additional.form.language.error") }),
       occasion: z.string().optional(),
-      restrictions: z.string().optional(),
+      allergies: z.string().optional(),
       comment: z.string().optional(),
     }),
   });
 
   const paymentSchema = z.object({
     payment: z.object({
+      currency: z
+        .string()
+        .min(1, { message: t("payment.form.currency.error") }),
       methodPayment: z
         .string()
         .min(1, { message: t("payment.form.payment.error") }),
+      terms: z.boolean().refine((v) => v, {
+        message: t("payment.form.terms.error"),
+      }),
+      politics: z.boolean().refine((v) => v, {
+        message: t("payment.form.politics.error"),
+      }),
     }),
   });
 
@@ -107,38 +109,23 @@ export default function PageRegisterClass() {
         phone: reservation.userPhone || "",
       },
       additional: {
-        language: reservation.language || "",
+        language: reservation.languageClass || "",
         occasion: reservation.occasion || "",
-        restrictions: reservation.restrictions || "",
+        allergies: reservation.allergies || "",
         comment: reservation.comments || "",
       },
       payment: {
+        currency: "PEN",
         methodPayment: "",
+        terms: false,
+        politics: false,
       },
     },
     mode: "onSubmit",
   });
 
-  const handlePaymentSuccess = async (status: string) => {
-    try {
-      setReservation({
-        paymentStatus: "completed",
-        transactionId: status,
-      });
-      toast.success(t("payment.success"));
-      router.push("/workshops/confirmation");
-    } catch (error) {
-      console.error("Error al procesar el éxito del pago:", error);
-      toast.error(t("payment.error"));
-    }
-  };
-
-  const handlePaymentError = () => {
-    setReservation({ paymentStatus: "failed" });
-    toast.error(t("payment.error"));
-    setOrderInfo(undefined);
-  };
-
+  const [dataTransaction, setDataTransaction] =
+    useState<PaypalTransactionData>();
   const onSubmit = async (data: any) => {
     try {
       const currentSchema = getCurrentSchema();
@@ -162,42 +149,75 @@ export default function PageRegisterClass() {
         setCurrentStep(1);
       } else if (currentStep === 1) {
         setReservation({
-          language: data.additional.language,
+          languageClass: data.additional.language,
           occasion: data.additional.occasion,
-          restrictions: data.additional.restrictions,
+          allergies: data.additional.allergies,
           comments: data.additional.comment,
         });
         setCurrentStep(2);
       } else if (currentStep === 2) {
-        const paymentMethod = data.payment.methodPayment;
-        setReservation({
-          paymentMethod,
-          confirmed: true,
-        });
+        // const paymentMethod = data.payment.methodPayment;
 
-        const { orderNumber } = getDataOrderDynamic();
+        // Validar que los campos requeridos existan
+        if (
+          !reservation.userName ||
+          !reservation.userEmail ||
+          !reservation.userPhone ||
+          !reservation.scheduleClass ||
+          !reservation.languageClass ||
+          !reservation.dateClass
+        ) {
+          toast.error("Required fields are missing");
+          return;
+        }
 
-        if (paymentMethod === "izipay") {
-          try {
-            const paymentData: CreatePayment = {
-              amount: reservation.totalAmount * 100, // Convertir a centavos
-              currency: "PEN",
-              orderId: `WS-${orderNumber}`,
-              customer: {
-                email: reservation.userEmail || "",
-                reference: reservation.userPhone,
-                billingDetails: {
-                  firstName: reservation.userName,
-                  lastName: "asdasd",
-                  phoneNumber: reservation.userPhone,
-                },
-              },
-            };
-            setOrderInfo(paymentData);
-          } catch (error) {
-            console.error("Error al preparar el pago:", error);
-            toast.error(t("payment.error"));
+        const payload: WorkshopRegistrationData = {
+          userName: reservation.userName,
+          userEmail: reservation.userEmail,
+          userPhone: reservation.userPhone,
+          scheduleClass: reservation.scheduleClass,
+          languageClass: reservation.languageClass,
+          dateClass: reservation.dateClass,
+          totalParticipants: reservation.totalParticipants,
+          totalAdults: reservation.totalAdults || 0,
+          totalChildren: reservation.totalChildren || 0,
+          typeCurrency: data.payment.currency as "USD" | "PEN",
+          allergies: reservation.allergies || "",
+          occasion: reservation.occasion || "",
+          comments: reservation.comments || "",
+          typeClass: "NORMAL",
+          methodPayment: data.payment.methodPayment,
+          totalPriceAdults: reservation.totalPriceAdults,
+          totalPriceChildren: reservation.totalPriceChildren,
+          totalPrice: reservation.totalPrice,
+        };
+        try {
+          const response = await registerClass(payload).unwrap();
+
+          if (response) {
+            setDataTransaction({
+              userName: reservation.userName,
+              userEmail: reservation.userEmail,
+              userPhone: reservation.userPhone,
+              scheduleClass: reservation.scheduleClass,
+              languageClass: reservation.languageClass,
+              dateClass: format(reservation.dateClass, "dd/MM/yyyy"),
+              totalAdults: reservation.totalAdults || 0,
+              totalChildren: reservation.totalChildren || 0,
+              typeCurrency: data.payment.currency,
+              comments: reservation.comments || "",
+              paypalAmount: reservation.totalPrice.toString(),
+              paypalOrderId: "",
+              paypalOrderStatus: "",
+              paypalDate: new Date().toISOString(),
+              paypalCurrency: reservation.typeCurrency,
+              id: response.id,
+            });
           }
+        } catch (error) {
+          const errorMessage = (error as { data: { message: string } }).data
+            .message;
+          toast.error(errorMessage);
         }
       }
     } catch (error) {
@@ -219,13 +239,7 @@ export default function PageRegisterClass() {
       case 1:
         return <AdditionalInfoForm />;
       case 2:
-        return (
-          <PaymentForm
-            orderInfo={orderInfo}
-            onPaymentSuccess={handlePaymentSuccess}
-            onPaymentError={handlePaymentError}
-          />
-        );
+        return <PaymentForm />;
       default:
         return null;
     }
@@ -275,6 +289,10 @@ export default function PageRegisterClass() {
             </h2>
             {renderStepContent()}
 
+            {dataTransaction && (
+              <PayPalButton transactionData={dataTransaction} />
+            )}
+
             <div className="mt-6 flex justify-between">
               <Button
                 type="button"
@@ -284,9 +302,11 @@ export default function PageRegisterClass() {
               >
                 {t("buttons.back")}
               </Button>
-              <Button type="submit">
+              <Button type="submit" disabled={isLoadingRegisterClass}>
                 {currentStep === steps.length - 1
-                  ? t("buttons.confirm")
+                  ? isLoadingRegisterClass
+                    ? "Procesando..."
+                    : t("buttons.confirm")
                   : t("buttons.next")}
               </Button>
             </div>

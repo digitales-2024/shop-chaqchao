@@ -65,17 +65,17 @@ export default function WorkshopSelectDate() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      date: reservation.date || undefined,
-      schedule: reservation.schedule || "",
-      adults: reservation.adults || 1,
-      children: reservation.children || 0,
+      date: reservation.dateClass || undefined,
+      schedule: reservation.scheduleClass || "",
+      adults: reservation.totalAdults || 1,
+      children: reservation.totalChildren || 0,
     },
   });
   const { isLoading, data: schedules } = useSchedulesAdminQuery();
   const [data, setData] = useState<Option[]>([]);
   const [open, setOpen] = useState(false);
   useEffect(() => {
-    if (schedules) {
+    if (schedules?.NORMAL) {
       setData(
         schedules?.NORMAL.map((s) => {
           return {
@@ -93,11 +93,11 @@ export default function WorkshopSelectDate() {
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     setReservation({
-      date: values.date,
-      adults: values.adults,
-      children: values.children,
-      schedule: values.schedule,
-      totalAmount:
+      dateClass: values.date,
+      totalAdults: values.adults,
+      totalChildren: values.children,
+      scheduleClass: values.schedule,
+      totalPrice:
         values.adults *
           (prices?.find((p) => p.classTypeUser === "ADULT")?.price || 0) +
         values.children *

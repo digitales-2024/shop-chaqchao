@@ -1,10 +1,10 @@
-export type { Credentials, ClientLogin } from "./login";
+export type { ClientLogin, Credentials } from "./login";
 
 export type {
-  ClientGoogleData,
   ClientData,
-  ClientPayload,
   ClientDataUpdate,
+  ClientGoogleData,
+  ClientPayload,
 } from "./client";
 
 export type { ForgotPassword } from "./forgotPassword";
@@ -18,28 +18,29 @@ export type {
   OrderDetails,
 } from "./order";
 
-export type { CustomErrorData, ErrorFormData } from "./error";
+export type { Business } from "./business";
 export type { Category, Product } from "./catalog";
 export type { ClassClient, ClassesData, ClassesDataAdmin } from "./classes";
-export type { Business } from "./business";
+export type { CustomErrorData, ErrorFormData } from "./error";
 export type { PaypalTransactionData } from "./paypal";
 
-export type { CartItem, CreateCart, CheckoutCart } from "./cart";
+export type { CartItem, CheckoutCart, CreateCart } from "./cart";
 
 export {
-  INVOICES,
-  type Invoice,
-  type InvoiceData,
-  type ReceiptData,
-  InvoiceType,
   DocumentType,
   DocumentTypeInvoice,
-  type Receipt,
+  INVOICES,
+  InvoiceType,
+  type Invoice,
   type InvoiceCreate,
+  type InvoiceData,
+  type Receipt,
+  type ReceiptData,
 } from "./invoice";
 
 export {
+  type CartItemInfo,
   type CreatePayment,
   type ResponsePayment,
-  type CartItemInfo,
+  type WorkshopRegistrationData,
 } from "./payment";

@@ -1,8 +1,5 @@
-import {
-  CreateClassSchema,
-  RegisterClassResponse,
-} from "@/schemas/classRegisterSchema";
-import { ClassesDataAdmin } from "@/types";
+import { RegisterClassResponse } from "@/schemas/classRegisterSchema";
+import { ClassesDataAdmin, WorkshopRegistrationData } from "@/types";
 import { PaypalTransactionData } from "@/types/paypal";
 import { createApi } from "@reduxjs/toolkit/query/react";
 
@@ -26,7 +23,10 @@ export const classApi = createApi({
   tagTypes: ["Class"],
   endpoints: (build) => ({
     // Endpoint para crear una nueva clase (registro de reserva)
-    registerClass: build.mutation<RegisterClassResponse, CreateClassSchema>({
+    registerClass: build.mutation<
+      RegisterClassResponse,
+      WorkshopRegistrationData
+    >({
       query: (body) => ({
         url: "/classes/",
         method: "POST",

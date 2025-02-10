@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Izipay, Paypal } from "@/assets/icons";
 import { useReservation } from "@/hooks/use-reservation";
 import { usePricesQuery } from "@/redux/services/classApi";
-import { CreatePayment } from "@/types";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 
 import {
@@ -18,32 +17,22 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 import { cn } from "@/lib/utils";
 
-import { IzipayForm } from "../payment/IzipayForm";
 import { Separator } from "../ui/separator";
 
-interface PaymentFormProps {
-  orderInfo?: CreatePayment;
-  onPaymentSuccess?: (status: string) => void;
-  onPaymentError?: () => void;
-}
-
-export function PaymentForm({
-  orderInfo,
-  onPaymentSuccess,
-  onPaymentError,
-}: PaymentFormProps) {
+export function PaymentForm() {
   const { control, watch } = useFormContext();
-  const t = useTranslations("class.steps.payment");
-  const [selectedMethod, setSelectedMethod] = useState<string>("");
+  const [, setSelectedMethod] = useState<string>("");
   const currency = watch("payment.currency") || "PEN";
-  const { reservation } = useReservation();
+  const { reservation, setReservation } = useReservation();
+  const t = useTranslations("class.steps.payment");
 
+  // Fetch Prices
   const {
     data: pricesDolar,
     isLoading: isLoadingDolar,
     error: errorDolar,
   } = usePricesQuery({
-    typeCurrency: "DOLAR",
+    typeCurrency: "USD",
     typeClass: "NORMAL",
   });
 
@@ -52,11 +41,11 @@ export function PaymentForm({
     isLoading: isLoadingSoles,
     error: errorSoles,
   } = usePricesQuery({
-    typeCurrency: "SOL",
+    typeCurrency: "PEN",
     typeClass: "NORMAL",
   });
 
-  // Función para calcular los totales por tipo de usuario
+  // Calculate totals
   const calculateTotals = (
     adults: number,
     children: number,
@@ -73,62 +62,66 @@ export function PaymentForm({
       total: adults * adultPrice + children * childPrice,
     };
   };
+  // Error handling
+  const currentError = currency === "PEN" ? errorSoles : errorDolar;
+  // Get current prices and validate
+  const currentPrices = currency === "PEN" ? pricesSoles : pricesDolar;
 
-  // Manejo de estados de carga y error
+  const totals = calculateTotals(
+    reservation.totalAdults,
+    reservation.totalChildren,
+    currentPrices || [],
+  );
+
+  useEffect(() => {
+    setReservation({
+      totalPriceAdults: totals.adultTotal,
+      totalPriceChildren: totals.childTotal,
+      totalPrice: totals.total,
+      typeCurrency: currency,
+    });
+  }, [currency, totals.total, setReservation]);
+
+  // Loading state
   if (isLoadingDolar || isLoadingSoles) {
     return (
       <div className="flex items-center justify-center p-8">
         <div className="space-y-4 text-center">
           <div className="mx-auto h-8 w-8 animate-spin rounded-full border-b-2 border-primary"></div>
-          <p className="text-sm text-muted-foreground">Cargando precios...</p>
+          <p className="text-sm text-muted-foreground">{t("loading")}</p>
         </div>
       </div>
     );
   }
 
-  // Manejo de errores
-  const currentError = currency === "PEN" ? errorSoles : errorDolar;
   if (currentError) {
     return (
       <div className="rounded-lg border border-destructive p-4 text-destructive">
         <div className="space-y-2">
-          <p className="font-semibold">Error al cargar los precios</p>
+          <p className="font-semibold">{t("error.title")}</p>
           <p className="text-sm">
-            {(currentError as any)?.data?.message ||
-              "No se pudieron cargar los precios. Por favor, intente más tarde."}
+            {(currentError as any)?.data?.message || t("error.message")}
           </p>
         </div>
       </div>
     );
   }
 
-  // Verificar que tenemos los precios necesarios según la moneda seleccionada
-  const currentPrices = currency === "PEN" ? pricesSoles : pricesDolar;
   if (!currentPrices || currentPrices.length === 0) {
     return (
       <div className="border-warning text-warning rounded-lg border p-4">
         <div className="space-y-2">
-          <p className="font-semibold">Precios no disponibles</p>
+          <p className="font-semibold">{t("unavailable.title")}</p>
           <p className="text-sm">
-            Los precios para {currency === "PEN" ? "Soles" : "Dólares"} no están
-            disponibles en este momento.
-            {currency === "USD" && " Por favor, intente con Soles."}
+            {t("unavailable.message", {
+              currency: currency === "PEN" ? "Soles" : "Dólares",
+            })}
+            {currency === "USD" && t("unavailable.tryPEN")}
           </p>
         </div>
       </div>
     );
   }
-
-  const totals = calculateTotals(
-    reservation.adults,
-    reservation.children,
-    currentPrices,
-  );
-
-  // Handler for payment success
-  const handlePaymentSuccess = (response: any) => {
-    onPaymentSuccess?.(response.clientAnswer?.orderStatus ?? "");
-  };
 
   return (
     <div className="space-y-6">
@@ -148,26 +141,29 @@ export function PaymentForm({
                   field.onChange(value);
                   if (value === "USD") {
                     setSelectedMethod("paypal");
+                  } else {
+                    setSelectedMethod("");
                   }
                 }}
-                defaultValue="PEN"
-                value={field.value || "PEN"}
+                defaultValue={field.value}
+                value={field.value}
                 className="flex gap-4"
               >
                 <FormItem>
                   <label className="flex items-center gap-2">
                     <RadioGroupItem value="PEN" />
-                    <span>Soles (S/)</span>
+                    <span>{t("form.currency.options.PEN")} (S/.)</span>
                   </label>
                 </FormItem>
                 <FormItem>
                   <label className="flex items-center gap-2">
                     <RadioGroupItem value="USD" />
-                    <span>Dólares ($)</span>
+                    <span>{t("form.currency.options.USD")} ($)</span>
                   </label>
                 </FormItem>
               </RadioGroup>
             </FormControl>
+            <FormMessage />
           </FormItem>
         )}
       />
@@ -176,14 +172,18 @@ export function PaymentForm({
       <div className="rounded-lg border p-4">
         <div className="space-y-2">
           <div className="flex justify-between">
-            <span>Adultos ({reservation.adults})</span>
+            <span>
+              {t("summary.adults", { count: reservation.totalAdults })}
+            </span>
             <span>
               {currency === "PEN" ? "S/" : "$"} {totals.adultTotal.toFixed(2)}
             </span>
           </div>
-          {reservation.children > 0 && (
+          {reservation.totalChildren > 0 && (
             <div className="flex justify-between">
-              <span>Niños ({reservation.children})</span>
+              <span>
+                {t("summary.children", { count: reservation.totalChildren })}
+              </span>
               <span>
                 {currency === "PEN" ? "S/" : "$"} {totals.childTotal.toFixed(2)}
               </span>
@@ -205,7 +205,7 @@ export function PaymentForm({
         name="payment.methodPayment"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Método de Pago</FormLabel>
+            <FormLabel>{t("form.payment.label")}</FormLabel>
             <FormControl>
               <RadioGroup
                 onValueChange={(value) => {
@@ -217,18 +217,18 @@ export function PaymentForm({
               >
                 <FormItem className="m-0">
                   <label
-                    htmlFor="paypal"
+                    htmlFor="PAYPAL"
                     className={cn(
                       "relative flex w-full cursor-pointer rounded-lg border-2 p-4 transition-all hover:bg-accent",
-                      field.value === "paypal"
+                      field.value === "PAYPAL"
                         ? "border-primary bg-accent"
                         : "border-muted",
                     )}
                   >
                     <FormControl>
                       <RadioGroupItem
-                        value="paypal"
-                        id="paypal"
+                        value="PAYPAL"
+                        id="PAYPAL"
                         className="sr-only"
                       />
                     </FormControl>
@@ -237,7 +237,7 @@ export function PaymentForm({
                         <span className="font-medium">Paypal</span>
                         <Paypal className="h-5 w-auto" />
                       </div>
-                      {field.value === "paypal" && (
+                      {field.value === "PAYPAL" && (
                         <div className="h-2 w-2 rounded-full bg-primary" />
                       )}
                     </div>
@@ -247,18 +247,18 @@ export function PaymentForm({
                 {currency === "PEN" && (
                   <FormItem className="m-0">
                     <label
-                      htmlFor="izipay"
+                      htmlFor="IZIPAY"
                       className={cn(
                         "relative flex w-full cursor-pointer rounded-lg border-2 p-4 transition-all hover:bg-accent",
-                        field.value === "izipay"
+                        field.value === "IZIPAY"
                           ? "border-primary bg-accent"
                           : "border-muted",
                       )}
                     >
                       <FormControl>
                         <RadioGroupItem
-                          value="izipay"
-                          id="izipay"
+                          value="IZIPAY"
+                          id="IZIPAY"
                           className="sr-only"
                         />
                       </FormControl>
@@ -267,7 +267,7 @@ export function PaymentForm({
                           <span className="font-medium">Izipay</span>
                           <Izipay className="h-5 w-auto" />
                         </div>
-                        {field.value === "izipay" && (
+                        {field.value === "IZIPAY" && (
                           <div className="h-2 w-2 rounded-full bg-primary" />
                         )}
                       </div>
@@ -281,18 +281,86 @@ export function PaymentForm({
         )}
       />
 
-      {selectedMethod === "izipay" && orderInfo && (
-        <IzipayForm
-          paymentData={{
-            ...orderInfo,
-            amount: Math.round(totals.total * 100), // Convertir a centavos y redondear
-            currency: currency,
-          }}
-          onSuccess={handlePaymentSuccess}
-          onError={onPaymentError}
-          containerId="workshop-izipay-form"
+      {/* Terms and Conditions */}
+      <FormField
+        control={control}
+        name="payment.terms"
+        render={({ field }) => (
+          <FormItem>
+            <FormControl>
+              <label className="flex w-fit cursor-pointer items-center rounded-lg border border-transparent px-3 py-2 transition-all hover:bg-secondary/10">
+                <span className="inline-flex items-center">
+                  <span className="relative flex cursor-pointer items-center">
+                    <input
+                      className={cn("peer size-5 opacity-0")}
+                      type="checkbox"
+                      checked={field.value}
+                      onChange={field.onChange}
+                    />
+                    <span className="absolute inset-0 rounded-[5px] border border-secondary before:absolute before:inset-0 before:scale-0 before:rounded-[4px] before:bg-secondary before:transition-all peer-checked:before:scale-105" />
+                  </span>
+                  <span className="ml-2 inline-flex cursor-pointer gap-1 text-sm text-neutral-600">
+                    {t("form.terms.label")}
+                    <Link
+                      href="/terms-and-conditions"
+                      className="text-primary hover:underline"
+                      target="_blank"
+                    >
+                      {t("form.terms.link")}
+                    </Link>
+                  </span>
+                </span>
+              </label>
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      {/* Privacy Policy */}
+      <FormField
+        control={control}
+        name="payment.politics"
+        render={({ field }) => (
+          <FormItem>
+            <FormControl>
+              <label className="flex w-fit cursor-pointer items-center rounded-lg border border-transparent px-3 py-2 transition-all hover:bg-secondary/10">
+                <span className="inline-flex items-center">
+                  <span className="relative flex cursor-pointer items-center">
+                    <input
+                      className={cn("peer size-5 opacity-0")}
+                      type="checkbox"
+                      checked={field.value}
+                      onChange={field.onChange}
+                    />
+                    <span className="absolute inset-0 rounded-[5px] border border-secondary before:absolute before:inset-0 before:scale-0 before:rounded-[4px] before:bg-secondary before:transition-all peer-checked:before:scale-105" />
+                  </span>
+                  <span className="ml-2 inline-flex cursor-pointer gap-1 text-sm text-neutral-600">
+                    {t("form.politics.label")}
+                    <Link
+                      href="/politics"
+                      className="text-primary hover:underline"
+                      target="_blank"
+                    >
+                      {t("form.politics.link")}
+                    </Link>
+                  </span>
+                </span>
+              </label>
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      {/* PayPal Button */}
+      {/* {isSuccessRegisterClass && dataTransaction && (
+        <PaypalPaymentMethod
+          transactionData={dataTransaction}
+          onPaymentSuccess={onPaymentSuccess}
+          onPaymentError={onPaymentError}
         />
-      )}
+      )} */}
     </div>
   );
 }

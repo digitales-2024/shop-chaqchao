@@ -1,42 +1,33 @@
-import { ReservationData as BaseReservationData } from "@/types/reservationData";
+import { WorkshopRegistrationData } from "@/types";
 import { create } from "zustand";
 
 // Extendemos el tipo base para mantener la consistencia
-export type ReservationData = Omit<BaseReservationData, "date"> & {
-  date: Date | undefined;
-  adults: number;
-  paymentMethod?: string;
-  paymentStatus?: "pending" | "completed" | "failed";
-  transactionId?: string;
-};
 
 interface ReservationState {
-  reservation: ReservationData;
-  setReservation: (data: Partial<ReservationData>) => void;
+  reservation: WorkshopRegistrationData;
+  setReservation: (data: Partial<WorkshopRegistrationData>) => void;
   resetReservation: () => void;
 }
 
-const initialReservation: ReservationData = {
-  date: undefined,
-  adults: 1,
-  participants: 1,
-  children: 0,
-  time: "",
-  schedule: "",
-  allergies: "",
-  comments: "",
-  confirmed: false,
-  language: "",
+const initialReservation: WorkshopRegistrationData = {
+  typeClass: "NORMAL",
   userName: "",
   userEmail: "",
   userPhone: "",
-  typeCurrency: "USD",
-  totalAmount: 0,
+  totalAdults: 1,
+  totalChildren: 0,
+  totalParticipants: 1,
+  totalPrice: 0,
+  totalPriceAdults: 0,
+  totalPriceChildren: 0,
+  languageClass: "",
+  dateClass: undefined,
+  scheduleClass: "",
+  comments: "",
+  allergies: "",
   occasion: "",
-  restrictions: "",
-  paymentMethod: "",
-  paymentStatus: "pending",
-  transactionId: "",
+  typeCurrency: "USD",
+  methodPayment: "",
 };
 
 export const useReservation = create<ReservationState>((set) => ({

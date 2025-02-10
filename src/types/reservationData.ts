@@ -3,7 +3,6 @@ export interface ReservationData {
   date: Date | null;
   participants: number;
   children: number;
-  time: string;
   allergies: string;
   confirmed: boolean;
   language: string;

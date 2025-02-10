@@ -45,7 +45,7 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({ transactionData }) => {
                 purchase_units: [
                   {
                     amount: {
-                      currency_code: "USD",
+                      currency_code: transactionData.typeCurrency,
                       value: transactionData.paypalAmount,
                     },
                   },

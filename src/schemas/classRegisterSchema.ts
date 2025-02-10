@@ -29,26 +29,22 @@ export const classSchema = z.object({
 });
 
 export interface RegisterClassResponse {
-  statusCode: number;
-  message: string;
-  data: {
-    id: string;
-    userName: string;
-    userEmail: string;
-    userPhone: string;
-    totalParticipants: number;
-    totalAdults: number;
-    totalChildren: number;
-    totalPrice: number;
-    totalPriceAdults: number;
-    totalPriceChildren: number;
-    languageClass: string;
-    typeCurrency: string;
-    scheduleClass: string;
-    dateClass: string;
-    comments: string;
-    status: string;
-  };
+  id: string;
+  userName: string;
+  userEmail: string;
+  userPhone: string;
+  totalParticipants: number;
+  totalAdults: number;
+  totalChildren: number;
+  totalPrice: number;
+  totalPriceAdults: number;
+  totalPriceChildren: number;
+  languageClass: string;
+  typeCurrency: string;
+  scheduleClass: string;
+  dateClass: string;
+  comments: string;
+  status: string;
 }
 
 export type CreateClassSchema = z.infer<typeof classSchema>;

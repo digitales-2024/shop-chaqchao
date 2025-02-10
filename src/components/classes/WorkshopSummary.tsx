@@ -42,7 +42,7 @@ export default function WorkshopSummary() {
   const locale = useLocale();
   const { reservation } = useReservation();
 
-  if (!reservation?.date) {
+  if (!reservation?.dateClass) {
     return (
       <Card>
         <CardHeader>
@@ -64,9 +64,9 @@ export default function WorkshopSummary() {
   const hasPersonalInfo =
     reservation.userName || reservation.userEmail || reservation.userPhone;
   const hasAdditionalInfo =
-    reservation.language ||
+    reservation.languageClass ||
     reservation.occasion ||
-    reservation.restrictions ||
+    reservation.allergies ||
     reservation.comments;
 
   return (
@@ -81,19 +81,19 @@ export default function WorkshopSummary() {
         <Section title={t("basicInfo")}>
           <InfoRow
             label={t("date")}
-            value={format(reservation.date, "PPP", {
+            value={format(reservation.dateClass, "PPP", {
               locale: locale === "es" ? es : undefined,
             })}
           />
-          <InfoRow label={t("schedule")} value={reservation.schedule} />
+          <InfoRow label={t("schedule")} value={reservation.scheduleClass} />
           <div className="grid grid-cols-2">
             <p className="text-gray-600">{t("participants.title")}</p>
             <div className="text-end font-bold">
               <p>
-                {reservation.adults} {t("participants.adults")}
+                {reservation.totalAdults} {t("participants.adults")}
               </p>
               <p>
-                {reservation.children} {t("participants.children")}
+                {reservation.totalChildren} {t("participants.children")}
               </p>
             </div>
           </div>
@@ -115,16 +115,19 @@ export default function WorkshopSummary() {
 
         {hasAdditionalInfo && (
           <Section title={t("additionalInfo")}>
-            {reservation.language && (
-              <InfoRow label={t("language")} value={reservation.language} />
+            {reservation.languageClass && (
+              <InfoRow
+                label={t("language")}
+                value={reservation.languageClass}
+              />
             )}
             {reservation.occasion && (
               <InfoRow label={t("occasion")} value={reservation.occasion} />
             )}
-            {reservation.restrictions && (
+            {reservation.allergies && (
               <InfoRow
                 label={t("restrictions")}
-                value={reservation.restrictions}
+                value={reservation.allergies}
               />
             )}
             {reservation.comments && (

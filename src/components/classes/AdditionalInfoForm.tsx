@@ -174,7 +174,7 @@ export function AdditionalInfoForm() {
         />
         <FormField
           control={control}
-          name="additional.restrictions"
+          name="additional.allergies"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
