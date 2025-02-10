@@ -3,8 +3,10 @@ import {
   useSchedulesAdminQuery,
   usePricesQuery,
   useGetClassesFuturesQuery,
+  useGetClassesCapacityQuery,
+  useClassByDateMutation,
 } from "@/redux/services/classApi";
-import { TypeClass } from "@/types/classes";
+import { ClassesDataAdmin, TypeClass } from "@/types/classes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format, isSameDay } from "date-fns";
 import {
@@ -53,6 +55,12 @@ import { TwoMonthCalendar } from "./TwoMonthCalendar";
 
 export default function WorkshopSelectDate() {
   const { reservation, setReservation } = useReservation();
+  const { data: capacityNormal } = useGetClassesCapacityQuery({
+    typeClass: "NORMAL" as TypeClass,
+  });
+
+  const [findClass] = useClassByDateMutation();
+
   const t = useTranslations("class.schedule");
   const formSchema = z.object({
     date: z.date({
@@ -69,12 +77,20 @@ export default function WorkshopSelectDate() {
     defaultValues: {
       date: reservation.dateClass || undefined,
       schedule: reservation.scheduleClass || "",
-      adults: reservation.totalAdults || 1,
+      adults: capacityNormal?.minCapacity || 1,
       children: reservation.totalChildren || 0,
     },
   });
+
+  // Establecer el valor inicial de adults cuando se carga la capacidad
+  useEffect(() => {
+    if (capacityNormal && !classData && !form.watch("date")) {
+      form.setValue("adults", capacityNormal.minCapacity);
+    }
+  }, [capacityNormal]);
   const { isLoading, data: schedules } = useSchedulesAdminQuery();
   const [data, setData] = useState<Option[]>([]);
+  const [counterMin, setCounterMin] = useState(1);
   const [open, setOpen] = useState(false);
   useEffect(() => {
     if (schedules?.NORMAL) {
@@ -90,6 +106,58 @@ export default function WorkshopSelectDate() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [schedules, form.watch("date")]);
+
+  const [classData, setClassData] = useState<ClassesDataAdmin | undefined>();
+  useEffect(() => {
+    const fetchClassData = async () => {
+      setClassData(undefined);
+      if (!form.watch("date") || !form.watch("schedule")) {
+        return;
+      }
+      const response = await findClass({
+        date: format(form.watch("date"), "dd-MM-yyyy"),
+        schedule: form.watch("schedule"),
+        typeClass: "NORMAL" as TypeClass,
+      }).unwrap();
+
+      setClassData(response);
+    };
+
+    fetchClassData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [form.watch("date"), form.watch("schedule")]);
+
+  useEffect(() => {
+    // Si hay una clase creada, el mínimo es 1 adulto
+    if (classData) {
+      const newMin = 1;
+      setCounterMin(newMin);
+      if (form.watch("adults") < newMin) {
+        form.setValue("adults", newMin);
+      }
+      return;
+    }
+
+    // Si no hay clase creada, validamos capacidad mínima
+    if (capacityNormal) {
+      const totalParticipants = form.watch("children") + form.watch("adults");
+      let newMin: number;
+
+      // Si el total ya cumple la capacidad mínima, permite mínimo 1 adulto
+      if (totalParticipants >= capacityNormal.minCapacity) {
+        newMin = 1;
+      } else {
+        // Si no cumple, el mínimo de adultos debe ser la capacidad mínima
+        newMin = capacityNormal.minCapacity;
+      }
+
+      setCounterMin(newMin);
+      if (form.watch("adults") < newMin) {
+        form.setValue("adults", newMin);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [classData, form.watch("adults"), form.watch("children")]);
 
   const router = useRouter();
 
@@ -146,11 +214,33 @@ export default function WorkshopSelectDate() {
   });
 
   useEffect(() => {
+    // Limpiar schedule y classData cuando cambie la fecha
     if (form.getValues("date")) {
       form.setValue("schedule", "");
+      setClassData(undefined);
+      // Al cambiar la fecha, resetear a capacidad mínima si no hay clase
+      if (capacityNormal && !classData) {
+        const newMin = capacityNormal.minCapacity;
+        setCounterMin(newMin);
+        form.setValue("adults", newMin);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [form.getValues("date")]);
+  }, [form.watch("date")]);
+
+  // Reset classData cuando cambie el schedule
+  useEffect(() => {
+    if (form.watch("schedule")) {
+      setClassData(undefined);
+      // Al cambiar el schedule, resetear a capacidad mínima si no hay clase
+      if (capacityNormal && !classData) {
+        const newMin = capacityNormal.minCapacity;
+        setCounterMin(newMin);
+        form.setValue("adults", newMin);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [form.watch("schedule")]);
 
   return (
     <Card className="m-2 border-none shadow">
@@ -258,7 +348,7 @@ export default function WorkshopSelectDate() {
                           <Counter
                             name={field.name}
                             control={form.control}
-                            min={1}
+                            min={counterMin}
                           />
                         </FormControl>
                         <FormMessage />
