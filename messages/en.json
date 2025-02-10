@@ -423,6 +423,36 @@
         "title": "Participants",
         "adults": "Adults",
         "children": "Children"
+      },
+      "capacity": {
+        "class": "Class with capacity of",
+        "people": "people",
+        "available": {
+          "title": "Current class status:",
+          "label": "Registered:",
+          "of": "of",
+          "cupos": "spots",
+          "available": "Available spots:"
+        },
+        "you": {
+          "title": "Your reservation",
+          "label": "People to register:",
+          "messageSuccess": {
+            "01": "There are enough spots. After your reservation, there will be",
+            "02": "spots available."
+          },
+          "messageNotAvailable": {
+            "01": "Attention! Not enough spots. Exceeds by",
+            "02": "people",
+            "03": "Only",
+            "04": "spots left."
+          },
+          "messageMinimum": {
+            "01": "The class needs a minimum of",
+            "02": "people. Missing",
+            "03": "more people."
+          }
+        }
       }
     },
     "errors": {

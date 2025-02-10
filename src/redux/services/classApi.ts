@@ -157,7 +157,7 @@ export const classApi = createApi({
       { typeClass?: TypeClass }
     >({
       query: ({ typeClass }) => ({
-        url: "/classes/capacity?typeClass=" + typeClass,
+        url: "/classes/capacity",
         method: "GET",
         params: { typeClass },
         credentials: "include",

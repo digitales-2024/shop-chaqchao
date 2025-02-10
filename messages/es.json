@@ -424,6 +424,36 @@
         "title": "Participantes",
         "adults": "Adultos",
         "children": "Niños"
+      },
+      "capacity": {
+        "class": "Clase con capacidad de",
+        "people": "personas",
+        "available": {
+          "title": "Estado actual de la clase:",
+          "label": "Incritos:",
+          "of": "de",
+          "cupos": "cupos",
+          "available": "Cupos disponibles:"
+        },
+        "you": {
+          "title": "Tu reservación",
+          "label": "Personas a inscribir:",
+          "messageSuccess": {
+            "01": "Hay suficientes cupos. Después de tu reservación quedarán",
+            "02": "cupos disponibles."
+          },
+          "messageNotAvailable": {
+            "01": "¡Atención! No hay suficientes cupos. Se excede por",
+            "02": "personas",
+            "03": "Solo quedan",
+            "04": "cupos disponibles."
+          },
+          "messageMinimum": {
+            "01": "La clase necesita mínimo",
+            "02": "personas. Faltan",
+            "03": "personas más."
+          }
+        }
       }
     },
     "errors": {
