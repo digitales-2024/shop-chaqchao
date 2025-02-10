@@ -326,10 +326,32 @@
         "title": "Payment Information",
         "description": "Please complete this information to continue with your reservation",
         "form": {
+          "currency": {
+            "label": "Select the currency",
+            "options": {
+              "PEN": "Soles",
+              "USD": "Dollars"
+            },
+            "error": "Select the currency"
+          },
           "payment": {
             "label": "Select the payment method",
             "error": "Select the payment method"
+          },
+          "terms": {
+            "label": "I have read and accept the",
+            "link": "Terms and Conditions",
+            "error": "You must accept the terms and conditions"
+          },
+          "politics": {
+            "label": "By continuing, you agree to our",
+            "link": "Privacy Policy",
+            "error": "You must accept the privacy policy"
           }
+        },
+        "summary": {
+          "adults": "Adultos",
+          "children": "Niños"
         }
       }
     },
@@ -360,6 +382,7 @@
       "title": "Bean to Bar Workshop",
       "selectDate": "Select Date and hour of the workshop",
       "errorSelectDate": "Please select a date",
+      "errorSchedule": "Not available schedules",
       "pickDate": "Select a date",
       "errorSelectSchedule": "Please select a schedule",
       "participants": {

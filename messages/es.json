@@ -327,10 +327,32 @@
         "title": "Información de pago",
         "description": "Por favor, completa esta información para continuar con tu reserva",
         "form": {
+          "currency": {
+            "label": "Moneda",
+            "options": {
+              "PEN": "Soles",
+              "USD": "Dolares"
+            },
+            "error": "Selecciona una moneda"
+          },
           "payment": {
             "label": "Selecciona el medio de pago",
             "error": "Selecciona un medio de pago"
+          },
+          "terms": {
+            "label": "He leído y acepto los",
+            "link": "términos y condiciones",
+            "error": "Debes aceptar los términos y condiciones"
+          },
+          "politics": {
+            "label": "He leído y acepto la",
+            "link": "política de privacidad",
+            "error": "Debes aceptar la política de privacidad"
           }
+        },
+        "summary": {
+          "adults": "Adultos",
+          "children": "Niños"
         }
       }
     },
@@ -361,6 +383,7 @@
       "title": "Taller del grano a la barra",
       "selectDate": "Seleccione la fecha y la hora del taller",
       "errorSelectDate": "Por favor, seleccione una fecha",
+      "errorSchedule": "No hay horarios disponibles",
       "pickDate": "Seleccione una fecha",
       "errorSelectSchedule": "Por favor, seleccione un horario",
       "participants": {
