@@ -224,7 +224,7 @@ export const DetailCheckout = () => {
 
               <div className="flex flex-col">
                 <span className="text-xs text-gray-400">
-                  {t("dateOrder.questShipping")}:
+                  {t("dateOrder.shippingquest")}:
                 </span>
                 <span className="font-bold">
                   {shippingToAnotherCity
