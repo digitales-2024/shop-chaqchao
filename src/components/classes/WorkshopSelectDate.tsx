@@ -169,6 +169,7 @@ export default function WorkshopSelectDate() {
     const deleteClassCreated = async () => {
       if (reservation?.id) {
         await deleteClass(reservation?.id);
+        setReservation({ ...reservation, id: "" });
       }
     };
 

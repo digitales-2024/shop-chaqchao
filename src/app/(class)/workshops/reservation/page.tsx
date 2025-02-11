@@ -128,11 +128,27 @@ export default function PageRegisterClass() {
 
   const [deleteClass] = useDeleteClassMutation();
 
+  const deleteClassWithRetry = async (classId: string, maxRetries = 3) => {
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        await deleteClass(classId);
+        setDataTransaction(undefined);
+        setReservation({ id: undefined });
+        return true;
+      } catch (error) {
+        if (attempt === maxRetries) {
+          return false;
+        }
+        // Esperar antes del siguiente intento (500ms, 1000ms, 1500ms)
+        await new Promise((resolve) => setTimeout(resolve, attempt * 500));
+      }
+    }
+  };
+
   useEffect(() => {
     const resetCreateClass = async () => {
       if (dataTransaction?.id) {
-        await deleteClass(dataTransaction.id);
-        setDataTransaction(undefined);
+        await deleteClassWithRetry(dataTransaction.id);
       }
     };
 
@@ -314,7 +330,10 @@ export default function PageRegisterClass() {
                 <div className="rounded-md bg-yellow-50 p-4">
                   <CountdownTimer
                     duration={300} // 5 minutos en segundos
-                    onComplete={() => {
+                    onComplete={async () => {
+                      if (dataTransaction?.id) {
+                        await deleteClassWithRetry(dataTransaction.id);
+                      }
                       toast.error(
                         "El tiempo para realizar el pago ha expirado",
                       );
