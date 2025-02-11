@@ -167,11 +167,11 @@ export default function WorkshopSummary() {
                     } else if (totalFinal < capacityNormal.minCapacity) {
                       return (
                         <p className="text-sm text-yellow-500">
-                          {t("capacity.you.messageMinimun.01")}{" "}
+                          {t("capacity.you.messageMinimum.01")}{" "}
                           {capacityNormal.minCapacity}{" "}
-                          {t("capacity.you.messageMinimun.02")}{" "}
+                          {t("capacity.you.messageMinimum.02")}{" "}
                           {capacityNormal.minCapacity - totalFinal}{" "}
-                          {t("capacity.you.messageMinimun.03")}
+                          {t("capacity.you.messageMinimum.03")}
                         </p>
                       );
                     } else {
