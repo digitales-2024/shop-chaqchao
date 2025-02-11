@@ -130,8 +130,8 @@ export default function WorkshopSelectDate() {
   }, [form.watch("date"), form.watch("schedule")]);
 
   useEffect(() => {
-    // Si hay una clase creada, el mínimo es 1 adulto
-    if (classData) {
+    // Si hay una clase creada con participantes, el mínimo es 1 adulto
+    if (classData && classData.totalParticipants > 0) {
       const newMin = 1;
       setCounterMin(newMin);
       if (form.watch("adults") < newMin) {
@@ -140,7 +140,7 @@ export default function WorkshopSelectDate() {
       return;
     }
 
-    // Si no hay clase creada, validamos capacidad mínima
+    // Si no hay clase creada o la clase tiene 0 participantes, validamos capacidad mínima
     if (capacityNormal) {
       const totalParticipants = form.watch("children") + form.watch("adults");
       let newMin: number;
