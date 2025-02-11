@@ -2,6 +2,7 @@
 "use client";
 import { useRegisterClass } from "@/hooks/use-class-registration";
 import { useReservation } from "@/hooks/use-reservation";
+import { useDeleteClassMutation } from "@/redux/services/classApi";
 import { PaypalTransactionData, WorkshopRegistrationData } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
@@ -19,6 +20,7 @@ import { PaymentForm } from "@/components/classes/PaymentForm";
 import PayPalButton from "@/components/classes/PaypalButton";
 import { PersonalInfoForm } from "@/components/classes/PersonalInfoForm";
 import WorkshopSummary from "@/components/classes/WorkshopSummary";
+import CountdownTimer from "@/components/common/CountdownTimer";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
@@ -124,6 +126,19 @@ export default function PageRegisterClass() {
     mode: "onSubmit",
   });
 
+  const [deleteClass] = useDeleteClassMutation();
+
+  useEffect(() => {
+    const resetCreateClass = async () => {
+      if (dataTransaction?.id) {
+        await deleteClass(dataTransaction.id);
+        setDataTransaction(undefined);
+      }
+    };
+
+    resetCreateClass();
+  }, [form.watch("payment.currency")]);
+
   const [dataTransaction, setDataTransaction] =
     useState<PaypalTransactionData>();
   const onSubmit = async (data: any) => {
@@ -213,6 +228,11 @@ export default function PageRegisterClass() {
               paypalCurrency: reservation.typeCurrency,
               id: response.id,
             });
+
+            setReservation({
+              ...reservation,
+              id: response.id,
+            });
           }
         } catch (error) {
           const errorMessage = (error as { data: { message: string } }).data
@@ -227,7 +247,7 @@ export default function PageRegisterClass() {
   };
 
   const goToPreviousStep = () => {
-    if (currentStep > 0) {
+    if (currentStep > 0 && !dataTransaction) {
       setCurrentStep(currentStep - 1);
     }
   };
@@ -290,7 +310,21 @@ export default function PageRegisterClass() {
             {renderStepContent()}
 
             {dataTransaction && (
-              <PayPalButton transactionData={dataTransaction} />
+              <div className="space-y-4">
+                <div className="rounded-md bg-yellow-50 p-4">
+                  <CountdownTimer
+                    duration={300} // 5 minutos en segundos
+                    onComplete={() => {
+                      toast.error(
+                        "El tiempo para realizar el pago ha expirado",
+                      );
+                      router.refresh();
+                      router.push("/workshops");
+                    }}
+                  />
+                </div>
+                <PayPalButton transactionData={dataTransaction} />
+              </div>
             )}
 
             <div className="mt-6 flex justify-between">
@@ -302,7 +336,10 @@ export default function PageRegisterClass() {
               >
                 {t("buttons.back")}
               </Button>
-              <Button type="submit" disabled={isLoadingRegisterClass}>
+              <Button
+                type="submit"
+                disabled={isLoadingRegisterClass || !!dataTransaction}
+              >
                 {currentStep === steps.length - 1
                   ? isLoadingRegisterClass
                     ? "Procesando..."

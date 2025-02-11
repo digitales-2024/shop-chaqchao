@@ -5,6 +5,7 @@ import {
   useGetClassesFuturesQuery,
   useGetClassesCapacityQuery,
   useClassByDateMutation,
+  useDeleteClassMutation,
 } from "@/redux/services/classApi";
 import { ClassesDataAdmin, TypeClass } from "@/types/classes";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -161,6 +162,18 @@ export default function WorkshopSelectDate() {
   }, [classData, form.watch("adults"), form.watch("children")]);
 
   const router = useRouter();
+
+  const [deleteClass] = useDeleteClassMutation();
+
+  useEffect(() => {
+    const deleteClassCreated = async () => {
+      if (reservation?.id) {
+        await deleteClass(reservation?.id);
+      }
+    };
+
+    deleteClassCreated();
+  }, [form.watch("date"), form.watch("schedule")]);
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     setReservation({

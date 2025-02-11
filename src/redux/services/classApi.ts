@@ -164,6 +164,13 @@ export const classApi = createApi({
       }),
       providesTags: ["Class"],
     }),
+
+    deleteClass: build.mutation({
+      query: (id: string) => ({
+        url: `/classes/${id}/delete`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 
@@ -179,4 +186,5 @@ export const {
   useSchedulesAdminQuery,
   useGetClassesFuturesQuery,
   useGetClassesCapacityQuery,
+  useDeleteClassMutation,
 } = classApi;

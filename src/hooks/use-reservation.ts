@@ -10,6 +10,7 @@ interface ReservationState {
 }
 
 const initialReservation: WorkshopRegistrationData = {
+  id: "",
   typeClass: "NORMAL",
   userName: "",
   userEmail: "",

@@ -117,7 +117,7 @@ export interface WorkshopRegistrationData {
   expiresAt?: string;
   isClosed?: boolean;
   typeCurrency: "USD" | "PEN";
-  methodPayment: "PAYPAL" | "IZIPAY";
+  methodPayment: "PAYPAL" | "IZIPAY" | "";
 
   // Campos específicos de PayPal
   paypalOrderId?: string;
