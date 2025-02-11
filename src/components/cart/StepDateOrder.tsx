@@ -235,39 +235,39 @@ export const StepDateOrder = () => {
               htmlFor="envio-otra-ciudad"
               className="flex flex-col space-y-1"
             >
-              <span>{t("shippingquest")}</span>
+              <div className="flex items-center space-x-2">
+                <span>{t("shippingquest")}</span>
+                <Checkbox
+                  id="envio-otra-ciudad"
+                  checked={shippingToAnotherCity}
+                  onCheckedChange={setshippingToAnotherCity}
+                />
+              </div>
               <span className="text-sm font-normal text-muted-foreground">
                 {shippingToAnotherCity ? t("yesShipping") : t("noShipping")}
               </span>
             </Label>
-            <Checkbox
-              id="envio-otra-ciudad"
-              checked={shippingToAnotherCity}
-              onCheckedChange={setshippingToAnotherCity}
-            />
           </div>
-          {/* Sección de detalles de envío */}
-          {shippingToAnotherCity && (
-            <div className="rounded-lg border bg-gray-100 p-4 transition-all duration-300">
+        </div>
+        <div className="flex flex-wrap items-center gap-4">
+          {!!shippingToAnotherCity && (
+            <div className="mt-2 space-y-1 rounded-lg border bg-card p-6 text-card-foreground shadow-sm">
               <h3 className="text-lg font-medium">{t("shippingDetails")}</h3>
-              <div className="mt-2 grid grid-cols-2 gap-4">
-                <LocationSelector />
-                <Input placeholder={t("postalCode")} />
+              <div className="flex flex-wrap items-center gap-4">
+                <div className="flex-shrink-0">
+                  <LocationSelector />
+                </div>
+                <div className="min-w-[150px] flex-1">
+                  <Input placeholder={t("address")} />
+                </div>
+                <div className="min-w-[150px] flex-1">
+                  <Input placeholder={t("reference")} />
+                </div>
               </div>
-              {t("labelShipping")}{" "}
-              {dateOrder.location && (
-                <p className="text-sm text-muted-foreground">
-                  {t("addressLabel")}{" "}
-                  {dateOrder.location.cityInt &&
-                  dateOrder.location.stateInt &&
-                  dateOrder.location.countryInt
-                    ? `${dateOrder.location.cityInt}, ${dateOrder.location.stateInt}, ${dateOrder.location.countryInt} - ${dateOrder.location.codPostalInt}`
-                    : t("addressNotAvailable")}
-                </p>
-              )}
             </div>
           )}
         </div>
+
         <Button onClick={handleConfirmDate} disabled={!date || !hour}>
           {t("button")}
         </Button>
