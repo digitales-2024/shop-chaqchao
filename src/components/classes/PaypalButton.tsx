@@ -22,10 +22,14 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({ transactionData }) => {
       <PayPalScriptProvider
         options={{
           clientId: clientId,
+          components: "buttons",
+          intent: "capture",
+          "disable-funding": "card",
         }}
       >
         <div className="w-full">
           <PayPalButtons
+            forceReRender={[clientId]} // Para asegurar que el botón se re-renderice si cambia el clientId
             style={{
               layout: "horizontal",
               tagline: false,
@@ -99,8 +103,22 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({ transactionData }) => {
             onCancel={() => {
               toast.error("Pago cancelado");
             }}
-            onError={() => {
-              toast.error("Ocurrió un error al procesar el pago");
+            onError={(err) => {
+              console.error("Error en PayPal:", err);
+              // Manejar error de bloqueador de anuncios
+              if (err.toString().includes("ERR_BLOCKED_BY_CLIENT")) {
+                toast.error("El botón de PayPal no se pudo cargar", {
+                  description:
+                    "Por favor, desactiva el bloqueador de anuncios para continuar con el pago",
+                  duration: 5000,
+                });
+                return;
+              }
+
+              toast.error("Error al procesar el pago con PayPal", {
+                description:
+                  "Por favor, intenta nuevamente o utiliza otro método de pago",
+              });
             }}
           />
         </div>
