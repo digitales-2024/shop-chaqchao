@@ -326,6 +326,7 @@
       "payment": {
         "title": "Información de pago",
         "description": "Por favor, completa esta información para continuar con tu reserva",
+        "loading": "Procesando clase...",
         "form": {
           "currency": {
             "label": "Moneda",

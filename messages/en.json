@@ -325,6 +325,7 @@
       "payment": {
         "title": "Payment Information",
         "description": "Please complete this information to continue with your reservation",
+        "loading": "Processing workshop...",
         "form": {
           "currency": {
             "label": "Select the currency",

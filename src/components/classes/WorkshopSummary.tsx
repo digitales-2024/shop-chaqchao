@@ -9,13 +9,7 @@ import { es } from "date-fns/locale";
 import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 import PulsatingDots from "../common/PulsatingDots";
 import { Separator } from "../ui/separator";
@@ -104,7 +98,7 @@ export default function WorkshopSummary() {
         <CardTitle className="text-balance text-3xl font-black text-terciary">
           {t("title")}
         </CardTitle>
-        <CardDescription>
+        <div>
           {isLoading || isLoadingCapacity ? (
             <PulsatingDots />
           ) : (
@@ -116,7 +110,7 @@ export default function WorkshopSummary() {
               )}
             </div>
           )}
-        </CardDescription>
+        </div>
       </CardHeader>
       <CardContent className="space-y-4">
         {isLoading || isLoadingCapacity ? (
