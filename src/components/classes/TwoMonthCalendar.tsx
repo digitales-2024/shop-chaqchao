@@ -13,11 +13,23 @@ import {
   startOfDay,
 } from "date-fns";
 import { es } from "date-fns/locale";
-import { CalendarCheck, ChevronLeft, ChevronRight, Minus } from "lucide-react";
+import {
+  CalendarCheck,
+  ChevronLeft,
+  ChevronRight,
+  Minus,
+  Info,
+} from "lucide-react";
 import * as React from "react";
 
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 import { cn } from "@/lib/utils";
 
@@ -113,16 +125,27 @@ export function TwoMonthCalendar({
           const dateKey = format(date, "yyyy-MM-dd");
           const isCalendarDateDisabled = disabledDates.includes(dateKey);
 
+          // Nuevo: determinar si el día está parcialmente ocupado
+          const classesForDate = classes.filter(
+            (c) =>
+              new Date(c.dateClass).getDate() === date.getDate() &&
+              new Date(c.dateClass).getMonth() === date.getMonth() &&
+              new Date(c.dateClass).getFullYear() === date.getFullYear(),
+          );
+          const isPartiallyOccupied =
+            classesForDate.length > 0 &&
+            classesForDate.some((c) => !c.isClosed);
+
           return (
             <Button
               type="button"
               key={index}
               variant="ghost"
               className={cn(
-                "relative h-9 w-9 p-0 font-normal",
+                "relative h-9 w-9 p-0 font-normal disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-400",
                 !isCurrentMonth && "text-gray-400",
                 isSelected && "bg-primary text-primary-foreground",
-                isBlocked && "cursor-not-allowed bg-rose-100 text-rose-400",
+                isBlocked && "cursor-not-allowed bg-gray-100 text-gray-400",
                 isToday(date) && "bg-accent text-accent-foreground",
                 isCreated && "bg-emerald-100 text-emerald-700",
                 isSelected &&
@@ -137,6 +160,21 @@ export function TwoMonthCalendar({
               }
               onClick={() => handleDateSelect(date)}
             >
+              {/* Nuevo: envolver el ícono con Tooltip de shadcn */}
+              {isPartiallyOccupied && (
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <div className="absolute right-0 top-0">
+                        <Info className="h-3 w-3 text-yellow-500" />
+                      </div>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <p>Parcialmente ocupado</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              )}
               {isCreated && (
                 <CalendarCheck className="absolute left-0 top-0 size-3 text-emerald-500" />
               )}

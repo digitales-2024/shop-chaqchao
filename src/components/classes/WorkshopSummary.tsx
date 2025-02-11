@@ -58,7 +58,7 @@ export default function WorkshopSummary() {
     const fetchClassData = async () => {
       if (reservation?.dateClass && reservation?.scheduleClass) {
         const response = await findClass({
-          date: format(reservation.dateClass, "dd/MM/yyyy"),
+          date: format(reservation.dateClass, "dd-MM-yyyy"),
           schedule: reservation.scheduleClass,
           typeClass: "NORMAL" as TypeClass,
         }).unwrap();
