@@ -18,10 +18,11 @@ interface DateOrder {
 }
 
 interface Location {
-  cityInt: string; //atributos para envios interciudades
-  codPostalInt: string;
-  countryInt: string;
-  stateInt: string;
+  city: string; //atributos para envios interciudades
+  address: string;
+  reference: string;
+  country: string;
+  state: string;
 }
 
 interface CartDetailState {
@@ -59,10 +60,11 @@ const useCartDetail = create<CartDetailState>((set) => ({
     hour: undefined,
     fullDate: undefined, //agregar nuevos atributos
     location: {
-      cityInt: "",
-      codPostalInt: "",
-      countryInt: "",
-      stateInt: "",
+      city: "",
+      address: "",
+      reference: "",
+      country: "",
+      state: "",
     },
   },
   setDateOrder: (dateOrder: DateOrder) => set(() => ({ dateOrder })),
