@@ -38,6 +38,30 @@ export default function PageRegisterClass() {
   const { reservation, setReservation } = useReservation();
   const { registerClass, isLoadingRegisterClass } = useRegisterClass();
   const router = useRouter();
+  const [dataTransaction, setDataTransaction] =
+    useState<PaypalTransactionData>();
+
+  // Manejo de limpieza cuando se recarga o cierra la página
+  useEffect(() => {
+    const handleBeforeUnload = async () => {
+      if (dataTransaction?.id) {
+        // Intentar eliminar la clase antes de que la página se recargue
+        await deleteClassWithRetry(dataTransaction.id);
+      }
+    };
+
+    // Agregar el evento beforeunload
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
+    // Cleanup cuando el componente se desmonte o la página se recargue
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+      // Intentar eliminar la clase si existe
+      if (dataTransaction?.id) {
+        deleteClassWithRetry(dataTransaction.id);
+      }
+    };
+  }, [dataTransaction?.id]);
 
   useEffect(() => {
     if (!reservation.dateClass && !reservation.scheduleClass) {
@@ -155,8 +179,6 @@ export default function PageRegisterClass() {
     resetCreateClass();
   }, [form.watch("payment.currency")]);
 
-  const [dataTransaction, setDataTransaction] =
-    useState<PaypalTransactionData>();
   const onSubmit = async (data: any) => {
     try {
       const currentSchema = getCurrentSchema();
