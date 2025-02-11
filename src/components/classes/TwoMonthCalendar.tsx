@@ -21,16 +21,19 @@ import { Separator } from "@/components/ui/separator";
 
 import { cn } from "@/lib/utils";
 
+// Se añade la nueva prop disabledDates
 interface TwoMonthCalendarProps {
   value?: Date;
   onChange?: (date: Date) => void;
   classes?: ClassesDataAdmin[];
+  disabledDates?: string[]; // nueva prop: array de fechas en formato "yyyy-MM-dd"
 }
 
 export function TwoMonthCalendar({
   value,
   onChange,
   classes = [],
+  disabledDates = [],
 }: TwoMonthCalendarProps) {
   const [monthStart, setMonthStart] = React.useState(startOfMonth(new Date()));
   const today = startOfDay(new Date());
@@ -106,6 +109,9 @@ export function TwoMonthCalendar({
             date.getDate() === value.getDate();
           const isBlocked = isDateBlocked(date);
           const isCreated = isDateCreated(date);
+          // Nueva validación: si la fecha se encuentra en disabledDates
+          const dateKey = format(date, "yyyy-MM-dd");
+          const isCalendarDateDisabled = disabledDates.includes(dateKey);
 
           return (
             <Button
@@ -126,6 +132,7 @@ export function TwoMonthCalendar({
               disabled={
                 !isCurrentMonth ||
                 isBlocked ||
+                isCalendarDateDisabled ||
                 isBefore(date, startOfMonth(new Date()))
               }
               onClick={() => handleDateSelect(date)}

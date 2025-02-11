@@ -17,8 +17,9 @@ import {
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import * as z from "zod";
 
 import { Button } from "@/components/ui/button";
@@ -208,6 +209,49 @@ export default function WorkshopSelectDate() {
       typeClass: "NORMAL" as TypeClass,
     });
 
+  // Actualizar cálculo de disabledDates para que un día se considere cerrado únicamente si para cada
+  // horario definido en schedules.NORMAL existe una clase en ese día y está cerrada.
+  const disabledDates = useMemo(() => {
+    if (!classFutures || !schedules?.NORMAL) return [];
+    const groups = classFutures.reduce(
+      (acc, curr) => {
+        const dateKey = format(new Date(curr.dateClass), "yyyy-MM-dd");
+        if (!acc[dateKey]) acc[dateKey] = [];
+        acc[dateKey].push(curr);
+        return acc;
+      },
+      {} as Record<string, ClassesDataAdmin[]>,
+    );
+    return Object.keys(groups).filter((dateKey) =>
+      schedules.NORMAL.every((sch) =>
+        groups[dateKey].some(
+          (cls) => cls.scheduleClass === sch.startTime && cls.isClosed,
+        ),
+      ),
+    );
+  }, [classFutures, schedules]);
+
+  // Handler para el cambio de horario: si el horario seleccionado está cerrado, se muestra toast y se limpia
+  const handleScheduleChange = (newSchedule: string) => {
+    const selectedDate: Date = form.getValues("date");
+    if (!selectedDate) return;
+    const dateKey = format(selectedDate, "yyyy-MM-dd");
+    const classesForDate = classFutures?.filter(
+      (cls) => format(new Date(cls.dateClass), "yyyy-MM-dd") === dateKey,
+    );
+    const selectedClass = classesForDate?.find(
+      (cls) => cls.scheduleClass === newSchedule,
+    );
+    if (selectedClass && selectedClass.isClosed) {
+      toast.error(
+        "El horario seleccionado está cerrado. Por favor elige otra fecha.",
+      );
+      form.setValue("schedule", "");
+    } else {
+      form.setValue("schedule", newSchedule);
+    }
+  };
+
   const { data: prices, isLoading: isLoadingPrices } = usePricesQuery({
     typeCurrency: "USD",
     typeClass: "NORMAL",
@@ -289,7 +333,7 @@ export default function WorkshopSelectDate() {
                             field.onChange(date);
                             setOpen(false);
                           }}
-                          classes={classFutures}
+                          disabledDates={disabledDates} // nueva prop para días bloqueados
                         />
                       )}
                     </PopoverContent>
@@ -310,7 +354,8 @@ export default function WorkshopSelectDate() {
                     ) : (
                       <ButtonSelect
                         value={field.value}
-                        onChange={field.onChange}
+                        // Usar el handler para validar horario cerrado
+                        onChange={handleScheduleChange}
                         options={data}
                       />
                     )}
