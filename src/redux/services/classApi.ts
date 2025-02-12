@@ -1,7 +1,7 @@
 import { RegisterClassResponse } from "@/schemas/classRegisterSchema";
 import { ClassesDataAdmin, WorkshopRegistrationData } from "@/types";
 import { TypeClass } from "@/types/classes";
-import { PaypalTransactionData } from "@/types/paypal";
+import { TransactionData } from "@/types/paypal";
 import { createApi } from "@reduxjs/toolkit/query/react";
 
 import baseQueryWithReauth from "./baseQuery";
@@ -40,17 +40,22 @@ export const classApi = createApi({
     // Endpoint para confirmar el pago de una clase
     confirmPayment: build.mutation<
       void,
-      { id: string; paypalData: PaypalTransactionData }
+      { id: string; paymentData?: TransactionData }
     >({
-      query: ({ id, paypalData }) => ({
+      query: ({ id, paymentData }) => ({
         url: `/classes/${id}`,
         method: "PATCH",
         body: {
-          paypalOrderId: String(paypalData.paypalOrderId),
-          paypalOrderStatus: String(paypalData.paypalOrderStatus),
-          paypalAmount: paypalData.paypalAmount,
-          paypalCurrency: String(paypalData.paypalCurrency),
-          paypalDate: String(paypalData.paypalDate),
+          paypalOrderId: String(paymentData?.paypalOrderId),
+          paypalOrderStatus: String(paymentData?.paypalOrderStatus),
+          paypalAmount: paymentData?.paypalAmount,
+          paypalCurrency: String(paymentData?.paypalCurrency),
+          paypalDate: String(paymentData?.paypalDate),
+          izipayOrderId: String(paymentData?.izipayOrderId),
+          izipayOrderStatus: String(paymentData?.izipayOrderStatus),
+          izipayAmount: paymentData?.izipayAmount,
+          izipayCurrency: String(paymentData?.izipayCurrency),
+          izipayDate: String(paymentData?.izipayDate),
         },
         credentials: "include",
       }),

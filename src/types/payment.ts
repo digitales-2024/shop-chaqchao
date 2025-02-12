@@ -51,6 +51,7 @@ export interface CartItemInfo {
 
 enum ProductType {
   FOOD_AND_GROCERY = "FOOD_AND_GROCERY", //Alimentos y productos comestibles.
+  SERVICE_FOR_INDIVIDUAL = "SERVICE_FOR_INDIVIDUAL",
 }
 
 interface TransactionOptions {

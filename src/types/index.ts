@@ -22,7 +22,7 @@ export type { Business } from "./business";
 export type { Category, Product } from "./catalog";
 export type { ClassClient, ClassesData, ClassesDataAdmin } from "./classes";
 export type { CustomErrorData, ErrorFormData } from "./error";
-export type { PaypalTransactionData } from "./paypal";
+export type { TransactionData } from "./paypal";
 
 export type { CartItem, CheckoutCart, CreateCart } from "./cart";
 

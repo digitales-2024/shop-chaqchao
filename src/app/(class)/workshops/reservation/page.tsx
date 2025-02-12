@@ -1,13 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import { useRegisterClass } from "@/hooks/use-class-registration";
+import {
+  useConfirmClassPayment,
+  useRegisterClass,
+} from "@/hooks/use-class-registration";
+import { usePayment } from "@/hooks/use-payment";
 import { useReservation } from "@/hooks/use-reservation";
 import { useDeleteClassMutation } from "@/redux/services/classApi";
-import { PaypalTransactionData, WorkshopRegistrationData } from "@/types";
+import { TransactionData, WorkshopRegistrationData } from "@/types";
+import { getDataOrderDynamic } from "@/utils/getDataOrderDynamic";
 import { zodResolver } from "@hookform/resolvers/zod";
+import KRGlue from "@lyracom/embedded-form-glue";
 import { format } from "date-fns";
-import { ChevronRight } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { ChevronRight, Delete, Info, ShoppingBag } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
@@ -15,7 +21,9 @@ import { isValidPhoneNumber } from "react-phone-number-input";
 import { toast } from "sonner";
 import { z } from "zod";
 
+import PaymentFormIzipay from "@/components/cart/PaymentForm";
 import { AdditionalInfoForm } from "@/components/classes/AdditionalInfoForm";
+import { AlertSuccessPayment } from "@/components/classes/AlertSuccessPayment";
 import { PaymentForm } from "@/components/classes/PaymentForm";
 import PayPalButton from "@/components/classes/PaypalButton";
 import { PersonalInfoForm } from "@/components/classes/PersonalInfoForm";
@@ -26,6 +34,11 @@ import { Separator } from "@/components/ui/separator";
 
 import { cn } from "@/lib/utils";
 
+const endpoint =
+  process.env.NEXT_PUBLIC_IZIPAY_PAYMENT_ENDPOINT ||
+  "https://api.micuentaweb.pe";
+const publicKey = process.env.NEXT_PUBLIC_IZIPAY_PAYMENT_PUBLIC_KEY || "";
+
 export default function PageRegisterClass() {
   const t = useTranslations("class.steps");
   const [currentStep, setCurrentStep] = useState(0);
@@ -34,14 +47,128 @@ export default function PageRegisterClass() {
     { id: "additional", title: t("additional.title") },
     { id: "payment", title: t("payment.title") },
   ];
+  const locale = useLocale();
 
   const { reservation, setReservation } = useReservation();
-  console.log("🚀 ~ PageRegisterClass ~ reservation:", reservation);
+  const [showPayment, setShowPayment] = useState(false);
+  const [token, setToken] = useState("");
+  const { generatePaymentToken, handleValidatePayment } = usePayment();
   const { registerClass, isLoadingRegisterClass } = useRegisterClass();
   const router = useRouter();
+  const { orderNumber } = getDataOrderDynamic();
 
-  const [dataTransaction, setDataTransaction] =
-    useState<PaypalTransactionData>();
+  const [dataTransaction, setDataTransaction] = useState<TransactionData>();
+  const payment = (token: string, dataTransaction: TransactionData) => {
+    try {
+      getFormToken(token, dataTransaction);
+      setShowPayment(true);
+    } catch (error) {
+      handlePaymentError();
+    }
+  };
+
+  const handlePaymentError = () => {
+    toast("Error ", {
+      description: "",
+      icon: <Info />,
+      className: "text-rose-500",
+    });
+    // Resetear orderInfo y token para permitir reintentar
+    setShowPayment(false);
+  };
+
+  const { confirmPayment } = useConfirmClassPayment();
+  const [open, setOpen] = useState(false);
+
+  const getFormToken = async (
+    token: string,
+    dataTransaction: TransactionData,
+  ) => {
+    try {
+      const { KR } = await KRGlue.loadLibrary(endpoint, publicKey);
+      await KR.setFormConfig({
+        formToken: token,
+        "kr-language": locale,
+        "kr-public-key": publicKey,
+      });
+
+      await KR.onError((error) => {
+        toast(error.errorMessage, {
+          description: error.detailedErrorMessage,
+          icon: <Delete />,
+          className: "text-rose-500",
+        });
+      });
+
+      await KR.onPopinClosed(() => {
+        toast("Cerrar", {
+          description: "El popin ha sido cerrado",
+          icon: <Info />,
+          className: "text-rose-500",
+        });
+      });
+
+      await KR.onSubmit(async (paymentData) => {
+        const response = await handleValidatePayment(paymentData);
+        if (response.data && response.data.isValid) {
+          toast("Pago exitoso", {
+            description: "El pago ha sido procesado correctamente",
+            icon: <ShoppingBag />,
+            className: "text-emerald-500",
+          });
+
+          const tData: TransactionData = {
+            userEmail: dataTransaction?.userEmail,
+            userName: dataTransaction?.userName,
+            userPhone: dataTransaction?.userPhone,
+            scheduleClass: dataTransaction?.scheduleClass,
+            languageClass: dataTransaction?.languageClass,
+            dateClass: dataTransaction?.dateClass,
+            totalAdults: dataTransaction?.totalAdults,
+            totalChildren: dataTransaction?.totalChildren,
+            typeCurrency: dataTransaction?.typeCurrency,
+            comments: dataTransaction?.comments,
+            izipayAmount:
+              (paymentData.clientAnswer.orderDetails.orderEffectiveAmount &&
+                paymentData.clientAnswer.orderDetails.orderEffectiveAmount.toString()) ||
+              reservation.totalPrice.toString(),
+            izipayCurrency: paymentData.clientAnswer.orderDetails.orderCurrency,
+            izipayDate: paymentData.serverDate,
+            izipayOrderId: paymentData.clientAnswer.orderDetails.orderId,
+            izipayOrderStatus: paymentData.clientAnswer.orderStatus,
+          };
+
+          const response = await confirmPayment({
+            id: dataTransaction.id as string,
+            paymentData: tData,
+          });
+          console.log("🚀 ~ awaitKR.onSubmit ~ response:", response);
+          if (response.data) {
+            setOpen(true);
+          } else if (response.error) {
+            const errorMessage =
+              (response.error as { message?: string }).message ||
+              "Error desconocido";
+            toast("Ocurrió un error al confirmar el pago", {
+              description: errorMessage,
+            });
+          }
+        }
+        KR.closePopin("#formPayment"); // Close the popin after payment
+        return false;
+      });
+
+      await KR.renderElements(
+        "#formPayment",
+      ); /* Render the payment form into myPaymentForm div*/
+    } catch (error) {
+      toast("", {
+        description: "",
+        icon: <Info />,
+        className: "text-rose-500",
+      });
+    }
+  };
 
   useEffect(() => {
     if (!reservation.dateClass && !reservation.scheduleClass) {
@@ -227,31 +354,49 @@ export default function PageRegisterClass() {
         };
         try {
           const response = await registerClass(payload).unwrap();
-
+          const dataT: TransactionData = {
+            userName: reservation.userName,
+            userEmail: reservation.userEmail,
+            userPhone: reservation.userPhone,
+            scheduleClass: reservation.scheduleClass,
+            languageClass: reservation.languageClass,
+            dateClass: format(reservation.dateClass, "dd/MM/yyyy"),
+            totalAdults: reservation.totalAdults || 0,
+            totalChildren: reservation.totalChildren || 0,
+            typeCurrency: data.payment.currency,
+            comments: reservation.comments || "",
+          };
           if (response) {
+            dataT.id = response.id;
             setDataTransaction({
-              userName: reservation.userName,
-              userEmail: reservation.userEmail,
-              userPhone: reservation.userPhone,
-              scheduleClass: reservation.scheduleClass,
-              languageClass: reservation.languageClass,
-              dateClass: format(reservation.dateClass, "dd/MM/yyyy"),
-              totalAdults: reservation.totalAdults || 0,
-              totalChildren: reservation.totalChildren || 0,
-              typeCurrency: data.payment.currency,
-              comments: reservation.comments || "",
+              ...dataT,
               paypalAmount: reservation.totalPrice.toString(),
               paypalOrderId: "",
               paypalOrderStatus: "",
               paypalDate: new Date().toISOString(),
               paypalCurrency: reservation.typeCurrency,
-              id: response.id,
             });
 
             setReservation({
               ...reservation,
               id: response.id,
+              typeCurrency: data.payment.currency as "USD" | "PEN",
             });
+          }
+
+          const tokenResponse = await generatePaymentToken({
+            amount: reservation.totalPrice * 100,
+            currency: data.payment.currency,
+            orderId: orderNumber,
+            customer: {
+              email: reservation.userEmail,
+            },
+          });
+
+          // Si el método de pago es IZIPAY, se genera el token y se muestra el formulario
+          if (data.payment.methodPayment === "IZIPAY") {
+            setToken(tokenResponse?.token ?? "");
+            payment(tokenResponse?.token ?? "", dataT);
           }
         } catch (error) {
           const errorMessage = (error as { data: { message: string } }).data
@@ -349,7 +494,21 @@ export default function PageRegisterClass() {
                   <PayPalButton transactionData={dataTransaction} />
                 )}
                 {reservation.methodPayment === "IZIPAY" && (
-                  <Button type="button">Pagar con IZIPAY</Button>
+                  <div className="d-flex justify-content-center">
+                    <div
+                      id="myDIV"
+                      className="formulario"
+                      style={{ display: showPayment ? "block" : "none" }}
+                    >
+                      <div id="formPayment">
+                        {/* Formulario de pago POPIN */}
+                        <PaymentFormIzipay popin={true} token={token} />
+                      </div>
+                    </div>
+                    {open && (
+                      <AlertSuccessPayment isOpen={open} setIsOpen={setOpen} />
+                    )}
+                  </div>
                 )}
               </div>
             )}
