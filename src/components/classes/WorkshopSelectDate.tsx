@@ -6,10 +6,11 @@ import {
   useGetClassesCapacityQuery,
   useClassByDateMutation,
   useDeleteClassMutation,
+  useCloseTimeQuery,
 } from "@/redux/services/classApi";
 import { ClassesDataAdmin, TypeClass } from "@/types/classes";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { format, isSameDay } from "date-fns";
+import { addMinutes, format, isSameDay, parse } from "date-fns";
 import {
   Phone,
   UserRoundPen,
@@ -57,6 +58,8 @@ import { TwoMonthCalendar } from "./TwoMonthCalendar";
 
 export default function WorkshopSelectDate() {
   const { reservation, setReservation } = useReservation();
+  const { data: closeTime, isLoading: isLoadingCloseTime } =
+    useCloseTimeQuery();
   const { data: capacityNormal } = useGetClassesCapacityQuery({
     typeClass: "NORMAL" as TypeClass,
   });
@@ -99,10 +102,32 @@ export default function WorkshopSelectDate() {
     if (schedules?.NORMAL) {
       setData(
         schedules?.NORMAL.map((s) => {
+          const selectedDate = form.watch("date");
+          // Si no hay fecha seleccionada, mostrar horarios habilitados
+          if (!selectedDate) {
+            return {
+              value: s.startTime,
+              label: s.startTime,
+              disabled: false,
+            } as Option;
+          }
+          // Buscar si existe una clase para este horario solo si hay fecha seleccionada
+          const existingClass = classFutures?.find(
+            (cls) =>
+              cls.scheduleClass === s.startTime &&
+              format(new Date(cls.dateClass), "yyyy-MM-dd") ===
+                format(selectedDate, "yyyy-MM-dd"),
+          );
           return {
             value: s.startTime,
             label: s.startTime,
-            disabled: isToday(form.watch("date")) && compareTimes(s.startTime),
+            // Solo aplicar la lógica de tiempo si es hoy
+            disabled:
+              isToday(selectedDate) &&
+              compareTimes(
+                s.startTime,
+                (existingClass?.totalParticipants ?? 0) > 0,
+              ),
           } as Option;
         }),
       );
@@ -199,25 +224,26 @@ export default function WorkshopSelectDate() {
     return isSameDay(date, today);
   };
 
-  // funcion para saber la hora actual formato 11:00
-  const getCurrentTime = () => {
-    const now = new Date();
-    const hours = now.getHours().toString().padStart(2, "0");
-    const minutes = now.getMinutes().toString().padStart(2, "0");
-    return `${hours}:${minutes}`;
-  };
+  // Función para comparar si un horario está cerrado según los intervalos definidos
+  const compareTimes = (time1: string, hasParticipants = false) => {
+    if (!closeTime) return true; // Si no hay closeTime, deshabilitar por defecto
 
-  // Función para comparar si un horario es menor al actual por al menos 50 minutos
-  const compareTimes = (time1: string) => {
-    const [hour1, minute1] = time1.split(":").map(Number);
-    const [hour2, minute2] = getCurrentTime().split(":").map(Number);
+    const timeSchedule = parse(time1, "HH:mm", new Date());
+    const newTime = addMinutes(
+      new Date(),
+      closeTime.closeBeforeStartInterval ?? 0,
+    );
+    const newTimeFinal = addMinutes(
+      new Date(),
+      closeTime.finalRegistrationCloseInterval ?? 0,
+    );
 
-    // Convertir ambos horarios a minutos totales
-    const totalMinutes1 = hour1 * 60 + minute1;
-    const totalMinutes2 = hour2 * 60 + minute2;
+    // Si no hay participantes, usar intervalo final
+    if (!hasParticipants) {
+      return timeSchedule < newTimeFinal;
+    }
 
-    // Verificar si el horario seleccionado es menor al actual + 50 minutos
-    return totalMinutes1 <= totalMinutes2 + 50;
+    return timeSchedule < newTime;
   };
 
   const { data: classFutures, isLoading: isLoadingClassFutures } =
@@ -246,11 +272,14 @@ export default function WorkshopSelectDate() {
       ),
     );
   }, [classFutures, schedules]);
-
-  // Handler para el cambio de horario: si el horario seleccionado está cerrado, se muestra toast y se limpia
+  // Handler para el cambio de horario: verifica tiempo de cierre y estado cerrado
   const handleScheduleChange = (newSchedule: string) => {
-    const selectedDate: Date = form.getValues("date");
-    if (!selectedDate) return;
+    const selectedDate = form.getValues("date");
+    if (!selectedDate) {
+      form.setValue("schedule", newSchedule);
+      return;
+    }
+
     const dateKey = format(selectedDate, "yyyy-MM-dd");
     const classesForDate = classFutures?.filter(
       (cls) => format(new Date(cls.dateClass), "yyyy-MM-dd") === dateKey,
@@ -258,14 +287,38 @@ export default function WorkshopSelectDate() {
     const selectedClass = classesForDate?.find(
       (cls) => cls.scheduleClass === newSchedule,
     );
-    if (selectedClass && selectedClass.isClosed) {
+    // Verificar si el horario está cerrado por tiempo (solo si es hoy)
+    if (isToday(selectedDate)) {
+      if (!closeTime) {
+        toast.error("No se pueden verificar los horarios en este momento");
+        form.setValue("schedule", "");
+        return;
+      }
+      if (
+        compareTimes(newSchedule, (selectedClass?.totalParticipants ?? 0) > 0)
+      ) {
+        const hasParticipants = (selectedClass?.totalParticipants ?? 0) > 0;
+        const minutes = hasParticipants
+          ? closeTime.closeBeforeStartInterval
+          : closeTime.finalRegistrationCloseInterval;
+        toast.error(
+          `No se permiten registros para este horario. Debe registrarse con al menos ${minutes} minutos de anticipación.`,
+        );
+        form.setValue("schedule", "");
+        return;
+      }
+    }
+
+    // Verificar si la clase está marcada como cerrada (para cualquier fecha)
+    if (selectedClass?.isClosed) {
       toast.error(
         "El horario seleccionado está cerrado. Por favor elige otra fecha.",
       );
       form.setValue("schedule", "");
-    } else {
-      form.setValue("schedule", newSchedule);
+      return;
     }
+
+    form.setValue("schedule", newSchedule);
   };
 
   const { data: prices, isLoading: isLoadingPrices } = usePricesQuery({
@@ -353,7 +406,7 @@ export default function WorkshopSelectDate() {
                 <FormItem className="flex flex-col items-center">
                   <FormLabel></FormLabel>
                   <FormControl>
-                    {isLoading || !data ? (
+                    {isLoading || isLoadingCloseTime || !data || !closeTime ? (
                       <PulsatingDots />
                     ) : (
                       <ButtonSelect

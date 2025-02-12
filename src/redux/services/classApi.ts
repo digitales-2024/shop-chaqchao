@@ -171,6 +171,23 @@ export const classApi = createApi({
         method: "DELETE",
       }),
     }),
+
+    //Obtener los tiempos de cierre de las clases
+    closeTime: build.query<
+      {
+        closeBeforeStartInterval: number;
+        finalRegistrationCloseInterval: number;
+      },
+      void
+    >({
+      query: () => ({
+        url: "/classes/close-time",
+        method: "GET",
+        credentials: "include",
+      }),
+
+      providesTags: ["Class"],
+    }),
   }),
 });
 
@@ -187,4 +204,5 @@ export const {
   useGetClassesFuturesQuery,
   useGetClassesCapacityQuery,
   useDeleteClassMutation,
+  useCloseTimeQuery,
 } = classApi;

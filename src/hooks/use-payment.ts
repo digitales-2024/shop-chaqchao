@@ -17,7 +17,6 @@ export const usePayment = () => {
   const e = useTranslations("errors");
 
   const generatePaymentToken = async (data: UsePayment) => {
-    console.log("🚀 ~ generatePaymentToken ~ data:", data);
     try {
       const token = await generatePaymentTokenMutation(data).unwrap();
       if (token) {
