@@ -1,5 +1,5 @@
 import { useConfirmClassPayment } from "@/hooks/use-class-registration";
-import { PaypalTransactionData } from "@/types";
+import { TransactionData } from "@/types";
 import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { AlertSuccessPayment } from "./AlertSuccessPayment";
 
 interface PayPalButtonProps {
-  transactionData: PaypalTransactionData;
+  transactionData: TransactionData;
 }
 
 const PayPalButton: React.FC<PayPalButtonProps> = ({ transactionData }) => {
@@ -36,7 +36,7 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({ transactionData }) => {
             }}
             className="z-10 w-full rounded-full"
             createOrder={(_data, actions) => {
-              if (parseFloat(transactionData.paypalAmount) <= 0) {
+              if (parseFloat(transactionData?.paypalAmount ?? "0") <= 0) {
                 toast.error(
                   "El monto total debe ser mayor a cero para realizar el pago",
                 );
@@ -50,14 +50,14 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({ transactionData }) => {
                   {
                     amount: {
                       currency_code: transactionData.typeCurrency,
-                      value: transactionData.paypalAmount,
+                      value: transactionData.paypalAmount ?? "0",
                     },
                   },
                 ],
               });
             }}
             onClick={() => {
-              if (parseFloat(transactionData.paypalAmount) <= 0) {
+              if (parseFloat(transactionData.paypalAmount ?? "0") <= 0) {
                 console.warn("Payment attempt with zero amount");
               }
             }}
@@ -77,7 +77,7 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({ transactionData }) => {
                 try {
                   const response = await confirmPayment({
                     id: finalTransactionData.id || "",
-                    paypalData: finalTransactionData,
+                    paymentData: finalTransactionData,
                   });
 
                   if (response.data) {
