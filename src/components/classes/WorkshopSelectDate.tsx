@@ -389,6 +389,28 @@ export default function WorkshopSelectDate() {
                           onChange={(date) => {
                             field.onChange(date);
                             setOpen(false);
+                            // Resetear la reservación pero mantener la nueva fecha
+                            setReservation({
+                              id: "",
+                              typeClass: "NORMAL",
+                              userName: "",
+                              userEmail: "",
+                              userPhone: "",
+                              totalAdults: 1,
+                              totalChildren: 0,
+                              totalParticipants: 1,
+                              totalPrice: 0,
+                              totalPriceAdults: 0,
+                              totalPriceChildren: 0,
+                              languageClass: "",
+                              dateClass: date,
+                              scheduleClass: "",
+                              comments: "",
+                              allergies: "",
+                              occasion: "",
+                              typeCurrency: "USD",
+                              methodPayment: "",
+                            });
                           }}
                           disabledDates={disabledDates} // nueva prop para días bloqueados
                         />
