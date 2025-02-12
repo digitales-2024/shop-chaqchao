@@ -89,6 +89,7 @@ export default function WorkshopSelectDate() {
     if (capacityNormal && !classData && !form.watch("date")) {
       form.setValue("adults", capacityNormal.minCapacity);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [capacityNormal]);
   const { isLoading, data: schedules } = useSchedulesAdminQuery();
   const [data, setData] = useState<Option[]>([]);
@@ -174,6 +175,7 @@ export default function WorkshopSelectDate() {
     };
 
     deleteClassCreated();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form.watch("date"), form.watch("schedule")]);
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
@@ -276,12 +278,6 @@ export default function WorkshopSelectDate() {
     if (form.getValues("date")) {
       form.setValue("schedule", "");
       setClassData(undefined);
-      // Al cambiar la fecha, resetear a capacidad mínima si no hay clase
-      if (capacityNormal && !classData) {
-        const newMin = capacityNormal.minCapacity;
-        setCounterMin(newMin);
-        form.setValue("adults", newMin);
-      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form.watch("date")]);
@@ -290,12 +286,6 @@ export default function WorkshopSelectDate() {
   useEffect(() => {
     if (form.watch("schedule")) {
       setClassData(undefined);
-      // Al cambiar el schedule, resetear a capacidad mínima si no hay clase
-      if (capacityNormal && !classData) {
-        const newMin = capacityNormal.minCapacity;
-        setCounterMin(newMin);
-        form.setValue("adults", newMin);
-      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form.watch("schedule")]);
