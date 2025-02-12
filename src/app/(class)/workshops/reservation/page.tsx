@@ -127,7 +127,7 @@ export default function PageRegisterClass() {
         comment: reservation.comments || "",
       },
       payment: {
-        currency: "PEN",
+        currency: "USD",
         methodPayment: "",
         terms: false,
         politics: false,

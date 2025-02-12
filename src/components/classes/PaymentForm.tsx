@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Izipay, Paypal } from "@/assets/icons";
 import { useReservation } from "@/hooks/use-reservation";
 import { usePricesQuery } from "@/redux/services/classApi";
@@ -22,7 +23,7 @@ import { Separator } from "../ui/separator";
 export function PaymentForm() {
   const { control, watch } = useFormContext();
   const [, setSelectedMethod] = useState<string>("");
-  const currency = watch("payment.currency") || "PEN";
+  const currency = watch("payment.currency") || "USD";
   const { reservation, setReservation } = useReservation();
   const t = useTranslations("class.steps.payment");
 
@@ -80,6 +81,7 @@ export function PaymentForm() {
       totalPrice: totals.total,
       typeCurrency: currency,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currency, totals.total, setReservation]);
 
   // Loading state
@@ -151,14 +153,14 @@ export function PaymentForm() {
               >
                 <FormItem>
                   <label className="flex items-center gap-2">
-                    <RadioGroupItem value="PEN" />
-                    <span>{t("form.currency.options.PEN")} (S/.)</span>
+                    <RadioGroupItem value="USD" />
+                    <span>{t("form.currency.options.USD")} ($)</span>
                   </label>
                 </FormItem>
                 <FormItem>
                   <label className="flex items-center gap-2">
-                    <RadioGroupItem value="USD" />
-                    <span>{t("form.currency.options.USD")} ($)</span>
+                    <RadioGroupItem value="PEN" />
+                    <span>{t("form.currency.options.PEN")} (S/.)</span>
                   </label>
                 </FormItem>
               </RadioGroup>
