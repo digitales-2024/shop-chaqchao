@@ -22,7 +22,9 @@ import { Separator } from "../ui/separator";
 
 export function PaymentForm() {
   const { control, watch } = useFormContext();
-  const [, setSelectedMethod] = useState<string>("");
+  const [selectMethod, setSelectedMethod] = useState<"PAYPAL" | "IZIPAY" | "">(
+    "",
+  );
   const currency = watch("payment.currency") || "USD";
   const { reservation, setReservation } = useReservation();
   const t = useTranslations("class.steps.payment");
@@ -80,9 +82,10 @@ export function PaymentForm() {
       totalPriceChildren: totals.childTotal,
       totalPrice: totals.total,
       typeCurrency: currency,
+      methodPayment: selectMethod,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currency, totals.total, setReservation]);
+  }, [currency, totals.total, setReservation, selectMethod]);
 
   // Loading state
   if (isLoadingDolar || isLoadingSoles) {
@@ -142,9 +145,9 @@ export function PaymentForm() {
                 onValueChange={(value) => {
                   field.onChange(value);
                   if (value === "USD") {
-                    setSelectedMethod("paypal");
+                    setSelectedMethod("PAYPAL");
                   } else {
-                    setSelectedMethod("");
+                    setSelectedMethod("IZIPAY");
                   }
                 }}
                 defaultValue={field.value}
@@ -212,7 +215,7 @@ export function PaymentForm() {
               <RadioGroup
                 onValueChange={(value) => {
                   field.onChange(value);
-                  setSelectedMethod(value);
+                  setSelectedMethod(value as "PAYPAL" | "IZIPAY");
                 }}
                 defaultValue={field.value}
                 className="grid grid-cols-1 gap-4 md:grid-cols-2"

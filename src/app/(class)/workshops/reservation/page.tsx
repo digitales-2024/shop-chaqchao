@@ -36,15 +36,9 @@ export default function PageRegisterClass() {
   ];
 
   const { reservation, setReservation } = useReservation();
+  console.log("🚀 ~ PageRegisterClass ~ reservation:", reservation);
   const { registerClass, isLoadingRegisterClass } = useRegisterClass();
   const router = useRouter();
-
-  // const { data: existRegister } = useGetRegisterClassByIdQuery(
-  //   reservation.id || "",
-  //   {
-  //     skip: !!reservation.id,
-  //   },
-  // );
 
   const [dataTransaction, setDataTransaction] =
     useState<PaypalTransactionData>();
@@ -351,7 +345,12 @@ export default function PageRegisterClass() {
                     }}
                   />
                 </div>
-                <PayPalButton transactionData={dataTransaction} />
+                {reservation.methodPayment === "PAYPAL" && (
+                  <PayPalButton transactionData={dataTransaction} />
+                )}
+                {reservation.methodPayment === "IZIPAY" && (
+                  <Button type="button">Pagar con IZIPAY</Button>
+                )}
               </div>
             )}
 
