@@ -201,9 +201,7 @@ export function AdditionalInfoForm() {
                         : "other"
                     }
                     onChange={(value) => {
-                      if (value !== "other") {
-                        field.onChange(value);
-                      }
+                      field.onChange(value === "other" ? "" : value);
                     }}
                     options={occasionOptions}
                   />
@@ -248,9 +246,7 @@ export function AdditionalInfoForm() {
                         : "other"
                     }
                     onChange={(value) => {
-                      if (value !== "other") {
-                        field.onChange(value);
-                      }
+                      field.onChange(value === "other" ? "" : value);
                     }}
                     options={restrictionOptions}
                   />
