@@ -163,6 +163,7 @@ export default function PageRegisterClass() {
     };
 
     resetCreateClass();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form.watch("payment.currency")]);
 
   const onSubmit = async (data: any) => {
