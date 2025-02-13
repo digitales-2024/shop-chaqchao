@@ -14,6 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import KRGlue from "@lyracom/embedded-form-glue";
 import { format } from "date-fns";
 import { ChevronRight, Delete, Info, ShoppingBag } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -52,6 +53,7 @@ export default function PageRegisterClass() {
 
   const { reservation, setReservation } = useReservation();
   const [showPayment, setShowPayment] = useState(false);
+  const [isLoadingIzipay, setIsLoadingIzipay] = useState(false);
   const [token, setToken] = useState("");
   const { generatePaymentToken, handleValidatePayment } = usePayment();
   const { registerClass, isLoadingRegisterClass } = useRegisterClass();
@@ -59,12 +61,15 @@ export default function PageRegisterClass() {
   const { orderNumber } = getDataOrderDynamic();
 
   const [dataTransaction, setDataTransaction] = useState<TransactionData>();
-  const payment = (token: string, dataTransaction: TransactionData) => {
+  const payment = async (token: string, dataTransaction: TransactionData) => {
     try {
-      getFormToken(token, dataTransaction);
+      setIsLoadingIzipay(true);
+      await getFormToken(token, dataTransaction);
       setShowPayment(true);
     } catch (error) {
       handlePaymentError();
+    } finally {
+      setIsLoadingIzipay(false);
     }
   };
 
@@ -520,21 +525,34 @@ export default function PageRegisterClass() {
                   <PayPalButton transactionData={dataTransaction} />
                 )}
                 {reservation.methodPayment === "IZIPAY" && (
-                  <div className="d-flex justify-content-center">
-                    <div
-                      id="myDIV"
-                      className="formulario"
-                      style={{ display: showPayment ? "block" : "none" }}
-                    >
-                      <div id="formPayment">
-                        {/* Formulario de pago POPIN */}
-                        <PaymentFormIzipay popin={true} token={token} />
+                  <>
+                    {isLoadingIzipay && (
+                      <div className="flex w-full items-center justify-center p-8">
+                        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                        <span className="ml-3 text-sm text-muted-foreground">
+                          Cargando formulario de pago...
+                        </span>
                       </div>
-                    </div>
-                    {open && (
-                      <AlertSuccessPayment isOpen={open} setIsOpen={setOpen} />
                     )}
-                  </div>
+                    <div className="d-flex justify-content-center">
+                      <div
+                        id="myDIV"
+                        className="formulario"
+                        style={{ display: showPayment ? "block" : "none" }}
+                      >
+                        <div id="formPayment">
+                          {/* Formulario de pago POPIN */}
+                          <PaymentFormIzipay popin={true} token={token} />
+                        </div>
+                      </div>
+                      {open && (
+                        <AlertSuccessPayment
+                          isOpen={open}
+                          setIsOpen={setOpen}
+                        />
+                      )}
+                    </div>
+                  </>
                 )}
               </div>
             )}
