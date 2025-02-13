@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { motion } from "framer-motion";
 import { Minus, Plus } from "lucide-react";
 import { useController, type Control } from "react-hook-form";

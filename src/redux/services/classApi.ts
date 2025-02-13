@@ -1,9 +1,7 @@
-import {
-  CreateClassSchema,
-  RegisterClassResponse,
-} from "@/schemas/classRegisterSchema";
-import { ClassesDataAdmin } from "@/types";
-import { PaypalTransactionData } from "@/types/paypal";
+import { RegisterClassResponse } from "@/schemas/classRegisterSchema";
+import { ClassesDataAdmin, WorkshopRegistrationData } from "@/types";
+import { TypeClass } from "@/types/classes";
+import { TransactionData } from "@/types/paypal";
 import { createApi } from "@reduxjs/toolkit/query/react";
 
 import baseQueryWithReauth from "./baseQuery";
@@ -26,7 +24,10 @@ export const classApi = createApi({
   tagTypes: ["Class"],
   endpoints: (build) => ({
     // Endpoint para crear una nueva clase (registro de reserva)
-    registerClass: build.mutation<RegisterClassResponse, CreateClassSchema>({
+    registerClass: build.mutation<
+      RegisterClassResponse,
+      WorkshopRegistrationData
+    >({
       query: (body) => ({
         url: "/classes/",
         method: "POST",
@@ -39,17 +40,22 @@ export const classApi = createApi({
     // Endpoint para confirmar el pago de una clase
     confirmPayment: build.mutation<
       void,
-      { id: string; paypalData: PaypalTransactionData }
+      { id: string; paymentData?: TransactionData }
     >({
-      query: ({ id, paypalData }) => ({
+      query: ({ id, paymentData }) => ({
         url: `/classes/${id}`,
         method: "PATCH",
         body: {
-          paypalOrderId: String(paypalData.paypalOrderId),
-          paypalOrderStatus: String(paypalData.paypalOrderStatus),
-          paypalAmount: paypalData.paypalAmount,
-          paypalCurrency: String(paypalData.paypalCurrency),
-          paypalDate: String(paypalData.paypalDate),
+          paypalOrderId: String(paymentData?.paypalOrderId),
+          paypalOrderStatus: String(paymentData?.paypalOrderStatus),
+          paypalAmount: paymentData?.paypalAmount,
+          paypalCurrency: String(paymentData?.paypalCurrency),
+          paypalDate: String(paymentData?.paypalDate),
+          izipayOrderId: String(paymentData?.izipayOrderId),
+          izipayOrderStatus: String(paymentData?.izipayOrderStatus),
+          izipayAmount: paymentData?.izipayAmount,
+          izipayCurrency: String(paymentData?.izipayCurrency),
+          izipayDate: String(paymentData?.izipayDate),
         },
         credentials: "include",
       }),
@@ -121,14 +127,71 @@ export const classApi = createApi({
     // Ver si hay una clase registrada para una fecha y hora específica
     classByDate: build.mutation<
       ClassesDataAdmin,
-      { date: string; schedule: string }
+      { date: string; schedule: string; typeClass: TypeClass }
     >({
-      query: ({ date, schedule }) => ({
-        url: `/classes/check?schedule=${schedule}&date=${date}`,
+      query: ({ date, schedule, typeClass = "NORMAL" }) => ({
+        url: `/classes/check?schedule=${schedule}&date=${date}&typeClass=${typeClass}`,
         method: "POST",
         credentials: "include",
       }),
       invalidatesTags: ["Class"],
+    }),
+
+    // Obtener las clases futuras
+    getClassesFutures: build.query<
+      ClassesDataAdmin[],
+      { typeClass?: TypeClass; schedule?: string }
+    >({
+      query: ({ typeClass, schedule }) => ({
+        url: "/classes/futures",
+        method: "GET",
+        params: { typeClass, schedule },
+        credentials: "include",
+      }),
+      providesTags: ["Class"],
+    }),
+
+    // Obtener capacidad de las clases
+    getClassesCapacity: build.query<
+      {
+        id: string;
+        typeClass: TypeClass;
+        minCapacity: number;
+        maxCapacity: number;
+      },
+      { typeClass?: TypeClass }
+    >({
+      query: ({ typeClass }) => ({
+        url: "/classes/capacity",
+        method: "GET",
+        params: { typeClass },
+        credentials: "include",
+      }),
+      providesTags: ["Class"],
+    }),
+
+    deleteClass: build.mutation({
+      query: (id: string) => ({
+        url: `/classes/${id}/delete`,
+        method: "DELETE",
+      }),
+    }),
+
+    //Obtener los tiempos de cierre de las clases
+    closeTime: build.query<
+      {
+        closeBeforeStartInterval: number;
+        finalRegistrationCloseInterval: number;
+      },
+      void
+    >({
+      query: () => ({
+        url: "/classes/close-time",
+        method: "GET",
+        credentials: "include",
+      }),
+
+      providesTags: ["Class"],
     }),
   }),
 });
@@ -143,4 +206,8 @@ export const {
   useGetClassesByClientQuery,
   useClassByDateMutation,
   useSchedulesAdminQuery,
+  useGetClassesFuturesQuery,
+  useGetClassesCapacityQuery,
+  useDeleteClassMutation,
+  useCloseTimeQuery,
 } = classApi;

@@ -1,3 +1,30 @@
+import { useReservation } from "@/hooks/use-reservation";
+import {
+  useSchedulesAdminQuery,
+  usePricesQuery,
+  useGetClassesFuturesQuery,
+  useGetClassesCapacityQuery,
+  useClassByDateMutation,
+  useDeleteClassMutation,
+  useCloseTimeQuery,
+} from "@/redux/services/classApi";
+import { ClassesDataAdmin, TypeClass } from "@/types/classes";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { addMinutes, format, isSameDay, parse } from "date-fns";
+import {
+  Phone,
+  UserRoundPen,
+  UsersRound,
+  Calendar as CalendarIcon,
+} from "lucide-react";
+import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import { useEffect, useState, useMemo } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import * as z from "zod";
+
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -7,25 +34,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { useTranslations } from "next-intl";
-import { Separator } from "../ui/separator";
-import {
-  Phone,
-  UserRoundPen,
-  UsersRound,
-  Calendar as CalendarIcon,
-} from "lucide-react";
-import { TwoMonthCalendar } from "./TwoMonthCalendar";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import * as z from "zod";
-
-import { Button } from "@/components/ui/button";
-import {
   Form,
   FormControl,
   FormField,
@@ -33,22 +41,31 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { format, isSameDay } from "date-fns";
-import { cn } from "@/lib/utils";
-import Counter from "../ui/counter";
 import {
-  useSchedulesAdminQuery,
-  usePricesQuery,
-} from "@/redux/services/classApi";
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+
+import { cn } from "@/lib/utils";
+
 import PulsatingDots from "../common/PulsatingDots";
 import { ButtonSelect, Option } from "../ui/button-select";
-import { useRouter } from "next/navigation";
-import { useReservation } from "@/hooks/use-reservation";
-import { useEffect, useState } from "react";
+import Counter from "../ui/counter";
+import { Separator } from "../ui/separator";
 import { Skeleton } from "../ui/skeleton";
+import { TwoMonthCalendar } from "./TwoMonthCalendar";
 
 export default function WorkshopSelectDate() {
   const { reservation, setReservation } = useReservation();
+  const { data: closeTime, isLoading: isLoadingCloseTime } =
+    useCloseTimeQuery();
+  const { data: capacityNormal } = useGetClassesCapacityQuery({
+    typeClass: "NORMAL" as TypeClass,
+  });
+
+  const [findClass] = useClassByDateMutation();
+
   const t = useTranslations("class.schedule");
   const formSchema = z.object({
     date: z.date({
@@ -63,37 +80,140 @@ export default function WorkshopSelectDate() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      date: reservation.date || undefined,
-      schedule: reservation.schedule || "",
-      adults: reservation.adults || 1,
-      children: reservation.children || 0,
+      date: reservation.dateClass || undefined,
+      schedule: reservation.scheduleClass || "",
+      adults: capacityNormal?.minCapacity || 1,
+      children: reservation.totalChildren || 0,
     },
   });
+
+  // Establecer el valor inicial de adults cuando se carga la capacidad
+  useEffect(() => {
+    if (capacityNormal && !classData && !form.watch("date")) {
+      form.setValue("adults", capacityNormal.minCapacity);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [capacityNormal]);
   const { isLoading, data: schedules } = useSchedulesAdminQuery();
   const [data, setData] = useState<Option[]>([]);
+  const [counterMin, setCounterMin] = useState(1);
   const [open, setOpen] = useState(false);
   useEffect(() => {
-    if (schedules) {
+    if (schedules?.NORMAL) {
       setData(
         schedules?.NORMAL.map((s) => {
+          const selectedDate = form.watch("date");
+          // Si no hay fecha seleccionada, mostrar horarios habilitados
+          if (!selectedDate) {
+            return {
+              value: s.startTime,
+              label: s.startTime,
+              disabled: false,
+            } as Option;
+          }
+          // Buscar si existe una clase para este horario solo si hay fecha seleccionada
+          const existingClass = classFutures?.find(
+            (cls) =>
+              cls.scheduleClass === s.startTime &&
+              format(new Date(cls.dateClass), "yyyy-MM-dd") ===
+                format(selectedDate, "yyyy-MM-dd"),
+          );
           return {
             value: s.startTime,
             label: s.startTime,
-            disabled: isToday(form.watch("date")) && compareTimes(s.startTime),
+            // Solo aplicar la lógica de tiempo si es hoy
+            disabled:
+              isToday(selectedDate) &&
+              compareTimes(
+                s.startTime,
+                (existingClass?.totalParticipants ?? 0) > 0,
+              ),
           } as Option;
         }),
       );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [schedules, form.watch("date")]);
+
+  const [classData, setClassData] = useState<ClassesDataAdmin | undefined>();
+  useEffect(() => {
+    const fetchClassData = async () => {
+      setClassData(undefined);
+      if (!form.watch("date") || !form.watch("schedule")) {
+        return;
+      }
+      const response = await findClass({
+        date: format(form.watch("date"), "dd-MM-yyyy"),
+        schedule: form.watch("schedule"),
+        typeClass: "NORMAL" as TypeClass,
+      }).unwrap();
+
+      setClassData(response);
+    };
+
+    fetchClassData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [form.watch("date"), form.watch("schedule")]);
+
+  useEffect(() => {
+    // Si hay una clase creada con participantes, el mínimo es 1 adulto
+    if (classData && classData.totalParticipants > 0) {
+      const newMin = 1;
+      setCounterMin(newMin);
+      if (form.watch("adults") < newMin) {
+        form.setValue("adults", newMin);
+      }
+      return;
+    }
+
+    // Si no hay clase creada o la clase tiene 0 participantes, validamos capacidad mínima
+    if (capacityNormal) {
+      const totalParticipants = form.watch("children") + form.watch("adults");
+      let newMin: number;
+
+      // Si el total ya cumple la capacidad mínima, permite mínimo 1 adulto
+      if (totalParticipants >= capacityNormal.minCapacity) {
+        newMin = 1;
+      } else {
+        // Si no cumple, el mínimo de adultos debe ser la capacidad mínima
+        newMin = capacityNormal.minCapacity;
+      }
+
+      setCounterMin(newMin);
+      if (form.watch("adults") < newMin) {
+        form.setValue("adults", newMin);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [classData, form.watch("adults"), form.watch("children")]);
 
   const router = useRouter();
 
+  const [deleteClass] = useDeleteClassMutation();
+
+  useEffect(() => {
+    const deleteClassCreated = async () => {
+      if (reservation?.id) {
+        await deleteClass(reservation?.id);
+        setReservation({ ...reservation, id: "" });
+      }
+    };
+
+    deleteClassCreated();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [form.watch("date"), form.watch("schedule")]);
+
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     setReservation({
-      date: values.date,
-      adults: values.adults,
-      children: values.children,
-      schedule: values.schedule,
+      dateClass: values.date,
+      totalAdults: values.adults,
+      totalChildren: values.children,
+      scheduleClass: values.schedule,
+      totalPrice:
+        values.adults *
+          (prices?.find((p) => p.classTypeUser === "ADULT")?.price || 0) +
+        values.children *
+          (prices?.find((p) => p.classTypeUser === "CHILD")?.price || 0),
     });
     router.push("/workshops/reservation");
   };
@@ -104,37 +224,122 @@ export default function WorkshopSelectDate() {
     return isSameDay(date, today);
   };
 
-  // funcion para saber la hora actual formato 11:00
-  const getCurrentTime = () => {
-    const now = new Date();
-    const hours = now.getHours().toString().padStart(2, "0");
-    const minutes = now.getMinutes().toString().padStart(2, "0");
-    return `${hours}:${minutes}`;
+  // Función para comparar si un horario está cerrado según los intervalos definidos
+  const compareTimes = (time1: string, hasParticipants = false) => {
+    if (!closeTime) return true; // Si no hay closeTime, deshabilitar por defecto
+
+    const timeSchedule = parse(time1, "HH:mm", new Date());
+    const newTime = addMinutes(
+      new Date(),
+      closeTime.closeBeforeStartInterval ?? 0,
+    );
+    const newTimeFinal = addMinutes(
+      new Date(),
+      closeTime.finalRegistrationCloseInterval ?? 0,
+    );
+
+    // Si no hay participantes, usar intervalo final
+    if (!hasParticipants) {
+      return timeSchedule < newTimeFinal;
+    }
+
+    return timeSchedule < newTime;
   };
 
-  // Función para comparar si un horario es menor al actual por al menos 50 minutos
-  const compareTimes = (time1: string) => {
-    const [hour1, minute1] = time1.split(":").map(Number);
-    const [hour2, minute2] = getCurrentTime().split(":").map(Number);
+  const { data: classFutures, isLoading: isLoadingClassFutures } =
+    useGetClassesFuturesQuery({
+      typeClass: "NORMAL" as TypeClass,
+    });
 
-    // Convertir ambos horarios a minutos totales
-    const totalMinutes1 = hour1 * 60 + minute1;
-    const totalMinutes2 = hour2 * 60 + minute2;
+  // Actualizar cálculo de disabledDates para que un día se considere cerrado únicamente si para cada
+  // horario definido en schedules.NORMAL existe una clase en ese día y está cerrada.
+  const disabledDates = useMemo(() => {
+    if (!classFutures || !schedules?.NORMAL) return [];
+    const groups = classFutures.reduce(
+      (acc, curr) => {
+        const dateKey = format(new Date(curr.dateClass), "yyyy-MM-dd");
+        if (!acc[dateKey]) acc[dateKey] = [];
+        acc[dateKey].push(curr);
+        return acc;
+      },
+      {} as Record<string, ClassesDataAdmin[]>,
+    );
+    return Object.keys(groups).filter((dateKey) =>
+      schedules.NORMAL.every((sch) =>
+        groups[dateKey].some(
+          (cls) => cls.scheduleClass === sch.startTime && cls.isClosed,
+        ),
+      ),
+    );
+  }, [classFutures, schedules]);
+  // Handler para el cambio de horario: verifica tiempo de cierre y estado cerrado
+  const handleScheduleChange = (newSchedule: string) => {
+    const selectedDate = form.getValues("date");
+    if (!selectedDate) {
+      form.setValue("schedule", newSchedule);
+      return;
+    }
 
-    // Verificar si el horario seleccionado es menor al actual + 50 minutos
-    return totalMinutes1 <= totalMinutes2 + 50;
+    const dateKey = format(selectedDate, "yyyy-MM-dd");
+    const classesForDate = classFutures?.filter(
+      (cls) => format(new Date(cls.dateClass), "yyyy-MM-dd") === dateKey,
+    );
+    const selectedClass = classesForDate?.find(
+      (cls) => cls.scheduleClass === newSchedule,
+    );
+    // Verificar si el horario está cerrado por tiempo (solo si es hoy)
+    if (isToday(selectedDate)) {
+      if (!closeTime) {
+        toast.error("The schedules cannot be verified at this time");
+        form.setValue("schedule", "");
+        return;
+      }
+      if (
+        compareTimes(newSchedule, (selectedClass?.totalParticipants ?? 0) > 0)
+      ) {
+        const hasParticipants = (selectedClass?.totalParticipants ?? 0) > 0;
+        const minutes = hasParticipants
+          ? closeTime.closeBeforeStartInterval
+          : closeTime.finalRegistrationCloseInterval;
+        toast.error(
+          `Registrations for this time are not allowed. You must register at least ${minutes} minutes in advance.`,
+        );
+        form.setValue("schedule", "");
+        return;
+      }
+    }
+
+    // Verificar si la clase está marcada como cerrada (para cualquier fecha)
+    if (selectedClass?.isClosed) {
+      toast.error("The selected time is closed. Please choose another date.");
+      form.setValue("schedule", "");
+      return;
+    }
+
+    form.setValue("schedule", newSchedule);
   };
 
   const { data: prices, isLoading: isLoadingPrices } = usePricesQuery({
-    typeCurrency: "DOLAR",
+    typeCurrency: "USD",
     typeClass: "NORMAL",
   });
 
   useEffect(() => {
+    // Limpiar schedule y classData cuando cambie la fecha
     if (form.getValues("date")) {
       form.setValue("schedule", "");
+      setClassData(undefined);
     }
-  }, [form.getValues("date")]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [form.watch("date")]);
+
+  // Reset classData cuando cambie el schedule
+  useEffect(() => {
+    if (form.watch("schedule")) {
+      setClassData(undefined);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [form.watch("schedule")]);
 
   return (
     <Card className="m-2 border-none shadow">
@@ -174,14 +379,41 @@ export default function WorkshopSelectDate() {
                       </FormControl>
                     </PopoverTrigger>
                     <PopoverContent className="w-full sm:w-[40rem]">
-                      <TwoMonthCalendar
-                        value={field.value}
-                        onChange={(date) => {
-                          field.onChange(date);
-                          setOpen(false);
-                        }}
-                        // classes={classesFutures}
-                      />
+                      {isLoadingClassFutures ? (
+                        <PulsatingDots />
+                      ) : (
+                        <TwoMonthCalendar
+                          value={field.value}
+                          classes={classFutures}
+                          onChange={(date) => {
+                            field.onChange(date);
+                            setOpen(false);
+                            // Resetear la reservación pero mantener la nueva fecha
+                            setReservation({
+                              id: "",
+                              typeClass: "NORMAL",
+                              userName: "",
+                              userEmail: "",
+                              userPhone: "",
+                              totalAdults: 1,
+                              totalChildren: 0,
+                              totalParticipants: 1,
+                              totalPrice: 0,
+                              totalPriceAdults: 0,
+                              totalPriceChildren: 0,
+                              languageClass: "",
+                              dateClass: date,
+                              scheduleClass: "",
+                              comments: "",
+                              allergies: "",
+                              occasion: "",
+                              typeCurrency: "USD",
+                              methodPayment: "",
+                            });
+                          }}
+                          disabledDates={disabledDates} // nueva prop para días bloqueados
+                        />
+                      )}
                     </PopoverContent>
                   </Popover>
                   <FormMessage />
@@ -195,12 +427,13 @@ export default function WorkshopSelectDate() {
                 <FormItem className="flex flex-col items-center">
                   <FormLabel></FormLabel>
                   <FormControl>
-                    {isLoading || !data ? (
+                    {isLoading || isLoadingCloseTime || !data || !closeTime ? (
                       <PulsatingDots />
                     ) : (
                       <ButtonSelect
                         value={field.value}
-                        onChange={field.onChange}
+                        // Usar el handler para validar horario cerrado
+                        onChange={handleScheduleChange}
                         options={data}
                       />
                     )}
@@ -238,7 +471,7 @@ export default function WorkshopSelectDate() {
                           <Counter
                             name={field.name}
                             control={form.control}
-                            min={1}
+                            min={counterMin}
                           />
                         </FormControl>
                         <FormMessage />

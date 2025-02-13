@@ -1,5 +1,6 @@
 "use client";
 import { Product } from "@/types";
+import { useTranslations } from "next-intl";
 import React from "react";
 
 import {
@@ -17,7 +18,6 @@ import { Card, CardContent, CardFooter } from "../ui/card";
 import { AddToCartButton } from "./AddToCartButton";
 import { OutStock } from "./OutStock";
 import { ProductDialog } from "./ProductDialog";
-import { useTranslations } from "next-intl";
 
 interface CartItemProps {
   product: Product;

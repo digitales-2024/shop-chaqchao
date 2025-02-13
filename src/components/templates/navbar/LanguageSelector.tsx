@@ -1,14 +1,15 @@
 "use client";
 
+import { Locale } from "@/i18n/config";
+import { setUserLocale } from "@/services/locale";
+import { useLocale, useTranslations } from "next-intl";
+
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
 } from "@/components/ui/select";
-import { useLocale, useTranslations } from "next-intl";
-import { setUserLocale } from "@/services/locale";
-import { Locale } from "@/i18n/config";
 
 export function LanguageSelector() {
   const t = useTranslations("navbar.languages");

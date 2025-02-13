@@ -1,5 +1,12 @@
+import { useLanguages } from "@/hooks/use-languages";
+import { useReservation } from "@/hooks/use-reservation";
+import { useClassByDateMutation } from "@/redux/services/classApi";
+import { ClassesDataAdmin, TypeClass } from "@/types/classes";
+import { format } from "date-fns";
+import { useTranslations } from "next-intl";
+import { useEffect, useRef, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { Textarea } from "@/components/ui/textarea";
+
 import {
   FormControl,
   FormField,
@@ -7,12 +14,10 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Textarea } from "@/components/ui/textarea";
 
-import { useTranslations } from "next-intl";
-import { ButtonSelect } from "../ui/button-select";
-import { useLanguages } from "@/hooks/use-languages";
 import PulsatingDots from "../common/PulsatingDots";
-import { useEffect, useRef } from "react";
+import { ButtonSelect } from "../ui/button-select";
 
 const TextareaAutosize = ({
   value,
@@ -52,8 +57,63 @@ const TextareaAutosize = ({
 };
 
 export function AdditionalInfoForm() {
-  const { control } = useFormContext();
+  const { control, setValue } = useFormContext();
   const t = useTranslations();
+
+  const { isLoading, languageOptions } = useLanguages();
+  const [findClass, { isLoading: isLoadingClass }] = useClassByDateMutation();
+  const { reservation, setReservation } = useReservation();
+  const [classData, setClassData] = useState<ClassesDataAdmin | null>(null);
+
+  useEffect(() => {
+    const existClass = async () => {
+      if (reservation?.scheduleClass && reservation?.dateClass) {
+        const classResponse = await findClass({
+          typeClass: "NORMAL" as TypeClass,
+          schedule: reservation.scheduleClass,
+          date: format(reservation.dateClass, "dd-MM-yyyy"),
+        });
+
+        if (classResponse.data) {
+          setClassData(classResponse.data);
+          setReservation({
+            ...reservation,
+            languageClass: classResponse.data.languageClass,
+          });
+          // Actualizar el valor del campo del formulario
+          setValue("additional.language", classResponse.data.languageClass);
+        } else {
+          setClassData(null);
+        }
+      }
+    };
+
+    existClass();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reservation.scheduleClass, reservation.dateClass]);
+
+  const [languageOptionsDisabled, setLanguageOptionsDisabled] =
+    useState(languageOptions);
+  useEffect(() => {
+    if (languageOptions) {
+      if (
+        reservation?.languageClass &&
+        classData &&
+        classData?.totalParticipants > 0
+      ) {
+        // Si hay participantes, bloquear todas las opciones
+        setLanguageOptionsDisabled(
+          languageOptions.map((option) => ({
+            ...option,
+            disabled: true,
+          })),
+        );
+      } else {
+        // Si no hay participantes o no existe clase, habilitar las opciones
+        setLanguageOptionsDisabled(languageOptions);
+      }
+    }
+  }, [languageOptions, classData, reservation?.languageClass]);
 
   const occasionOptions = [
     {
@@ -93,8 +153,6 @@ export function AdditionalInfoForm() {
     },
   ];
 
-  const { isLoading, languageOptions } = useLanguages();
-
   return (
     <div className="space-y-6">
       <div>
@@ -112,13 +170,13 @@ export function AdditionalInfoForm() {
                 {t("class.steps.additional.form.language.label")}
               </FormLabel>
               <FormControl>
-                {isLoading ? (
+                {isLoading || isLoadingClass ? (
                   <PulsatingDots />
                 ) : (
                   <ButtonSelect
                     value={field.value}
                     onChange={field.onChange}
-                    options={languageOptions}
+                    options={languageOptionsDisabled}
                   />
                 )}
               </FormControl>
@@ -143,9 +201,7 @@ export function AdditionalInfoForm() {
                         : "other"
                     }
                     onChange={(value) => {
-                      if (value !== "other") {
-                        field.onChange(value);
-                      }
+                      field.onChange(value === "other" ? "" : value);
                     }}
                     options={occasionOptions}
                   />
@@ -173,7 +229,7 @@ export function AdditionalInfoForm() {
         />
         <FormField
           control={control}
-          name="additional.restrictions"
+          name="additional.allergies"
           render={({ field }) => (
             <FormItem>
               <FormLabel>
@@ -190,9 +246,7 @@ export function AdditionalInfoForm() {
                         : "other"
                     }
                     onChange={(value) => {
-                      if (value !== "other") {
-                        field.onChange(value);
-                      }
+                      field.onChange(value === "other" ? "" : value);
                     }}
                     options={restrictionOptions}
                   />
