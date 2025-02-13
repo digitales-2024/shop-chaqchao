@@ -150,3 +150,22 @@ export interface ResponsePayment {
 export interface Token {
   token: string;
 }
+
+// Estados válidos de pago para Izipay
+export const VALID_ORDER_STATUS = ["PAID", "AUTHORISED", "ACCEPTED"] as const;
+export type ValidOrderStatus = (typeof VALID_ORDER_STATUS)[number];
+
+// Funciones de validación para Izipay
+export function validateAmount(amount: number): boolean {
+  return Number.isInteger(amount) && amount > 0;
+}
+
+export function validateEmail(email: string): boolean {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+export function validateOrderId(orderId: string): boolean {
+  const validOrderIdRegex = /^[a-zA-Z0-9_-]+$/;
+  return validOrderIdRegex.test(orderId);
+}

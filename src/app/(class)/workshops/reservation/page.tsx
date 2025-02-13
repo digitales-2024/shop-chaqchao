@@ -9,6 +9,7 @@ import { useReservation } from "@/hooks/use-reservation";
 import { useDeleteClassMutation } from "@/redux/services/classApi";
 import { TransactionData, WorkshopRegistrationData } from "@/types";
 import { getDataOrderDynamic } from "@/utils/getDataOrderDynamic";
+import { paymentValidator } from "@/utils/payment-validator";
 import { zodResolver } from "@hookform/resolvers/zod";
 import KRGlue from "@lyracom/embedded-form-glue";
 import { format } from "date-fns";
@@ -108,14 +109,39 @@ export default function PageRegisterClass() {
         });
       });
 
-      await KR.onSubmit(async (paymentData) => {
+      await KR.onSubmit(async (paymentData: any) => {
+        // Validar la respuesta del pago
+        if (!paymentValidator.validatePaymentResponse(paymentData)) {
+          throw new Error("Respuesta de pago inválida");
+        }
+
         const response = await handleValidatePayment(paymentData);
         if (response.data && response.data.isValid) {
+          // Validar el monto del pago
+          const paidAmount =
+            paymentData.clientAnswer.orderDetails.orderEffectiveAmount;
+          if (
+            !paymentValidator.validateAmount(
+              paidAmount,
+              reservation.totalPrice * 100,
+            )
+          ) {
+            throw new Error("Monto de pago inválido");
+          }
+
           toast("Pago exitoso", {
             description: "El pago ha sido procesado correctamente",
             icon: <ShoppingBag />,
             className: "text-emerald-500",
           });
+
+          // Extraer datos del pago con validaciones
+          const { clientAnswer, serverDate } = paymentData;
+          const { orderDetails, orderStatus } = clientAnswer;
+
+          if (!orderDetails) {
+            throw new Error("Detalles de la orden no disponibles");
+          }
 
           const tData: TransactionData = {
             userEmail: dataTransaction?.userEmail,
@@ -128,21 +154,21 @@ export default function PageRegisterClass() {
             totalChildren: dataTransaction?.totalChildren,
             typeCurrency: dataTransaction?.typeCurrency,
             comments: dataTransaction?.comments,
+            // Usar valores seguros con fallbacks
             izipayAmount:
-              (paymentData.clientAnswer.orderDetails.orderEffectiveAmount &&
-                paymentData.clientAnswer.orderDetails.orderEffectiveAmount.toString()) ||
+              orderDetails.orderEffectiveAmount?.toString() ||
               reservation.totalPrice.toString(),
-            izipayCurrency: paymentData.clientAnswer.orderDetails.orderCurrency,
-            izipayDate: paymentData.serverDate,
-            izipayOrderId: paymentData.clientAnswer.orderDetails.orderId,
-            izipayOrderStatus: paymentData.clientAnswer.orderStatus,
+            izipayCurrency:
+              orderDetails.orderCurrency || reservation.typeCurrency,
+            izipayDate: serverDate,
+            izipayOrderId: orderDetails.orderId || "NO_ORDER_ID",
+            izipayOrderStatus: orderStatus,
           };
 
           const response = await confirmPayment({
             id: dataTransaction.id as string,
             paymentData: tData,
           });
-          console.log("🚀 ~ awaitKR.onSubmit ~ response:", response);
           if (response.data) {
             setOpen(true);
           } else if (response.error) {
