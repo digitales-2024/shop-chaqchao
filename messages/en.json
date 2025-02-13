@@ -404,6 +404,14 @@
           "description": "Join other chocolate enthusiasts for a fun and interactive workshop experience."
         },
         "contact": "Contact us to arrange your perfect chocolate experience"
+      },
+      "calendar": {
+        "tooltip": {
+          "title": "Workshop",
+          "schedule": "Schedule",
+          "closed": "Closed",
+          "available": "Available spots"
+        }
       }
     },
     "summary": {

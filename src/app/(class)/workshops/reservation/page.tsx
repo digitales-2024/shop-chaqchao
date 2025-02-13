@@ -572,7 +572,7 @@ export default function PageRegisterClass() {
               >
                 {currentStep === steps.length - 1
                   ? isLoadingRegisterClass
-                    ? "Procesando..."
+                    ? "Loading..."
                     : t("buttons.confirm")
                   : t("buttons.next")}
               </Button>

@@ -290,7 +290,7 @@ export default function WorkshopSelectDate() {
     // Verificar si el horario está cerrado por tiempo (solo si es hoy)
     if (isToday(selectedDate)) {
       if (!closeTime) {
-        toast.error("No se pueden verificar los horarios en este momento");
+        toast.error("The schedules cannot be verified at this time");
         form.setValue("schedule", "");
         return;
       }
@@ -302,7 +302,7 @@ export default function WorkshopSelectDate() {
           ? closeTime.closeBeforeStartInterval
           : closeTime.finalRegistrationCloseInterval;
         toast.error(
-          `No se permiten registros para este horario. Debe registrarse con al menos ${minutes} minutos de anticipación.`,
+          `Registrations for this time are not allowed. You must register at least ${minutes} minutes in advance.`,
         );
         form.setValue("schedule", "");
         return;
@@ -311,9 +311,7 @@ export default function WorkshopSelectDate() {
 
     // Verificar si la clase está marcada como cerrada (para cualquier fecha)
     if (selectedClass?.isClosed) {
-      toast.error(
-        "El horario seleccionado está cerrado. Por favor elige otra fecha.",
-      );
+      toast.error("The selected time is closed. Please choose another date.");
       form.setValue("schedule", "");
       return;
     }
@@ -386,6 +384,7 @@ export default function WorkshopSelectDate() {
                       ) : (
                         <TwoMonthCalendar
                           value={field.value}
+                          classes={classFutures}
                           onChange={(date) => {
                             field.onChange(date);
                             setOpen(false);

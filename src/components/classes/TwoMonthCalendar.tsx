@@ -13,13 +13,8 @@ import {
   startOfDay,
 } from "date-fns";
 import { es } from "date-fns/locale";
-import {
-  CalendarCheck,
-  ChevronLeft,
-  ChevronRight,
-  Minus,
-  Info,
-} from "lucide-react";
+import { ChevronLeft, ChevronRight, Minus } from "lucide-react";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 
 import { Button } from "@/components/ui/button";
@@ -49,15 +44,7 @@ export function TwoMonthCalendar({
 }: TwoMonthCalendarProps) {
   const [monthStart, setMonthStart] = React.useState(startOfMonth(new Date()));
   const today = startOfDay(new Date());
-
-  const blockedDays = React.useMemo(() => {
-    return classes.filter((c) => c.isClosed);
-  }, [classes]);
-
-  const classesDays = React.useMemo(() => {
-    return classes.filter((c) => !c.isClosed);
-  }, [classes]);
-
+  const t = useTranslations("class.schedule.calendar.tooltip");
   const isDateBlocked = React.useCallback(
     (date: Date) => {
       // Bloquear fechas anteriores a hoy
@@ -65,26 +52,36 @@ export function TwoMonthCalendar({
         return true;
       }
 
-      return blockedDays.some(
-        (blockedDate) =>
-          new Date(blockedDate.dateClass).getDate() === date.getDate() &&
-          new Date(blockedDate.dateClass).getMonth() === date.getMonth() &&
-          new Date(blockedDate.dateClass).getFullYear() === date.getFullYear(),
+      // Obtener todas las clases para esta fecha
+      const classesForThisDate = classes.filter(
+        (c) =>
+          new Date(c.dateClass).getDate() === date.getDate() &&
+          new Date(c.dateClass).getMonth() === date.getMonth() &&
+          new Date(c.dateClass).getFullYear() === date.getFullYear(),
       );
+
+      // Si hay clases para esta fecha, verificar si todas están cerradas
+      if (classesForThisDate.length > 0) {
+        return classesForThisDate.every((c) => c.isClosed);
+      }
+
+      return false;
     },
-    [blockedDays, today],
+    [classes, today],
   );
 
   const isDateCreated = React.useCallback(
     (date: Date) => {
-      return classesDays.some(
-        (createdDate) =>
-          new Date(createdDate.dateClass).getDate() === date.getDate() &&
-          new Date(createdDate.dateClass).getMonth() === date.getMonth() &&
-          new Date(createdDate.dateClass).getFullYear() === date.getFullYear(),
+      // Retornar true si hay al menos una clase abierta para esta fecha
+      return classes.some(
+        (c) =>
+          new Date(c.dateClass).getDate() === date.getDate() &&
+          new Date(c.dateClass).getMonth() === date.getMonth() &&
+          new Date(c.dateClass).getFullYear() === date.getFullYear() &&
+          !c.isClosed,
       );
     },
-    [classesDays],
+    [classes],
   );
 
   const handleDateSelect = (date: Date) => {
@@ -142,12 +139,13 @@ export function TwoMonthCalendar({
               key={index}
               variant="ghost"
               className={cn(
-                "relative h-9 w-9 p-0 font-normal disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-400",
+                "relative flex h-9 w-9 flex-col p-0 font-normal disabled:cursor-not-allowed disabled:bg-gray-100 disabled:text-gray-400",
                 !isCurrentMonth && "text-gray-400",
                 isSelected && "bg-primary text-primary-foreground",
                 isBlocked && "cursor-not-allowed bg-gray-100 text-gray-400",
                 isToday(date) && "bg-accent text-accent-foreground",
-                isCreated && "bg-emerald-100 text-emerald-700",
+                isCreated &&
+                  "border bg-white font-black text-emerald-700 hover:bg-emerald-100",
                 isSelected &&
                   isToday(date) &&
                   "bg-primary text-primary-foreground",
@@ -164,19 +162,41 @@ export function TwoMonthCalendar({
               {isPartiallyOccupied && (
                 <TooltipProvider>
                   <Tooltip>
-                    <TooltipTrigger asChild>
-                      <div className="absolute right-0 top-0">
-                        <Info className="h-3 w-3 text-yellow-500" />
-                      </div>
-                    </TooltipTrigger>
+                    <TooltipTrigger className="absolute bottom-0 h-full w-full"></TooltipTrigger>
                     <TooltipContent>
-                      <p>Parcialmente ocupado</p>
+                      <div className="space-y-2">
+                        <p className="border-b pb-1 font-medium">
+                          {t("title")}
+                        </p>
+                        {classesForDate.map((classInfo, idx) => (
+                          <div
+                            key={idx}
+                            className="space-y-0.5 text-start text-sm"
+                          >
+                            <p className="space-x-2">
+                              <strong>{t("schedule")}:</strong>
+                              <span className="font-normal">
+                                {classInfo.scheduleClass}
+                              </span>
+                              <span
+                                className={cn(
+                                  "text-xs font-normal",
+                                  classInfo.isClosed
+                                    ? "text-rose-500"
+                                    : "text-emerald-500",
+                                )}
+                              >
+                                {classInfo.isClosed
+                                  ? t("closed")
+                                  : t("available")}
+                              </span>
+                            </p>
+                          </div>
+                        ))}
+                      </div>
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
-              )}
-              {isCreated && (
-                <CalendarCheck className="absolute left-0 top-0 size-3 text-emerald-500" />
               )}
               {isBlocked && (
                 <Minus

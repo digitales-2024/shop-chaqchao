@@ -405,6 +405,14 @@
           "description": "Únase a otros entusiastas del chocolate para disfrutar de un taller divertido e interactivo"
         },
         "contact": "Contáctenos para organizar su experiencia de chocolate perfecta"
+      },
+      "calendar": {
+        "tooltip": {
+          "title": "Clases programadas",
+          "schedule": "Horario",
+          "closed": "Cerrado",
+          "available": "Cupos disponibles"
+        }
       }
     },
     "summary": {
