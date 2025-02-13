@@ -530,7 +530,7 @@ export default function PageRegisterClass() {
                       <div className="flex w-full items-center justify-center p-8">
                         <Loader2 className="h-8 w-8 animate-spin text-primary" />
                         <span className="ml-3 text-sm text-muted-foreground">
-                          Cargando formulario de pago...
+                          Loading form...
                         </span>
                       </div>
                     )}
