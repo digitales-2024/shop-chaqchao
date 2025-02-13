@@ -415,17 +415,16 @@ export default function PageRegisterClass() {
             });
           }
 
-          const tokenResponse = await generatePaymentToken({
-            amount: reservation.totalPrice * 100,
-            currency: data.payment.currency,
-            orderId: orderNumber,
-            customer: {
-              email: reservation.userEmail,
-            },
-          });
-
           // Si el método de pago es IZIPAY, se genera el token y se muestra el formulario
           if (data.payment.methodPayment === "IZIPAY") {
+            const tokenResponse = await generatePaymentToken({
+              amount: reservation.totalPrice * 100,
+              currency: data.payment.currency,
+              orderId: orderNumber,
+              customer: {
+                email: reservation.userEmail,
+              },
+            });
             setToken(tokenResponse?.token ?? "");
             payment(tokenResponse?.token ?? "", dataT);
           }
@@ -511,6 +510,8 @@ export default function PageRegisterClass() {
                     duration={300} // 5 minutos en segundos
                     onComplete={async () => {
                       if (dataTransaction?.id) {
+                        setDataTransaction(undefined);
+                        setReservation({ id: undefined });
                         await deleteClassWithRetry(dataTransaction.id);
                       }
                       toast.error(
