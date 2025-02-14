@@ -20,7 +20,7 @@ import { TableCart } from "./TableCart";
 export const DetailCheckout = () => {
   const { amountTotal, cartItems } = useCartStore();
 
-  const { dateOrder, invoice, contact, someonePickup, shippingToAnotherCity } =
+  const { dateOrder, invoice, contact, someonePickup, isShipping } =
     useCartDetail();
   const t = useTranslations("checkout");
   const locale = useLocale();
@@ -206,12 +206,14 @@ export const DetailCheckout = () => {
                   {t("dateOrder.questShipping")}:
                 </span>
                 <span className="font-bold">
-                  {shippingToAnotherCity
-                    ? locale === "es"
-                      ? "Si"
-                      : "Yes"
-                    : "No"}
+                  {isShipping ? (locale === "es" ? "Si" : "Yes") : "No"}
                 </span>
+                {isShipping && dateOrder.shippingState && (
+                  <span className="ml-2 text-sm text-gray-600">
+                    ({dateOrder.shippingState}, {dateOrder.shippingCity},{" "}
+                    {dateOrder.shippingAddress})
+                  </span>
+                )}
               </div>
             </div>
           </div>
