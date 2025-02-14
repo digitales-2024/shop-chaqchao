@@ -7,7 +7,6 @@ import { getCodeCountry } from "@/utils/getCodeCountry";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { CircleAlert } from "lucide-react";
-import { CircleAlert } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 
 import { BusinessInfoCart } from "../business/BusinessInfoCart";
@@ -21,8 +20,7 @@ import { TableCart } from "./TableCart";
 export const DetailCheckout = () => {
   const { amountTotal, cartItems } = useCartStore();
 
-  const { dateOrder, invoice, contact, someonePickup, shippingToAnotherCity } =
-    useCartDetail();
+  const { dateOrder, invoice, contact, someonePickup } = useCartDetail();
   const t = useTranslations("checkout");
   const locale = useLocale();
 
@@ -200,11 +198,6 @@ export const DetailCheckout = () => {
               </span>
               <span className="font-bold">
                 {someonePickup ? (locale === "es" ? "Si" : "Yes") : "No"}
-                {shippingToAnotherCity
-                  ? locale === "es"
-                    ? "Si"
-                    : "Yes"
-                  : "No"}
               </span>
             </div>
           </div>

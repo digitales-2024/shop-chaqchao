@@ -36,8 +36,8 @@ export const StepDateOrder = () => {
     setActiveStep,
     setSomeonePickup,
     someonePickup,
-    setshippingToAnotherCity,
-    shippingToAnotherCity,
+    setIsShipping,
+    isShipping,
   } = useCartDetail();
   const memoizedDateOrder = useMemo(() => dateOrder, [dateOrder]);
   const { date, hour, fullDate } = memoizedDateOrder;
@@ -146,7 +146,7 @@ export const StepDateOrder = () => {
         ...dateOrder,
       });
       setSomeonePickup(someonePickup);
-      setshippingToAnotherCity(shippingToAnotherCity);
+      setIsShipping(isShipping); // Confirmar que se mantiene
       handleStepComplete(2);
       setActiveStep(-1);
     }

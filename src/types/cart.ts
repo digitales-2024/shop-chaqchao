@@ -20,7 +20,7 @@ export type CheckoutCart = {
   customerEmail: string;
   customerPhone: string;
   someonePickup: boolean;
-  shippingToAnotherCity: boolean;
+  isShipping: boolean;
   comments?: string;
   pickupTime: Date;
   clientId?: string;
