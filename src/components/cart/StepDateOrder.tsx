@@ -36,8 +36,8 @@ export const StepDateOrder = () => {
     setActiveStep,
     setSomeonePickup,
     someonePickup,
-    setshippingToAnotherCity,
-    shippingToAnotherCity,
+    setIsShipping,
+    isShipping,
   } = useCartDetail();
   const memoizedDateOrder = useMemo(() => dateOrder, [dateOrder]);
   const { date, hour, fullDate } = memoizedDateOrder;
@@ -141,12 +141,13 @@ export const StepDateOrder = () => {
   }, [openingTime, closingTime, date]);
 
   const handleConfirmDate = async () => {
+  const handleConfirmDate = async () => {
     if (date && hour) {
       setDateOrder({
         ...dateOrder,
       });
       setSomeonePickup(someonePickup);
-      setshippingToAnotherCity(shippingToAnotherCity);
+      setIsShipping(isShipping); // Confirmar que se mantiene
       handleStepComplete(2);
       setActiveStep(-1);
     }
@@ -249,50 +250,51 @@ export const StepDateOrder = () => {
                 onCheckedChange={setSomeonePickup}
               />
             </div>
-          </CardContent>
-        </Card>
-        <div className="flex flex-col space-y-4">
-          <div className="flex items-center justify-between space-x-2 py-4">
-            <Label
-              htmlFor="envio-otra-ciudad"
-              className="flex flex-col space-y-1"
-            >
-              <span>{t("questShipping")}</span>
-              <span className="text-sm font-normal text-muted-foreground">
-                {shippingToAnotherCity ? t("yesShipping") : t("noShipping")}
-              </span>
-            </Label>
-            <Checkbox
-              id="envio-otra-ciudad"
-              checked={shippingToAnotherCity}
-              onCheckedChange={setshippingToAnotherCity}
-            />
-          </div>
-          {/* Sección de detalles de envío */}
-          {shippingToAnotherCity && (
-            <div className="rounded-lg border bg-gray-100 p-4 transition-all duration-300">
-              <h3 className="text-lg font-medium">{t("shippingDetails")}</h3>
-              <div className="mt-2 grid grid-cols-2 gap-4">
-                <LocationSelector />
-                <Input placeholder={t("postalCode")} />
+            <div className="flex flex-col space-y-4">
+              <div className="flex items-center justify-between space-x-2 py-4">
+                <Checkbox
+                  id="envio-otra-ciudad"
+                  checked={isShipping}
+                  onCheckedChange={(checked) => setIsShipping(checked === true)}
+                />
+                <Label
+                  htmlFor="envio-otra-ciudad"
+                  className="flex flex-col space-y-1"
+                >
+                  <span>{t("shippingquest")}</span>
+                  <span className="text-sm font-normal text-muted-foreground">
+                    {isShipping ? t("yesShipping") : t("noShipping")}
+                  </span>
+                </Label>
               </div>
-              {t("labelShipping")}{" "}
-              {dateOrder.location && (
-                <p className="text-sm text-muted-foreground">
-                  {t("addressLabel")}{" "}
-                  {dateOrder.location.cityInt &&
-                  dateOrder.location.stateInt &&
-                  dateOrder.location.countryInt
-                    ? `${dateOrder.location.cityInt}, ${dateOrder.location.stateInt}, ${dateOrder.location.countryInt} - ${dateOrder.location.codPostalInt}`
-                    : t("addressNotAvailable")}
-                </p>
+            </div>
+            <div className="flex flex-wrap items-center gap-4">
+              {!!isShipping && (
+                <div className="mt-2 space-y-1 rounded-lg border bg-card p-6 text-card-foreground shadow-sm">
+                  <h3 className="text-lg font-medium">
+                    {t("shippingDetails")}
+                  </h3>
+                  <div className="flex flex-wrap items-center gap-4">
+                    <div className="flex-shrink-0">
+                      <LocationSelector />
+                    </div>
+                    <div className="min-w-[150px] flex-1">
+                      <Input placeholder={t("address")} />
+                    </div>
+                    <div className="min-w-[150px] flex-1">
+                      <Input placeholder={t("reference")} />
+                    </div>
+                  </div>
+                </div>
               )}
             </div>
-          )}
+          </CardContent>
+        </Card>
+        <div>
+          <Button onClick={handleConfirmDate} disabled={!date || !hour}>
+            {t("button")}
+          </Button>
         </div>
-        <Button onClick={handleConfirmDate} disabled={!date || !hour}>
-          {t("button")}
-        </Button>
       </div>
     </div>
   );
