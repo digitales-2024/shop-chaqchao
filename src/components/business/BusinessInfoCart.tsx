@@ -1,72 +1,15 @@
 "use client";
 import { useBusiness } from "@/hooks/useBusiness";
-import { BusinessHour } from "@/types/business";
 import { motion } from "framer-motion";
-import { Clock, ExternalLink, MapPin } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { Skeleton } from "../ui/skeleton";
+import { ExternalLink, MapPin } from "lucide-react";
 
 const direction = "Chaqchao+Express,+Avenida+Ejército,+Yanahuara";
 export const BusinessInfoCart = () => {
   const t = useTranslations("business");
-  const d = useTranslations("business.days");
-  const { isLoading, business } = useBusiness();
-
-  const getFormattedBusinessHours = (
-    hours: BusinessHour[],
-  ): { nombre: string; valor: string }[] => {
-    const daysOfWeek = [
-      "SUNDAY",
-      "MONDAY",
-      "TUESDAY",
-      "WEDNESDAY",
-      "THURSDAY",
-      "FRIDAY",
-      "SATURDAY",
-    ];
-
-    const groupedHours = hours.reduce(
-      (acc, hour) => {
-        const key = `${hour.openingTime}-${hour.closingTime}`;
-        if (!acc[key]) {
-          acc[key] = [];
-        }
-        acc[key].push(hour.dayOfWeek);
-        return acc;
-      },
-      {} as Record<string, string[]>,
-    );
-
-    const formattedHours = Object.entries(groupedHours).map(([time, days]) => {
-      const dayRanges = days
-        .sort((a, b) => daysOfWeek.indexOf(a) - daysOfWeek.indexOf(b))
-        .reduce((acc, day, index, array) => {
-          if (
-            index === 0 ||
-            daysOfWeek.indexOf(day) !== daysOfWeek.indexOf(array[index - 1]) + 1
-          ) {
-            acc.push([day]);
-          } else {
-            acc[acc.length - 1].push(day);
-          }
-          return acc;
-        }, [] as string[][]);
-
-      const formattedDays = dayRanges
-        .map((range) => {
-          if (range.length === 1) {
-            return `${d(range[0])}`;
-          }
-          return `${d(range[0])} a ${d(range[range.length - 1])}`;
-        })
-        .join(", ");
-
-      return { nombre: formattedDays, valor: time.replace("-", " - ") };
-    });
-
-    return formattedHours;
-  };
+  const { business, isLoading } = useBusiness();
 
   return (
     <motion.div
@@ -84,21 +27,6 @@ export const BusinessInfoCart = () => {
           ) : (
             <span>{business.businessInfo?.address}</span>
           )}
-        </div>
-        <div className="mb-4">
-          <span className="font-black">{t("schedule")}</span>
-          <div className="flex flex-col gap-2">
-            {business.businessHours &&
-              getFormattedBusinessHours(business.businessHours).map(
-                (hour, index) => (
-                  <div key={index} className="inline-flex items-center gap-2">
-                    <Clock className="size-4 shrink-0" />
-                    <span className="font-bold">{hour.nombre}:</span>{" "}
-                    {hour.valor}
-                  </div>
-                ),
-              )}
-          </div>
         </div>
         <a
           href={`https://www.google.com/maps/dir/?api=1&destination=${direction}`}
