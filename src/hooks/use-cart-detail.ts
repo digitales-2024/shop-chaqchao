@@ -13,12 +13,8 @@ interface Contact {
 interface DateOrder {
   date: Date | undefined;
   hour: string | undefined;
-  fullDate: Date | undefined; //agregar nuevos atributos
+  fullDate: Date | undefined;
   isShipping: boolean;
-  shippingAddress?: string;
-  shippingReferences?: string;
-  shippingState?: string;
-  shippingCity?: string;
 }
 
 interface CartDetailState {
@@ -61,13 +57,12 @@ const useCartDetail = create<CartDetailState>((set) => ({
   invoice: {
     documentType: "",
     number: "",
-    address: "",
     typeInvoice: InvoiceType.RECEIPT,
     nameBusiness: "",
-    city: "",
-    codPostal: "",
+    address: "",
     country: "",
     state: "",
+    city: "",
   },
   someonePickup: false,
   setSomeonePickup: (someonePickup: boolean) => set(() => ({ someonePickup })),
