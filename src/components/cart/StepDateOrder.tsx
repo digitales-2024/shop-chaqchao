@@ -123,7 +123,7 @@ export const StepDateOrder = () => {
         ...dateOrder,
       });
       setSomeonePickup(someonePickup);
-      setIsShipping(isShipping); // Confirmar que se mantiene
+      setIsShipping(isShipping);
       handleStepComplete(2);
       setActiveStep(-1);
     }
