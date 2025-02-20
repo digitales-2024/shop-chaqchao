@@ -16,6 +16,7 @@ import { SearchProducts } from "./SearchProduts";
 const MotionCard = motion.create(CartItem);
 import { Card, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
+
 import { FaWhatsapp } from "react-icons/fa";
 import { ArrowUpRight } from "lucide-react";
 
