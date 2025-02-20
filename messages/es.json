@@ -94,6 +94,9 @@
     "metadata": {
       "title": "Categorías de productos",
       "description": "Elija entre nuestra variedad de productos y disfrute de la mejor calidad."
+    },
+    "PopupMessage": {
+      "message": "¿Deseas que tu pedido sea enviado a otra ciudad? Escríbenos a"
     }
   },
   "cartItem": {
@@ -465,6 +468,7 @@
         }
       }
     },
+
     "errors": {
       "name": "Por favor ingrese su nombre completo.",
       "email": "Por favor ingrese un correo electrónico válido.",
