@@ -230,12 +230,6 @@ export const DetailCheckout = () => {
                 <span className="font-bold">
                   {isShipping ? (locale === "es" ? "Si" : "Yes") : "No"}
                 </span>
-                {isShipping && dateOrder.shippingState && (
-                  <span className="ml-2 text-sm text-gray-600">
-                    ({dateOrder.shippingState}, {dateOrder.shippingCity},{" "}
-                    {dateOrder.shippingAddress})
-                  </span>
-                )}
               </div>
             </div>
           </div>
