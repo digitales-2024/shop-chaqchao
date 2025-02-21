@@ -82,7 +82,7 @@ export const BusinessInfoCart = () => {
           {isLoading ? (
             <Skeleton className="h-4 w-32" />
           ) : (
-            <span>{business.businessInfo.address}</span>
+            <span>{business.businessInfo?.address}</span>
           )}
         </div>
         <div className="mb-4">
