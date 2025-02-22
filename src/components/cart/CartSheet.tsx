@@ -118,13 +118,17 @@ export function CartSheet() {
                                   </div>
                                 </div>
                               )}
-                              <Image
-                                className="h-full w-full object-cover"
-                                width={64}
-                                height={64}
-                                alt={item.name}
-                                src={item.image}
-                              />
+                              {item.images &&
+                                item.images.length > 0 &&
+                                item.images[0].url && (
+                                  <Image
+                                    className="h-full w-full object-cover"
+                                    width={64}
+                                    height={64}
+                                    alt={item.name}
+                                    src={item.images[0].url}
+                                  />
+                                )}
                             </div>
                             <Link
                               href={"/"}
