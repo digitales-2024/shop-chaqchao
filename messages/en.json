@@ -239,6 +239,8 @@
     "buttonClose": "Hide location",
     "address": "Collection point",
     "schedule": "Schedule",
+    "messageTimePickup": "Important Information About Your Order",
+    "messageTimePickupLarge": "Your order will be available for pickup during the designated hours. You have a maximum of 48 hours to collect it. After this time, no exchanges or refunds will be accepted. Thank you for your understanding!",
     "see": "See how to get there",
     "days": {
       "SUNDAY": "Sunday",
