@@ -10,7 +10,7 @@ const direction = "Chaqchao+Express,+Avenida+Ejército,+Yanahuara";
 export const BusinessInfoCart = () => {
   const t = useTranslations("business");
   const { business, isLoading } = useBusiness();
-
+  console.log(business);
   return (
     <>
       <motion.div
