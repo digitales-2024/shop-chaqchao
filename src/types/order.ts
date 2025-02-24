@@ -21,7 +21,6 @@ export type OrderDetails = {
   pickupTime: Date;
   isActive: boolean;
   someonePickup: boolean;
-  isShipping: boolean;
   pickupCode: string;
   totalAmount: null;
   client: Client;
