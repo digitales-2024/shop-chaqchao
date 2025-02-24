@@ -1,7 +1,22 @@
 import { WorkshopRegistrationData } from "@/types";
 import { create } from "zustand";
 
-// Extendemos el tipo base para mantener la consistencia
+export interface ReservationData {
+  time: any;
+  date: Date | undefined;
+  schedule: string;
+  adults: number;
+  children: number;
+  comments?: string;
+  confirmed?: boolean;
+  language?: string;
+  userName?: string;
+  userEmail?: string;
+  userPhone?: string;
+  typeCurrency?: string;
+  occasion?: string;
+  restrictions?: string;
+}
 
 interface ReservationState {
   reservation: WorkshopRegistrationData;
