@@ -241,7 +241,7 @@
     "address": "Punto de recogida",
     "schedule": "Horario",
     "messageTimePickupLarge": "Tu pedido estará disponible para recoger en el horario establecido. Tienes un plazo máximo de 48 horas para retirarlo. Pasado este tiempo, no se aceptarán cambios ni devoluciones. ¡Gracias por tu comprensión!",
-    "messageTimePickup": "Información importante sobre la orden",
+    "messageTimePickup": "Información importante sobre tu pedido",
     "see": "Ver como llegar",
     "days": {
       "MONDAY": "Lunes",
