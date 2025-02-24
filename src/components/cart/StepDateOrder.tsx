@@ -14,7 +14,6 @@ import { cn } from "@/lib/utils";
 
 import { Button } from "../ui/button";
 import { Calendar } from "../ui/calendar";
-import { Checkbox } from "../ui/checkbox";
 import { Label } from "../ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import {
@@ -34,8 +33,6 @@ export const StepDateOrder = () => {
     setActiveStep,
     setSomeonePickup,
     someonePickup,
-    setIsShipping,
-    isShipping,
   } = useCartDetail();
   const memoizedDateOrder = useMemo(() => dateOrder, [dateOrder]);
   const { date, hour, fullDate } = memoizedDateOrder;
@@ -144,7 +141,6 @@ export const StepDateOrder = () => {
         ...dateOrder,
       });
       setSomeonePickup(someonePickup);
-      setIsShipping(isShipping); // Confirmar que se mantiene
       handleStepComplete(2);
       setActiveStep(-1);
     }
