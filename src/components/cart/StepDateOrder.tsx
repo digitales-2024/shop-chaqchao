@@ -14,7 +14,6 @@ import { cn } from "@/lib/utils";
 
 import { Button } from "../ui/button";
 import { Calendar } from "../ui/calendar";
-import { Checkbox } from "../ui/checkbox";
 import { Label } from "../ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import {
@@ -34,8 +33,6 @@ export const StepDateOrder = () => {
     setActiveStep,
     setSomeonePickup,
     someonePickup,
-    setIsShipping,
-    isShipping,
   } = useCartDetail();
   const memoizedDateOrder = useMemo(() => dateOrder, [dateOrder]);
   const { date, hour, fullDate } = memoizedDateOrder;
@@ -124,7 +121,6 @@ export const StepDateOrder = () => {
         ...dateOrder,
       });
       setSomeonePickup(someonePickup);
-      setIsShipping(isShipping);
       handleStepComplete(2);
       setActiveStep(-1);
     }
@@ -225,24 +221,6 @@ export const StepDateOrder = () => {
                 checked={someonePickup}
                 onCheckedChange={setSomeonePickup}
               />
-            </div>
-            <div className="flex flex-col space-y-4">
-              <div className="flex items-center justify-between space-x-2 py-4">
-                <Checkbox
-                  id="envio-otra-ciudad"
-                  checked={isShipping}
-                  onCheckedChange={(checked) => setIsShipping(checked === true)}
-                />
-                <Label
-                  htmlFor="envio-otra-ciudad"
-                  className="flex flex-col space-y-1"
-                >
-                  <span>{t("shippingquest")}</span>
-                  <span className="text-sm font-normal text-muted-foreground">
-                    {isShipping ? t("yesShipping") : t("noShipping")}
-                  </span>
-                </Label>
-              </div>
             </div>
           </CardContent>
         </Card>
