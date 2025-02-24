@@ -500,6 +500,8 @@
       "button": "Verificar pedido",
       "messageTimePickupLarge": "Tu pedido estará disponible para recoger en el horario establecido. Tienes un plazo máximo de 48 horas para retirarlo. Pasado este tiempo, no se aceptarán cambios ni devoluciones. ¡Gracias por tu comprensión!",
       "messageTimePickup": "Información importante sobre tu pedido",
+      "messageTimePickupLarge": "Tu pedido estará disponible para recoger en el horario establecido. Tienes un plazo máximo de 48 horas para retirarlo. Pasado este tiempo, no se aceptarán cambios ni devoluciones. ¡Gracias por tu comprensión!",
+      "messageTimePickup": "Información importante sobre tu pedido",
       "messages": {
         "warning": {
           "title": "¡Atención!",
@@ -549,12 +551,6 @@
       "noShipping": "No, recibiré el pedido aquí",
       "yes": "Sí, otra persona recogerá el pedido",
       "yesShipping": "Sí, enviaré a otra ciudad el pedido",
-      "shippingDetails": "Ingresa la dirección de envío",
-      "address": "Dirección",
-      "country": "País",
-      "state": "Estado",
-      "city": "Ciudad",
-      "postalCode": "Código Postal",
       "labelShipping": "Tu pedido será enviado a",
       "messages": {
         "date": "Por favor selecciona una fecha",

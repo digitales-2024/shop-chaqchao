@@ -21,8 +21,7 @@ import { TableCart } from "./TableCart";
 export const DetailCheckout = () => {
   const { amountTotal, cartItems } = useCartStore();
 
-  const { dateOrder, invoice, contact, someonePickup, isShipping } =
-    useCartDetail();
+  const { dateOrder, invoice, contact, someonePickup } = useCartDetail();
   const t = useTranslations("checkout");
   const locale = useLocale();
 
@@ -206,17 +205,6 @@ export const DetailCheckout = () => {
               <span className="text-xs text-gray-400">
                 {t("dateOrder.shippingquest")}:
               </span>
-              <div className="flex items-center">
-                <span className="font-bold">
-                  {isShipping ? (locale === "es" ? "Si" : "Yes") : "No"}
-                </span>
-                {isShipping && dateOrder.shippingState && (
-                  <span className="ml-2 text-sm text-gray-600">
-                    ({dateOrder.shippingState}, {dateOrder.shippingCity},{" "}
-                    {dateOrder.shippingAddress})
-                  </span>
-                )}
-              </div>
             </div>
             <div className="flex flex-col">
               <span className="text-xs text-gray-400">
