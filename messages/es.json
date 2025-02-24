@@ -549,12 +549,6 @@
       "noShipping": "No, recibiré el pedido aquí",
       "yes": "Sí, otra persona recogerá el pedido",
       "yesShipping": "Sí, enviaré a otra ciudad el pedido",
-      "shippingDetails": "Ingresa la dirección de envío",
-      "address": "Dirección",
-      "country": "País",
-      "state": "Estado",
-      "city": "Ciudad",
-      "postalCode": "Código Postal",
       "labelShipping": "Tu pedido será enviado a",
       "messages": {
         "date": "Por favor selecciona una fecha",

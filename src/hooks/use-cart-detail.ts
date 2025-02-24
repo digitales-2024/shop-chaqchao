@@ -13,15 +13,7 @@ interface Contact {
 interface DateOrder {
   date: Date | undefined;
   hour: string | undefined;
-  fullDate: Date | undefined; //agregar nuevos atributos
-  location?: Location;
-}
-
-interface Location {
-  cityInt: string; //atributos para envios interciudades
-  codPostalInt: string;
-  countryInt: string;
-  stateInt: string;
+  fullDate: Date | undefined;
 }
 
 interface CartDetailState {
@@ -32,8 +24,6 @@ interface CartDetailState {
   invoice: InvoiceData | ReceiptData;
   someonePickup: boolean;
   setSomeonePickup: (data: boolean) => void;
-  isShipping: boolean; //envios
-  setIsShipping: (data: boolean) => void;
   setInvoice: (data: InvoiceData) => void;
   activeStep: number;
   setActiveStep: (step: number) => void;
@@ -58,12 +48,6 @@ const useCartDetail = create<CartDetailState>((set) => ({
     date: undefined,
     hour: undefined,
     fullDate: undefined, //agregar nuevos atributos
-    location: {
-      cityInt: "",
-      codPostalInt: "",
-      countryInt: "",
-      stateInt: "",
-    },
   },
   setDateOrder: (dateOrder: DateOrder) => set(() => ({ dateOrder })),
   invoice: {
@@ -78,8 +62,6 @@ const useCartDetail = create<CartDetailState>((set) => ({
   } as InvoiceData,
   someonePickup: false,
   setSomeonePickup: (someonePickup: boolean) => set(() => ({ someonePickup })),
-  isShipping: false,
-  setIsShipping: (isShipping: boolean) => set(() => ({ isShipping })),
   setInvoice: (invoice: InvoiceData) => set(() => ({ invoice })),
   activeStep: 0,
   setActiveStep: (activeStep: number) => set(() => ({ activeStep })),
