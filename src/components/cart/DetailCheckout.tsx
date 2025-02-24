@@ -183,16 +183,6 @@ export const DetailCheckout = () => {
                 <Skeleton className="h-8 w-full" />
               )}
             </div>
-            <div className="flex flex-col">
-              <span className="text-xs text-gray-400">
-                {t("invoice.codPostal")}:
-              </span>
-              {invoice.codPostal ? (
-                <span className="truncate font-bold">{invoice.codPostal}</span>
-              ) : (
-                <Skeleton className="h-8 w-full" />
-              )}
-            </div>
           </div>
 
           <p className="font-bold text-primary">{t("dateOrder.title")}</p>
