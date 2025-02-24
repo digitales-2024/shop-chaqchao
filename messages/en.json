@@ -455,15 +455,6 @@
       "quest": "Will someone else pick up the order?",
       "no": "No, I will pick up the order myself",
       "yes": "Yes, someone else will pick up the order",
-      "shippingquest": "Will you send the order to another city?",
-      "noShipping": "No, thanks",
-      "yesShipping": "Yes, I will send the order to another city",
-      "shippingDetails": "Shipping details",
-      "address": "Address",
-      "state": "State",
-      "city": "City",
-      "reference": "Reference",
-      "labelShipping": "Your order will be shipped to",
       "messages": {
         "date": "The date is required",
         "hour": "The hour is required"

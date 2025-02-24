@@ -440,7 +440,6 @@
       "button": "Confirmar pedido",
       "loading": "Confirmando pedido...",
       "someone": "Recogerá otra persona el pedido",
-      "shipping": "Enviar a otra ciudad el pedido",
       "errors": {
         "terms": "Debes aceptar los términos y condiciones",
         "privacy": "Debes aceptar la política de privacidad",
@@ -457,10 +456,6 @@
       "quest": "¿Recogerá otra persona el pedido?",
       "no": "No, recogeré el pedido yo mismo",
       "yes": "Sí, otra persona recogerá el pedido",
-      "shippingquest": "¿Enviará a otra ciudad el pedido?",
-      "noShipping": "No, gracias",
-      "yesShipping": "Sí, enviaré a otra ciudad el pedido",
-      "labelShipping": "Tu pedido será enviado a",
       "messages": {
         "date": "Por favor selecciona una fecha",
         "hour": "Por favor selecciona una hora"
