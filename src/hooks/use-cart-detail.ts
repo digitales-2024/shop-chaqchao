@@ -62,7 +62,6 @@ const useCartDetail = create<CartDetailState>((set) => ({
     address: "",
     country: "",
     state: "",
-    codPostal: "",
     city: "",
   } as InvoiceData,
   someonePickup: false,

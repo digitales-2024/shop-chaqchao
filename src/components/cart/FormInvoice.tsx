@@ -58,15 +58,10 @@ export const FormInvoice = () => {
         invoice.typeInvoice === InvoiceType.INVOICE
           ? invoice.country || ""
           : "",
-
       state:
         invoice.typeInvoice === InvoiceType.INVOICE ? invoice.state || "" : "",
       city:
         invoice.typeInvoice === InvoiceType.INVOICE ? invoice.city || "" : "",
-      codPostal:
-        invoice.typeInvoice === InvoiceType.INVOICE
-          ? invoice.codPostal || ""
-          : "",
     },
   });
   const t = useTranslations("checkout.invoice");
@@ -92,7 +87,7 @@ export const FormInvoice = () => {
 
       setIsLoading(false);
       form.setValue("nameBusiness", response.razonSocial);
-      form.setValue("address", response.direccion);
+      form.setValue("address", response.direccion || undefined);
     };
 
     if (
