@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 
 import { Skeleton } from "../ui/skeleton";
-import { CircleAlert, ExternalLink, MapPin } from "lucide-react";
+import { ExternalLink, MapPin } from "lucide-react";
 
 const direction = "Chaqchao+Express,+Avenida+Ejército,+Yanahuara";
 export const BusinessInfoCart = () => {
@@ -42,13 +42,6 @@ export const BusinessInfoCart = () => {
           </a>
         </div>
       </motion.div>
-      <div className="space-y-4 p-4">
-        <h3 className="mb-2 flex items-center gap-2 text-lg font-black text-red-600">
-          <CircleAlert className="size-6 shrink-0" />
-          {t("messageTimePickup")}
-        </h3>
-        <h3 className="mb-2 text-red-600">{t("messageTimePickupLarge")}</h3>
-      </div>
     </>
   );
 };

@@ -7,6 +7,7 @@ import { getCodeCountry } from "@/utils/getCodeCountry";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { useLocale, useTranslations } from "next-intl";
+import { CircleAlert } from "lucide-react";
 
 import { BusinessInfoCart } from "../business/BusinessInfoCart";
 import { Card, CardContent, CardHeader } from "../ui/card";
@@ -19,8 +20,7 @@ import { TableCart } from "./TableCart";
 export const DetailCheckout = () => {
   const { amountTotal, cartItems } = useCartStore();
 
-  const { dateOrder, invoice, contact, someonePickup, isShipping } =
-    useCartDetail();
+  const { dateOrder, invoice, contact, someonePickup } = useCartDetail();
   const t = useTranslations("checkout");
   const locale = useLocale();
 
@@ -219,11 +219,6 @@ export const DetailCheckout = () => {
               <span className="text-xs text-gray-400">
                 {t("dateOrder.shippingquest")}:
               </span>
-              <div className="flex items-center">
-                <span className="font-bold">
-                  {isShipping ? (locale === "es" ? "Si" : "Yes") : "No"}
-                </span>
-              </div>
             </div>
           </div>
         </div>
@@ -241,6 +236,15 @@ export const DetailCheckout = () => {
           <span>S/. {amountTotal.toFixed(2)}</span>
         </p>
         <BusinessInfoCart />
+        <div className="space-y-4 p-4">
+          <h3 className="mb-2 flex items-center gap-2 text-lg font-black text-red-600">
+            <CircleAlert className="size-6 shrink-0" />
+            {t("checkout.messageTimePickup")}
+          </h3>
+          <h3 className="mb-2 text-red-600">
+            {t("checkout.messageTimePickupLarge")}
+          </h3>
+        </div>
         <ConfirmCheckout validateCart={validateCart} />
       </CardContent>
     </Card>
