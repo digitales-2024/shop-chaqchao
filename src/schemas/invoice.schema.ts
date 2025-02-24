@@ -11,23 +11,6 @@ export const RecieptSchema = () => {
     number: z.string().regex(/^[0-9]+$/, {
       message: t("number"),
     }),
-    address: z.string().min(1, {
-      message: t("address"),
-    }),
-    country: z.string().min(1, {
-      message: t("country"),
-    }),
-    city: z.string().min(1, {
-      message: t("city"),
-    }),
-    codPostal: z
-      .string()
-      .min(5, {
-        message: t("postalCode"),
-      })
-      .max(5, {
-        message: t("postalCode"),
-      }),
   });
 };
 
@@ -52,22 +35,8 @@ export const InvoiceSchema = () => {
     nameBusiness: z.string().min(1, {
       message: t("nameBusiness"),
     }),
-    address: z.string().min(1, {
-      message: t("address"),
-    }),
-    country: z.string().min(1, {
-      message: t("country"),
-    }),
-    city: z.string().min(1, {
-      message: t("city"),
-    }),
-    codPostal: z
-      .string()
-      .min(5, {
-        message: t("postalCode"),
-      })
-      .max(5, {
-        message: t("postalCode"),
-      }),
+    address: z.string().optional(),
+    country: z.string().optional(),
+    city: z.string().optional(),
   });
 };

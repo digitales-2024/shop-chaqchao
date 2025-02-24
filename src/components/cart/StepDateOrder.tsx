@@ -15,9 +15,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
 import { Calendar } from "../ui/calendar";
 import { Checkbox } from "../ui/checkbox";
-import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import LocationSelector from "../ui/location-input";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import {
   Select,
@@ -242,26 +240,6 @@ export const StepDateOrder = () => {
                   </span>
                 </Label>
               </div>
-            </div>
-            <div className="flex flex-wrap items-center gap-4">
-              {!!isShipping && (
-                <div className="mt-2 space-y-1 rounded-lg border bg-card p-6 text-card-foreground shadow-sm">
-                  <h3 className="text-lg font-medium">
-                    {t("shippingDetails")}
-                  </h3>
-                  <div className="flex flex-wrap items-center gap-4">
-                    <div className="flex-shrink-0">
-                      <LocationSelector />
-                    </div>
-                    <div className="min-w-[150px] flex-1">
-                      <Input placeholder={t("address")} />
-                    </div>
-                    <div className="min-w-[150px] flex-1">
-                      <Input placeholder={t("reference")} />
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
           </CardContent>
         </Card>

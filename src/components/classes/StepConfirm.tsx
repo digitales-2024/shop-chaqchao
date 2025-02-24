@@ -53,9 +53,9 @@ export const StepConfirm = () => {
     useState<PaypalTransactionData>();
   const handleClassRegister = async () => {
     const payload = {
-      userName: reservation.userName,
-      userEmail: reservation.userEmail,
-      userPhone: reservation.userPhone,
+      userName: reservation.userName || "",
+      userEmail: reservation.userEmail || "",
+      userPhone: reservation.userPhone || "",
       scheduleClass: reservation.time,
       languageClass: reservation.language,
       dateClass: reservation.date?.toISOString() || "",

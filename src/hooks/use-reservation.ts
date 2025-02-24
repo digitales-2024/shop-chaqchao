@@ -1,6 +1,7 @@
 import { create } from "zustand";
 
 export interface ReservationData {
+  time: any;
   date: Date | undefined;
   schedule: string;
   adults: number;
