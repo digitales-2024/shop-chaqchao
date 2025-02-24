@@ -10,7 +10,7 @@ const direction = "Chaqchao+Express,+Avenida+Ejército,+Yanahuara";
 export const BusinessInfoCart = () => {
   const t = useTranslations("business");
   const { business, isLoading } = useBusiness();
-
+  console.log(business);
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -23,6 +23,8 @@ export const BusinessInfoCart = () => {
         <div className="mb-2 inline-flex items-center gap-2">
           <MapPin className="size-5 shrink-0" />
           {isLoading ? (
+            <Skeleton className="h-4 w-32" />
+          ) : !business ? (
             <Skeleton className="h-4 w-32" />
           ) : (
             <span>{business.businessInfo?.address}</span>

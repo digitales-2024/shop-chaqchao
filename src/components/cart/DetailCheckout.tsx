@@ -122,73 +122,58 @@ export const DetailCheckout = () => {
             </div>
           </div>
           {invoice.typeInvoice === InvoiceType.INVOICE && (
-            <>
-              <div className="grid grid-cols-1">
-                <div className="flex flex-col">
-                  <span className="text-xs text-gray-400">
-                    {t("invoice.nameBusiness")}:
+            <div className="grid grid-cols-1">
+              <div className="flex flex-col">
+                <span className="text-xs text-gray-400">
+                  {t("invoice.nameBusiness")}:
+                </span>
+                {"nameBusiness" in invoice && invoice.nameBusiness ? (
+                  <span className="truncate font-bold">
+                    {invoice.nameBusiness}
                   </span>
-                  {"nameBusiness" in invoice && invoice.nameBusiness ? (
-                    <span className="truncate font-bold">
-                      {invoice.nameBusiness}
-                    </span>
-                  ) : (
-                    <Skeleton className="h-8 w-full" />
-                  )}
-                </div>
+                ) : (
+                  <Skeleton className="h-8 w-full" />
+                )}
               </div>
-              <div className="grid grid-cols-1">
-                <div className="flex flex-col">
-                  <span className="text-xs text-gray-400">
-                    {t("invoice.address")}:
-                  </span>
-                  {invoice.address ? (
-                    <span className="truncate font-bold">
-                      {invoice.address}
-                    </span>
-                  ) : (
-                    <Skeleton className="h-8 w-full" />
-                  )}
-                </div>
-              </div>
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <div className="flex flex-col">
-                  <span className="text-xs text-gray-400">
-                    {t("invoice.country")}:
-                  </span>
-                  {invoice.country ? (
-                    <span className="truncate font-bold">
-                      {getCodeCountry(invoice.country)}
-                    </span>
-                  ) : (
-                    <Skeleton className="h-8 w-full" />
-                  )}
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-xs text-gray-400">
-                    {t("invoice.state")}:
-                  </span>
-                  {invoice.state ? (
-                    <span className="truncate font-bold">{invoice.state}</span>
-                  ) : (
-                    <Skeleton className="h-8 w-full" />
-                  )}
-                </div>
-              </div>
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <div className="flex flex-col">
-                  <span className="text-xs text-gray-400">
-                    {t("invoice.city")}:
-                  </span>
-                  {invoice.city ? (
-                    <span className="truncate font-bold">{invoice.city}</span>
-                  ) : (
-                    <Skeleton className="h-8 w-full" />
-                  )}
-                </div>
-              </div>
-            </>
+            </div>
           )}
+
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="flex flex-col">
+              <span className="text-xs text-gray-400">
+                {t("invoice.country")}:
+              </span>
+              {invoice.country ? (
+                <span className="truncate font-bold">
+                  {getCodeCountry(invoice.country)}
+                </span>
+              ) : (
+                <Skeleton className="h-8 w-full" />
+              )}
+            </div>
+            <div className="flex flex-col">
+              <span className="text-xs text-gray-400">
+                {t("invoice.state")}:
+              </span>
+              {invoice.state ? (
+                <span className="truncate font-bold">{invoice.state}</span>
+              ) : (
+                <Skeleton className="h-8 w-full" />
+              )}
+            </div>
+          </div>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="flex flex-col">
+              <span className="text-xs text-gray-400">
+                {t("invoice.city")}:
+              </span>
+              {invoice.city ? (
+                <span className="truncate font-bold">{invoice.city}</span>
+              ) : (
+                <Skeleton className="h-8 w-full" />
+              )}
+            </div>
+          </div>
 
           <p className="font-bold text-primary">{t("dateOrder.title")}</p>
           <Separator />
