@@ -215,11 +215,6 @@ export const DetailCheckout = () => {
                 {someonePickup ? (locale === "es" ? "Si" : "Yes") : "No"}
               </span>
             </div>
-            <div className="flex flex-col">
-              <span className="text-xs text-gray-400">
-                {t("dateOrder.shippingquest")}:
-              </span>
-            </div>
           </div>
         </div>
         <Separator />
