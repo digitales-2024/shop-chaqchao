@@ -1,45 +1,26 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import {
-  useConfirmClassPayment,
-  useRegisterClass,
-} from "@/hooks/use-class-registration";
-import { usePayment } from "@/hooks/use-payment";
 import { useReservation } from "@/hooks/use-reservation";
-import { useDeleteClassMutation } from "@/redux/services/classApi";
-import { TransactionData, WorkshopRegistrationData } from "@/types";
-import { getDataOrderDynamic } from "@/utils/getDataOrderDynamic";
-import { paymentValidator } from "@/utils/payment-validator";
 import { zodResolver } from "@hookform/resolvers/zod";
-import KRGlue from "@lyracom/embedded-form-glue";
-import { format } from "date-fns";
-import { ChevronRight, Delete, Info, ShoppingBag } from "lucide-react";
-import { Loader2 } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { ChevronRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
-import { isValidPhoneNumber } from "react-phone-number-input";
-import { toast } from "sonner";
-import { z } from "zod";
 
-import PaymentFormIzipay from "@/components/cart/PaymentForm";
+import { z } from "zod";
 import { AdditionalInfoForm } from "@/components/classes/AdditionalInfoForm";
-import { AlertSuccessPayment } from "@/components/classes/AlertSuccessPayment";
-import { PaymentForm } from "@/components/classes/PaymentForm";
-import PayPalButton from "@/components/classes/PaypalButton";
 import { PersonalInfoForm } from "@/components/classes/PersonalInfoForm";
 import WorkshopSummary from "@/components/classes/WorkshopSummary";
-import CountdownTimer from "@/components/common/CountdownTimer";
+
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
 import { cn } from "@/lib/utils";
 
-const endpoint =
-  process.env.NEXT_PUBLIC_IZIPAY_PAYMENT_ENDPOINT ||
-  "https://api.micuentaweb.pe";
-const publicKey = process.env.NEXT_PUBLIC_IZIPAY_PAYMENT_PUBLIC_KEY || "";
+import { PaymentForm } from "@/components/classes/PaymentForm";
+
+import { isValidPhoneNumber } from "react-phone-number-input";
 
 export default function PageRegisterClass() {
   const t = useTranslations("class.steps");

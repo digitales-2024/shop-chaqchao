@@ -42,20 +42,12 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 
 import { cn } from "@/lib/utils";
 
 import PulsatingDots from "../common/PulsatingDots";
 import { ButtonSelect, Option } from "../ui/button-select";
 import Counter from "../ui/counter";
-import { Separator } from "../ui/separator";
-import { Skeleton } from "../ui/skeleton";
-import { TwoMonthCalendar } from "./TwoMonthCalendar";
 
 export default function WorkshopSelectDate() {
   const { reservation, setReservation } = useReservation();
@@ -332,7 +324,6 @@ export default function WorkshopSelectDate() {
     // Limpiar schedule y classData cuando cambie la fecha
     if (form.getValues("date")) {
       form.setValue("schedule", "");
-      setClassData(undefined);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form.watch("date")]);
