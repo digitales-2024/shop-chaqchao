@@ -85,28 +85,51 @@ export const StepDateOrder = () => {
   const lang = useLocale();
 
   useEffect(() => {
-    if (openingTime && closingTime) {
+    if (openingTime && closingTime && date) {
       const [openingHour, openingMinutes] = openingTime.split(":").map(Number);
       const [closingHour, closingMinutes] = closingTime.split(":").map(Number);
 
       const horas = [];
       const now = new Date();
-      const isToday = date && date.toDateString() === now.toDateString();
-      const currentMinutes = now.getMinutes();
-      const startHour = isToday
-        ? now.getHours() + (currentMinutes === 0 ? 1 : 2)
-        : openingHour + 1;
+      const isToday = date.toDateString() === now.toDateString();
 
-      for (let i = startHour; i <= closingHour; i++) {
-        for (let j = 0; j < 60; j += 15) {
+      let startHour = openingHour;
+      let startMinutes = openingMinutes;
+      let endHour = closingHour;
+      let endMinutes = closingMinutes;
+
+      if (isToday) {
+        startHour = now.getHours();
+        startMinutes = now.getMinutes();
+
+        // Redondear los minutos actuales al siguiente múltiplo de 5
+        startMinutes = Math.ceil(startMinutes / 15) * 15;
+
+        // Si los minutos resultantes son 60, incrementar la hora
+        if (startMinutes === 60) {
+          startMinutes = 0;
+          startHour += 1;
+        }
+
+        // Calcular la hora de finalización como 30 minutos después de la hora actual
+        const adjustedTime = new Date(now.getTime() + 30 * 60000);
+        endHour = adjustedTime.getHours();
+        endMinutes = adjustedTime.getMinutes();
+
+        // Redondear los minutos de finalización al siguiente múltiplo de 5
+        endMinutes = Math.ceil(endMinutes / 15) * 15;
+
+        // Si los minutos resultantes son 60, incrementar la hora
+        if (endMinutes === 60) {
+          endMinutes = 0;
+          endHour += 1;
+        }
+      }
+
+      for (let i = startHour; i <= endHour; i++) {
+        for (let j = i === startHour ? startMinutes : 0; j < 60; j += 15) {
           if (i === openingHour && j < openingMinutes) continue;
-          if (i === closingHour && j >= closingMinutes) break;
-          if (
-            isToday &&
-            (i < now.getHours() + 1 ||
-              (i === now.getHours() + 1 && j <= now.getMinutes()))
-          )
-            continue;
+          if (i === endHour && j >= endMinutes) break;
           horas.push(`${i}:${j.toString().padStart(2, "0")}`);
         }
       }
