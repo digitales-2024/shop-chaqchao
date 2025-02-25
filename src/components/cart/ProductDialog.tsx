@@ -23,11 +23,9 @@ interface ProductDialogProps {
 
 export const ProductDialog = ({ product }: ProductDialogProps) => {
   const [quantity, setQuantity] = useState(1);
-
   const incrementQuantity = () => setQuantity((prev) => prev + 1);
   const decrementQuantity = () =>
     setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
-
   const t = useTranslations("cartItem");
 
   return (
