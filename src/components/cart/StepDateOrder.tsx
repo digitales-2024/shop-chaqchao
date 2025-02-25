@@ -95,34 +95,19 @@ export const StepDateOrder = () => {
 
       let startHour = openingHour;
       let startMinutes = openingMinutes;
-      let endHour = closingHour;
-      let endMinutes = closingMinutes;
+      const endHour = closingHour;
+      const endMinutes = closingMinutes;
 
       if (isToday) {
         startHour = now.getHours();
         startMinutes = now.getMinutes();
 
-        // Redondear los minutos actuales al siguiente múltiplo de 5
-        startMinutes = Math.ceil(startMinutes / 15) * 15;
+        //hora de inicio 30 minutos después de la hora actual
+        startMinutes += 30;
 
-        // Si los minutos resultantes son 60, incrementar la hora
-        if (startMinutes === 60) {
-          startMinutes = 0;
+        if (startMinutes >= 60) {
+          startMinutes -= 60;
           startHour += 1;
-        }
-
-        // Calcular la hora de finalización como 30 minutos después de la hora actual
-        const adjustedTime = new Date(now.getTime() + 30 * 60000);
-        endHour = adjustedTime.getHours();
-        endMinutes = adjustedTime.getMinutes();
-
-        // Redondear los minutos de finalización al siguiente múltiplo de 5
-        endMinutes = Math.ceil(endMinutes / 15) * 15;
-
-        // Si los minutos resultantes son 60, incrementar la hora
-        if (endMinutes === 60) {
-          endMinutes = 0;
-          endHour += 1;
         }
       }
 
