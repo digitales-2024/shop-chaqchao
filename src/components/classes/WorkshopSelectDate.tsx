@@ -1,3 +1,4 @@
+import { useLanguages } from "@/hooks/use-languages";
 import { useReservation } from "@/hooks/use-reservation";
 import {
   useSchedulesAdminQuery,
@@ -76,6 +77,7 @@ export default function WorkshopSelectDate() {
     }),
     adults: z.number(),
     children: z.number(),
+    language: z.string().min(1, { message: t("language.error") }),
   });
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -84,6 +86,7 @@ export default function WorkshopSelectDate() {
       schedule: reservation.scheduleClass || "",
       adults: capacityNormal?.minCapacity || 1,
       children: reservation.totalChildren || 0,
+      language: reservation.languageClass || "",
     },
   });
 
@@ -209,6 +212,7 @@ export default function WorkshopSelectDate() {
       totalAdults: values.adults,
       totalChildren: values.children,
       scheduleClass: values.schedule,
+      languageClass: values.language,
       totalPrice:
         values.adults *
           (prices?.find((p) => p.classTypeUser === "ADULT")?.price || 0) +
@@ -341,6 +345,58 @@ export default function WorkshopSelectDate() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form.watch("schedule")]);
 
+  const { isLoading: isLoadingLanguages, languageOptions } = useLanguages();
+
+  useEffect(() => {
+    const existClass = async () => {
+      if (reservation?.scheduleClass && reservation?.dateClass) {
+        const classResponse = await findClass({
+          typeClass: "NORMAL" as TypeClass,
+          schedule: reservation.scheduleClass,
+          date: format(reservation.dateClass, "dd-MM-yyyy"),
+        });
+
+        if (classResponse.data) {
+          setClassData(classResponse.data);
+          setReservation({
+            ...reservation,
+            languageClass: classResponse.data.languageClass,
+          });
+          // Actualizar el valor del campo del formulario
+          form.setValue("language", classResponse.data.languageClass);
+        } else {
+          setClassData(undefined);
+        }
+      }
+    };
+
+    existClass();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reservation.scheduleClass, reservation.dateClass]);
+
+  const [languageOptionsDisabled, setLanguageOptionsDisabled] =
+    useState(languageOptions);
+  useEffect(() => {
+    if (languageOptions) {
+      if (
+        reservation?.languageClass &&
+        classData &&
+        classData?.totalParticipants > 0
+      ) {
+        // Si hay participantes, bloquear todas las opciones
+        setLanguageOptionsDisabled(
+          languageOptions.map((option) => ({
+            ...option,
+            disabled: true,
+          })),
+        );
+      } else {
+        // Si no hay participantes o no existe clase, habilitar las opciones
+        setLanguageOptionsDisabled(languageOptions);
+      }
+    }
+  }, [languageOptions, classData, reservation?.languageClass]);
+
   return (
     <Card className="m-2 border-none shadow">
       <CardHeader>
@@ -435,6 +491,27 @@ export default function WorkshopSelectDate() {
                         // Usar el handler para validar horario cerrado
                         onChange={handleScheduleChange}
                         options={data}
+                      />
+                    )}
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="language"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("language.label")}</FormLabel>
+                  <FormControl>
+                    {isLoadingLanguages || isLoadingLanguages ? (
+                      <PulsatingDots />
+                    ) : (
+                      <ButtonSelect
+                        value={field.value}
+                        onChange={field.onChange}
+                        options={languageOptionsDisabled}
                       />
                     )}
                   </FormControl>

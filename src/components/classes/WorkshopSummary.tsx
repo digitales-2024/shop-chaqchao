@@ -208,6 +208,9 @@ export default function WorkshopSummary() {
               </p>
             </div>
           </div>
+          {reservation.languageClass && (
+            <InfoRow label={t("language")} value={reservation.languageClass} />
+          )}
         </Section>
         {hasPersonalInfo && (
           <Section title={t("personalInfo")}>
@@ -224,12 +227,6 @@ export default function WorkshopSummary() {
         )}
         {hasAdditionalInfo && (
           <Section title={t("additionalInfo")}>
-            {reservation.languageClass && (
-              <InfoRow
-                label={t("language")}
-                value={reservation.languageClass}
-              />
-            )}
             {reservation.occasion && (
               <InfoRow label={t("occasion")} value={reservation.occasion} />
             )}
