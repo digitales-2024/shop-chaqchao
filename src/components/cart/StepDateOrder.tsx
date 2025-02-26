@@ -107,13 +107,13 @@ export const StepDateOrder = () => {
           adjustedHour += 1;
         }
 
-        // Si la hora actual ajustada es menor que la hora de apertura, usamos la de apertura
+        // cambios en la hora +30 min de la hora actual (today) o +30 min hora de apertura
         if (
           adjustedHour < openingHour ||
           (adjustedHour === openingHour && adjustedMinutes < openingMinutes)
         ) {
           startHour = openingHour;
-          startMinutes = openingMinutes;
+          startMinutes = openingMinutes + 30;
         } else {
           startHour = adjustedHour;
           startMinutes = adjustedMinutes;
