@@ -10,6 +10,7 @@ import { BusinessInfoCart } from "../business/BusinessInfoCart";
 import {
   DialogClose,
   DialogDescription,
+  DialogImage,
   DialogSubtitle,
   DialogTitle,
 } from "../common/Dialog";
@@ -49,6 +50,13 @@ export const ProductDialog = ({ product }: ProductDialogProps) => {
       {isLoadingProductById ? (
         <div className="flex h-full items-center justify-center">
           <PulsatingDots />
+      <div className="grid h-full gap-x-10 md:grid-cols-2">
+        <div className="flex items-center justify-center bg-secondary/5">
+          <DialogImage
+            src={product.image}
+            alt={`producto ${product.name}`}
+            className="object-cover [filter:_drop-shadow(2px_10px_10px_#818182);]"
+          />
         </div>
       ) : (
         <div className="grid h-full gap-x-10 md:grid-cols-2">

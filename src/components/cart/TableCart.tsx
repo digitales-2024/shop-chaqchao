@@ -72,16 +72,12 @@ export const TableCart = ({ validateItem, errorValidate }: TableCartProps) => {
                         </div>
                       </div>
                     )}
-                    {cartItem.images &&
-                      cartItem.images.length > 0 &&
-                      cartItem.images[0].url && (
-                        <Image
-                          height={100}
-                          width={100}
-                          src={cartItem.images[0].url}
-                          alt={cartItem.name}
-                        />
-                      )}
+                    <Image
+                      height={100}
+                      width={100}
+                      src={cartItem.image}
+                      alt={cartItem.name}
+                    />
                   </div>
                   <div className="flex flex-col items-start justify-start">
                     <h3 className="font-bold capitalize">{cartItem.name}</h3>

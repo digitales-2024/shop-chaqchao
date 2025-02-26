@@ -2,7 +2,7 @@
 import useCartDetail from "@/hooks/use-cart-detail";
 import { useBusiness } from "@/hooks/useBusiness";
 import { getDayOfWeek } from "@/types/business";
-import { format } from "date-fns";
+import { format, setHours, setMinutes } from "date-fns";
 import { es } from "date-fns/locale";
 import { CalendarIcon, Clock } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
@@ -34,7 +34,9 @@ export const StepDateOrder = () => {
     setSomeonePickup,
     someonePickup,
   } = useCartDetail();
+
   const memoizedDateOrder = useMemo(() => dateOrder, [dateOrder]);
+
   const { date, hour, fullDate } = memoizedDateOrder;
 
   const { business } = useBusiness();
@@ -46,7 +48,7 @@ export const StepDateOrder = () => {
   // Función para deshabilitar fechas pasadas
   const deshabilitarFechasPasadas = (date: Date) => {
     const today = new Date();
-    today.setHours(0, 0, 0, 0); // Establecer a inicio del día
+    today.setHours(0, 0, 0, 0); // Set to the start of today
     return date < today;
   };
 
@@ -54,15 +56,10 @@ export const StepDateOrder = () => {
   useEffect(() => {
     if (date && hour) {
       const [hours, minutes] = hour.split(":").map(Number);
-
-      // Crear una nueva fecha exactamente como la seleccionó el usuario
-      const fechaSeleccionada = new Date(date);
-      // Establecer la hora exacta que seleccionó el usuario sin conversiones de zona horaria
-      fechaSeleccionada.setHours(hours, minutes, 0, 0);
-
+      const nuevaFechaHora = setMinutes(setHours(date, hours), minutes);
       setDateOrder({
         ...dateOrder,
-        fullDate: fechaSeleccionada,
+        fullDate: nuevaFechaHora,
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

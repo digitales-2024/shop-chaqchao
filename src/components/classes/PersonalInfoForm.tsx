@@ -1,8 +1,5 @@
-import { useReservation } from "@/hooks/use-reservation";
-import { useTranslations } from "next-intl";
-import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
-
+import { Input } from "@/components/ui/input";
 import {
   FormControl,
   FormField,
@@ -10,9 +7,10 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-
+import { useTranslations } from "next-intl";
 import { PhoneInput } from "../ui/phone-input";
+import { useReservation } from "@/hooks/use-reservation";
+import { useEffect } from "react";
 
 export function PersonalInfoForm() {
   const { control, watch } = useFormContext();
@@ -59,7 +57,11 @@ export function PersonalInfoForm() {
             <FormItem>
               <FormLabel>{t("form.email.label")}</FormLabel>
               <FormControl>
-                <Input placeholder={t("form.email.placeholder")} {...field} />
+                <Input
+                  type="email"
+                  placeholder={t("form.email.placeholder")}
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

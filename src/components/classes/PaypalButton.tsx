@@ -1,5 +1,5 @@
 import { useConfirmClassPayment } from "@/hooks/use-class-registration";
-import { TransactionData } from "@/types";
+import { PaypalTransactionData } from "@/types";
 import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { AlertSuccessPayment } from "./AlertSuccessPayment";
 
 interface PayPalButtonProps {
-  transactionData: TransactionData;
+  transactionData: PaypalTransactionData;
 }
 
 const PayPalButton: React.FC<PayPalButtonProps> = ({ transactionData }) => {
@@ -22,21 +22,17 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({ transactionData }) => {
       <PayPalScriptProvider
         options={{
           clientId: clientId,
-          components: "buttons",
-          intent: "capture",
-          "disable-funding": "card",
         }}
       >
         <div className="w-full">
           <PayPalButtons
-            forceReRender={[clientId]} // Para asegurar que el botón se re-renderice si cambia el clientId
             style={{
               layout: "horizontal",
               tagline: false,
             }}
             className="z-10 w-full rounded-full"
             createOrder={(_data, actions) => {
-              if (parseFloat(transactionData?.paypalAmount ?? "0") <= 0) {
+              if (parseFloat(transactionData.paypalAmount) <= 0) {
                 toast.error(
                   "El monto total debe ser mayor a cero para realizar el pago",
                 );
@@ -49,15 +45,15 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({ transactionData }) => {
                 purchase_units: [
                   {
                     amount: {
-                      currency_code: transactionData.typeCurrency,
-                      value: transactionData.paypalAmount ?? "0",
+                      currency_code: "USD",
+                      value: transactionData.paypalAmount,
                     },
                   },
                 ],
               });
             }}
             onClick={() => {
-              if (parseFloat(transactionData.paypalAmount ?? "0") <= 0) {
+              if (parseFloat(transactionData.paypalAmount) <= 0) {
                 console.warn("Payment attempt with zero amount");
               }
             }}
@@ -77,7 +73,7 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({ transactionData }) => {
                 try {
                   const response = await confirmPayment({
                     id: finalTransactionData.id || "",
-                    paymentData: finalTransactionData,
+                    paypalData: finalTransactionData,
                   });
 
                   if (response.data) {
@@ -103,22 +99,8 @@ const PayPalButton: React.FC<PayPalButtonProps> = ({ transactionData }) => {
             onCancel={() => {
               toast.error("Pago cancelado");
             }}
-            onError={(err) => {
-              console.error("Error en PayPal:", err);
-              // Manejar error de bloqueador de anuncios
-              if (err.toString().includes("ERR_BLOCKED_BY_CLIENT")) {
-                toast.error("El botón de PayPal no se pudo cargar", {
-                  description:
-                    "Por favor, desactiva el bloqueador de anuncios para continuar con el pago",
-                  duration: 5000,
-                });
-                return;
-              }
-
-              toast.error("Error al procesar el pago con PayPal", {
-                description:
-                  "Por favor, intenta nuevamente o utiliza otro método de pago",
-              });
+            onError={() => {
+              toast.error("Ocurrió un error al procesar el pago");
             }}
           />
         </div>
