@@ -136,7 +136,6 @@ export const StepDateOrder = () => {
   }, [openingTime, closingTime, date]);
 
   const handleConfirmDate = async () => {
-  const handleConfirmDate = async () => {
     if (date && hour) {
       setDateOrder({
         ...dateOrder,

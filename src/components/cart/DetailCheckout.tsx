@@ -7,7 +7,6 @@ import { getCodeCountry } from "@/utils/getCodeCountry";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { CircleAlert } from "lucide-react";
-import { CircleAlert } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 
 import { BusinessInfoCart } from "../business/BusinessInfoCart";
