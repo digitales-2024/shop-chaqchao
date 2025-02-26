@@ -7,6 +7,7 @@ import { getCodeCountry } from "@/utils/getCodeCountry";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { useLocale, useTranslations } from "next-intl";
+import { CircleAlert } from "lucide-react";
 
 import { BusinessInfoCart } from "../business/BusinessInfoCart";
 import { Card, CardContent, CardHeader } from "../ui/card";
@@ -118,81 +119,74 @@ export const DetailCheckout = () => {
               )}
             </div>
           </div>
-          <div className="grid grid-cols-1">
-            <div className="flex flex-col">
-              <span className="text-xs text-gray-400">
-                {t("invoice.address")}:
-              </span>
-              {invoice.address ? (
-                <span className="truncate font-bold">{invoice.address}</span>
-              ) : (
-                <Skeleton className="h-8 w-full" />
-              )}
-            </div>
-          </div>
           {invoice.typeInvoice === InvoiceType.INVOICE && (
-            <div className="grid grid-cols-1">
-              <div className="flex flex-col">
-                <span className="text-xs text-gray-400">
-                  {t("invoice.nameBusiness")}:
-                </span>
-                {"nameBusiness" in invoice && invoice.nameBusiness ? (
-                  <span className="truncate font-bold">
-                    {invoice.nameBusiness}
+            <>
+              <div className="grid grid-cols-1">
+                <div className="flex flex-col">
+                  <span className="text-xs text-gray-400">
+                    {t("invoice.nameBusiness")}:
                   </span>
-                ) : (
-                  <Skeleton className="h-8 w-full" />
-                )}
+                  {"nameBusiness" in invoice && invoice.nameBusiness ? (
+                    <span className="truncate font-bold">
+                      {invoice.nameBusiness}
+                    </span>
+                  ) : (
+                    <Skeleton className="h-8 w-full" />
+                  )}
+                </div>
               </div>
-            </div>
+              <div className="grid grid-cols-1">
+                <div className="flex flex-col">
+                  <span className="text-xs text-gray-400">
+                    {t("invoice.address")}:
+                  </span>
+                  {invoice.address ? (
+                    <span className="truncate font-bold">
+                      {invoice.address}
+                    </span>
+                  ) : (
+                    <Skeleton className="h-8 w-full" />
+                  )}
+                </div>
+              </div>
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div className="flex flex-col">
+                  <span className="text-xs text-gray-400">
+                    {t("invoice.country")}:
+                  </span>
+                  {invoice.country ? (
+                    <span className="truncate font-bold">
+                      {getCodeCountry(invoice.country)}
+                    </span>
+                  ) : (
+                    <Skeleton className="h-8 w-full" />
+                  )}
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-xs text-gray-400">
+                    {t("invoice.state")}:
+                  </span>
+                  {invoice.state ? (
+                    <span className="truncate font-bold">{invoice.state}</span>
+                  ) : (
+                    <Skeleton className="h-8 w-full" />
+                  )}
+                </div>
+              </div>
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div className="flex flex-col">
+                  <span className="text-xs text-gray-400">
+                    {t("invoice.city")}:
+                  </span>
+                  {invoice.city ? (
+                    <span className="truncate font-bold">{invoice.city}</span>
+                  ) : (
+                    <Skeleton className="h-8 w-full" />
+                  )}
+                </div>
+              </div>
+            </>
           )}
-
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div className="flex flex-col">
-              <span className="text-xs text-gray-400">
-                {t("invoice.country")}:
-              </span>
-              {invoice.country ? (
-                <span className="truncate font-bold">
-                  {getCodeCountry(invoice.country)}
-                </span>
-              ) : (
-                <Skeleton className="h-8 w-full" />
-              )}
-            </div>
-            <div className="flex flex-col">
-              <span className="text-xs text-gray-400">
-                {t("invoice.state")}:
-              </span>
-              {invoice.state ? (
-                <span className="truncate font-bold">{invoice.state}</span>
-              ) : (
-                <Skeleton className="h-8 w-full" />
-              )}
-            </div>
-          </div>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div className="flex flex-col">
-              <span className="text-xs text-gray-400">
-                {t("invoice.city")}:
-              </span>
-              {invoice.city ? (
-                <span className="truncate font-bold">{invoice.city}</span>
-              ) : (
-                <Skeleton className="h-8 w-full" />
-              )}
-            </div>
-            <div className="flex flex-col">
-              <span className="text-xs text-gray-400">
-                {t("invoice.codPostal")}:
-              </span>
-              {invoice.codPostal ? (
-                <span className="truncate font-bold">{invoice.codPostal}</span>
-              ) : (
-                <Skeleton className="h-8 w-full" />
-              )}
-            </div>
-          </div>
 
           <p className="font-bold text-primary">{t("dateOrder.title")}</p>
           <Separator />
@@ -237,6 +231,15 @@ export const DetailCheckout = () => {
           <span>S/. {amountTotal.toFixed(2)}</span>
         </p>
         <BusinessInfoCart />
+        <div className="space-y-4 p-4">
+          <h3 className="mb-2 flex items-center gap-2 text-lg font-black text-red-600">
+            <CircleAlert className="size-6 shrink-0" />
+            {t("checkout.messageTimePickup")}
+          </h3>
+          <h3 className="mb-2 text-red-600">
+            {t("checkout.messageTimePickupLarge")}
+          </h3>
+        </div>
         <ConfirmCheckout validateCart={validateCart} />
       </CardContent>
     </Card>

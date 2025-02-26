@@ -1,4 +1,4 @@
-export interface TransactionData {
+export interface PaypalTransactionData {
   userName: string;
   userEmail: string;
   userPhone: string;
@@ -9,15 +9,10 @@ export interface TransactionData {
   totalChildren: number;
   typeCurrency: string;
   comments: string;
-  paypalAmount?: string;
-  paypalOrderId?: string;
-  paypalOrderStatus?: string;
-  paypalDate?: string;
-  paypalCurrency?: string;
-  izipayAmount?: string;
-  izipayOrderId?: string;
-  izipayOrderStatus?: string;
-  izipayDate?: string;
-  izipayCurrency?: string;
+  paypalAmount: string;
+  paypalOrderId: string;
+  paypalOrderStatus: string;
+  paypalDate: string;
+  paypalCurrency: string;
   id?: string;
 }

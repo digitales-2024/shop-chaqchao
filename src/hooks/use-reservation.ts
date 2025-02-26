@@ -1,41 +1,45 @@
-import { WorkshopRegistrationData } from "@/types";
 import { create } from "zustand";
 
-// Extendemos el tipo base para mantener la consistencia
-
-interface ReservationState {
-  reservation: WorkshopRegistrationData;
-  setReservation: (data: Partial<WorkshopRegistrationData>) => void;
-  resetReservation: () => void;
+export interface ReservationData {
+  time: any;
+  date: Date | undefined;
+  schedule: string;
+  adults: number;
+  children: number;
+  comments?: string;
+  confirmed?: boolean;
+  language?: string;
+  userName?: string;
+  userEmail?: string;
+  userPhone?: string;
+  typeCurrency?: string;
+  occasion?: string;
+  restrictions?: string;
 }
 
-const initialReservation: WorkshopRegistrationData = {
-  id: "",
-  typeClass: "NORMAL",
-  userName: "",
-  userEmail: "",
-  userPhone: "",
-  totalAdults: 1,
-  totalChildren: 0,
-  totalParticipants: 1,
-  totalPrice: 0,
-  totalPriceAdults: 0,
-  totalPriceChildren: 0,
-  languageClass: "",
-  dateClass: undefined,
-  scheduleClass: "",
-  comments: "",
-  allergies: "",
-  occasion: "",
-  typeCurrency: "USD",
-  methodPayment: "",
-};
+interface ReservationState {
+  reservation: ReservationData;
+  setReservation: (data: Partial<ReservationData>) => void;
+}
 
 export const useReservation = create<ReservationState>((set) => ({
-  reservation: initialReservation,
+  reservation: {
+    date: undefined,
+    adults: 1,
+    children: 0,
+    schedule: "",
+    comments: "",
+    confirmed: false,
+    language: "",
+    userName: "",
+    userEmail: "",
+    userPhone: "",
+    typeCurrency: "DOLAR",
+    occasion: "",
+    restrictions: "",
+  },
   setReservation: (newData) =>
     set((state) => ({
       reservation: { ...state.reservation, ...newData },
     })),
-  resetReservation: () => set({ reservation: initialReservation }),
 }));

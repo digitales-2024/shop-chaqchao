@@ -1,4 +1,3 @@
-"use client";
 import { Product } from "@/types";
 import { motion } from "framer-motion";
 import { Minus, Plus } from "lucide-react";
@@ -9,10 +8,10 @@ import { BusinessInfoCart } from "../business/BusinessInfoCart";
 import {
   DialogClose,
   DialogDescription,
+  DialogImage,
   DialogSubtitle,
   DialogTitle,
 } from "../common/Dialog";
-import Gallery from "../common/Gallery";
 import { ScrollArea } from "../ui/scroll-area";
 import { Separator } from "../ui/separator";
 import { AddToCartButton } from "./AddToCartButton";
@@ -34,9 +33,11 @@ export const ProductDialog = ({ product }: ProductDialogProps) => {
     <ScrollArea className="h-full max-h-[90vh]">
       <div className="grid h-full gap-x-10 md:grid-cols-2">
         <div className="flex items-center justify-center bg-secondary/5">
-          {product.images && product.images.length > 0 && (
-            <Gallery images={product.images} label={product.name} />
-          )}
+          <DialogImage
+            src={product.image}
+            alt={`producto ${product.name}`}
+            className="object-cover [filter:_drop-shadow(2px_10px_10px_#818182);]"
+          />
         </div>
         <div className="space-y-6 px-8 py-20">
           <DialogTitle>

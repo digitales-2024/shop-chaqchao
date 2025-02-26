@@ -1,18 +1,4 @@
 {
-  "izipay": {
-    "loading": "Procesando pago...",
-    "initialization": "Preparando formulario de pago...",
-    "pay": "Pagar con tarjeta",
-    "errors": {
-      "token": "Error al generar el token de pago",
-      "validation": "Error al validar el pago",
-      "initialization": "Error al inicializar el pago",
-      "generic": "Error en el proceso de pago",
-      "canceled": "El pago ha sido cancelado",
-      "network": "Error de conexión, por favor intenta de nuevo"
-    },
-    "success": "¡Pago realizado con éxito!"
-  },
   "navbar": {
     "products": "Productos",
     "workshops": "Talleres",
@@ -94,6 +80,9 @@
     "metadata": {
       "title": "Categorías de productos",
       "description": "Elija entre nuestra variedad de productos y disfrute de la mejor calidad."
+    },
+    "PopupMessage": {
+      "message": "¿Deseas que tu pedido sea enviado a otra ciudad? Escríbenos a"
     }
   },
   "cartItem": {
@@ -265,8 +254,7 @@
       "buttons": {
         "back": "Atrás",
         "next": "Siguiente",
-        "confirm": "Confirmar",
-        "paypal": "Pagar con Paypal"
+        "confirm": "Confirmar"
       },
       "personal": {
         "title": "Información Personal",
@@ -326,34 +314,11 @@
       "payment": {
         "title": "Información de pago",
         "description": "Por favor, completa esta información para continuar con tu reserva",
-        "loading": "Procesando clase...",
         "form": {
-          "currency": {
-            "label": "Moneda",
-            "options": {
-              "PEN": "Soles",
-              "USD": "Dolares"
-            },
-            "error": "Selecciona una moneda"
-          },
           "payment": {
             "label": "Selecciona el medio de pago",
             "error": "Selecciona un medio de pago"
-          },
-          "terms": {
-            "label": "He leído y acepto los",
-            "link": "términos y condiciones",
-            "error": "Debes aceptar los términos y condiciones"
-          },
-          "politics": {
-            "label": "He leído y acepto la",
-            "link": "política de privacidad",
-            "error": "Debes aceptar la política de privacidad"
           }
-        },
-        "summary": {
-          "adults": "Adultos",
-          "children": "Niños"
         }
       }
     },
@@ -384,7 +349,6 @@
       "title": "Taller del grano a la barra",
       "selectDate": "Seleccione la fecha y la hora del taller",
       "errorSelectDate": "Por favor, seleccione una fecha",
-      "errorSchedule": "No hay horarios disponibles",
       "pickDate": "Seleccione una fecha",
       "errorSelectSchedule": "Por favor, seleccione un horario",
       "participants": {
@@ -405,14 +369,6 @@
           "description": "Únase a otros entusiastas del chocolate para disfrutar de un taller divertido e interactivo"
         },
         "contact": "Contáctenos para organizar su experiencia de chocolate perfecta"
-      },
-      "calendar": {
-        "tooltip": {
-          "title": "Clases programadas",
-          "schedule": "Horario",
-          "closed": "Cerrado",
-          "available": "Cupos disponibles"
-        }
       }
     },
     "summary": {
@@ -433,38 +389,9 @@
         "title": "Participantes",
         "adults": "Adultos",
         "children": "Niños"
-      },
-      "capacity": {
-        "class": "Clase con capacidad de",
-        "people": "personas",
-        "available": {
-          "title": "Estado actual de la clase:",
-          "label": "Incritos:",
-          "of": "de",
-          "cupos": "cupos",
-          "available": "Cupos disponibles:"
-        },
-        "you": {
-          "title": "Tu reservación",
-          "label": "Personas a inscribir:",
-          "messageSuccess": {
-            "01": "Hay suficientes cupos. Después de tu reservación quedarán",
-            "02": "cupos disponibles."
-          },
-          "messageNotAvailable": {
-            "01": "¡Atención! No hay suficientes cupos. Se excede por",
-            "02": "personas",
-            "03": "Solo quedan",
-            "04": "cupos disponibles."
-          },
-          "messageMinimum": {
-            "01": "La clase necesita mínimo",
-            "02": "personas. Faltan",
-            "03": "personas más."
-          }
-        }
       }
     },
+
     "errors": {
       "name": "Por favor ingrese su nombre completo.",
       "email": "Por favor ingrese un correo electrónico válido.",
@@ -477,23 +404,13 @@
       "title": "¡Registro confirmado!",
       "description": "Tu registro ha sido confirmado y se encuentra en proceso de validación. Recibirás un correo electrónico con la confirmación de tu registro.",
       "accept": "Aceptar"
-    },
-    "confirmation": {
-      "title": "¡Reserva Confirmada!",
-      "description": "Tu reserva para el taller ha sido confirmada exitosamente. Te hemos enviado un correo electrónico con los detalles.",
-      "details": {
-        "name": "Nombre",
-        "email": "Correo",
-        "date": "Fecha",
-        "schedule": "Horario",
-        "transaction": "ID de Transacción"
-      },
-      "backButton": "Volver a Talleres"
     }
   },
   "checkout": {
     "checkout": {
       "button": "Verificar pedido",
+      "messageTimePickupLarge": "Tu pedido estará disponible para recoger en el horario establecido. Tienes un plazo máximo de 48 horas para retirarlo. Pasado este tiempo, no se aceptarán cambios ni devoluciones. ¡Gracias por tu comprensión!",
+      "messageTimePickup": "Información importante sobre tu pedido",
       "messages": {
         "warning": {
           "title": "¡Atención!",

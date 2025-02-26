@@ -1,8 +1,7 @@
 "use client";
 
-import Image from "next/image";
-
 import { WorkshopInfo } from "@/components/classes/WorkshopInfo";
+import Image from "next/image";
 import WorkshopSelectDate from "@/components/classes/WorkshopSelectDate";
 
 export default function ReservationPage() {

@@ -2,7 +2,7 @@
 import useCartDetail from "@/hooks/use-cart-detail";
 import { useBusiness } from "@/hooks/useBusiness";
 import { getDayOfWeek } from "@/types/business";
-import { format } from "date-fns";
+import { format, setHours, setMinutes } from "date-fns";
 import { es } from "date-fns/locale";
 import { CalendarIcon, Clock } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
@@ -34,7 +34,9 @@ export const StepDateOrder = () => {
     setSomeonePickup,
     someonePickup,
   } = useCartDetail();
+
   const memoizedDateOrder = useMemo(() => dateOrder, [dateOrder]);
+
   const { date, hour, fullDate } = memoizedDateOrder;
 
   const { business } = useBusiness();
@@ -46,7 +48,7 @@ export const StepDateOrder = () => {
   // Función para deshabilitar fechas pasadas
   const deshabilitarFechasPasadas = (date: Date) => {
     const today = new Date();
-    today.setHours(0, 0, 0, 0); // Establecer a inicio del día
+    today.setHours(0, 0, 0, 0); // Set to the start of today
     return date < today;
   };
 
@@ -54,15 +56,10 @@ export const StepDateOrder = () => {
   useEffect(() => {
     if (date && hour) {
       const [hours, minutes] = hour.split(":").map(Number);
-
-      // Crear una nueva fecha exactamente como la seleccionó el usuario
-      const fechaSeleccionada = new Date(date);
-      // Establecer la hora exacta que seleccionó el usuario sin conversiones de zona horaria
-      fechaSeleccionada.setHours(hours, minutes, 0, 0);
-
+      const nuevaFechaHora = setMinutes(setHours(date, hours), minutes);
       setDateOrder({
         ...dateOrder,
-        fullDate: fechaSeleccionada,
+        fullDate: nuevaFechaHora,
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -85,28 +82,48 @@ export const StepDateOrder = () => {
   const lang = useLocale();
 
   useEffect(() => {
-    if (openingTime && closingTime) {
+    if (openingTime && closingTime && date) {
       const [openingHour, openingMinutes] = openingTime.split(":").map(Number);
       const [closingHour, closingMinutes] = closingTime.split(":").map(Number);
 
       const horas = [];
       const now = new Date();
-      const isToday = date && date.toDateString() === now.toDateString();
-      const currentMinutes = now.getMinutes();
-      const startHour = isToday
-        ? now.getHours() + (currentMinutes === 0 ? 1 : 2)
-        : openingHour + 1;
+      const isToday = date.toDateString() === now.toDateString();
 
-      for (let i = startHour; i <= closingHour; i++) {
-        for (let j = 0; j < 60; j += 15) {
+      let startHour = openingHour;
+      let startMinutes = openingMinutes;
+      const endHour = closingHour;
+      const endMinutes = closingMinutes;
+
+      if (isToday) {
+        const currentHour = now.getHours();
+        const currentMinutes = now.getMinutes() + 30; // Agregamos 30 minutos
+
+        let adjustedHour = currentHour;
+        let adjustedMinutes = currentMinutes;
+
+        if (adjustedMinutes >= 60) {
+          adjustedMinutes -= 60;
+          adjustedHour += 1;
+        }
+
+        // cambios en la hora +30 min de la hora actual (today) o +30 min hora de apertura
+        if (
+          adjustedHour < openingHour ||
+          (adjustedHour === openingHour && adjustedMinutes < openingMinutes)
+        ) {
+          startHour = openingHour;
+          startMinutes = openingMinutes + 30;
+        } else {
+          startHour = adjustedHour;
+          startMinutes = adjustedMinutes;
+        }
+      }
+
+      for (let i = startHour; i <= endHour; i++) {
+        for (let j = i === startHour ? startMinutes : 0; j < 60; j += 15) {
           if (i === openingHour && j < openingMinutes) continue;
-          if (i === closingHour && j >= closingMinutes) break;
-          if (
-            isToday &&
-            (i < now.getHours() + 1 ||
-              (i === now.getHours() + 1 && j <= now.getMinutes()))
-          )
-            continue;
+          if (i === endHour && j >= endMinutes) break;
           horas.push(`${i}:${j.toString().padStart(2, "0")}`);
         }
       }
@@ -115,12 +132,10 @@ export const StepDateOrder = () => {
     }
   }, [openingTime, closingTime, date]);
 
-  const handleConfirmDate = () => {
+  const handleConfirmDate = async () => {
     if (date && hour) {
       setDateOrder({
         ...dateOrder,
-        date,
-        hour,
       });
       setSomeonePickup(someonePickup);
       handleStepComplete(2);
@@ -159,6 +174,7 @@ export const StepDateOrder = () => {
                   setDateOrder({
                     ...dateOrder,
                     date: date,
+                    hour: undefined, // Resetea la hora cuando se cambia la fecha
                   });
                 }}
                 disabled={deshabilitarFechasPasadas}
@@ -226,9 +242,11 @@ export const StepDateOrder = () => {
             </div>
           </CardContent>
         </Card>
-        <Button onClick={handleConfirmDate} disabled={!date || !hour}>
-          {t("button")}
-        </Button>
+        <div>
+          <Button onClick={handleConfirmDate} disabled={!date || !hour}>
+            {t("button")}
+          </Button>
+        </div>
       </div>
     </div>
   );
