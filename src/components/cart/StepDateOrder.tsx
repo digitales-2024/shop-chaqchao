@@ -162,6 +162,7 @@ export const StepDateOrder = () => {
                   setDateOrder({
                     ...dateOrder,
                     date: date,
+                    hour: undefined, // Resetea la hora cuando se cambia la fecha
                   });
                 }}
                 disabled={deshabilitarFechasPasadas}
