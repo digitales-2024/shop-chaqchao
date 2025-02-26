@@ -96,15 +96,27 @@ export const StepDateOrder = () => {
       const endMinutes = closingMinutes;
 
       if (isToday) {
-        startHour = now.getHours();
-        startMinutes = now.getMinutes();
+        const currentHour = now.getHours();
+        const currentMinutes = now.getMinutes() + 30; // Agregamos 30 minutos
 
-        //hora de inicio 30 minutos después de la hora actual
-        startMinutes += 30;
+        let adjustedHour = currentHour;
+        let adjustedMinutes = currentMinutes;
 
-        if (startMinutes >= 60) {
-          startMinutes -= 60;
-          startHour += 1;
+        if (adjustedMinutes >= 60) {
+          adjustedMinutes -= 60;
+          adjustedHour += 1;
+        }
+
+        // Si la hora actual ajustada es menor que la hora de apertura, usamos la de apertura
+        if (
+          adjustedHour < openingHour ||
+          (adjustedHour === openingHour && adjustedMinutes < openingMinutes)
+        ) {
+          startHour = openingHour;
+          startMinutes = openingMinutes;
+        } else {
+          startHour = adjustedHour;
+          startMinutes = adjustedMinutes;
         }
       }
 
