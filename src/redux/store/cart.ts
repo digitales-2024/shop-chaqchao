@@ -74,14 +74,12 @@ const useCartStore = create(
         );
 
         if (itemExists) {
-          if (
-            typeof itemExists.quantity === "number" &&
-            itemExists.quantity < itemExists.maxStock
-          ) {
+          if (typeof itemExists.quantity === "number") {
             itemExists.quantity++;
             set({ amountTotal: get().amountTotal + itemExists.price });
-            set({ cartItems: [...get().cartItems] });
           }
+
+          set({ cartItems: [...get().cartItems] });
         }
       },
       decreaseQuantity: (productId, quantity) => {

@@ -127,6 +127,5 @@ export const useCatalog = (
     isLoadingProductMerch,
     productById,
     isLoadingProductById,
-    refetchProductById,
   };
 };

@@ -13,7 +13,6 @@ export interface Product {
   isActive: boolean;
   isAvailable: boolean;
   isRestricted: boolean;
-  maxStock: number;
   category: Category;
   variations: [];
 }

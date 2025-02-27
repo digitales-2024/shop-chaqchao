@@ -47,7 +47,7 @@ const useCartDetail = create<CartDetailState>((set) => ({
   dateOrder: {
     date: undefined,
     hour: undefined,
-    fullDate: undefined, //agregar nuevos atributos
+    fullDate: undefined,
   },
   setDateOrder: (dateOrder: DateOrder) => set(() => ({ dateOrder })),
   invoice: {

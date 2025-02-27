@@ -1,5 +1,4 @@
 "use client";
-
 import WorkshopSummary from "@/components/classes/WorkshopSummary";
 import { useEffect, useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
@@ -15,7 +14,6 @@ import { z } from "zod";
 import { useReservation } from "@/hooks/use-reservation";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-
 import { isValidPhoneNumber } from "react-phone-number-input";
 
 export default function PageRegisterClass() {
@@ -53,6 +51,9 @@ export default function PageRegisterClass() {
 
   const additionalSchema = z.object({
     additional: z.object({
+      language: z
+        .string()
+        .min(1, { message: t("additional.form.language.error") }),
       occasion: z.string().optional(),
       restrictions: z.string().optional(),
       comment: z.string().optional(),
@@ -90,6 +91,7 @@ export default function PageRegisterClass() {
         phone: reservation.userPhone || "",
       },
       additional: {
+        language: reservation.language || "",
         occasion: reservation.occasion || "",
         restrictions: reservation.restrictions || "",
         comment: reservation.comments || "",
@@ -126,6 +128,7 @@ export default function PageRegisterClass() {
         setCurrentStep(1);
       } else if (currentStep === 1) {
         setReservation({
+          language: data.additional.language,
           occasion: data.additional.occasion,
           restrictions: data.additional.restrictions,
           comments: data.additional.comment,

@@ -1,4 +1,3 @@
-
 import { useFormContext } from "react-hook-form";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -103,7 +102,30 @@ export function AdditionalInfoForm() {
           {t("class.steps.additional.description")}
         </p>
       </div>
-      <div className="space-y-4">        
+      <div className="space-y-4">
+        <FormField
+          control={control}
+          name="additional.language"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                {t("class.steps.additional.form.language.label")}
+              </FormLabel>
+              <FormControl>
+                {isLoading ? (
+                  <PulsatingDots />
+                ) : (
+                  <ButtonSelect
+                    value={field.value}
+                    onChange={field.onChange}
+                    options={languageOptions}
+                  />
+                )}
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <FormField
           control={control}
           name="additional.occasion"
