@@ -1,10 +1,10 @@
 "use client";
 import { useBusiness } from "@/hooks/useBusiness";
 import { motion } from "framer-motion";
+import { ExternalLink, MapPin } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { Skeleton } from "../ui/skeleton";
-import { ExternalLink, MapPin } from "lucide-react";
 
 const direction = "Chaqchao+Express,+Avenida+Ejército,+Yanahuara";
 export const BusinessInfoCart = () => {
