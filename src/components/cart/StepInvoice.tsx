@@ -27,6 +27,7 @@ export const StepInvoice = () => {
                   country: "",
                   state: "",
                   city: "",
+                  codPostal: "",
                   nameBusiness: "",
                 });
               }}

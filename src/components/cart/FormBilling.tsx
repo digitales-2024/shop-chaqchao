@@ -1,4 +1,4 @@
-import { Invoice } from "@/types";
+import { Invoice, Receipt } from "@/types";
 import { useTranslations } from "next-intl";
 import { UseFormReturn } from "react-hook-form";
 
@@ -14,7 +14,7 @@ import { Input } from "../ui/input";
 import LocationSelector from "../ui/location-input";
 
 interface FormBillingProps {
-  form: UseFormReturn<Invoice, unknown, undefined>;
+  form: UseFormReturn<Receipt | Invoice, unknown, undefined>;
 }
 
 export const FormBilling = ({ form }: FormBillingProps) => {
@@ -63,6 +63,20 @@ export const FormBilling = ({ form }: FormBillingProps) => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>{t("city")}</FormLabel>
+              <FormControl>
+                <Input autoComplete="off" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="codPostal"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>{t("codPostal")}</FormLabel>
               <FormControl>
                 <Input autoComplete="off" {...field} />
               </FormControl>

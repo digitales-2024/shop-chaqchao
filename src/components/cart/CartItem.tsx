@@ -1,5 +1,6 @@
 "use client";
 import { Product } from "@/types";
+import { useTranslations } from "next-intl";
 import React from "react";
 
 import {
@@ -17,7 +18,6 @@ import { Card, CardContent, CardFooter } from "../ui/card";
 import { AddToCartButton } from "./AddToCartButton";
 import { OutStock } from "./OutStock";
 import { ProductDialog } from "./ProductDialog";
-import { useTranslations } from "next-intl";
 
 interface CartItemProps {
   product: Product;
@@ -43,11 +43,13 @@ export const CartItem = React.forwardRef<HTMLDivElement, CartItemProps>(
               <Card className="group/product grid h-full w-full grid-rows-[1fr_200px] border-none bg-transparent p-2 shadow-none transition-all duration-500 hover:bg-white hover:shadow-sm">
                 <CardContent className="flex h-full w-full flex-col items-center justify-start gap-4 border-none p-0">
                   <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-sm bg-secondary/5 p-10">
-                    <DialogImage
-                      src={product.image}
-                      alt={`chaqchao ${product.name}`}
-                      className="object-cover [filter:_drop-shadow(2px_10px_10px_#818182);]"
-                    />
+                    {product.images && product.images.length > 0 && (
+                      <DialogImage
+                        src={product.images[0].url}
+                        alt={`chaqchao ${product.name}`}
+                        className="object-cover [filter:_drop-shadow(2px_10px_10px_#818182);]"
+                      />
+                    )}
                     {!product.isAvailable && <OutStock />}
                   </div>
                 </CardContent>

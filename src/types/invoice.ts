@@ -32,6 +32,7 @@ export interface Receipt {
   country: string;
   state: string;
   city: string;
+  codPostal: string;
   nameBusiness?: string;
 }
 export type Invoice = Receipt;
@@ -51,6 +52,7 @@ export interface InvoiceCreate {
   city: string;
   state: string;
   country: string;
+  postalCode: string;
   paymentStatus: PaymentStatus;
   businessName?: string;
 }

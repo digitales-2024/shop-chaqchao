@@ -23,6 +23,7 @@ import {
 
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import { FormBilling } from "./FormBilling";
 
 const receiptDocuments = [
   {
@@ -46,6 +47,23 @@ export const FormReceipt = () => {
           : DocumentType.DNI,
       number:
         invoice.typeInvoice === InvoiceType.RECEIPT ? invoice.number || "" : "",
+
+      address:
+        invoice.typeInvoice === InvoiceType.RECEIPT
+          ? invoice.address || ""
+          : "",
+      country:
+        invoice.typeInvoice === InvoiceType.RECEIPT
+          ? invoice.country || ""
+          : "",
+      state:
+        invoice.typeInvoice === InvoiceType.RECEIPT ? invoice.state || "" : "",
+      city:
+        invoice.typeInvoice === InvoiceType.RECEIPT ? invoice.city || "" : "",
+      codPostal:
+        invoice.typeInvoice === InvoiceType.RECEIPT
+          ? invoice.codPostal || ""
+          : "",
     },
   });
   const t = useTranslations("checkout.invoice");
@@ -126,6 +144,7 @@ export const FormReceipt = () => {
             </FormItem>
           )}
         />
+        <FormBilling form={form} />
         <Button className="w-full">{c("continue")}</Button>
       </form>
     </Form>

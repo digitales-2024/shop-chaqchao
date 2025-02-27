@@ -1,4 +1,18 @@
 {
+  "izipay": {
+    "loading": "Processing payment...",
+    "initialization": "Preparing payment form...",
+    "pay": "Pay with card",
+    "errors": {
+      "token": "Error generating payment token",
+      "validation": "Error validating payment",
+      "initialization": "Error initializing payment",
+      "generic": "Error in payment process",
+      "canceled": "Payment has been cancelled",
+      "network": "Connection error, please try again"
+    },
+    "success": "Payment successful!"
+  },
   "navbar": {
     "products": "Products",
     "workshops": "Workshops",
@@ -80,9 +94,6 @@
     "metadata": {
       "title": "Product categories",
       "description": "Choose from our variety of products and enjoy the best quality."
-    },
-    "PopupMessage": {
-      "message": "Do you want your order to be sent to another city? Write to us at"
     }
   },
   "cartItem": {
@@ -253,7 +264,8 @@
       "buttons": {
         "back": "Back",
         "next": "Next",
-        "confirm": "Confirm"
+        "confirm": "Confirm",
+        "paypal": "Pay with Paypal"
       },
       "personal": {
         "title": "Contact Information",
@@ -313,11 +325,34 @@
       "payment": {
         "title": "Payment Information",
         "description": "Please complete this information to continue with your reservation",
+        "loading": "Processing workshop...",
         "form": {
+          "currency": {
+            "label": "Select the currency",
+            "options": {
+              "PEN": "Soles",
+              "USD": "Dollars"
+            },
+            "error": "Select the currency"
+          },
           "payment": {
             "label": "Select the payment method",
             "error": "Select the payment method"
+          },
+          "terms": {
+            "label": "I have read and accept the",
+            "link": "Terms and Conditions",
+            "error": "You must accept the terms and conditions"
+          },
+          "politics": {
+            "label": "By continuing, you agree to our",
+            "link": "Privacy Policy",
+            "error": "You must accept the privacy policy"
           }
+        },
+        "summary": {
+          "adults": "Adultos",
+          "children": "Niños"
         }
       }
     },
@@ -348,6 +383,7 @@
       "title": "Bean to Bar Workshop",
       "selectDate": "Select Date and hour of the workshop",
       "errorSelectDate": "Please select a date",
+      "errorSchedule": "Not available schedules",
       "pickDate": "Select a date",
       "errorSelectSchedule": "Please select a schedule",
       "participants": {
@@ -368,9 +404,16 @@
           "description": "Join other chocolate enthusiasts for a fun and interactive workshop experience."
         },
         "contact": "Contact us to arrange your perfect chocolate experience"
+      },
+      "calendar": {
+        "tooltip": {
+          "title": "Workshop",
+          "schedule": "Schedule",
+          "closed": "Closed",
+          "available": "Available spots"
+        }
       }
     },
-
     "summary": {
       "title": "CHAQCHAO’S BEAN TO BAR CHOCOLATE CLASS",
       "basicInfo": "Basic Information",
@@ -389,6 +432,36 @@
         "title": "Participants",
         "adults": "Adults",
         "children": "Children"
+      },
+      "capacity": {
+        "class": "Class with capacity of",
+        "people": "people",
+        "available": {
+          "title": "Current class status:",
+          "label": "Registered:",
+          "of": "of",
+          "cupos": "spots",
+          "available": "Available spots:"
+        },
+        "you": {
+          "title": "Your reservation",
+          "label": "People to register:",
+          "messageSuccess": {
+            "01": "There are enough spots. After your reservation, there will be",
+            "02": "spots available."
+          },
+          "messageNotAvailable": {
+            "01": "Attention! Not enough spots. Exceeds by",
+            "02": "people",
+            "03": "Only",
+            "04": "spots left."
+          },
+          "messageMinimum": {
+            "01": "The class needs a minimum of",
+            "02": "people. Missing",
+            "03": "more people."
+          }
+        }
       }
     },
     "errors": {
@@ -403,13 +476,23 @@
       "title": "Registration confirmed!",
       "description": "Your registration has been confirmed and is in the process of validation. You will receive an email with the confirmation of your registration.",
       "accept": "Accept"
+    },
+    "confirmation": {
+      "title": "Reservation confirmed!",
+      "description": "Your reservation for the workshop has been confirmed successfully. We have sent you an email with the details.",
+      "details": {
+        "name": "Name",
+        "email": "Email",
+        "date": "Date",
+        "schedule": "Schedule",
+        "transaction": "Transaction ID"
+      },
+      "backButton": "Back to Workshops"
     }
   },
   "checkout": {
     "checkout": {
       "button": "Checkout",
-      "messageTimePickup": "Important Information About Your Order",
-      "messageTimePickupLarge": "Your order will be available for pickup during the designated hours. You have a maximum of 48 hours to collect it. After this time, no exchanges or refunds will be accepted. Thank you for your understanding!",
       "messages": {
         "warning": {
           "title": "Warning",

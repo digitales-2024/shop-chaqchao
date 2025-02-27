@@ -1,20 +1,45 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import WorkshopSummary from "@/components/classes/WorkshopSummary";
+import {
+  useConfirmClassPayment,
+  useRegisterClass,
+} from "@/hooks/use-class-registration";
+import { usePayment } from "@/hooks/use-payment";
+import { useReservation } from "@/hooks/use-reservation";
+import { useDeleteClassMutation } from "@/redux/services/classApi";
+import { TransactionData, WorkshopRegistrationData } from "@/types";
+import { getDataOrderDynamic } from "@/utils/getDataOrderDynamic";
+import { paymentValidator } from "@/utils/payment-validator";
+import { zodResolver } from "@hookform/resolvers/zod";
+import KRGlue from "@lyracom/embedded-form-glue";
+import { format } from "date-fns";
+import { ChevronRight, Delete, Info, ShoppingBag } from "lucide-react";
+import { Loader2 } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { PersonalInfoForm } from "@/components/classes/PersonalInfoForm";
-import { AdditionalInfoForm } from "@/components/classes/AdditionalInfoForm";
-import { PaymentForm } from "@/components/classes/PaymentForm";
-import { ChevronRight } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { useReservation } from "@/hooks/use-reservation";
-import { useRouter } from "next/navigation";
-import { useTranslations } from "next-intl";
 import { isValidPhoneNumber } from "react-phone-number-input";
+import { toast } from "sonner";
+import { z } from "zod";
+
+import PaymentFormIzipay from "@/components/cart/PaymentForm";
+import { AdditionalInfoForm } from "@/components/classes/AdditionalInfoForm";
+import { AlertSuccessPayment } from "@/components/classes/AlertSuccessPayment";
+import { PaymentForm } from "@/components/classes/PaymentForm";
+import PayPalButton from "@/components/classes/PaypalButton";
+import { PersonalInfoForm } from "@/components/classes/PersonalInfoForm";
+import WorkshopSummary from "@/components/classes/WorkshopSummary";
+import CountdownTimer from "@/components/common/CountdownTimer";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+
+import { cn } from "@/lib/utils";
+
+const endpoint =
+  process.env.NEXT_PUBLIC_IZIPAY_PAYMENT_ENDPOINT ||
+  "https://api.micuentaweb.pe";
+const publicKey = process.env.NEXT_PUBLIC_IZIPAY_PAYMENT_PUBLIC_KEY || "";
 
 export default function PageRegisterClass() {
   const t = useTranslations("class.steps");
@@ -24,17 +49,166 @@ export default function PageRegisterClass() {
     { id: "additional", title: t("additional.title") },
     { id: "payment", title: t("payment.title") },
   ];
+  const locale = useLocale();
 
   const { reservation, setReservation } = useReservation();
+  const [showPayment, setShowPayment] = useState(false);
+  const [isLoadingIzipay, setIsLoadingIzipay] = useState(false);
+  const [token, setToken] = useState("");
+  const { generatePaymentToken, handleValidatePayment } = usePayment();
+  const { registerClass, isLoadingRegisterClass } = useRegisterClass();
   const router = useRouter();
+  const { orderNumber } = getDataOrderDynamic();
+
+  const [dataTransaction, setDataTransaction] = useState<TransactionData>();
+  const payment = async (token: string, dataTransaction: TransactionData) => {
+    try {
+      setIsLoadingIzipay(true);
+      await getFormToken(token, dataTransaction);
+      setShowPayment(true);
+    } catch (error) {
+      handlePaymentError();
+    } finally {
+      setIsLoadingIzipay(false);
+    }
+  };
+
+  const handlePaymentError = () => {
+    toast("Error ", {
+      description: "",
+      icon: <Info />,
+      className: "text-rose-500",
+    });
+    // Resetear orderInfo y token para permitir reintentar
+    setShowPayment(false);
+  };
+
+  const { confirmPayment } = useConfirmClassPayment();
+  const [open, setOpen] = useState(false);
+
+  const getFormToken = async (
+    token: string,
+    dataTransaction: TransactionData,
+  ) => {
+    try {
+      const { KR } = await KRGlue.loadLibrary(endpoint, publicKey);
+      await KR.setFormConfig({
+        formToken: token,
+        "kr-language": locale,
+        "kr-public-key": publicKey,
+      });
+
+      await KR.onError((error) => {
+        toast(error.errorMessage, {
+          description: error.detailedErrorMessage,
+          icon: <Delete />,
+          className: "text-rose-500",
+        });
+      });
+
+      await KR.onPopinClosed(() => {
+        toast("Cerrar", {
+          description: "El popin ha sido cerrado",
+          icon: <Info />,
+          className: "text-rose-500",
+        });
+      });
+
+      await KR.onSubmit(async (paymentData: any) => {
+        // Validar la respuesta del pago
+        if (!paymentValidator.validatePaymentResponse(paymentData)) {
+          throw new Error("Respuesta de pago inválida");
+        }
+
+        const response = await handleValidatePayment(paymentData);
+        if (response.data && response.data.isValid) {
+          // Validar el monto del pago
+          const paidAmount =
+            paymentData.clientAnswer.orderDetails.orderEffectiveAmount;
+          if (
+            !paymentValidator.validateAmount(
+              paidAmount,
+              reservation.totalPrice * 100,
+            )
+          ) {
+            throw new Error("Monto de pago inválido");
+          }
+
+          toast("Pago exitoso", {
+            description: "El pago ha sido procesado correctamente",
+            icon: <ShoppingBag />,
+            className: "text-emerald-500",
+          });
+
+          // Extraer datos del pago con validaciones
+          const { clientAnswer, serverDate } = paymentData;
+          const { orderDetails, orderStatus } = clientAnswer;
+
+          if (!orderDetails) {
+            throw new Error("Detalles de la orden no disponibles");
+          }
+
+          const tData: TransactionData = {
+            userEmail: dataTransaction?.userEmail,
+            userName: dataTransaction?.userName,
+            userPhone: dataTransaction?.userPhone,
+            scheduleClass: dataTransaction?.scheduleClass,
+            languageClass: dataTransaction?.languageClass,
+            dateClass: dataTransaction?.dateClass,
+            totalAdults: dataTransaction?.totalAdults,
+            totalChildren: dataTransaction?.totalChildren,
+            typeCurrency: dataTransaction?.typeCurrency,
+            comments: dataTransaction?.comments,
+            // Usar valores seguros con fallbacks
+            izipayAmount:
+              orderDetails.orderEffectiveAmount?.toString() ||
+              reservation.totalPrice.toString(),
+            izipayCurrency:
+              orderDetails.orderCurrency || reservation.typeCurrency,
+            izipayDate: serverDate,
+            izipayOrderId: orderDetails.orderId || "NO_ORDER_ID",
+            izipayOrderStatus: orderStatus,
+          };
+
+          const response = await confirmPayment({
+            id: dataTransaction.id as string,
+            paymentData: tData,
+          });
+          if (response.data) {
+            setOpen(true);
+          } else if (response.error) {
+            const errorMessage =
+              (response.error as { message?: string }).message ||
+              "Error desconocido";
+            toast("Ocurrió un error al confirmar el pago", {
+              description: errorMessage,
+            });
+          }
+        }
+        KR.closePopin("#formPayment"); // Close the popin after payment
+        return false;
+      });
+
+      await KR.renderElements(
+        "#formPayment",
+      ); /* Render the payment form into myPaymentForm div*/
+    } catch (error) {
+      toast("", {
+        description: "",
+        icon: <Info />,
+        className: "text-rose-500",
+      });
+    }
+  };
 
   useEffect(() => {
-    if (!reservation.date && !reservation.schedule) {
+    if (!reservation.dateClass && !reservation.scheduleClass) {
       router.push(`/workshops`);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reservation]);
 
-  // Esquemas separados para cada paso
+  // Esquemas de validación
   const personalSchema = z.object({
     personal: z.object({
       name: z.string().min(2, {
@@ -55,20 +229,28 @@ export default function PageRegisterClass() {
         .string()
         .min(1, { message: t("additional.form.language.error") }),
       occasion: z.string().optional(),
-      restrictions: z.string().optional(),
+      allergies: z.string().optional(),
       comment: z.string().optional(),
     }),
   });
 
   const paymentSchema = z.object({
     payment: z.object({
+      currency: z
+        .string()
+        .min(1, { message: t("payment.form.currency.error") }),
       methodPayment: z
         .string()
         .min(1, { message: t("payment.form.payment.error") }),
+      terms: z.boolean().refine((v) => v, {
+        message: t("payment.form.terms.error"),
+      }),
+      politics: z.boolean().refine((v) => v, {
+        message: t("payment.form.politics.error"),
+      }),
     }),
   });
 
-  // Usar solo el esquema del paso actual
   const getCurrentSchema = () => {
     switch (currentStep) {
       case 0:
@@ -91,21 +273,53 @@ export default function PageRegisterClass() {
         phone: reservation.userPhone || "",
       },
       additional: {
-        language: reservation.language || "",
+        language: reservation.languageClass || "",
         occasion: reservation.occasion || "",
-        restrictions: reservation.restrictions || "",
+        allergies: reservation.allergies || "",
         comment: reservation.comments || "",
       },
       payment: {
+        currency: "USD",
         methodPayment: "",
+        terms: false,
+        politics: false,
       },
     },
     mode: "onSubmit",
   });
 
+  const [deleteClass] = useDeleteClassMutation();
+
+  const deleteClassWithRetry = async (classId: string, maxRetries = 3) => {
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        await deleteClass(classId);
+        setDataTransaction(undefined);
+        setReservation({ id: undefined });
+        return true;
+      } catch (error) {
+        if (attempt === maxRetries) {
+          return false;
+        }
+        // Esperar antes del siguiente intento (500ms, 1000ms, 1500ms)
+        await new Promise((resolve) => setTimeout(resolve, attempt * 500));
+      }
+    }
+  };
+
+  useEffect(() => {
+    const resetCreateClass = async () => {
+      if (dataTransaction?.id) {
+        await deleteClassWithRetry(dataTransaction.id);
+      }
+    };
+
+    resetCreateClass();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [form.watch("payment.currency")]);
+
   const onSubmit = async (data: any) => {
     try {
-      // Validar solo el paso actual
       const currentSchema = getCurrentSchema();
       const result = currentSchema.safeParse(data);
 
@@ -118,7 +332,6 @@ export default function PageRegisterClass() {
         return;
       }
 
-      // Actualizar el estado global según el paso actual
       if (currentStep === 0) {
         setReservation({
           userName: data.personal.name,
@@ -128,24 +341,107 @@ export default function PageRegisterClass() {
         setCurrentStep(1);
       } else if (currentStep === 1) {
         setReservation({
-          language: data.additional.language,
+          languageClass: data.additional.language,
           occasion: data.additional.occasion,
-          restrictions: data.additional.restrictions,
+          allergies: data.additional.allergies,
           comments: data.additional.comment,
         });
         setCurrentStep(2);
       } else if (currentStep === 2) {
-        setReservation({ confirmed: true });
-        // Aquí iría la lógica de envío final
-        console.log("Reserva confirmada!");
+        // const paymentMethod = data.payment.methodPayment;
+
+        // Validar que los campos requeridos existan
+        if (
+          !reservation.userName ||
+          !reservation.userEmail ||
+          !reservation.userPhone ||
+          !reservation.scheduleClass ||
+          !reservation.languageClass ||
+          !reservation.dateClass
+        ) {
+          toast.error("Required fields are missing");
+          return;
+        }
+
+        const payload: WorkshopRegistrationData = {
+          userName: reservation.userName,
+          userEmail: reservation.userEmail,
+          userPhone: reservation.userPhone,
+          scheduleClass: reservation.scheduleClass,
+          languageClass: reservation.languageClass,
+          dateClass: reservation.dateClass,
+          totalParticipants: reservation.totalParticipants,
+          totalAdults: reservation.totalAdults || 0,
+          totalChildren: reservation.totalChildren || 0,
+          typeCurrency: data.payment.currency as "USD" | "PEN",
+          allergies: reservation.allergies || "",
+          occasion: reservation.occasion || "",
+          comments: reservation.comments || "",
+          typeClass: "NORMAL",
+          methodPayment: data.payment.methodPayment,
+          totalPriceAdults: reservation.totalPriceAdults,
+          totalPriceChildren: reservation.totalPriceChildren,
+          totalPrice: reservation.totalPrice,
+        };
+        try {
+          const response = await registerClass(payload).unwrap();
+          const dataT: TransactionData = {
+            userName: reservation.userName,
+            userEmail: reservation.userEmail,
+            userPhone: reservation.userPhone,
+            scheduleClass: reservation.scheduleClass,
+            languageClass: reservation.languageClass,
+            dateClass: format(reservation.dateClass, "dd/MM/yyyy"),
+            totalAdults: reservation.totalAdults || 0,
+            totalChildren: reservation.totalChildren || 0,
+            typeCurrency: data.payment.currency,
+            comments: reservation.comments || "",
+          };
+          if (response) {
+            dataT.id = response.id;
+            setDataTransaction({
+              ...dataT,
+              paypalAmount: reservation.totalPrice.toString(),
+              paypalOrderId: "",
+              paypalOrderStatus: "",
+              paypalDate: new Date().toISOString(),
+              paypalCurrency: reservation.typeCurrency,
+            });
+
+            setReservation({
+              ...reservation,
+              id: response.id,
+              typeCurrency: data.payment.currency as "USD" | "PEN",
+            });
+          }
+
+          // Si el método de pago es IZIPAY, se genera el token y se muestra el formulario
+          if (data.payment.methodPayment === "IZIPAY") {
+            const tokenResponse = await generatePaymentToken({
+              amount: reservation.totalPrice * 100,
+              currency: data.payment.currency,
+              orderId: orderNumber,
+              customer: {
+                email: reservation.userEmail,
+              },
+            });
+            setToken(tokenResponse?.token ?? "");
+            payment(tokenResponse?.token ?? "", dataT);
+          }
+        } catch (error) {
+          const errorMessage = (error as { data: { message: string } }).data
+            .message;
+          toast.error(errorMessage);
+        }
       }
     } catch (error) {
       console.error("Error en la validación:", error);
+      toast.error(t("payment.error"));
     }
   };
 
   const goToPreviousStep = () => {
-    if (currentStep > 0) {
+    if (currentStep > 0 && !dataTransaction) {
       setCurrentStep(currentStep - 1);
     }
   };
@@ -207,6 +503,61 @@ export default function PageRegisterClass() {
             </h2>
             {renderStepContent()}
 
+            {dataTransaction && (
+              <div className="space-y-4">
+                <div className="rounded-md bg-yellow-50 p-4">
+                  <CountdownTimer
+                    duration={300} // 5 minutos en segundos
+                    onComplete={async () => {
+                      if (dataTransaction?.id) {
+                        setDataTransaction(undefined);
+                        setReservation({ id: undefined });
+                        await deleteClassWithRetry(dataTransaction.id);
+                      }
+                      toast.error(
+                        "El tiempo para realizar el pago ha expirado",
+                      );
+                      router.refresh();
+                      router.push("/workshops");
+                    }}
+                  />
+                </div>
+                {reservation.methodPayment === "PAYPAL" && (
+                  <PayPalButton transactionData={dataTransaction} />
+                )}
+                {reservation.methodPayment === "IZIPAY" && (
+                  <>
+                    {isLoadingIzipay && (
+                      <div className="flex w-full items-center justify-center p-8">
+                        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                        <span className="ml-3 text-sm text-muted-foreground">
+                          Loading form...
+                        </span>
+                      </div>
+                    )}
+                    <div className="d-flex justify-content-center">
+                      <div
+                        id="myDIV"
+                        className="formulario"
+                        style={{ display: showPayment ? "block" : "none" }}
+                      >
+                        <div id="formPayment">
+                          {/* Formulario de pago POPIN */}
+                          <PaymentFormIzipay popin={true} token={token} />
+                        </div>
+                      </div>
+                      {open && (
+                        <AlertSuccessPayment
+                          isOpen={open}
+                          setIsOpen={setOpen}
+                        />
+                      )}
+                    </div>
+                  </>
+                )}
+              </div>
+            )}
+
             <div className="mt-6 flex justify-between">
               <Button
                 type="button"
@@ -216,9 +567,14 @@ export default function PageRegisterClass() {
               >
                 {t("buttons.back")}
               </Button>
-              <Button type="submit">
+              <Button
+                type="submit"
+                disabled={isLoadingRegisterClass || !!dataTransaction}
+              >
                 {currentStep === steps.length - 1
-                  ? t("buttons.confirm")
+                  ? isLoadingRegisterClass
+                    ? "Loading..."
+                    : t("buttons.confirm")
                   : t("buttons.next")}
               </Button>
             </div>
