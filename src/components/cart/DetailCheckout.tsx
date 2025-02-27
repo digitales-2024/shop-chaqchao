@@ -6,6 +6,7 @@ import { InvoiceType } from "@/types";
 import { getCodeCountry } from "@/utils/getCodeCountry";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
+import { CircleAlert } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { CircleAlert } from "lucide-react";
 
@@ -187,7 +188,6 @@ export const DetailCheckout = () => {
               </div>
             </>
           )}
-
           <p className="font-bold text-primary">{t("dateOrder.title")}</p>
           <Separator />
           <div className="grid grid-cols-1">
@@ -215,6 +215,16 @@ export const DetailCheckout = () => {
                 {someonePickup ? (locale === "es" ? "Si" : "Yes") : "No"}
               </span>
             </div>
+            <div className="flex flex-col">
+              <span className="text-xs text-gray-400">
+                {t("dateOrder.shippingquest")}:
+              </span>
+            </div>
+            <div className="flex flex-col">
+              <span className="text-xs text-gray-400">
+                {t("dateOrder.shippingquest")}:
+              </span>
+            </div>
           </div>
         </div>
         <Separator />
@@ -231,6 +241,15 @@ export const DetailCheckout = () => {
           <span>S/. {amountTotal.toFixed(2)}</span>
         </p>
         <BusinessInfoCart />
+        <div className="space-y-4 p-4">
+          <h3 className="mb-2 flex items-center gap-2 text-lg font-black text-red-600">
+            <CircleAlert className="size-6 shrink-0" />
+            {t("checkout.messageTimePickup")}
+          </h3>
+          <h3 className="mb-2 text-red-600">
+            {t("checkout.messageTimePickupLarge")}
+          </h3>
+        </div>
         <div className="space-y-4 p-4">
           <h3 className="mb-2 flex items-center gap-2 text-lg font-black text-red-600">
             <CircleAlert className="size-6 shrink-0" />

@@ -281,12 +281,6 @@
         "title": "Información adicional",
         "description": "Por favor, completa esta información para continuar con tu pedido",
         "form": {
-          "language": {
-            "label": "Selecciona el idioma con el que deseas tomar tu clase",
-            "es": "Español",
-            "en": "Ingles",
-            "error": "Selecciona un idioma"
-          },
           "occasion": {
             "label": "¿Cuál es la ocasion?",
             "options": {
@@ -356,6 +350,12 @@
         "age": "Edad",
         "adults": "Adultos",
         "children": "Niños"
+      },
+      "language": {
+        "label": "Selecciona el idioma con el que deseas tomar tu clase",
+        "es": "Español",
+        "en": "Ingles",
+        "error": "Selecciona un idioma"
       },
       "booknow": "Reservar ahora",
       "experience": {
@@ -440,6 +440,7 @@
       "button": "Confirmar pedido",
       "loading": "Confirmando pedido...",
       "someone": "Recogerá otra persona el pedido",
+      "shipping": "Enviar a otra ciudad el pedido",
       "errors": {
         "terms": "Debes aceptar los términos y condiciones",
         "privacy": "Debes aceptar la política de privacidad",
@@ -454,8 +455,12 @@
       "label": "Recogerás tu pedido el",
       "button": "Confirmar",
       "quest": "¿Recogerá otra persona el pedido?",
+      "questShipping": "¿Enviará a otra ciudad el pedido?",
       "no": "No, recogeré el pedido yo mismo",
+      "noShipping": "No, recibiré el pedido aquí",
       "yes": "Sí, otra persona recogerá el pedido",
+      "yesShipping": "Sí, enviaré a otra ciudad el pedido",
+      "labelShipping": "Tu pedido será enviado a",
       "messages": {
         "date": "Por favor selecciona una fecha",
         "hour": "Por favor selecciona una hora"

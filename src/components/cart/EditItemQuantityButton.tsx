@@ -1,21 +1,29 @@
 "use client";
 
 import { useCart } from "@/hooks/use-cart";
+import { useCatalog } from "@/hooks/use-catalog";
 import { CartItem } from "@/types";
 import clsx from "clsx";
 import { Minus, Plus } from "lucide-react";
 
 export type TypeUpdateItemQuantity = "PLUS" | "MIN";
 
-function SubmitButton({ type }: { type: TypeUpdateItemQuantity }) {
+function SubmitButton({
+  type,
+  disabled,
+}: {
+  type: TypeUpdateItemQuantity;
+  disabled?: boolean;
+}) {
   return (
     <button
       type="submit"
       aria-label={
         type === "PLUS" ? "Increase item quantity" : "Reduce item quantity"
       }
+      disabled={disabled}
       className={clsx(
-        "ease flex h-full min-w-[36px] max-w-[36px] flex-none items-center justify-center rounded-full p-2 transition-all duration-200 hover:border-neutral-800 hover:opacity-80",
+        "ease flex h-full min-w-[36px] max-w-[36px] flex-none items-center justify-center rounded-full p-2 transition-all duration-200 hover:border-neutral-800 hover:opacity-80 disabled:cursor-not-allowed disabled:opacity-50",
         {
           "ml-auto": type === "MIN",
         },
@@ -38,6 +46,13 @@ export const EditItemQuantityButton = ({
   type: TypeUpdateItemQuantity;
 }) => {
   const { updateItemQuantity } = useCart();
+  const { productById, isLoadingProductById } = useCatalog({
+    id: item.id,
+  });
+  const disabled =
+    type === "PLUS" &&
+    item.quantity >= (productById?.maxStock ?? item.maxStock);
+
   return (
     <form
       action={async () => {
@@ -48,7 +63,7 @@ export const EditItemQuantityButton = ({
         }
       }}
     >
-      <SubmitButton type={type} />
+      <SubmitButton type={type} disabled={disabled || isLoadingProductById} />
     </form>
   );
 };
