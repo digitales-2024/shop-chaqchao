@@ -35,7 +35,6 @@ type BillingDocument = {
   state: string;
   country: string;
   city: string;
-  postalCode: string;
   typeDocument: string;
   businessName: string;
   paymentStatus: PaymentStatus;

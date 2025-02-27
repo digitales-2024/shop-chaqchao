@@ -85,28 +85,48 @@ export const StepDateOrder = () => {
   const lang = useLocale();
 
   useEffect(() => {
-    if (openingTime && closingTime) {
+    if (openingTime && closingTime && date) {
       const [openingHour, openingMinutes] = openingTime.split(":").map(Number);
       const [closingHour, closingMinutes] = closingTime.split(":").map(Number);
 
       const horas = [];
       const now = new Date();
-      const isToday = date && date.toDateString() === now.toDateString();
-      const currentMinutes = now.getMinutes();
-      const startHour = isToday
-        ? now.getHours() + (currentMinutes === 0 ? 1 : 2)
-        : openingHour + 1;
+      const isToday = date.toDateString() === now.toDateString();
 
-      for (let i = startHour; i <= closingHour; i++) {
-        for (let j = 0; j < 60; j += 15) {
+      let startHour = openingHour;
+      let startMinutes = openingMinutes;
+      const endHour = closingHour;
+      const endMinutes = closingMinutes;
+
+      if (isToday) {
+        const currentHour = now.getHours();
+        const currentMinutes = now.getMinutes() + 30; // Agregamos 30 minutos
+
+        let adjustedHour = currentHour;
+        let adjustedMinutes = currentMinutes;
+
+        if (adjustedMinutes >= 60) {
+          adjustedMinutes -= 60;
+          adjustedHour += 1;
+        }
+
+        // cambios en la hora +30 min de la hora actual (today) o +30 min hora de apertura
+        if (
+          adjustedHour < openingHour ||
+          (adjustedHour === openingHour && adjustedMinutes < openingMinutes)
+        ) {
+          startHour = openingHour;
+          startMinutes = openingMinutes + 30;
+        } else {
+          startHour = adjustedHour;
+          startMinutes = adjustedMinutes;
+        }
+      }
+
+      for (let i = startHour; i <= endHour; i++) {
+        for (let j = i === startHour ? startMinutes : 0; j < 60; j += 15) {
           if (i === openingHour && j < openingMinutes) continue;
-          if (i === closingHour && j >= closingMinutes) break;
-          if (
-            isToday &&
-            (i < now.getHours() + 1 ||
-              (i === now.getHours() + 1 && j <= now.getMinutes()))
-          )
-            continue;
+          if (i === endHour && j >= endMinutes) break;
           horas.push(`${i}:${j.toString().padStart(2, "0")}`);
         }
       }
@@ -115,12 +135,10 @@ export const StepDateOrder = () => {
     }
   }, [openingTime, closingTime, date]);
 
-  const handleConfirmDate = () => {
+  const handleConfirmDate = async () => {
     if (date && hour) {
       setDateOrder({
         ...dateOrder,
-        date,
-        hour,
       });
       setSomeonePickup(someonePickup);
       handleStepComplete(2);
@@ -159,6 +177,7 @@ export const StepDateOrder = () => {
                   setDateOrder({
                     ...dateOrder,
                     date: date,
+                    hour: undefined, // Resetea la hora cuando se cambia la fecha
                   });
                 }}
                 disabled={deshabilitarFechasPasadas}
@@ -226,9 +245,11 @@ export const StepDateOrder = () => {
             </div>
           </CardContent>
         </Card>
-        <Button onClick={handleConfirmDate} disabled={!date || !hour}>
-          {t("button")}
-        </Button>
+        <div>
+          <Button onClick={handleConfirmDate} disabled={!date || !hour}>
+            {t("button")}
+          </Button>
+        </div>
       </div>
     </div>
   );

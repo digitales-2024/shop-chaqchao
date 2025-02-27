@@ -94,6 +94,9 @@
     "metadata": {
       "title": "Categorías de productos",
       "description": "Elija entre nuestra variedad de productos y disfrute de la mejor calidad."
+    },
+    "PopupMessage": {
+      "message": "¿Deseas que tu pedido sea enviado a otra ciudad? Escríbenos a"
     }
   },
   "cartItem": {
@@ -465,6 +468,7 @@
         }
       }
     },
+
     "errors": {
       "name": "Por favor ingrese su nombre completo.",
       "email": "Por favor ingrese un correo electrónico válido.",
@@ -494,6 +498,8 @@
   "checkout": {
     "checkout": {
       "button": "Verificar pedido",
+      "messageTimePickupLarge": "Tu pedido estará disponible para recoger en el horario establecido. Tienes un plazo máximo de 48 horas para retirarlo. Pasado este tiempo, no se aceptarán cambios ni devoluciones. ¡Gracias por tu comprensión!",
+      "messageTimePickup": "Información importante sobre tu pedido",
       "messages": {
         "warning": {
           "title": "¡Atención!",

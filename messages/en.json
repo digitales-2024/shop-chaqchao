@@ -94,6 +94,9 @@
     "metadata": {
       "title": "Product categories",
       "description": "Choose from our variety of products and enjoy the best quality."
+    },
+    "PopupMessage": {
+      "message": "Do you want your order to be sent to another city? Write to us at"
     }
   },
   "cartItem": {
@@ -414,6 +417,7 @@
         }
       }
     },
+
     "summary": {
       "title": "CHAQCHAO’S BEAN TO BAR CHOCOLATE CLASS",
       "basicInfo": "Basic Information",
@@ -493,6 +497,8 @@
   "checkout": {
     "checkout": {
       "button": "Checkout",
+      "messageTimePickup": "Important Information About Your Order",
+      "messageTimePickupLarge": "Your order will be available for pickup during the designated hours. You have a maximum of 48 hours to collect it. After this time, no exchanges or refunds will be accepted. Thank you for your understanding!",
       "messages": {
         "warning": {
           "title": "Warning",
