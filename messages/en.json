@@ -280,6 +280,12 @@
         "title": "Additional Information",
         "description": "Please complete this information to continue with your order",
         "form": {
+          "language": {
+            "label": "Select the language in which you want to take the class",
+            "es": "Spanish",
+            "en": "English",
+            "error": "Select a language"
+          },
           "occasion": {
             "label": "What is the occasion?",
             "options": {
@@ -349,12 +355,6 @@
         "age": "Age",
         "adults": "Adults",
         "children": "Children"
-      },
-      "language": {
-        "label": "Select the language in which you want to take the class",
-        "es": "Spanish",
-        "en": "English",
-        "error": "Select a language"
       },
       "booknow": "Book Now",
       "experience": {

@@ -2,12 +2,10 @@
 
 import { useCart } from "@/hooks/use-cart";
 import useCartSheet from "@/hooks/use-cart-sheet";
-import useCartStore from "@/redux/store/cart";
 import { Product } from "@/types";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, VariantProps } from "class-variance-authority";
 import React from "react";
-import { toast } from "sonner";
 
 import { cn } from "@/lib/utils";
 
@@ -65,26 +63,10 @@ const AddToCartButton = React.forwardRef<HTMLDivElement, AddToCartButtonProps>(
     ref,
   ) => {
     const { onOpenChange } = useCartSheet();
+
     const { addItemCard } = useCart();
-    const cartItems = useCartStore((state) => state.cartItems);
 
     const handleAddToCart = async () => {
-      // Verificar el stock disponible
-      const currentItem = cartItems.find(
-        (item: Product) => item.id === product.id,
-      );
-      const currentQuantity = currentItem?.quantity || 0;
-      const requestedQuantity = quantity || 1;
-      if (
-        currentItem &&
-        currentQuantity + requestedQuantity > currentItem.maxStock
-      ) {
-        toast.error(
-          `No hay suficiente stock disponible. Máximo: ${currentItem.maxStock}`,
-        );
-        return;
-      }
-
       onOpenChange();
       if (setIsDialogOpen) {
         setIsDialogOpen(false);
