@@ -653,7 +653,7 @@ export default function WorkshopSelectDate() {
           </div>
           <p>{t("experience.contact")}</p>
           <a
-            href="https://wa.me/+51958086581?text=Hello!"
+            href="https://wa.me/+51958086581?text=Hello! I would like to get more information about chocolate workshops"
             target="_blank"
             className="inline-flex w-full items-center justify-center gap-3 text-terciary"
           >
