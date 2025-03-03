@@ -15,6 +15,9 @@ export default function ReservationPage() {
           width={1920}
           height={1080}
           className="w-full"
+          priority
+          placeholder="blur"
+          blurDataURL="/images/workshop_01.jpg"
         />
         <Image
           src="/images/workshop_02.webp"
@@ -22,6 +25,9 @@ export default function ReservationPage() {
           width={500}
           height={800}
           className="hidden h-full object-cover object-center sm:flex"
+          priority
+          placeholder="blur"
+          blurDataURL="/images/workshop_02.jpg"
         />
         <Image
           src="/images/workshop_03.webp"
@@ -29,6 +35,9 @@ export default function ReservationPage() {
           width={1920}
           height={1080}
           className="hidden h-full object-cover object-center sm:flex"
+          priority
+          placeholder="blur"
+          blurDataURL="/images/workshop_03.jpg"
         />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2">

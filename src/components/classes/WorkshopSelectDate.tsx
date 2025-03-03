@@ -9,7 +9,8 @@ import {
   useDeleteClassMutation,
   useCloseTimeQuery,
 } from "@/redux/services/classApi";
-import { ClassesDataAdmin, TypeClass } from "@/types/classes";
+import { ClassesDataAdmin } from "@/types";
+import { TypeClass } from "@/types/classes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { addMinutes, format, isSameDay, parse } from "date-fns";
 import {
@@ -281,6 +282,7 @@ export default function WorkshopSelectDate() {
     const selectedDate = form.getValues("date");
     if (!selectedDate) {
       form.setValue("schedule", newSchedule);
+      setReservation({ scheduleClass: newSchedule });
       return;
     }
 
@@ -296,6 +298,7 @@ export default function WorkshopSelectDate() {
       if (!closeTime) {
         toast.error("The schedules cannot be verified at this time");
         form.setValue("schedule", "");
+        setReservation({ scheduleClass: "" });
         return;
       }
       if (
@@ -309,6 +312,7 @@ export default function WorkshopSelectDate() {
           `Registrations for this time are not allowed. You must register at least ${minutes} minutes in advance.`,
         );
         form.setValue("schedule", "");
+        setReservation({ scheduleClass: "" });
         return;
       }
     }
@@ -317,10 +321,12 @@ export default function WorkshopSelectDate() {
     if (selectedClass?.isClosed) {
       toast.error("The selected time is closed. Please choose another date.");
       form.setValue("schedule", "");
+      setReservation({ scheduleClass: "" });
       return;
     }
 
     form.setValue("schedule", newSchedule);
+    setReservation({ scheduleClass: newSchedule });
   };
 
   const { data: prices, isLoading: isLoadingPrices } = usePricesQuery({
@@ -349,6 +355,7 @@ export default function WorkshopSelectDate() {
 
   useEffect(() => {
     const existClass = async () => {
+      console.log("🚀 ~ existClass ~ classResponse:", reservation);
       if (reservation?.scheduleClass && reservation?.dateClass) {
         const classResponse = await findClass({
           typeClass: "NORMAL" as TypeClass,
@@ -372,7 +379,7 @@ export default function WorkshopSelectDate() {
 
     existClass();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [reservation.scheduleClass, reservation.dateClass]);
+  }, [form.watch("schedule"), form.watch("date")]);
 
   const [languageOptionsDisabled, setLanguageOptionsDisabled] =
     useState(languageOptions);
@@ -528,7 +535,7 @@ export default function WorkshopSelectDate() {
                       {t("participants.adults")}
                     </span>
                     <span className="text-sm font-thin">
-                      {t("participants.age")} 13 - 80
+                      {t("participants.age")} 14 - 80
                     </span>
                     <span className="text-sm font-black">
                       {isLoadingPrices ? (
@@ -562,7 +569,7 @@ export default function WorkshopSelectDate() {
                       {t("participants.children")}
                     </span>
                     <span className="text-sm font-thin">
-                      {t("participants.age")} 05 - 12
+                      {t("participants.age")} 05 - 13
                     </span>
                     <span className="text-sm font-black">
                       {isLoadingPrices ? (
