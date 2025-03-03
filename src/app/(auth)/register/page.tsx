@@ -184,7 +184,7 @@ export default function AuthComponent() {
                             {t("password")}{" "}
                             <span className="text-rose-500">*</span>
                             <Tooltip>
-                              <TooltipTrigger tabIndex={-1}>
+                              <TooltipTrigger tabIndex={-1} type="button">
                                 <Badge
                                   className="aspect-square cursor-help rounded-full"
                                   variant="outline"

@@ -10,7 +10,6 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 
-import { LanguageSelector } from "@/components/templates/navbar/LanguageSelector";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -96,7 +95,6 @@ export default function ForgotPasswordPage() {
           </CardFooter>
         </Card>
       </div>
-      <LanguageSelector />
     </>
   );
 }
