@@ -27,7 +27,7 @@ export function Footer() {
 
   return (
     <footer className="w-full bg-secondary-foreground py-12">
-      <div className="mx-auto grid max-w-[1025px] grid-cols-3">
+      <div className="mx-auto grid max-w-[1025px] grid-cols-1 justify-items-center sm:grid-cols-3">
         <div className="space-y-6">
           <h3 className="font-riddle text-4xl">CHAQCHAO CHOCOLATE FACTORY</h3>
           <p className="font-semibold">{t("visit")}</p>
