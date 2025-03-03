@@ -5,14 +5,7 @@ import { BillingDocumentType, OrderClient } from "@/types/order";
 import { numberToLetter } from "@/utils/numberToLetter";
 import { format } from "date-fns";
 import { es } from "date-fns/locale";
-import {
-  Download,
-  Mail,
-  MessageCircleMore,
-  MoreVertical,
-  PackageOpen,
-  Phone,
-} from "lucide-react";
+import { Download, MoreVertical, PackageOpen } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -61,6 +54,14 @@ export const OrderDetail = ({ order }: OrderDisplayProps) => {
   if (isLoadingOrder) {
     return <PulsatingDots />;
   }
+
+  const pickupDate = new Date(
+    order?.pickupTime?.toString().replace("Z", "") ?? new Date(),
+  );
+  const hour = pickupDate.getHours();
+  const minute = pickupDate.getMinutes().toString().padStart(2, "0");
+  const hour12 = hour % 12 || 12;
+  const ampm = hour >= 12 ? "PM" : "AM";
 
   return (
     <div className="flex h-full flex-col">
@@ -123,16 +124,6 @@ export const OrderDetail = ({ order }: OrderDisplayProps) => {
                   </dt>
                   <dd className="group/email font-normal">
                     {orderDetail?.client.email}
-                    <Button
-                      size="icon"
-                      variant="outline"
-                      className="h-6 w-6 opacity-0 transition-opacity group-hover/email:opacity-100"
-                    >
-                      <span className="sr-only">Email client</span>
-                      <a href={`mailto: ${orderDetail?.client.email}`}>
-                        <Mail className="h-3 w-3" />
-                      </a>
-                    </Button>
                   </dd>
                 </div>
                 <div className="flex flex-col items-start">
@@ -141,33 +132,6 @@ export const OrderDetail = ({ order }: OrderDisplayProps) => {
                   </dt>
                   <dd className="group/phone space-x-2 font-normal">
                     {orderDetail?.client.phone}
-                    {orderDetail?.client.phone && (
-                      <>
-                        <Button
-                          size="icon"
-                          variant="outline"
-                          className="h-6 w-6 opacity-0 transition-opacity group-hover/phone:opacity-100"
-                        >
-                          <span className="sr-only">Phone client</span>
-                          <a href={`tel:${orderDetail?.client.phone}`}>
-                            <Phone className="h-3 w-3" />
-                          </a>
-                        </Button>
-                        <Button
-                          size="icon"
-                          variant="outline"
-                          className="h-6 w-6 opacity-0 transition-opacity group-hover/phone:opacity-100"
-                        >
-                          <span className="sr-only">Phone client</span>
-                          <a
-                            href={`https://wa.me/${orderDetail?.client.phone.replace(/\s+/g, "")}`}
-                            target="_blank"
-                          >
-                            <MessageCircleMore className="h-3 w-3" />
-                          </a>
-                        </Button>
-                      </>
-                    )}
                   </dd>
                 </div>
                 <div></div>
@@ -192,7 +156,7 @@ export const OrderDetail = ({ order }: OrderDisplayProps) => {
                     {t("details.client.address")}
                   </dt>
                   <dd className="font-normal capitalize">
-                    {orderDetail?.billingDocument.address}
+                    {orderDetail?.billingDocument.address ?? "--"}
                   </dd>
                 </div>
                 <div className="flex flex-col items-start">
@@ -200,7 +164,7 @@ export const OrderDetail = ({ order }: OrderDisplayProps) => {
                     {t("details.client.country")}
                   </dt>
                   <dd className="font-normal capitalize">
-                    {orderDetail?.billingDocument.country}
+                    {orderDetail?.billingDocument.country ?? "--"}
                   </dd>
                 </div>
                 <div className="flex flex-col items-start">
@@ -208,7 +172,7 @@ export const OrderDetail = ({ order }: OrderDisplayProps) => {
                     {t("details.client.state")}
                   </dt>
                   <dd className="font-normal capitalize">
-                    {orderDetail?.billingDocument.state}
+                    {orderDetail?.billingDocument.state ?? "--"}
                   </dd>
                 </div>
                 <div className="flex flex-col items-start">
@@ -216,7 +180,7 @@ export const OrderDetail = ({ order }: OrderDisplayProps) => {
                     {t("details.client.city")}
                   </dt>
                   <dd className="font-normal capitalize">
-                    {orderDetail?.billingDocument.city}
+                    {orderDetail?.billingDocument.city ?? "--"}
                   </dd>
                 </div>
                 {orderDetail?.billingDocument.businessName !== "" && (
@@ -225,7 +189,7 @@ export const OrderDetail = ({ order }: OrderDisplayProps) => {
                       {t("details.client.businessName")}
                     </dt>
                     <dd className="font-normal capitalize">
-                      {orderDetail?.billingDocument.businessName}
+                      {orderDetail?.billingDocument.businessName ?? "--"}
                     </dd>
                   </div>
                 )}
@@ -233,13 +197,7 @@ export const OrderDetail = ({ order }: OrderDisplayProps) => {
             </div>
             <Line className="border-dashed" />
             <div className="w-full text-center text-xs font-thin">
-              {format(
-                orderDetail ? orderDetail?.pickupTime : new Date(),
-                "dd/MM/yyyy HH:mm:ss",
-                {
-                  locale: locale === "es" ? es : undefined,
-                },
-              )}
+              {`${format(pickupDate, "EEEE, dd MMMM", { locale: locale === "es" ? es : undefined })}, ${hour12}:${minute} ${ampm}`}
             </div>
             <Line className="border-dashed" />
             <div className="flex-1 px-0 py-2 sm:px-6">
@@ -265,13 +223,16 @@ export const OrderDetail = ({ order }: OrderDisplayProps) => {
                       <TableRow key={product.id}>
                         <TableCell className="flex items-center gap-2 truncate">
                           <Avatar className="rounded-md bg-slate-100">
-                            <AvatarImage
-                              src={product.image}
-                              alt={product.name}
-                            />
-                            <AvatarFallback>
-                              <PackageOpen />
-                            </AvatarFallback>
+                            {product.images.length > 0 ? (
+                              <AvatarImage
+                                src={product.images[0].url}
+                                alt={product.name}
+                              />
+                            ) : (
+                              <AvatarFallback>
+                                <PackageOpen />
+                              </AvatarFallback>
+                            )}
                           </Avatar>
                           <span className="text-muted-foreground">
                             {product.name}
