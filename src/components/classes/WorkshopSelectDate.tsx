@@ -18,6 +18,7 @@ import {
   UserRoundPen,
   UsersRound,
   Calendar as CalendarIcon,
+  Info,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -26,6 +27,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
 
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -102,6 +104,7 @@ export default function WorkshopSelectDate() {
   const [data, setData] = useState<Option[]>([]);
   const [counterMin, setCounterMin] = useState(1);
   const [open, setOpen] = useState(false);
+  const [showRecommendation, setShowRecommendation] = useState(false);
   useEffect(() => {
     if (schedules?.NORMAL) {
       setData(
@@ -338,6 +341,8 @@ export default function WorkshopSelectDate() {
     // Limpiar schedule y classData cuando cambie la fecha
     if (form.getValues("date")) {
       form.setValue("schedule", "");
+      form.setValue("language", "");
+      setShowRecommendation(false);
       setClassData(undefined);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -353,9 +358,10 @@ export default function WorkshopSelectDate() {
 
   const { isLoading: isLoadingLanguages, languageOptions } = useLanguages();
 
+  const [existingClass, setExistingClass] = useState<boolean>(false);
+
   useEffect(() => {
     const existClass = async () => {
-      console.log("🚀 ~ existClass ~ classResponse:", reservation);
       if (reservation?.scheduleClass && reservation?.dateClass) {
         const classResponse = await findClass({
           typeClass: "NORMAL" as TypeClass,
@@ -371,8 +377,16 @@ export default function WorkshopSelectDate() {
           });
           // Actualizar el valor del campo del formulario
           form.setValue("language", classResponse.data.languageClass);
+          setExistingClass(true);
         } else {
           setClassData(undefined);
+          setReservation({
+            ...reservation,
+            languageClass: "",
+          });
+          // Actualizar el valor del campo del formulario
+          form.setValue("language", "");
+          setExistingClass(false);
         }
       }
     };
@@ -517,7 +531,12 @@ export default function WorkshopSelectDate() {
                     ) : (
                       <ButtonSelect
                         value={field.value}
-                        onChange={field.onChange}
+                        onChange={(value) => {
+                          field.onChange(value);
+                          setShowRecommendation(
+                            value === "español" && !classData,
+                          );
+                        }}
                         options={languageOptionsDisabled}
                       />
                     )}
@@ -526,6 +545,15 @@ export default function WorkshopSelectDate() {
                 </FormItem>
               )}
             />
+            {showRecommendation && !existingClass && (
+              <Alert className="border-yellow-500 text-yellow-600">
+                <Info className="stroke-yellow-500" />
+                <AlertTitle>{t("language.recommended.title")}</AlertTitle>
+                <AlertDescription>
+                  {t("language.recommended.description")}
+                </AlertDescription>
+              </Alert>
+            )}
             <div className="space-y-5">
               <h3 className="text-sm font-bold">{t("participants.title")}</h3>
               <ul className="space-y-4">

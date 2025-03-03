@@ -394,7 +394,11 @@
         "label": "Selecciona el idioma con el que deseas tomar tu clase",
         "es": "Español",
         "en": "Ingles",
-        "error": "Selecciona un idioma"
+        "error": "Selecciona un idioma",
+        "recommended": {
+          "title": "Recomendación",
+          "description": "Para las clases en español se recomienda una inscripción mínima de 3 personas."
+        }
       },
       "booknow": "Reservar ahora",
       "experience": {
