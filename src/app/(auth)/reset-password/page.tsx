@@ -14,7 +14,6 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import PulsatingDots from "@/components/common/PulsatingDots";
-import { LanguageSelector } from "@/components/templates/navbar/LanguageSelector";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -136,7 +135,7 @@ export default function ResetPasswordPage() {
 
   return (
     <>
-      <div className="relative inline-flex h-full min-h-screen w-full items-center justify-center">
+      <div className="relative inline-flex h-full min-h-[80vh] w-full items-center justify-center">
         <Card className="w-[350px] border-none shadow-none">
           <CardHeader className="space-y-6 text-center">
             <div className="mx-auto rounded-full bg-secondary/10 p-4">
@@ -204,7 +203,6 @@ export default function ResetPasswordPage() {
           </CardFooter>
         </Card>
       </div>
-      <LanguageSelector />
     </>
   );
 }

@@ -1,3 +1,4 @@
+import { useLanguages } from "@/hooks/use-languages";
 import { useReservation } from "@/hooks/use-reservation";
 import {
   useSchedulesAdminQuery,
@@ -8,7 +9,8 @@ import {
   useDeleteClassMutation,
   useCloseTimeQuery,
 } from "@/redux/services/classApi";
-import { ClassesDataAdmin, TypeClass } from "@/types/classes";
+import { ClassesDataAdmin } from "@/types";
+import { TypeClass } from "@/types/classes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { addMinutes, format, isSameDay, parse } from "date-fns";
 import {
@@ -16,6 +18,7 @@ import {
   UserRoundPen,
   UsersRound,
   Calendar as CalendarIcon,
+  Info,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -24,6 +27,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
 
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -76,6 +80,7 @@ export default function WorkshopSelectDate() {
     }),
     adults: z.number(),
     children: z.number(),
+    language: z.string().min(1, { message: t("language.error") }),
   });
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -84,6 +89,7 @@ export default function WorkshopSelectDate() {
       schedule: reservation.scheduleClass || "",
       adults: capacityNormal?.minCapacity || 1,
       children: reservation.totalChildren || 0,
+      language: reservation.languageClass || "",
     },
   });
 
@@ -98,6 +104,7 @@ export default function WorkshopSelectDate() {
   const [data, setData] = useState<Option[]>([]);
   const [counterMin, setCounterMin] = useState(1);
   const [open, setOpen] = useState(false);
+  const [showRecommendation, setShowRecommendation] = useState(false);
   useEffect(() => {
     if (schedules?.NORMAL) {
       setData(
@@ -209,6 +216,7 @@ export default function WorkshopSelectDate() {
       totalAdults: values.adults,
       totalChildren: values.children,
       scheduleClass: values.schedule,
+      languageClass: values.language,
       totalPrice:
         values.adults *
           (prices?.find((p) => p.classTypeUser === "ADULT")?.price || 0) +
@@ -277,6 +285,7 @@ export default function WorkshopSelectDate() {
     const selectedDate = form.getValues("date");
     if (!selectedDate) {
       form.setValue("schedule", newSchedule);
+      setReservation({ scheduleClass: newSchedule });
       return;
     }
 
@@ -292,6 +301,7 @@ export default function WorkshopSelectDate() {
       if (!closeTime) {
         toast.error("The schedules cannot be verified at this time");
         form.setValue("schedule", "");
+        setReservation({ scheduleClass: "" });
         return;
       }
       if (
@@ -305,6 +315,7 @@ export default function WorkshopSelectDate() {
           `Registrations for this time are not allowed. You must register at least ${minutes} minutes in advance.`,
         );
         form.setValue("schedule", "");
+        setReservation({ scheduleClass: "" });
         return;
       }
     }
@@ -313,10 +324,12 @@ export default function WorkshopSelectDate() {
     if (selectedClass?.isClosed) {
       toast.error("The selected time is closed. Please choose another date.");
       form.setValue("schedule", "");
+      setReservation({ scheduleClass: "" });
       return;
     }
 
     form.setValue("schedule", newSchedule);
+    setReservation({ scheduleClass: newSchedule });
   };
 
   const { data: prices, isLoading: isLoadingPrices } = usePricesQuery({
@@ -328,6 +341,8 @@ export default function WorkshopSelectDate() {
     // Limpiar schedule y classData cuando cambie la fecha
     if (form.getValues("date")) {
       form.setValue("schedule", "");
+      form.setValue("language", "");
+      setShowRecommendation(false);
       setClassData(undefined);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -340,6 +355,68 @@ export default function WorkshopSelectDate() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form.watch("schedule")]);
+
+  const { isLoading: isLoadingLanguages, languageOptions } = useLanguages();
+
+  const [existingClass, setExistingClass] = useState<boolean>(false);
+
+  useEffect(() => {
+    const existClass = async () => {
+      if (reservation?.scheduleClass && reservation?.dateClass) {
+        const classResponse = await findClass({
+          typeClass: "NORMAL" as TypeClass,
+          schedule: reservation.scheduleClass,
+          date: format(reservation.dateClass, "dd-MM-yyyy"),
+        });
+
+        if (classResponse.data) {
+          setClassData(classResponse.data);
+          setReservation({
+            ...reservation,
+            languageClass: classResponse.data.languageClass,
+          });
+          // Actualizar el valor del campo del formulario
+          form.setValue("language", classResponse.data.languageClass);
+          setExistingClass(true);
+        } else {
+          setClassData(undefined);
+          setReservation({
+            ...reservation,
+            languageClass: "",
+          });
+          // Actualizar el valor del campo del formulario
+          form.setValue("language", "");
+          setExistingClass(false);
+        }
+      }
+    };
+
+    existClass();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [form.watch("schedule"), form.watch("date")]);
+
+  const [languageOptionsDisabled, setLanguageOptionsDisabled] =
+    useState(languageOptions);
+  useEffect(() => {
+    if (languageOptions) {
+      if (
+        reservation?.languageClass &&
+        classData &&
+        classData?.totalParticipants > 0
+      ) {
+        // Si hay participantes, bloquear todas las opciones
+        setLanguageOptionsDisabled(
+          languageOptions.map((option) => ({
+            ...option,
+            disabled: true,
+          })),
+        );
+      } else {
+        // Si no hay participantes o no existe clase, habilitar las opciones
+        setLanguageOptionsDisabled(languageOptions);
+      }
+    }
+  }, [languageOptions, classData, reservation?.languageClass]);
 
   return (
     <Card className="m-2 border-none shadow">
@@ -442,6 +519,41 @@ export default function WorkshopSelectDate() {
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="language"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t("language.label")}</FormLabel>
+                  <FormControl>
+                    {isLoadingLanguages || isLoadingLanguages ? (
+                      <PulsatingDots />
+                    ) : (
+                      <ButtonSelect
+                        value={field.value}
+                        onChange={(value) => {
+                          field.onChange(value);
+                          setShowRecommendation(
+                            value === "español" && !classData,
+                          );
+                        }}
+                        options={languageOptionsDisabled}
+                      />
+                    )}
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            {showRecommendation && !existingClass && (
+              <Alert className="border-yellow-500 text-yellow-600">
+                <Info className="stroke-yellow-500" />
+                <AlertTitle>{t("language.recommended.title")}</AlertTitle>
+                <AlertDescription>
+                  {t("language.recommended.description")}
+                </AlertDescription>
+              </Alert>
+            )}
             <div className="space-y-5">
               <h3 className="text-sm font-bold">{t("participants.title")}</h3>
               <ul className="space-y-4">
@@ -451,7 +563,7 @@ export default function WorkshopSelectDate() {
                       {t("participants.adults")}
                     </span>
                     <span className="text-sm font-thin">
-                      {t("participants.age")} 13 - 80
+                      {t("participants.age")} 14 - 80
                     </span>
                     <span className="text-sm font-black">
                       {isLoadingPrices ? (
@@ -485,7 +597,7 @@ export default function WorkshopSelectDate() {
                       {t("participants.children")}
                     </span>
                     <span className="text-sm font-thin">
-                      {t("participants.age")} 05 - 12
+                      {t("participants.age")} 05 - 13
                     </span>
                     <span className="text-sm font-black">
                       {isLoadingPrices ? (
@@ -541,7 +653,7 @@ export default function WorkshopSelectDate() {
           </div>
           <p>{t("experience.contact")}</p>
           <a
-            href="https://wa.me/+51958086581?text=Hello!"
+            href="https://wa.me/+51958086581?text=Hello! I would like to get more information about chocolate workshops"
             target="_blank"
             className="inline-flex w-full items-center justify-center gap-3 text-terciary"
           >

@@ -225,9 +225,6 @@ export default function PageRegisterClass() {
 
   const additionalSchema = z.object({
     additional: z.object({
-      language: z
-        .string()
-        .min(1, { message: t("additional.form.language.error") }),
       occasion: z.string().optional(),
       allergies: z.string().optional(),
       comment: z.string().optional(),
@@ -273,7 +270,6 @@ export default function PageRegisterClass() {
         phone: reservation.userPhone || "",
       },
       additional: {
-        language: reservation.languageClass || "",
         occasion: reservation.occasion || "",
         allergies: reservation.allergies || "",
         comment: reservation.comments || "",
@@ -341,7 +337,6 @@ export default function PageRegisterClass() {
         setCurrentStep(1);
       } else if (currentStep === 1) {
         setReservation({
-          languageClass: data.additional.language,
           occasion: data.additional.occasion,
           allergies: data.additional.allergies,
           comments: data.additional.comment,

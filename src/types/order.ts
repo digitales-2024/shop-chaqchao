@@ -51,7 +51,7 @@ type ProductData = {
   id: string;
   name: string;
   price: number;
-  image: string;
+  images: { url: string }[];
   quantity: number;
   category: CategoryData;
 };

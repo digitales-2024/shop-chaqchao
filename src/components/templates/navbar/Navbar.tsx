@@ -5,6 +5,7 @@ import Link from "next/link";
 import { CartSheet } from "@/components/cart/CartSheet";
 
 import { LanguageSelector } from "./LanguageSelector";
+import { UserLogin } from "./UserLogin";
 
 export function Navbar() {
   const t = useTranslations("navbar");
@@ -30,8 +31,8 @@ export function Navbar() {
             ))}
           </div>
           <div className="flex flex-row items-center gap-4">
-            {/* <UserLogin /> */}
             <CartSheet />
+            <UserLogin />
           </div>
         </div>
       </nav>

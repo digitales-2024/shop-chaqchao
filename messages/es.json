@@ -296,12 +296,6 @@
         "title": "Información adicional",
         "description": "Por favor, completa esta información para continuar con tu pedido",
         "form": {
-          "language": {
-            "label": "Selecciona el idioma con el que deseas tomar tu clase",
-            "es": "Español",
-            "en": "Ingles",
-            "error": "Selecciona un idioma"
-          },
           "occasion": {
             "label": "¿Cuál es la ocasion?",
             "options": {
@@ -395,6 +389,16 @@
         "age": "Edad",
         "adults": "Adultos",
         "children": "Niños"
+      },
+      "language": {
+        "label": "Selecciona el idioma con el que deseas tomar tu clase",
+        "es": "Español",
+        "en": "Ingles",
+        "error": "Selecciona un idioma",
+        "recommended": {
+          "title": "Recomendación",
+          "description": "Para las clases en español se recomienda una inscripción mínima de 3 personas."
+        }
       },
       "booknow": "Reservar ahora",
       "experience": {
