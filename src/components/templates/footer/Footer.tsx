@@ -1,6 +1,7 @@
 import { Facebook, Instagram, TripAdvisor } from "@/assets/icons";
 import { ChaqchaoLogo } from "@/assets/images/ChaqchaoLogo";
 import { LibroReclamaciones } from "@/assets/images/LibroReclamaciones";
+import { PHONE_NUMBER } from "@/constants/info";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 
@@ -37,7 +38,7 @@ export function Footer() {
             </p>
             <ul className="font-semibold">
               <li>Calle Santa Catalina 204, Arequipa, Perú</li>
-              <li>Delivery +51 932 227 454</li>
+              <li>Delivery +51 {PHONE_NUMBER}</li>
               <li>
                 {t("sunday")} - {t("thursday")} 10am - 11pm
               </li>

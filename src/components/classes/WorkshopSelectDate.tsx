@@ -1,28 +1,29 @@
+import { PHONE_NUMBER } from "@/constants/info";
 import { useLanguages } from "@/hooks/use-languages";
 import { useReservation } from "@/hooks/use-reservation";
 import {
-  useSchedulesAdminQuery,
-  usePricesQuery,
-  useGetClassesFuturesQuery,
-  useGetClassesCapacityQuery,
   useClassByDateMutation,
-  useDeleteClassMutation,
   useCloseTimeQuery,
+  useDeleteClassMutation,
+  useGetClassesCapacityQuery,
+  useGetClassesFuturesQuery,
+  usePricesQuery,
+  useSchedulesAdminQuery,
 } from "@/redux/services/classApi";
 import { ClassesDataAdmin } from "@/types";
 import { TypeClass } from "@/types/classes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { addMinutes, format, isSameDay, parse } from "date-fns";
 import {
+  Calendar as CalendarIcon,
+  Info,
   Phone,
   UserRoundPen,
   UsersRound,
-  Calendar as CalendarIcon,
-  Info,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
@@ -653,12 +654,12 @@ export default function WorkshopSelectDate() {
           </div>
           <p>{t("experience.contact")}</p>
           <a
-            href="https://wa.me/+51958086581?text=Hello! I would like to get more information about chocolate workshops"
+            href={`https://wa.me/+51${PHONE_NUMBER}?text=Hello! I would like to get more information about chocolate workshops`}
             target="_blank"
             className="inline-flex w-full items-center justify-center gap-3 text-terciary"
           >
             <Phone />
-            <span className="text-xl font-black">+51 958 086 581</span>
+            <span className="text-xl font-black">+51 {PHONE_NUMBER}</span>
           </a>
         </div>
       </CardFooter>
