@@ -363,16 +363,16 @@
       },
       "learn": {
         "title": "What you'll learn:",
-        "learn1": "The history and origin of cacao in Peru",
-        "learn2": "Bean-to-bar chocolate making process",
-        "learn3": "Chocolate tempering techniques",
-        "learn4": "Create your own chocolate bars"
+        "learn1": "The history and origin of cacao in the world",
+        "learn2": "Explanation of each chocolate-making process",
+        "learn3": "Chocolate tempering technique",
+        "learn4": "Create your own chocolate bar"
       },
       "important": {
         "title": "Important Information:",
         "important1": "Duration: 2.5 hours",
         "important2": "All materials included",
-        "important3": "Children under 5 are not permitted",
+        "important3": "Recommended for children ages 5 and up.",
         "important4": "Children must be accompanied by an adult"
       }
     },
@@ -395,8 +395,8 @@
         "en": "English",
         "error": "Select a language",
         "recommended": {
-          "title": "Recommended",
-          "description": "For Spanish workshop, a minimum enrollment of 3 people is recommended."
+          "title": "Important Warning",
+          "description": "For Spanish workshop, a minimum enrollment of 3 people or contact "
         }
       },
       "booknow": "Book Now",

@@ -80,7 +80,7 @@
     "saturday": "Sábado"
   },
   "categories": {
-    "title": "Todos nuestro productos",
+    "title": "Todos nuestros productos",
     "description": "Elija entre nuestra variedad de productos y disfrute de la mejor calidad.",
     "search": "Busca entre nuestro catálogo de productos",
     "filters": {
@@ -364,16 +364,16 @@
       },
       "learn": {
         "title": "Lo que aprenderás:",
-        "learn1": "Historia y origen del cacao en Perú.",
-        "learn2": "Proceso de elaboración del chocolate desde el grano hasta la barra.",
-        "learn3": "Técnicas de templado del chocolate.",
+        "learn1": "Historia y origen del cacao en el mundo.",
+        "learn2": "Explicación de cada proceso de elaboración del chocolate.",
+        "learn3": "Técnica de temperado del chocolate.",
         "learn4": "Crea tus propias barras de chocolate."
       },
       "important": {
         "title": "Información importante:",
         "important1": "Duración: 2,5 horas.",
         "important2": "Todo el material incluido.",
-        "important3": "No se admiten niños menores de 5 años.",
+        "important3": "Recomendado para niños de 5 años en adelante.",
         "important4": "Los niños deben estar acompañados por un adulto."
       }
     },
@@ -396,8 +396,8 @@
         "en": "Ingles",
         "error": "Selecciona un idioma",
         "recommended": {
-          "title": "Recomendación",
-          "description": "Para las clases en español se recomienda una inscripción mínima de 3 personas."
+          "title": "Aviso Importante",
+          "description": "Para aperturar una clase de español, es necesario minimo 3 personas o comunicate al "
         }
       },
       "booknow": "Reservar ahora",

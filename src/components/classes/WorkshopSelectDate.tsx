@@ -552,6 +552,12 @@ export default function WorkshopSelectDate() {
                 <AlertTitle>{t("language.recommended.title")}</AlertTitle>
                 <AlertDescription>
                   {t("language.recommended.description")}
+                  <a
+                    href={`https://wa.me/+51${PHONE_NUMBER}`}
+                    className="text-yellow-700 underline"
+                  >
+                    +51 {PHONE_NUMBER}
+                  </a>
                 </AlertDescription>
               </Alert>
             )}
