@@ -54,25 +54,6 @@ export function AdditionalInfoForm() {
   const { control } = useFormContext();
   const t = useTranslations();
 
-  const occasionOptions = [
-    {
-      label: t("class.steps.additional.form.occasion.options.tourism"),
-      value: "tourism",
-    },
-    {
-      label: t("class.steps.additional.form.occasion.options.birthday"),
-      value: "birthday",
-    },
-    {
-      label: t("class.steps.additional.form.occasion.options.anniversary"),
-      value: "anniversary",
-    },
-    {
-      label: t("class.steps.additional.form.occasion.options.other"),
-      value: "other",
-    },
-  ];
-
   const restrictionOptions = [
     {
       label: t("class.steps.additional.form.restrictions.options.dairyFree"),
@@ -100,49 +81,6 @@ export function AdditionalInfoForm() {
         </p>
       </div>
       <div className="space-y-4">
-        <FormField
-          control={control}
-          name="additional.occasion"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                {t("class.steps.additional.form.occasion.label")}
-              </FormLabel>
-              <FormControl>
-                <div className="space-y-2">
-                  <ButtonSelect
-                    value={
-                      occasionOptions.some((opt) => opt.value === field.value)
-                        ? field.value
-                        : "other"
-                    }
-                    onChange={(value) => {
-                      field.onChange(value === "other" ? "" : value);
-                    }}
-                    options={occasionOptions}
-                  />
-                  {(!occasionOptions.some((opt) => opt.value === field.value) ||
-                    field.value === "other") && (
-                    <TextareaAutosize
-                      placeholder={t(
-                        "class.steps.additional.form.occasion.options.other",
-                      )}
-                      value={
-                        !occasionOptions.some(
-                          (opt) => opt.value === field.value,
-                        )
-                          ? field.value
-                          : ""
-                      }
-                      onChange={(e) => field.onChange(e.target.value)}
-                    />
-                  )}
-                </div>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
         <FormField
           control={control}
           name="additional.allergies"

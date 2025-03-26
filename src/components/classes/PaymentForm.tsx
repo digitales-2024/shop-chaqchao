@@ -3,7 +3,7 @@ import { Izipay, Paypal } from "@/assets/icons";
 import { useReservation } from "@/hooks/use-reservation";
 import { usePricesQuery } from "@/redux/services/classApi";
 import { useTranslations } from "next-intl";
-import Link from "next/link";
+//import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 
@@ -308,13 +308,14 @@ export function PaymentForm() {
                   </span>
                   <span className="ml-2 inline-flex cursor-pointer gap-1 text-sm text-neutral-600">
                     {t("form.terms.label")}
-                    <Link
-                      href="/terms-and-conditions"
+                    <a
+                      href="/Terminos_y_Condiciones.pdf"
                       className="font-bold text-primary underline"
                       target="_blank"
+                      rel="noopener noreferrer"
                     >
                       {t("form.terms.link")}
-                    </Link>
+                    </a>
                   </span>
                 </span>
               </label>
@@ -324,7 +325,7 @@ export function PaymentForm() {
         )}
       />
 
-      {/* Privacy Policy */}
+      {/* Privacy Policy 
       <FormField
         control={control}
         name="payment.politics"
@@ -358,7 +359,7 @@ export function PaymentForm() {
             <FormMessage />
           </FormItem>
         )}
-      />
+      />*/}
     </div>
   );
 }

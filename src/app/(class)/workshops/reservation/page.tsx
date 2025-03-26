@@ -242,9 +242,9 @@ export default function PageRegisterClass() {
       terms: z.boolean().refine((v) => v, {
         message: t("payment.form.terms.error"),
       }),
-      politics: z.boolean().refine((v) => v, {
+      /*politics: z.boolean().refine((v) => v, {
         message: t("payment.form.politics.error"),
-      }),
+      }),*/
     }),
   });
 

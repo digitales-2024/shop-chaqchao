@@ -164,36 +164,36 @@ export default function WorkshopSelectDate() {
   }, [form.watch("date"), form.watch("schedule")]);
 
   useEffect(() => {
-    // Si hay una clase creada con participantes, el mínimo es 1 adulto
-    if (classData && classData.totalParticipants > 0) {
-      const newMin = 1;
-      setCounterMin(newMin);
-      if (form.watch("adults") < newMin) {
-        form.setValue("adults", newMin);
-      }
-      return;
+    if (!capacityNormal) return;
+
+    const minCapacity = capacityNormal.minCapacity;
+    const maxCapacity = capacityNormal.maxCapacity;
+
+    let adults = form.watch("adults");
+    let children = form.watch("children");
+    // eslint-disable-next-line prefer-const
+    let totalParticipants = adults + children;
+
+    // Ajustar mínimo
+    if (totalParticipants < minCapacity) {
+      const diff = minCapacity - totalParticipants;
+      adults += diff; // Asegurar que al menos se cumpla el mínimo
     }
 
-    // Si no hay clase creada o la clase tiene 0 participantes, validamos capacidad mínima
-    if (capacityNormal) {
-      const totalParticipants = form.watch("children") + form.watch("adults");
-      let newMin: number;
-
-      // Si el total ya cumple la capacidad mínima, permite mínimo 1 adulto
-      if (totalParticipants >= capacityNormal.minCapacity) {
-        newMin = 1;
+    // Ajustar máximo
+    if (totalParticipants > maxCapacity) {
+      const diff = totalParticipants - maxCapacity;
+      if (children >= diff) {
+        children -= diff;
       } else {
-        // Si no cumple, el mínimo de adultos debe ser la capacidad mínima
-        newMin = capacityNormal.minCapacity;
-      }
-
-      setCounterMin(newMin);
-      if (form.watch("adults") < newMin) {
-        form.setValue("adults", newMin);
+        adults -= diff;
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [classData, form.watch("adults"), form.watch("children")]);
+
+    setCounterMin(minCapacity);
+    form.setValue("adults", adults);
+    form.setValue("children", children);
+  }, [capacityNormal, form.watch("adults"), form.watch("children")]);
 
   const router = useRouter();
 
@@ -649,6 +649,34 @@ export default function WorkshopSelectDate() {
             <div>
               <h4 className="font-black">{t("experience.private.title")}</h4>
               <p>{t("experience.private.description")}</p>
+
+              <div className="mt-4 grid grid-cols-[0.3fr,1fr] gap-y-2">
+                <h4 className="font-black">
+                  {t("experience.private.capacity")}
+                </h4>
+                <span>{t("experience.info.capacity")}</span>
+
+                <h4 className="mt-3 items-center font-black">
+                  {t("experience.private.cost")}
+                </h4>
+                <div className="flex flex-col">
+                  <span>{t("experience.info.costAdult")}</span>
+                  <span>{t("experience.info.costChildren")}</span>
+                </div>
+
+                <h4 className="font-black">
+                  {t("experience.private.location")}
+                </h4>
+                <span>{t("experience.info.location")}</span>
+
+                <h4 className="font-black">{t("experience.private.time")}</h4>
+                <span>{t("experience.info.time")}</span>
+
+                <h4 className="font-black">
+                  {t("experience.private.language")}
+                </h4>
+                <span>{t("experience.info.language")}</span>
+              </div>
             </div>
           </div>
           <div className="grid w-full grid-cols-[auto_1fr] gap-4 bg-secondary-foreground p-4 text-terciary">
@@ -656,6 +684,28 @@ export default function WorkshopSelectDate() {
             <div>
               <h4 className="font-black">{t("experience.group.title")}</h4>
               <p>{t("experience.group.description")}</p>
+
+              <div className="mt-4 grid grid-cols-[0.3fr,1fr] gap-y-2">
+                <h4 className="font-black">{t("experience.group.capacity")}</h4>
+                <span>{t("experience.infogroup.capacity")}</span>
+
+                <h4 className="mt-3 items-center font-black">
+                  {t("experience.group.cost")}
+                </h4>
+                <div className="flex flex-col">
+                  <span>{t("experience.infogroup.costAdult")}</span>
+                  <span>{t("experience.infogroup.costChildren")}</span>
+                </div>
+
+                <h4 className="font-black">{t("experience.group.location")}</h4>
+                <span>{t("experience.infogroup.location")}</span>
+
+                <h4 className="font-black">{t("experience.group.time")}</h4>
+                <span>{t("experience.infogroup.time")}</span>
+
+                <h4 className="font-black">{t("experience.group.language")}</h4>
+                <span>{t("experience.infogroup.language")}</span>
+              </div>
             </div>
           </div>
           <p>{t("experience.contact")}</p>

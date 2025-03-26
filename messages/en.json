@@ -403,12 +403,38 @@
       "experience": {
         "title": "Looking for a different Experience?",
         "private": {
-          "title": "Private Classes",
-          "description": "Perfect for special occasions, team building, or a more personalized experience."
+          "title": "Private Workshop",
+          "description": "Perfect for special occasions, team building, or a more personalized experience",
+          "capacity": "CAPACITY",
+          "cost": "COST",
+          "location": "LOCATION",
+          "time": "SCHEDULE",
+          "language": "LANGUAGE"
+        },
+        "info": {
+          "capacity": "Minimum 6 pax - Maximum 10 pax",
+          "costAdult": "S/ 110 per person (including VAT).",
+          "costChildren": "S/ 60 for children under 10 years old (including VAT).",
+          "location": "Santa Catalina 204 - Cercado Arequipa",
+          "time": "From Monday to Sunday in two shifts (11:00 am or 2:45 pm).",
+          "language": "English or Spanish"
         },
         "group": {
-          "title": "Group Classes",
-          "description": "Join other chocolate enthusiasts for a fun and interactive workshop experience."
+          "title": "Group Workshop",
+          "description": "Join other chocolate enthusiasts for a fun and interactive workshop",
+          "capacity": "CAPACITY",
+          "cost": "COST",
+          "location": "LOCATION",
+          "time": "SCHEDULE",
+          "language": "LANGUAGE"
+        },
+        "infogroup": {
+          "capacity": "Minimum 11 pax - Maximum 30 pax",
+          "costAdult": "S/ 100 per person (including VAT).",
+          "costChildren": "S/ 60 for children under 10 years old (including VAT).",
+          "location": "Calle Cortaderas 138 Yanahuara - Arequipa",
+          "time": "From Monday to Sunday at 11:00 am or 2:45 pm.",
+          "language": "English or Spanish"
         },
         "contact": "Contact us to arrange your perfect chocolate experience"
       },

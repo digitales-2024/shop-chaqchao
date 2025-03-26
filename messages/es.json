@@ -404,12 +404,38 @@
       "experience": {
         "title": "¿Busca una experiencia diferente?",
         "private": {
-          "title": "Clases privadas",
-          "description": "Perfecto para ocasiones especiales, trabajo en equipo o una experiencia más personalizada"
+          "title": "Taller privado",
+          "description": "Perfecto para ocasiones especiales, trabajo en equipo o una experiencia más personalizada",
+          "capacity": "CAPACIDAD ",
+          "cost": "COSTO",
+          "location": "LOCAL",
+          "time": "HORARIO  ",
+          "language": "IDIOMA "
+        },
+        "info": {
+          "capacity": "Mínimo 6 pax - Máximo 10 pax",
+          "costAdult": "S/ 110 por persona incluido IGV.",
+          "costChildren": "S/ 60 niños menores de 10 años (incluido IGV)",
+          "location": "Santa Catalina 204 - Cercado Arequipa",
+          "time": "De Lunes a Domingo en dos turnos (11:00 am o 2:45 pm).",
+          "language": "Inglés o Español"
         },
         "group": {
-          "title": "Clases grupales",
-          "description": "Únase a otros entusiastas del chocolate para disfrutar de un taller divertido e interactivo"
+          "title": "Taller grupal",
+          "description": "Únase a otros entusiastas del chocolate para disfrutar de un taller divertido e interactivo",
+          "capacity": "CAPACIDAD ",
+          "cost": "COSTO",
+          "location": "LOCAL",
+          "time": "HORARIO  ",
+          "language": "IDIOMA "
+        },
+        "infogroup": {
+          "capacity": "Mínimo 11 pax - Máximo 30 pax",
+          "costAdult": "S/ 100 por persona incluido IGV.",
+          "costChildren": "S/ 60 niños menores de 10 años (incluido IGV)",
+          "location": "Calle Cortaderas 138 Yanahuara - Arequipa",
+          "time": "De Lunes a Domingo a las 11:00 o 14:45 horas.",
+          "language": "Inglés o Español"
         },
         "contact": "Contáctenos para organizar su experiencia de chocolate perfecta"
       },

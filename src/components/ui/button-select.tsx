@@ -28,7 +28,7 @@ export function ButtonSelect({
           onClick={() => onChange(option.value)}
           variant={value === option.value ? "default" : "outline"}
           className={cn(
-            "transition-all",
+            "capitalize transition-all",
             value === option.value && "ring-2 ring-primary ring-offset-2",
           )}
           disabled={option.disabled}
