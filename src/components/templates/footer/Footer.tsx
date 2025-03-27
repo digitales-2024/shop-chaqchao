@@ -40,10 +40,7 @@ export function Footer() {
               <li>Calle Santa Catalina 204, Arequipa, Perú</li>
               <li>Delivery +51 {PHONE_NUMBER}</li>
               <li>
-                {t("sunday")} - {t("thursday")} 10am - 11pm
-              </li>
-              <li>
-                {t("friday")} - {t("saturday")} 10am - 12pm
+                {t("monday")} - {t("sunday")} 10am - 10:30pm
               </li>
             </ul>
           </div>
