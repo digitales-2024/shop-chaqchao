@@ -1,7 +1,6 @@
 import { Facebook, Instagram, TripAdvisor } from "@/assets/icons";
 import { ChaqchaoLogo } from "@/assets/images/ChaqchaoLogo";
 import { LibroReclamaciones } from "@/assets/images/LibroReclamaciones";
-import { PHONE_NUMBER } from "@/constants/info";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 
@@ -31,35 +30,31 @@ export function Footer() {
       <div className="mx-auto grid max-w-[1025px] grid-cols-1 justify-items-center sm:grid-cols-3">
         <div className="space-y-6">
           <h3 className="font-riddle text-4xl">CHAQCHAO CHOCOLATE FACTORY</h3>
-          <p className="font-semibold">{t("visit")}</p>
-          <div>
-            <p className="font-extralight">
-              + CHAQCHAO <span>{t("history")}</span>
-            </p>
+          <div className="space-y-6">
+            <p>Calle Santa Catalina 204, Arequipa, Perú</p>
+            <div>
+              <a
+                href="mailto:chaqchao@gmail.com?subject=Hello!"
+                className="block font-semibold underline"
+              >
+                chaqchao@gmail.com
+              </a>
+              <a
+                href={`tel:+51 54234572`}
+                className="block font-semibold underline"
+              >
+                +51 54234572
+              </a>
+            </div>
             <ul className="font-semibold">
-              <li>Calle Santa Catalina 204, Arequipa, Perú</li>
-              <li>Delivery +51 {PHONE_NUMBER}</li>
               <li>
-                {t("monday")} - {t("sunday")} 10am - 10:30pm
+                {t("sunday")} - {t("thursday")} 10am - 11pm
+              </li>
+              <li>
+                {t("friday")} - {t("saturday")} 10am - 12pm
               </li>
             </ul>
           </div>
-          <div>
-            <p className="font-extralight">+ CHAQCHAO EXPRESS</p>
-            <ul className="font-semibold">
-              <li>Avenida Ejército 313, Yanahuara, Arequipa, Perú</li>
-              <li>Delivery +51 978 306 060</li>
-              <li>
-                {t("monday")} - {t("sunday")} 8am - 10:30pm
-              </li>
-            </ul>
-          </div>
-          <a
-            href="mailto:info@chaqchao-chocolates.com?subject=Hello!"
-            className="block font-semibold underline"
-          >
-            info@chaqchao-chocolates.com
-          </a>
         </div>
         <div className="flex flex-col items-center gap-4 pt-10">
           {SOCIAL_MEDIA.map((item) => (
