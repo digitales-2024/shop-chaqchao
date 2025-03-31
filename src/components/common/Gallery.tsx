@@ -1,7 +1,6 @@
 "use client";
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import Image from "next/image";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -31,13 +30,10 @@ export default function Gallery({ images, label }: GalleryProps) {
   return (
     <div className="mx-auto grid w-full grid-rows-[1fr_100px]">
       <div className="relative mb-4 overflow-hidden rounded-lg">
-        <Image
+        <img
           src={images[currentIndex].url || "/placeholder.svg"}
           alt={label}
-          width={500}
-          height={500}
-          className="object-cover object-center transition-all duration-300 hover:scale-110"
-          priority
+          className="h-auto w-full object-cover object-center transition-all duration-300 hover:scale-110"
         />
         <Button
           variant="ghost"
@@ -67,14 +63,11 @@ export default function Gallery({ images, label }: GalleryProps) {
               index === currentIndex ? "ring-2 ring-primary" : ""
             }`}
           >
-            <Image
+            <img
               src={image.url || "/placeholder.svg"}
-              alt={label}
-              width={100}
-              height={100}
-              className="aspect-square object-cover object-center"
-              priority={index < 3}
-              quality={index < 3 ? 100 : 50}
+              alt={`${label} thumbnail ${index + 1}`}
+              className="aspect-square h-[100px] w-[100px] object-cover object-center"
+              loading={index < 3 ? "eager" : "lazy"}
             />
           </button>
         ))}
