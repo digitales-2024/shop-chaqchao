@@ -40,7 +40,7 @@ export const CartItem = React.forwardRef<HTMLDivElement, CartItemProps>(
             disabled={!product.isAvailable}
           >
             <DialogTrigger className="h-full w-full">
-              <Card className="group/product grid h-full w-full grid-rows-[80%_20%] border-none bg-transparent p-2 shadow-none transition-all duration-500 hover:bg-white hover:shadow-sm">
+              <Card className="group/product grid h-full w-full grid-rows-[75%_25%] border-none bg-transparent p-2 shadow-none transition-all duration-500 hover:bg-white hover:shadow-sm">
                 <CardContent className="flex h-full w-full flex-col items-center justify-start border-none p-0">
                   <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-sm">
                     {product.images && product.images.length > 0 && (
@@ -55,7 +55,7 @@ export const CartItem = React.forwardRef<HTMLDivElement, CartItemProps>(
                 </CardContent>
                 <CardFooter className="flex h-full w-full flex-col justify-between p-2">
                   <DialogTitle className="w-full">
-                    <h2 className="line-clamp-2 text-start font-nunito text-xl font-bold capitalize">
+                    <h2 className="line-clamp-2 text-wrap text-start font-nunito text-xl font-bold capitalize">
                       {product.name}
                     </h2>
                     <p className="text-start text-sm capitalize text-primary">
