@@ -19,9 +19,6 @@ const nextConfig = {
     formats: ["image/webp", "image/avif"],
   },
   swcMinify: true,
-  experimental: {
-    optimizeCss: true,
-  },
 };
 
 export default withNextIntl(nextConfig);
