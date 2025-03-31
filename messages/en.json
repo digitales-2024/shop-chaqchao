@@ -1,7 +1,21 @@
 {
+  "izipay": {
+    "loading": "Processing payment...",
+    "initialization": "Preparing payment form...",
+    "pay": "Pay with card",
+    "errors": {
+      "token": "Error generating payment token",
+      "validation": "Error validating payment",
+      "initialization": "Error initializing payment",
+      "generic": "Error in payment process",
+      "canceled": "Payment has been cancelled",
+      "network": "Connection error, please try again"
+    },
+    "success": "Payment successful!"
+  },
   "navbar": {
     "products": "Products",
-    "classes": "Class",
+    "workshops": "Workshops",
     "languages": {
       "es": "Spanish",
       "en": "English"
@@ -54,9 +68,16 @@
   },
   "footer": {
     "title": "Store information",
+    "visit": "Visit us",
+    "history": "Historic Center",
     "copyrigth": "All rights reserved",
     "description": "Discover our products and enjoy the best quality!",
-    "social": "Connect"
+    "social": "Connect",
+    "sunday": "Sunday",
+    "monday": "Monday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday"
   },
   "categories": {
     "title": "All our products",
@@ -73,6 +94,9 @@
     "metadata": {
       "title": "Product categories",
       "description": "Choose from our variety of products and enjoy the best quality."
+    },
+    "PopupMessage": {
+      "message": "Do you want your order to be sent to another city? Write to us at"
     }
   },
   "cartItem": {
@@ -92,7 +116,7 @@
     "registerButton": "Sign up",
     "forgot": "Forgot your password?",
     "terms": "By logging in, I declare that I agree with the",
-    "termsLink": "Terms and Privacy Policy"
+    "termsLink": "Terms and Conditions"
   },
   "register": {
     "title": "Welcome",
@@ -239,200 +263,240 @@
     }
   },
   "class": {
-    "previous": "Previous",
-    "next": "Next",
-    "confirm": "Confirm",
-    "step1": {
-      "title": "Contact Information",
-      "errors": {
-        "name": "Full name is required",
-        "email": "Email is required",
-        "phone": "Phone is required"
-      },
-      "label": {
-        "name": "Full Name",
-        "email": "Email",
-        "phone": "Phone"
-      },
-      "button": {
-        "back": "Back",
-        "next": "Next"
-      }
-    },
-    "step2": {
-      "title": "Date and hour of the Class",
-      "subtitle": "Select the date and hour you want to take the class",
-      "description": "Select the time of the class",
-      "errors": {
-        "date": "Please select a date to continue."
-      },
-      "moreDates": "MORE DATES",
-      "days": {
-        "today": "TODAY",
-        "mon": "MON",
-        "tue": "TUE",
-        "wed": "WED",
-        "thu": "THU",
-        "fri": "FRI",
-        "sat": "SAT",
-        "sun": "SUN"
-      },
-      "months": {
-        "jan": "JAN",
-        "feb": "FEB",
-        "mar": "MAR",
-        "apr": "APR",
-        "may": "MAY",
-        "jun": "JUN",
-        "jul": "JUL",
-        "aug": "AUG",
-        "sep": "SEP",
-        "oct": "OCT",
-        "nov": "NOV",
-        "dec": "DEC"
-      },
-      "button": {
-        "back": "Back",
-        "next": "Next"
-      }
-    },
-    "step3": {
-      "empty": "No places available",
-      "title": "Number of Participants",
-      "subtitle": "Select the number of participants for the class",
-      "adults": "Adults",
-      "children": "Children",
-      "toast": {
-        "fullFields": "Please select the number of adults to continue."
-      },
-      "message": {
-        "start": "There are",
-        "end": "seats available"
-      },
-      "childrenPay": "Children over 14 years pay",
-      "dateNotSelected": "Date not Selected",
-      "button": {
-        "back": "Back",
-        "next": "Next"
-      }
-    },
-    "step4": {
-      "title": "Language and comments",
-      "subtitle": "Select the language you want to take the class",
-      "languages": {
-        "español": "SPANISH",
-        "ingles": "ENGLISH"
-      },
-      "toast": {
-        "fullFields": "Please select a language to continue."
-      },
-      "comments": "Would you like to add any comments?",
-      "addComments": "Add comments",
-      "language": {
-        "loading": "Loading languages...",
-        "loadingError": "Error loading languages",
-        "notAvailable": "No languages ​​available"
-      },
-      "button": {
-        "back": "Back",
-        "next": "Next"
-      }
-    },
-    "step5": {
-      "title": "Booking Summary",
-      "people": "People",
-      "errors": {
-        "terms": "Accept the terms and policies to continue"
-      },
-      "toast": {
-        "noPlaceAvailable": "There are no more places available, please choose another date or time.",
-        "invalidNumberParticipantsRange": "Invalid number of participants, The minimum number of participants must be 2.",
-        "invalidNumberParticipants": "Invalid number of participants, The minimum number of participants must be 1.",
-        "classIsClose": "The class is closed, please choose another date or time.",
-        "registrationIsClose": "Registration is closed, please choose another date or time.",
-        "invalidClassDate": "Invalid date, Please choose another date or time.",
-        "classRegisterSuccessfully": "Class registered successfully. Proceed with payment.",
-        "errorRegisterClass": "Error registering class. Please try again.",
-        "paymentConfirmed": "Payment confirmed and class registered successfully.",
-        "errorConfirmPayment": "Error confirming payment. Please try again.",
-        "acceptTerms": "Accept the terms and policies to continue",
-        "timeOut": "The time to make the payment has expired and your quota has been cancelled.",
-        "paymentCancelled": "Payment cancelled"
-      },
-      "remainingTime": "Time remaining to make payment: ",
-      "totalParticipants": {
-        "people": "People"
-      },
-      "subtotalDetail": {
-        "title": "Subtotal",
-        "adults": "Adults",
-        "children": "Childrens"
-      },
-      "total": "Total",
-      "terms": {
-        "accord": "I agree with the ",
-        "terms": "Terms and Privacy Policy"
-      },
+    "steps": {
       "buttons": {
-        "loading": "Confirming registration",
         "back": "Back",
-        "register": "Register Class"
-      }
-    },
-    "confirmation": {
-      "people": "People",
-      "confirmation": "Reservation Confirmed!",
-      "userName": "Names: ",
-      "userEmail": "Email: ",
-      "userPhone": "Phone: ",
-      "languageClass": "Language: ",
-      "dateClass": "Date: ",
-      "scheduleClass": "Schedule: ",
-      "participantsClass": "Participants: ",
-      "userAllergies": "Allergies: ",
-      "dateNotSelected": "Date not Selected",
-      "state": "State: ",
-      "detail": {
-        "title": "Booking Details",
-        "adults": "Adult(S)",
-        "children": "Children(S)",
-        "considerations": {
-          "title": "Considerations",
-          "message": "*Arrive 5 minutes early"
+        "next": "Next",
+        "confirm": "Confirm",
+        "paypal": "Pay with Paypal"
+      },
+      "personal": {
+        "title": "Contact Information",
+        "description": "We will use this information to send you confirmation and updates about your reservation.",
+        "form": {
+          "name": {
+            "label": "Name",
+            "placeholder": "Enter your full name",
+            "error": "Enter your full name"
+          },
+          "email": {
+            "label": "Email",
+            "placeholder": "Enter your email",
+            "error": "Enter a valid email"
+          },
+          "phone": {
+            "label": "Phone",
+            "placeholder": "Enter your phone number",
+            "error": "Enter a valid phone number"
+          }
         }
       },
-      "allergies": {
-        "title": "Food allergies or restrictions",
-        "allergie": "Allergies: ",
-        "yes": "Si",
-        "none": "None"
+      "additional": {
+        "title": "Additional Information",
+        "description": "Please complete this information to continue with your order",
+        "form": {
+          "occasion": {
+            "label": "What is the occasion?",
+            "options": {
+              "tourism": "Tourism",
+              "birthday": "Birthday",
+              "anniversary": "Anniversary",
+              "other": "Other"
+            }
+          },
+          "restrictions": {
+            "label": "Do you have any allergies or dietary restrictions?",
+            "options": {
+              "dairyFree": "Dairy-free",
+              "glutenFree": "Gluten-free",
+              "sojaFree": "Soja-free",
+              "other": "Other allergy or restriction"
+            }
+          },
+          "comments": {
+            "label": "Do you have any other things you want to tell us?",
+            "placeholder": "Enter your comment"
+          }
+        }
       },
-      "companyName": "Company Name: ",
-      "phone": "Phone: ",
-      "description": "Description",
-      "quantity": "Quantity",
-      "price": "Price / Unit",
-      "typeCurrency": "type Currency",
-      "amount": "Amount",
-      "numberAdults": "Number of Adults",
-      "numberChildren": "Number of Children"
+      "payment": {
+        "title": "Payment Information",
+        "description": "Please complete this information to continue with your reservation",
+        "loading": "Processing workshop...",
+        "form": {
+          "currency": {
+            "label": "Select the currency",
+            "options": {
+              "PEN": "Soles",
+              "USD": "Dollars"
+            },
+            "error": "Select the currency"
+          },
+          "payment": {
+            "label": "Select the payment method",
+            "error": "Select the payment method"
+          },
+          "terms": {
+            "label": "I have read and accept the",
+            "link": "Terms and Conditions",
+            "error": "You must accept the terms and conditions"
+          },
+          "politics": {
+            "label": "By continuing, you agree to our",
+            "link": "Privacy Policy",
+            "error": "You must accept the privacy policy"
+          }
+        },
+        "summary": {
+          "adults": "Adultos",
+          "children": "Niños"
+        }
+      }
     },
-    "reservationSumary": {
-      "abstract": {
-        "title": "Booking Summary"
+    "info": {
+      "title": "CHAQCHAO’S",
+      "subtitle": "Bean to bar Chocolate Class",
+      "description": {
+        "text1": "We’re Arequipa’s first and only organic bean-to-bar chocolate shop, and we’re passionate about sharing the story of Peruvian cacao.",
+        "text2": "Come and join us for one of our  bean-to-bar chocolate classes to learn more about cacao and have some fun!",
+        "text3": "All ages are welcome in our workshops, including children."
       },
-      "languages": {
-        "spanish": "Spanish",
-        "english": "English"
+      "learn": {
+        "title": "What you'll learn:",
+        "learn1": "The history and origin of cacao in the world",
+        "learn2": "Explanation of each chocolate-making process",
+        "learn3": "Chocolate tempering technique",
+        "learn4": "Create your own chocolate bar"
       },
-      "userName": "Name: ",
-      "userEmail": "Email: ",
-      "userPhone": "Phone: ",
-      "languageClass": "Language: ",
-      "dateClass": "Date: ",
-      "scheduleClass": "Schedule: ",
-      "participantsClass": "Participants: ",
-      "userAllergies": "Allergies: "
+      "important": {
+        "title": "Important Information:",
+        "important1": "Duration: 2.5 hours",
+        "important2": "All materials included",
+        "important3": "Recommended for children ages 5 and up.",
+        "important4": "Children must be accompanied by an adult"
+      }
+    },
+    "schedule": {
+      "title": "Bean to Bar Workshop",
+      "selectDate": "Select Date and hour of the workshop",
+      "errorSelectDate": "Please select a date",
+      "errorSchedule": "Not available schedules",
+      "pickDate": "Select a date",
+      "errorSelectSchedule": "Please select a schedule",
+      "participants": {
+        "title": "Participants",
+        "age": "Age",
+        "adults": "Adults",
+        "children": "Children"
+      },
+      "language": {
+        "label": "Select the language in which you want to take the class",
+        "es": "Spanish",
+        "en": "English",
+        "error": "Select a language",
+        "recommended": {
+          "title": "Important Warning",
+          "description": "For Spanish workshop, a minimum enrollment of 3 people or contact "
+        }
+      },
+      "booknow": "Book Now",
+      "experience": {
+        "title": "Looking for a different Experience?",
+        "private": {
+          "title": "Private Workshop",
+          "description": "Perfect for special occasions, team building, or a more personalized experience",
+          "capacity": "CAPACITY",
+          "cost": "COST",
+          "location": "LOCATION",
+          "time": "SCHEDULE",
+          "language": "LANGUAGE"
+        },
+        "info": {
+          "capacity": "Minimum 6 pax - Maximum 10 pax",
+          "costAdult": "S/ 110 per person (including VAT).",
+          "costChildren": "S/ 60 for children under 10 years old (including VAT).",
+          "location": "Santa Catalina 204 - Cercado Arequipa",
+          "time": "From Monday to Sunday in two shifts (11:00 am or 2:45 pm).",
+          "language": "English or Spanish"
+        },
+        "group": {
+          "title": "Group Workshop",
+          "description": "Join other chocolate enthusiasts for a fun and interactive workshop",
+          "capacity": "CAPACITY",
+          "cost": "COST",
+          "location": "LOCATION",
+          "time": "SCHEDULE",
+          "language": "LANGUAGE"
+        },
+        "infogroup": {
+          "capacity": "Minimum 11 pax - Maximum 30 pax",
+          "costAdult": "S/ 100 per person (including VAT).",
+          "costChildren": "S/ 60 for children under 10 years old (including VAT).",
+          "location": "Calle Cortaderas 138 Yanahuara - Arequipa",
+          "time": "From Monday to Sunday at 11:00 am or 2:45 pm.",
+          "language": "English or Spanish"
+        },
+        "contact": "Contact us to arrange your perfect chocolate experience"
+      },
+      "calendar": {
+        "tooltip": {
+          "title": "Workshop",
+          "schedule": "Schedule",
+          "closed": "Closed",
+          "available": "Available spots"
+        }
+      }
+    },
+
+    "summary": {
+      "title": "CHAQCHAO’S BEAN TO BAR CHOCOLATE CLASS",
+      "basicInfo": "Basic Information",
+      "personalInfo": "Personal Information",
+      "additionalInfo": "Additional Information",
+      "date": "Date",
+      "schedule": "Schedule",
+      "language": "Language",
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "occasion": "Occasion",
+      "restrictions": "Restrictions",
+      "comments": "Comments",
+      "participants": {
+        "title": "Participants",
+        "adults": "Adults",
+        "children": "Children"
+      },
+      "capacity": {
+        "class": "Class with capacity of",
+        "people": "people",
+        "available": {
+          "title": "Current class status:",
+          "label": "Registered:",
+          "of": "of",
+          "cupos": "spots",
+          "available": "Available spots:"
+        },
+        "you": {
+          "title": "Your reservation",
+          "label": "People to register:",
+          "messageSuccess": {
+            "01": "There are enough spots. After your reservation, there will be",
+            "02": "spots available."
+          },
+          "messageNotAvailable": {
+            "01": "Attention! Not enough spots. Exceeds by",
+            "02": "people",
+            "03": "Only",
+            "04": "spots left."
+          },
+          "messageMinimum": {
+            "01": "The class needs a minimum of",
+            "02": "people. Missing",
+            "03": "more people."
+          }
+        }
+      }
     },
     "errors": {
       "name": "Please enter your full name",
@@ -446,11 +510,25 @@
       "title": "Registration confirmed!",
       "description": "Your registration has been confirmed and is in the process of validation. You will receive an email with the confirmation of your registration.",
       "accept": "Accept"
+    },
+    "confirmation": {
+      "title": "Reservation confirmed!",
+      "description": "Your reservation for the workshop has been confirmed successfully. We have sent you an email with the details.",
+      "details": {
+        "name": "Name",
+        "email": "Email",
+        "date": "Date",
+        "schedule": "Schedule",
+        "transaction": "Transaction ID"
+      },
+      "backButton": "Back to Workshops"
     }
   },
   "checkout": {
     "checkout": {
       "button": "Checkout",
+      "messageTimePickup": "Important Information About Your Order",
+      "messageTimePickupLarge": "Your order will be available for pickup during the designated hours. You have a maximum of 48 hours to collect it. After this time, no exchanges or refunds will be accepted. Thank you for your understanding!",
       "messages": {
         "warning": {
           "title": "Warning",

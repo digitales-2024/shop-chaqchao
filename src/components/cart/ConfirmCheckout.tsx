@@ -48,12 +48,13 @@ export const ConfirmCheckout = ({ validateCart }: ConfirmCheckoutProps) => {
       },
       { message: t("errors.terms") },
     ),
+    /*privacy: z.boolean().optional(),
     privacy: z.boolean().refine(
       (value) => {
         return value === true;
       },
       { message: t("errors.privacy") },
-    ),
+    ),*/
   });
 
   type ConfirmCheckoutType = z.infer<typeof confirmCheckoutSchema>;
@@ -64,7 +65,7 @@ export const ConfirmCheckout = ({ validateCart }: ConfirmCheckoutProps) => {
     resolver: zodResolver(confirmCheckoutSchema),
     defaultValues: {
       terms: false,
-      privacy: false,
+      //privacy: false,
     },
   });
 
@@ -278,10 +279,10 @@ export const ConfirmCheckout = ({ validateCart }: ConfirmCheckoutProps) => {
                       <>
                         {t("terms")}{" "}
                         <a
-                          href="/"
-                          className="text-primary"
+                          href="/Terminos_y_Condiciones.pdf"
+                          className="font-bold text-primary underline"
                           target="_blank"
-                          aria-label="privacy"
+                          rel="noopener noreferrer"
                         >
                           {t("termsLink")}
                         </a>
@@ -294,7 +295,7 @@ export const ConfirmCheckout = ({ validateCart }: ConfirmCheckoutProps) => {
             )}
           />
 
-          <FormField
+          {/*<FormField
             control={form.control}
             name="privacy"
             render={({ field }) => (
@@ -325,7 +326,7 @@ export const ConfirmCheckout = ({ validateCart }: ConfirmCheckoutProps) => {
                 <FormMessage />
               </FormItem>
             )}
-          />
+          />*/}
           {!showPayment &&
             (!!isFormComplete ? (
               <Button

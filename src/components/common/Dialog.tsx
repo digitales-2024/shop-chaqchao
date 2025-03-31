@@ -333,6 +333,8 @@ type DialogImageProps = {
 function DialogImage({ src, alt, className, style }: DialogImageProps) {
   const { uniqueId } = useDialog();
 
+  if (!src) return null;
+
   return (
     <motion.img
       src={src}

@@ -13,6 +13,7 @@ const config: Config = {
         commingSoon: ["var(--font-coming-soon)"],
         nunito: ["var(--font-nunito-variable)"],
         pacifico: ["var(--font-pacifico)"],
+        riddle: ["var(--font-riddle)"],
       },
       colors: {
         textColor: "hsl(var(--text))",
@@ -97,25 +98,44 @@ const config: Config = {
           },
         },
         meteor: {
-          "0%": { transform: "rotate(215deg) translateX(0)", opacity: "1" },
-          "70%": { opacity: "1" },
+          "0%": {
+            transform: "rotate(215deg) translateX(0)",
+            opacity: "1",
+          },
+          "70%": {
+            opacity: "1",
+          },
           "100%": {
             transform: "rotate(215deg) translateX(-100vh)",
             opacity: "0",
           },
         },
         "background-position-spin": {
-          "0%": { backgroundPosition: "top center" },
-          "100%": { backgroundPosition: "bottom center" },
+          "0%": {
+            backgroundPosition: "top center",
+          },
+          "100%": {
+            backgroundPosition: "bottom center",
+          },
         },
         gradient: {
-          "0%": { backgroundPosition: "0% 50%" },
-          "50%": { backgroundPosition: "100% 50%" },
-          "100%": { backgroundPosition: "0% 50%" },
+          "0%": {
+            backgroundPosition: "0% 50%",
+          },
+          "50%": {
+            backgroundPosition: "100% 50%",
+          },
+          "100%": {
+            backgroundPosition: "0% 50%",
+          },
         },
         rainbow: {
-          "0%": { "background-position": "0%" },
-          "100%": { "background-position": "200%" },
+          "0%": {
+            "background-position": "0%",
+          },
+          "100%": {
+            "background-position": "200%",
+          },
         },
         tada: {
           "0%": {

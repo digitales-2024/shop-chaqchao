@@ -27,8 +27,18 @@ const comingSoon = localFont({
   weight: "100 900",
 });
 
+const riddle = localFont({
+  src: "./fonts/RiddleUpright.woff2",
+  variable: "--font-riddle",
+  weight: "100 900",
+});
+
 export const metadata: Metadata = {
   title: "Chaqchao Chocolates | Store",
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+  },
   description:
     "Welcome to Chaqchao Chocolates, the best chocolates in Peru, made with organic cacao from the Andes.",
   robots: {
@@ -72,7 +82,6 @@ export const metadata: Metadata = {
     apple: "/apple-touch-icon.png",
   },
   manifest: "/site.webmanifest",
-  viewport: "width=device-width, initial-scale=1",
   keywords: "chocolates, cacao, peru, organic, fair trade, bean to bar",
   generator: "Next.js",
   publisher: "Chaqchao Chocolates",
@@ -98,7 +107,7 @@ export default async function RootLayout({
           />
         </head>
         <body
-          className={`${comingSoon.variable} ${geistSans.variable} font-nunito`}
+          className={`${comingSoon.variable} ${geistSans.variable} ${riddle.variable} font-nunito`}
         >
           <NextIntlClientProvider messages={messages}>
             <Toaster

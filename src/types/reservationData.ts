@@ -3,7 +3,6 @@ export interface ReservationData {
   date: Date | null;
   participants: number;
   children: number;
-  time: string;
   allergies: string;
   confirmed: boolean;
   language: string;
@@ -11,6 +10,12 @@ export interface ReservationData {
   userName: string;
   userEmail: string;
   userPhone: string;
-  typeCurrency: string;
+  typeCurrency: "USD" | "PEN";
   totalAmount: number;
+  paymentMethod?: string;
+  paymentStatus?: "pending" | "completed" | "failed";
+  transactionId?: string;
+  occasion?: string;
+  restrictions?: string;
+  comments?: string;
 }

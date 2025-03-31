@@ -1,6 +1,6 @@
 export interface CreatePayment {
   amount: number;
-  currency: string;
+  currency: "USD" | "PEN";
   orderId: string;
   customer: Customer;
   transactionOptions?: TransactionOptions;
@@ -21,14 +21,15 @@ interface SubMerchantDetails {
 interface Customer {
   reference?: string;
   email: string;
-  billingDetails?: BillingDeytails;
+  billingDetails?: BillingDetails;
   shoppingCart?: ShoppingCart;
 }
 
-interface BillingDeytails {
+interface BillingDetails {
   firstName?: string;
   lastName?: string;
   address?: string;
+  email?: string;
   phoneNumber?: string;
   country?: string; // PE
   state?: string;
@@ -50,6 +51,7 @@ export interface CartItemInfo {
 
 enum ProductType {
   FOOD_AND_GROCERY = "FOOD_AND_GROCERY", //Alimentos y productos comestibles.
+  SERVICE_FOR_INDIVIDUAL = "SERVICE_FOR_INDIVIDUAL",
 }
 
 interface TransactionOptions {
@@ -62,6 +64,73 @@ interface CardOptions {
 
 enum PaymentSource {
   EC = "EC", // Ecommerce
+}
+
+export interface PaymentMethod {
+  onPaymentSuccess?: (status: string) => void;
+  onPaymentError?: () => void;
+}
+
+// Interface antigua para mantener compatibilidad
+export interface PaypalTransactionData {
+  paypalOrderId: string;
+  paypalOrderStatus: string;
+  paypalAmount: string;
+  paypalCurrency: string;
+  paypalDate: string;
+  id: string;
+  userEmail: string;
+  userName: string;
+  userPhone: string;
+  dateClass: string;
+  scheduleClass: string;
+  languageClass: string;
+  totalAdults: number;
+  totalChildren: number;
+  typeCurrency: string;
+  comments: string;
+}
+
+export interface PaypalPaymentMethodProps extends PaymentMethod {
+  transactionData: PaypalTransactionData;
+}
+
+// Nueva interfaz genérica para el registro de clases
+export interface WorkshopRegistrationData {
+  id?: string;
+  typeClass: string;
+  userName: string;
+  userEmail: string;
+  userPhone: string;
+  totalAdults: number;
+  totalChildren: number;
+  totalParticipants: number;
+  totalPrice: number;
+  totalPriceAdults: number;
+  totalPriceChildren: number;
+  languageClass: string;
+  dateClass?: Date;
+  scheduleClass: string;
+  allergies?: string;
+  occasion?: string;
+  comments?: string;
+  status?: string;
+  expiresAt?: string;
+  isClosed?: boolean;
+  typeCurrency: "USD" | "PEN";
+  methodPayment: "PAYPAL" | "IZIPAY" | "";
+
+  // Campos específicos de PayPal
+  paypalOrderId?: string;
+  paypalOrderStatus?: string;
+  paypalAmount?: string;
+  paypalCurrency?: string;
+  paypalDate?: string;
+  // Campos específicos de Izipay
+  izipayTransactionId?: string;
+  izipayAuthCode?: string;
+  izipayCardBrand?: string;
+  izipayLastFourDigits?: string;
 }
 
 export interface Payment {
@@ -80,4 +149,23 @@ export interface ResponsePayment {
 
 export interface Token {
   token: string;
+}
+
+// Estados válidos de pago para Izipay
+export const VALID_ORDER_STATUS = ["PAID", "AUTHORISED", "ACCEPTED"] as const;
+export type ValidOrderStatus = (typeof VALID_ORDER_STATUS)[number];
+
+// Funciones de validación para Izipay
+export function validateAmount(amount: number): boolean {
+  return Number.isInteger(amount) && amount > 0;
+}
+
+export function validateEmail(email: string): boolean {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+export function validateOrderId(orderId: string): boolean {
+  const validOrderIdRegex = /^[a-zA-Z0-9_-]+$/;
+  return validOrderIdRegex.test(orderId);
 }

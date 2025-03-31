@@ -1,5 +1,4 @@
 "use client";
-import { GoogleIcon } from "@/assets/icons";
 import { useLogin } from "@/hooks/use-login";
 import { AuthSchema } from "@/schemas/authSchema";
 import { Credentials } from "@/types";
@@ -21,10 +20,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { InputPassword } from "@/components/ui/input-password";
-import { Separator } from "@/components/ui/separator";
 
 export const FormLogin = () => {
-  const { onLogin, googleLogin, isLoading } = useLogin();
+  const { onLogin, isLoading } = useLogin();
   const t = useTranslations("login");
 
   const form = useForm<Credentials>({
@@ -138,31 +136,7 @@ export const FormLogin = () => {
               </motion.div>
             </form>
           </Form>
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-            className="inline-flex items-center justify-center gap-4 text-center"
-          >
-            <Separator orientation="horizontal" className="w-16 opacity-45" />
-            O
-            <Separator orientation="horizontal" className="w-16 opacity-45" />
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-          >
-            <Button
-              variant="outline"
-              className="flex w-full items-center justify-center rounded-full border bg-white py-6"
-              onClick={googleLogin}
-              disabled={isLoading}
-            >
-              <GoogleIcon className="size" />
-              {t("google")}
-            </Button>
-          </motion.div>
+
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
@@ -179,7 +153,12 @@ export const FormLogin = () => {
             </p>
             <p className="mt-4 text-center text-xs text-gray-500">
               {t("terms")}
-              <Link href="/terms" className="ml-1 font-bold hover:text-primary">
+              <Link
+                href="/Terminos_y_Condiciones.pdf"
+                className="ml-1 font-bold hover:text-primary"
+                title="Terminos y condiciones"
+                target="_blank"
+              >
                 {t("termsLink")}
               </Link>
             </p>

@@ -1,5 +1,5 @@
 import { useLanguagesQuery } from "@/redux/services/classApi";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 interface Language {
   id: string;
@@ -16,8 +16,9 @@ export const useLanguages = () => {
     if (languages && !isLoading) {
       setLanguageOptions(
         languages.map((language: Language) => ({
-          value: language.id,
+          value: language.languageName,
           label: language.languageName,
+          disabled: false,
         })),
       );
     }

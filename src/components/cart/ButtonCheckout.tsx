@@ -19,7 +19,7 @@ export const ButtonCheckout = ({
     <Button
       variant="default"
       className={cn(
-        "h-16 rounded-full px-8 text-xl font-bold text-white [&_svg]:size-6 [&_svg]:shrink-0",
+        "h-16 rounded-none px-8 text-xl font-bold text-white [&_svg]:size-6 [&_svg]:shrink-0",
       )}
       onClick={validate}
       disabled={isLoading}

@@ -9,10 +9,10 @@ export interface Product {
   name: string;
   description: string;
   price: number;
-  image: string;
+  images: { url: string }[];
   isActive: boolean;
   isAvailable: boolean;
   isRestricted: boolean;
+  maxStock: number;
   category: Category;
-  variations: [];
 }

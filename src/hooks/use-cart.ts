@@ -316,7 +316,6 @@ export const useCart = () => {
         city: invoice.city,
         state: invoice.state,
         country: getCodeCountry(invoice.country),
-        postalCode: invoice.codPostal,
         businessName: invoice.nameBusiness ?? "",
         paymentStatus: status as PaymentStatus,
       };

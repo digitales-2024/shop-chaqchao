@@ -1,7 +1,21 @@
 {
+  "izipay": {
+    "loading": "Procesando pago...",
+    "initialization": "Preparando formulario de pago...",
+    "pay": "Pagar con tarjeta",
+    "errors": {
+      "token": "Error al generar el token de pago",
+      "validation": "Error al validar el pago",
+      "initialization": "Error al inicializar el pago",
+      "generic": "Error en el proceso de pago",
+      "canceled": "El pago ha sido cancelado",
+      "network": "Error de conexión, por favor intenta de nuevo"
+    },
+    "success": "¡Pago realizado con éxito!"
+  },
   "navbar": {
     "products": "Productos",
-    "classes": "Clases",
+    "workshops": "Talleres",
     "languages": {
       "es": "Español",
       "en": "Inglés"
@@ -54,12 +68,19 @@
   },
   "footer": {
     "title": "Información de la tienda",
+    "visit": "Visitanos en",
+    "history": "Centro Histórico",
     "copyrigth": "Todos los derechos reservados",
     "description": "¡Descubre nuestros productos y disfruta de la mejor calidad!",
-    "social": "Conéctate"
+    "social": "Conéctate",
+    "monday": "Lunes",
+    "sunday": "Domingo",
+    "thursday": "Jueves",
+    "friday": "Viernes",
+    "saturday": "Sábado"
   },
   "categories": {
-    "title": "Todos nuestro productos",
+    "title": "Todos nuestros productos",
     "description": "Elija entre nuestra variedad de productos y disfrute de la mejor calidad.",
     "search": "Busca entre nuestro catálogo de productos",
     "filters": {
@@ -73,6 +94,9 @@
     "metadata": {
       "title": "Categorías de productos",
       "description": "Elija entre nuestra variedad de productos y disfrute de la mejor calidad."
+    },
+    "PopupMessage": {
+      "message": "¿Deseas que tu pedido sea enviado a otra ciudad? Escríbenos a"
     }
   },
   "cartItem": {
@@ -92,7 +116,7 @@
     "registerButton": "Regístrate",
     "forgot": "¿Olvidaste tu contraseña?",
     "terms": "Al iniciar sesión, declaro que estoy de acuerdo con los",
-    "termsLink": "Términos y Políticas de Privacidad"
+    "termsLink": "Términos y Condiciones"
   },
   "register": {
     "title": "Bienvenido",
@@ -240,186 +264,241 @@
     }
   },
   "class": {
-    "previous": "Anterior",
-    "next": "Siguiente",
-    "confirm": "Confirmar",
-    "step1": {
-      "title": "Información de contacto",
-      "errors": {
-        "name": "Debe ingresar su nombre completo.",
-        "email": "Debe ingresar un correo electrónico válido.",
-        "phone": "Debe ingresar un número de teléfono válido."
+    "steps": {
+      "buttons": {
+        "back": "Atrás",
+        "next": "Siguiente",
+        "confirm": "Confirmar",
+        "paypal": "Pagar con Paypal"
       },
-      "label": {
-        "name": "Nombre Completo",
-        "email": "Correo Electrónico",
-        "phone": "Número de Teléfono"
+      "personal": {
+        "title": "Información Personal",
+        "description": "Utilizaremos esta información para enviarle confirmación y actualizaciones sobre su reserva.",
+        "form": {
+          "name": {
+            "label": "Nombre completo",
+            "placeholder": "Ingresa tu nombre completo",
+            "error": "Ingresa tu nombre completo"
+          },
+          "email": {
+            "label": "Correo electronico",
+            "placeholder": "Ingresa tu correo electrónico",
+            "error": "Ingresa un correo electrónico válido"
+          },
+          "phone": {
+            "label": "Celular",
+            "placeholder": "Ingresa tu celular",
+            "error": "Ingresa un número válido"
+          }
+        }
       },
-      "button": {
-        "back": "Atras",
-        "next": "Siguiente"
+      "additional": {
+        "title": "Información adicional",
+        "description": "Por favor, completa esta información para continuar con tu pedido",
+        "form": {
+          "occasion": {
+            "label": "¿Cuál es la ocasion?",
+            "options": {
+              "tourism": "Turismo",
+              "birthday": "Cumpleaños",
+              "anniversary": "Aniversario",
+              "other": "Otra"
+            }
+          },
+          "restrictions": {
+            "label": "¿Alguna alergia o restricciones dietéticas?",
+            "options": {
+              "dairyFree": "Sin leche",
+              "glutenFree": "Sin gluten",
+              "sojaFree": "Alergia a la soja",
+              "other": "Otra alergia o restriccion"
+            }
+          },
+          "comments": {
+            "label": "¿Tienes alguna otra cosa que querias decirnos?",
+            "placeholder": "Ingresa tu comentario"
+          }
+        }
+      },
+      "payment": {
+        "title": "Información de pago",
+        "description": "Por favor, completa esta información para continuar con tu reserva",
+        "loading": "Procesando clase...",
+        "form": {
+          "currency": {
+            "label": "Moneda",
+            "options": {
+              "PEN": "Soles",
+              "USD": "Dolares"
+            },
+            "error": "Selecciona una moneda"
+          },
+          "payment": {
+            "label": "Selecciona el medio de pago",
+            "error": "Selecciona un medio de pago"
+          },
+          "terms": {
+            "label": "He leído y acepto los",
+            "link": "términos y condiciones",
+            "error": "Debes aceptar los términos y condiciones"
+          },
+          "politics": {
+            "label": "He leído y acepto la",
+            "link": "política de privacidad",
+            "error": "Debes aceptar la política de privacidad"
+          }
+        },
+        "summary": {
+          "adults": "Adultos",
+          "children": "Niños"
+        }
       }
     },
-    "step2": {
-      "title": "Fecha y hora de la clase",
-      "subtitle": "Seleccione la fecha y hora en la que desea tomar la clase",
-      "description": "Seleccione la hora de la clase",
-      "errors": {
-        "date": "Por favor, selecciona una fecha para continuar"
+    "info": {
+      "title": "CHAQCHAO",
+      "subtitle": "Clase de Chocolate del grano a la barra",
+      "description": {
+        "text1": "Somos la primera y única tienda de chocolate orgánico “bean-to-bar” de Arequipa y nos apasiona compartir la historia del cacao peruano.",
+        "text2": "¡Únase a nosotros en una de nuestras clases de chocolate desde el grano hasta la barra para aprender más sobre el cacao y divertirse un poco!",
+        "text3": "Todas las edades son bienvenidas a nuestros talleres, incluidos los niños."
       },
-      "moreDates": "MÁS FECHAS",
-      "days": {
-        "today": "HOY",
-        "mon": "LUN",
-        "tue": "MAR",
-        "wed": "MIÉ",
-        "thu": "JUE",
-        "fri": "VIE",
-        "sat": "SAB",
-        "sun": "DOM"
+      "learn": {
+        "title": "Lo que aprenderás:",
+        "learn1": "Historia y origen del cacao en el mundo.",
+        "learn2": "Explicación de cada proceso de elaboración del chocolate.",
+        "learn3": "Técnica de temperado del chocolate.",
+        "learn4": "Crea tus propias barras de chocolate."
       },
-      "months": {
-        "jan": "ENE",
-        "feb": "FEB",
-        "mar": "MAR",
-        "apr": "ABR",
-        "may": "MAY",
-        "jun": "JUN",
-        "jul": "JUL",
-        "aug": "AGO",
-        "sep": "SET",
-        "oct": "OCT",
-        "nov": "NOV",
-        "dec": "DIC"
-      },
-      "button": {
-        "back": "Atras",
-        "next": "Siguiente"
+      "important": {
+        "title": "Información importante:",
+        "important1": "Duración: 2,5 horas.",
+        "important2": "Todo el material incluido.",
+        "important3": "Recomendado para niños de 5 años en adelante.",
+        "important4": "Los niños deben estar acompañados por un adulto."
       }
     },
-    "step3": {
-      "empty": "No hay lugares disponibles",
-      "title": "Cantidad de participantes",
-      "subtitle": "Seleccione la cantidad de participantes para la clase",
-      "adults": "Adultos",
-      "children": "Niños",
-      "toast": {
-        "fullFields": "Por favor, seleccione la cantidad de adultos para continuar."
-      },
-      "message": {
-        "start": "Quedan",
-        "end": "lugares disponibles"
-      },
-      "childrenPay": "Los niños mayores de 14 años pagan",
-      "dateNotSelected": "Fecha no seleccionada",
-      "button": {
-        "back": "Atras",
-        "next": "Siguiente"
-      }
-    },
-    "step4": {
-      "title": "Idioma y comentarios",
-      "subtitle": "Seleccione el idioma en el que desea tomar la clase",
-      "languages": {
-        "español": "ESPAÑOL",
-        "ingles": "INGLES"
-      },
-      "toast": {
-        "fullFields": "Por favor, seleccione un idioma para continuar."
-      },
-      "comments": "¿Desea agregar algún comentario?",
-      "addComments": "Agregar comentarios",
-      "language": {
-        "loading": "Cargando idiomas...",
-        "loadingError": "Error al cargar los idiomas",
-        "notAvailable": "No hay idiomas disponibles"
-      },
-      "button": {
-        "back": "Atras",
-        "next": "Siguiente"
-      }
-    },
-    "step5": {
-      "title": "Resumen de la reserva",
-      "people": "Personas",
-      "remainingTime": "Tiempo restante para realizar el pago: ",
-      "errors": {
-        "terms": "Debes aceptar los términos y condiciones"
-      },
-      "totalParticipants": {
-        "people": "Personas"
-      },
-      "subtotalDetail": {
-        "title": "Subtotal",
+    "schedule": {
+      "title": "Taller del grano a la barra",
+      "selectDate": "Seleccione la fecha y la hora del taller",
+      "errorSelectDate": "Por favor, seleccione una fecha",
+      "errorSchedule": "No hay horarios disponibles",
+      "pickDate": "Seleccione una fecha",
+      "errorSelectSchedule": "Por favor, seleccione un horario",
+      "participants": {
+        "title": "Participantes",
+        "age": "Edad",
         "adults": "Adultos",
         "children": "Niños"
       },
-      "total": "Total",
-      "terms": {
-        "accord": "Estoy de acuerdo con los ",
-        "terms": "Términos y Políticas de Privacidad"
-      },
-      "buttons": {
-        "loading": "Confirmando registro",
-        "back": "Atras",
-        "register": "Registrar Clase"
-      }
-    },
-    "confirmation": {
-      "people": "Personas",
-      "confirmation": "!RESERVA CONFIRMADA!",
-      "userName": "Nombre: ",
-      "userEmail": "Correo: ",
-      "userPhone": "Teléfono: ",
-      "languageClass": "Idioma: ",
-      "dateClass": "Fecha: ",
-      "scheduleClass": "Horario: ",
-      "participantsClass": "Participantes: ",
-      "userAllergies": "Alergias: ",
-      "dateNotSelected": "Fecha no seleccionada",
-      "state": "Estado: ",
-      "detail": {
-        "title": "Detalles de la Reserva",
-        "adults": "ADULTO(S)",
-        "children": "NIÑO(S)",
-        "considerations": {
-          "title": "CONSIDERACIONES",
-          "message": "*Llegar 5 minutos antes"
+      "language": {
+        "label": "Selecciona el idioma con el que deseas tomar tu clase",
+        "es": "Español",
+        "en": "Ingles",
+        "error": "Selecciona un idioma",
+        "recommended": {
+          "title": "Aviso Importante",
+          "description": "Para aperturar una clase de español, es necesario minimo 3 personas o comunicate al "
         }
       },
-      "allergies": {
-        "title": "Alergias o restricciones alimentarias",
-        "allergie": "Alergias: ",
-        "yes": "Si",
-        "none": "Ninguna"
+      "booknow": "Reservar ahora",
+      "experience": {
+        "title": "¿Busca una experiencia diferente?",
+        "private": {
+          "title": "Taller privado",
+          "description": "Perfecto para ocasiones especiales, trabajo en equipo o una experiencia más personalizada",
+          "capacity": "CAPACIDAD ",
+          "cost": "COSTO",
+          "location": "LOCAL",
+          "time": "HORARIO  ",
+          "language": "IDIOMA "
+        },
+        "info": {
+          "capacity": "Mínimo 6 pax - Máximo 10 pax",
+          "costAdult": "S/ 110 por persona incluido IGV.",
+          "costChildren": "S/ 60 niños menores de 10 años (incluido IGV)",
+          "location": "Santa Catalina 204 - Cercado Arequipa",
+          "time": "De Lunes a Domingo en dos turnos (11:00 am o 2:45 pm).",
+          "language": "Inglés o Español"
+        },
+        "group": {
+          "title": "Taller grupal",
+          "description": "Únase a otros entusiastas del chocolate para disfrutar de un taller divertido e interactivo",
+          "capacity": "CAPACIDAD ",
+          "cost": "COSTO",
+          "location": "LOCAL",
+          "time": "HORARIO  ",
+          "language": "IDIOMA "
+        },
+        "infogroup": {
+          "capacity": "Mínimo 11 pax - Máximo 30 pax",
+          "costAdult": "S/ 100 por persona incluido IGV.",
+          "costChildren": "S/ 60 niños menores de 10 años (incluido IGV)",
+          "location": "Calle Cortaderas 138 Yanahuara - Arequipa",
+          "time": "De Lunes a Domingo a las 11:00 o 14:45 horas.",
+          "language": "Inglés o Español"
+        },
+        "contact": "Contáctenos para organizar su experiencia de chocolate perfecta"
       },
-      "companyName": "Nombre de la Empresa: ",
-      "phone": "Teléfono: ",
-      "description": "Descripción",
-      "quantity": "Cantidad",
-      "price": "Precio / Unidad",
-      "typeCurrency": "Tipo de Moneda",
-      "amount": "Monto",
-      "numberAdults": "Número de Adultos",
-      "numberChildren": "Número de Niños"
+      "calendar": {
+        "tooltip": {
+          "title": "Clases programadas",
+          "schedule": "Horario",
+          "closed": "Cerrado",
+          "available": "Cupos disponibles"
+        }
+      }
     },
-    "reservationSumary": {
-      "abstract": {
-        "title": "Resumen de la Reserva"
+    "summary": {
+      "title": "CHAQCHAO CLASE DE CHOCOLATE DEL GRANO A LA BARRA",
+      "basicInfo": "Información básica",
+      "personalInfo": "Información personal",
+      "additionalInfo": "Información adicional",
+      "date": "Fecha",
+      "schedule": "Horario",
+      "language": "Idioma",
+      "name": "Nombre",
+      "email": "Correo electrónico",
+      "phone": "Teléfono",
+      "occasion": "Ocasión",
+      "restrictions": "Restricciones dietéticas",
+      "comments": "Comentarios adicionales",
+      "participants": {
+        "title": "Participantes",
+        "adults": "Adultos",
+        "children": "Niños"
       },
-      "languages": {
-        "spanish": "Español",
-        "english": "Ingles"
-      },
-      "userName": "Nombre: ",
-      "userEmail": "Correo: ",
-      "userPhone": "Teléfono: ",
-      "dateClass": "Fecha: ",
-      "scheduleClass": "Horario: ",
-      "languageClass": "Idioma: ",
-      "participantsClass": "Participantes: ",
-      "userAllergies": "Alergias: "
+      "capacity": {
+        "class": "Clase con capacidad de",
+        "people": "personas",
+        "available": {
+          "title": "Estado actual de la clase:",
+          "label": "Incritos:",
+          "of": "de",
+          "cupos": "cupos",
+          "available": "Cupos disponibles:"
+        },
+        "you": {
+          "title": "Tu reservación",
+          "label": "Personas a inscribir:",
+          "messageSuccess": {
+            "01": "Hay suficientes cupos. Después de tu reservación quedarán",
+            "02": "cupos disponibles."
+          },
+          "messageNotAvailable": {
+            "01": "¡Atención! No hay suficientes cupos. Se excede por",
+            "02": "personas",
+            "03": "Solo quedan",
+            "04": "cupos disponibles."
+          },
+          "messageMinimum": {
+            "01": "La clase necesita mínimo",
+            "02": "personas. Faltan",
+            "03": "personas más."
+          }
+        }
+      }
     },
+
     "errors": {
       "name": "Por favor ingrese su nombre completo.",
       "email": "Por favor ingrese un correo electrónico válido.",
@@ -432,11 +511,25 @@
       "title": "¡Registro confirmado!",
       "description": "Tu registro ha sido confirmado y se encuentra en proceso de validación. Recibirás un correo electrónico con la confirmación de tu registro.",
       "accept": "Aceptar"
+    },
+    "confirmation": {
+      "title": "¡Reserva Confirmada!",
+      "description": "Tu reserva para el taller ha sido confirmada exitosamente. Te hemos enviado un correo electrónico con los detalles.",
+      "details": {
+        "name": "Nombre",
+        "email": "Correo",
+        "date": "Fecha",
+        "schedule": "Horario",
+        "transaction": "ID de Transacción"
+      },
+      "backButton": "Volver a Talleres"
     }
   },
   "checkout": {
     "checkout": {
       "button": "Verificar pedido",
+      "messageTimePickupLarge": "Tu pedido estará disponible para recoger en el horario establecido. Tienes un plazo máximo de 48 horas para retirarlo. Pasado este tiempo, no se aceptarán cambios ni devoluciones. ¡Gracias por tu comprensión!",
+      "messageTimePickup": "Información importante sobre tu pedido",
       "messages": {
         "warning": {
           "title": "¡Atención!",

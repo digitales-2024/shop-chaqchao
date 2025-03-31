@@ -12,7 +12,7 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { Input, InputProps } from "@/components/ui/input";
+import { Input } from "@/components/ui/input";
 import {
   Popover,
   PopoverContent,
@@ -23,6 +23,7 @@ import { cn } from "@/lib/utils";
 
 import { ScrollArea } from "./scroll-area";
 
+export type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
 type PhoneInputProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
   "onChange" | "value"
@@ -88,11 +89,11 @@ const CountrySelect = ({
     <Popover modal={true}>
       <PopoverTrigger asChild>
         <Button
+          tabIndex={-1}
           type="button"
           variant={"outline"}
           className={cn("flex gap-1 rounded-e-none rounded-s-lg px-3")}
           disabled={disabled}
-          tabIndex={-1}
         >
           <FlagComponent country={value} countryName={value} />
           <ChevronsUpDown
@@ -149,7 +150,7 @@ const FlagComponent = ({ country, countryName }: RPNInput.FlagProps) => {
   const Flag = flags[country];
 
   return (
-    <span className="m-0 flex h-4 w-4 overflow-hidden rounded-sm bg-foreground/20 p-0">
+    <span className="flex h-3 w-4 items-center overflow-hidden rounded-sm bg-foreground/20">
       {Flag && <Flag title={countryName} />}
     </span>
   );

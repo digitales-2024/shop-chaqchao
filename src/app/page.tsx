@@ -1,19 +1,15 @@
-import { Featured } from "@/components/home/Featured";
-import { Hero } from "@/components/home/Hero";
-import { Recommend } from "@/components/home/Recommend";
-import { Workshops } from "@/components/home/Workshops";
-
-import LayoutShop from "./(shop)/layout";
+"use client";
+import {
+  MensajeEmergente,
+  ProductsFilters,
+} from "@/components/categories/ProductsFilters";
+import { LayoutShop } from "@/components/templates/LayoutShop";
 
 export default function Home() {
   return (
     <LayoutShop>
-      <div className="flex flex-col gap-20">
-        <Hero />
-        <Workshops />
-        <Recommend />
-        <Featured />
-      </div>
+      <ProductsFilters />
+      <MensajeEmergente />
     </LayoutShop>
   );
 }

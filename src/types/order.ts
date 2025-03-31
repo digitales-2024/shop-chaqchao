@@ -35,7 +35,6 @@ type BillingDocument = {
   state: string;
   country: string;
   city: string;
-  postalCode: string;
   typeDocument: string;
   businessName: string;
   paymentStatus: PaymentStatus;
@@ -52,7 +51,7 @@ type ProductData = {
   id: string;
   name: string;
   price: number;
-  image: string;
+  images: { url: string }[];
   quantity: number;
   category: CategoryData;
 };
