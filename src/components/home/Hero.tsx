@@ -9,6 +9,7 @@ import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image, { StaticImageData } from "next/image";
+import { useMemo, memo } from "react";
 import { Autoplay, EffectFade, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css/effect-fade";
@@ -46,11 +47,75 @@ const carouselItems: CarouselItem[] = [
   },
 ];
 
+const HeroCarousel = memo(() => {
+  return (
+    <div className="relative">
+      <div className="relative flex w-full items-center justify-center">
+        <Swiper
+          spaceBetween={50}
+          slidesPerView={1}
+          loop={true}
+          className="relative z-10 flex flex-col items-center justify-center"
+          autoplay={{ delay: 5000, disableOnInteraction: false }}
+          effect={"fade"}
+          navigation={{
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+          }}
+          pagination={{ clickable: true }}
+          modules={[Navigation, Autoplay, EffectFade]}
+          speed={1000}
+        >
+          {carouselItems.map((item, index) => (
+            <SwiperSlide
+              key={index}
+              className="h-auto flex-col items-end justify-end"
+            >
+              <Image
+                src={item.image.src}
+                alt={item.alt}
+                width={400}
+                height={600}
+                className="relative z-10 mx-auto h-[20rem] w-auto bg-transparent object-contain object-center [filter:_drop-shadow(2px_10px_10px_#adadad);] md:h-[40rem]"
+                priority={index === 0}
+                quality={index === 0 ? 85 : 70}
+                sizes="(max-width: 768px) 80vw, (max-width: 1200px) 50vw, 400px"
+                loading={index === 0 ? "eager" : "lazy"}
+              />
+            </SwiperSlide>
+          ))}
+          <div className="inline-flex w-full select-none justify-center gap-4 p-2">
+            <div className="swiper-button-prev flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-secondary text-secondary hover:scale-105">
+              <ChevronLeft size={24} />
+            </div>
+            <div className="swiper-button-next flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-secondary text-secondary hover:scale-105">
+              <ChevronRight size={24} />
+            </div>
+          </div>
+        </Swiper>
+      </div>
+      <SpinningText
+        radius={6}
+        fontSize={1.2}
+        duration={15}
+        className="absolute bottom-32 left-24 z-50 font-bold leading-none text-primary"
+      >
+        {`CHAQCHAO • CHOCOLATE • QUALITY • `}
+      </SpinningText>
+    </div>
+  );
+});
+
+HeroCarousel.displayName = "HeroCarousel";
+
 export const Hero = () => {
-  const FADE_DOWN_ANIMATION_VARIANTS = {
-    hidden: { opacity: 0, y: -10 },
-    show: { opacity: 1, y: 0, transition: { type: "spring" } },
-  };
+  const FADE_DOWN_ANIMATION_VARIANTS = useMemo(
+    () => ({
+      hidden: { opacity: 0, y: -10 },
+      show: { opacity: 1, y: 0, transition: { type: "spring" } },
+    }),
+    [],
+  );
 
   const t = useTranslations("hero");
 
@@ -110,58 +175,7 @@ export const Hero = () => {
             <ButtonProducts href="/categories">{t("button")}</ButtonProducts>
           </motion.div>
         </motion.div>
-        <div className="relative">
-          <div className="relative flex w-full items-center justify-center">
-            <Swiper
-              spaceBetween={50}
-              slidesPerView={1}
-              loop={true}
-              className="relative z-10 flex flex-col items-center justify-center"
-              autoplay={{ delay: 5000 }}
-              effect={"fade"}
-              navigation={{
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-              }}
-              pagination={{ clickable: true }}
-              modules={[Navigation, Autoplay, EffectFade]}
-              speed={1000}
-            >
-              {carouselItems.map((item, index) => (
-                <SwiperSlide
-                  key={index}
-                  className="h-auto flex-col items-end justify-end"
-                >
-                  <Image
-                    src={item.image.src}
-                    alt={item.alt}
-                    width={400}
-                    height={600}
-                    className="relative z-10 mx-auto h-[20rem] w-auto bg-transparent object-contain object-center [filter:_drop-shadow(2px_10px_10px_#adadad);] md:h-[40rem]"
-                    priority={index === 0}
-                    quality={100}
-                  />
-                </SwiperSlide>
-              ))}
-              <div className="inline-flex w-full select-none justify-center gap-4 p-2">
-                <div className="swiper-button-prev flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-secondary text-secondary hover:scale-105">
-                  <ChevronLeft size={24} />
-                </div>
-                <div className="swiper-button-next flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full border border-secondary text-secondary hover:scale-105">
-                  <ChevronRight size={24} />
-                </div>
-              </div>
-            </Swiper>
-          </div>
-          <SpinningText
-            radius={6}
-            fontSize={1.2}
-            duration={15}
-            className="absolute bottom-32 left-24 z-50 font-bold leading-none text-primary"
-          >
-            {`CHAQCHAO • CHOCOLATE • QUALITY • `}
-          </SpinningText>
-        </div>
+        <HeroCarousel />
       </div>
     </section>
   );

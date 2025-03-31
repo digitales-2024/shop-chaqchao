@@ -328,9 +328,19 @@ type DialogImageProps = {
   alt: string;
   className?: string;
   style?: React.CSSProperties;
+  loading?: "lazy" | "eager";
+  sizes?: string;
+  quality?: number;
 };
 
-function DialogImage({ src, alt, className, style }: DialogImageProps) {
+function DialogImage({
+  src,
+  alt,
+  className,
+  style,
+  loading,
+  sizes,
+}: DialogImageProps) {
   const { uniqueId } = useDialog();
 
   if (!src) return null;
@@ -342,6 +352,8 @@ function DialogImage({ src, alt, className, style }: DialogImageProps) {
       className={cn(className)}
       layoutId={`dialog-img-${uniqueId}`}
       style={style}
+      loading={loading}
+      sizes={sizes}
     />
   );
 }
