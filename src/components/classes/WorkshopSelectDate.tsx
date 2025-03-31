@@ -155,6 +155,7 @@ export default function WorkshopSelectDate() {
         schedule: form.watch("schedule"),
         typeClass: "NORMAL" as TypeClass,
       }).unwrap();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
 
       setClassData(response);
     };
@@ -193,6 +194,7 @@ export default function WorkshopSelectDate() {
     setCounterMin(minCapacity);
     form.setValue("adults", adults);
     form.setValue("children", children);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [capacityNormal, form.watch("adults"), form.watch("children")]);
 
   const router = useRouter();
