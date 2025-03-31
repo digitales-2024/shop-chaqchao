@@ -35,6 +35,10 @@ const riddle = localFont({
 
 export const metadata: Metadata = {
   title: "Chaqchao Chocolates | Store",
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+  },
   description:
     "Welcome to Chaqchao Chocolates, the best chocolates in Peru, made with organic cacao from the Andes.",
   robots: {
@@ -78,7 +82,6 @@ export const metadata: Metadata = {
     apple: "/apple-touch-icon.png",
   },
   manifest: "/site.webmanifest",
-  viewport: "width=device-width, initial-scale=1",
   keywords: "chocolates, cacao, peru, organic, fair trade, bean to bar",
   generator: "Next.js",
   publisher: "Chaqchao Chocolates",
