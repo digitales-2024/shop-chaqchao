@@ -1,7 +1,7 @@
 "use client";
 import { Product } from "@/types";
 import { useTranslations } from "next-intl";
-import React, { memo } from "react";
+import React from "react";
 
 import {
   Dialog,
@@ -23,8 +23,8 @@ interface CartItemProps {
   product: Product;
 }
 
-export const CartItem = memo(
-  React.forwardRef<HTMLDivElement, CartItemProps>(({ product }, ref) => {
+export const CartItem = React.forwardRef<HTMLDivElement, CartItemProps>(
+  ({ product }, ref) => {
     const t = useTranslations("cartItem");
     return (
       <div ref={ref} className="h-fit">
@@ -46,10 +46,8 @@ export const CartItem = memo(
                     {product.images && product.images.length > 0 && (
                       <DialogImage
                         src={product.images[0].url}
-                        alt={`chaqchao ${product.name} - ${product.category.name}`}
+                        alt={`chaqchao ${product.name}`}
                         className="h-auto max-h-full w-full object-cover"
-                        loading="lazy"
-                        sizes="(max-width: 768px) 100vw, 352px"
                       />
                     )}
                     {!product.isAvailable && <OutStock />}
@@ -91,6 +89,6 @@ export const CartItem = memo(
         </Dialog>
       </div>
     );
-  }),
+  },
 );
 CartItem.displayName = "CartItem";
