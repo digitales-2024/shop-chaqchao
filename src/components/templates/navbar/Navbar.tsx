@@ -30,7 +30,7 @@ export function Navbar() {
               </Link>
             ))}
           </div>
-          <div className="flex flex-row items-center gap-4">
+          <div className="flex flex-row items-center gap-4 px-4">
             <CartSheet />
             <UserLogin />
           </div>

@@ -36,42 +36,42 @@ export const CartItem = React.forwardRef<HTMLDivElement, CartItemProps>(
           }}
         >
           <Button
-            className="group/item m-0 h-[40rem] w-[22rem] overflow-hidden rounded-sm border border-secondary/10 bg-transparent p-0 transition-all duration-300 hover:bg-transparent hover:shadow-md"
+            className="group/item m-0 h-[40rem] w-[22rem] overflow-hidden rounded-sm border border-secondary/10 bg-transparent p-0 transition-all duration-300 hover:bg-transparent hover:shadow-sm"
             disabled={!product.isAvailable}
           >
             <DialogTrigger className="h-full w-full">
-              <Card className="group/product grid h-full w-full grid-rows-[1fr_200px] border-none bg-transparent p-2 shadow-none transition-all duration-500 hover:bg-white hover:shadow-sm">
-                <CardContent className="flex h-full w-full flex-col items-center justify-start gap-4 border-none p-0">
-                  <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-sm bg-secondary/5 p-10">
+              <Card className="group/product grid h-full w-full grid-rows-[80%_20%] border-none bg-transparent p-2 shadow-none transition-all duration-500 hover:bg-white hover:shadow-sm">
+                <CardContent className="flex h-full w-full flex-col items-center justify-start border-none p-0">
+                  <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-sm">
                     {product.images && product.images.length > 0 && (
                       <DialogImage
                         src={product.images[0].url}
                         alt={`chaqchao ${product.name}`}
-                        className="object-cover [filter:_drop-shadow(2px_10px_10px_#818182);]"
+                        className="h-auto max-h-full w-full object-cover"
                       />
                     )}
                     {!product.isAvailable && <OutStock />}
                   </div>
                 </CardContent>
-                <CardFooter className="grid h-full w-full grid-rows-[2fr_1fr] justify-items-start gap-4 p-2">
-                  <DialogTitle>
-                    <h2 className="truncate text-balance text-start font-nunito text-2xl font-bold capitalize">
+                <CardFooter className="flex h-full w-full flex-col justify-between p-2">
+                  <DialogTitle className="w-full">
+                    <h2 className="line-clamp-2 text-start font-nunito text-xl font-bold capitalize">
                       {product.name}
                     </h2>
-                    <p className="text-center text-sm capitalize text-primary">
+                    <p className="text-start text-sm capitalize text-primary">
                       {product.category.name}
                     </p>
                   </DialogTitle>
                   <div className="grid w-full grid-cols-2 items-center justify-items-start">
                     <DialogSubtitle>
-                      <p className="text-3xl font-bold">
+                      <p className="text-2xl font-bold">
                         S/. {product.price.toFixed(2)}
                       </p>
                     </DialogSubtitle>
                     <DialogDescription className="w-full">
                       <AddToCartButton
                         product={product}
-                        className="group/add h-16 w-full transition-all duration-300"
+                        className="group/add h-12 w-full transition-all duration-300"
                       >
                         {t("addToCart")}
                       </AddToCartButton>

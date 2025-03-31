@@ -45,21 +45,23 @@ export const ProductDialog = ({ product }: ProductDialogProps) => {
   }, [product]);
 
   return (
-    <ScrollArea className="h-full max-h-[90vh]">
+    <ScrollArea className="h-full max-h-[95vh]">
       {isLoadingProductById ? (
         <div className="flex h-full items-center justify-center">
           <PulsatingDots />
         </div>
       ) : (
-        <div className="grid h-full gap-x-10 md:grid-cols-2">
-          <div className="flex items-center justify-center bg-secondary/5">
+        <div className="grid h-full gap-x-6 md:grid-cols-2">
+          <div className="flex h-full w-full items-center justify-center p-4">
             {product.images && product.images.length > 0 && (
-              <Gallery images={product.images} label={product.name} />
+              <div className="h-full w-full max-w-[600px]">
+                <Gallery images={product.images} label={product.name} />
+              </div>
             )}
           </div>
-          <div className="space-y-6 px-8 py-20">
+          <div className="space-y-4 px-4 py-10 md:py-12 lg:px-6 lg:py-16">
             <DialogTitle>
-              <p className="font-nunito text-4xl font-black capitalize">
+              <p className="font-nunito text-3xl font-black capitalize md:text-4xl">
                 {product.name}
               </p>
             </DialogTitle>
@@ -71,11 +73,11 @@ export const ProductDialog = ({ product }: ProductDialogProps) => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="space-y-4"
+              className="space-y-3"
             >
               <div className="flex items-center justify-between">
                 <DialogSubtitle>
-                  <span className="text-3xl font-bold">
+                  <span className="text-2xl font-bold md:text-3xl">
                     S/. {product.price.toFixed(2)}
                   </span>
                 </DialogSubtitle>
@@ -118,7 +120,7 @@ export const ProductDialog = ({ product }: ProductDialogProps) => {
                   <AddToCartButton
                     product={product}
                     quantity={quantity}
-                    className="inline-flex h-16 w-full items-center justify-center text-xl"
+                    className="inline-flex h-12 w-full items-center justify-center text-base md:h-14 md:text-lg"
                   >
                     {t("addToCart")} ({quantity})
                   </AddToCartButton>
@@ -129,7 +131,7 @@ export const ProductDialog = ({ product }: ProductDialogProps) => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="space-y-4"
+              className="space-y-3"
             >
               <h3 className="font-nunito font-semibold text-gray-800">
                 {t("detail")}

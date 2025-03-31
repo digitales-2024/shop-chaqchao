@@ -1,9 +1,7 @@
 "use client";
 
-import { GoogleIcon } from "@/assets/icons";
 import { ChaqchaoLogo } from "@/assets/images/ChaqchaoLogo";
 import Bg from "@/assets/images/login/singin.webp";
-import { useLogin } from "@/hooks/use-login";
 import { useRegister } from "@/hooks/use-register";
 import {
   CreateClientsSchema,
@@ -34,7 +32,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { InputPassword } from "@/components/ui/input-password";
 import { PhoneInput } from "@/components/ui/phone-input";
-import { Separator } from "@/components/ui/separator";
 import {
   Tooltip,
   TooltipContent,
@@ -43,7 +40,6 @@ import {
 import DatePickerWithYearNavigation from "@/components/ui/year-selector";
 
 export default function AuthComponent() {
-  const { googleLogin } = useLogin();
   const { onCreateClient } = useRegister();
 
   const form = useForm<CreateClientsSchema>({
@@ -318,36 +314,7 @@ export default function AuthComponent() {
                   </motion.div>
                 </form>
               </Form>
-              <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
-                className="inline-flex items-center justify-center gap-4 text-center"
-              >
-                <Separator
-                  orientation="horizontal"
-                  className="w-16 opacity-45"
-                />
-                O
-                <Separator
-                  orientation="horizontal"
-                  className="w-16 opacity-45"
-                />
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
-              >
-                <Button
-                  variant="outline"
-                  className="flex w-full items-center justify-center rounded-full border bg-white py-6"
-                  onClick={googleLogin}
-                >
-                  <GoogleIcon />
-                  {t("google")}
-                </Button>
-              </motion.div>
+
               <motion.div
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
