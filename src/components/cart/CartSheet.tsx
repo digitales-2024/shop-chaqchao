@@ -3,9 +3,8 @@ import { ShoppingDelete } from "@/assets/icons";
 import { useCart } from "@/hooks/use-cart";
 import useCartSheet from "@/hooks/use-cart-sheet";
 import useCartStore from "@/redux/store/cart";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useTranslations } from "next-intl";
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -121,7 +120,7 @@ export function CartSheet() {
                               {item.images &&
                                 item.images.length > 0 &&
                                 item.images[0].url && (
-                                  <Image
+                                  <img
                                     className="h-full w-full object-cover"
                                     width={64}
                                     height={64}
