@@ -153,7 +153,12 @@ export const FormLogin = () => {
             </p>
             <p className="mt-4 text-center text-xs text-gray-500">
               {t("terms")}
-              <Link href="/terms" className="ml-1 font-bold hover:text-primary">
+              <Link
+                href="/Terminos_y_Condiciones.pdf"
+                className="ml-1 font-bold hover:text-primary"
+                title="Terminos y condiciones"
+                target="_blank"
+              >
                 {t("termsLink")}
               </Link>
             </p>
