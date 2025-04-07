@@ -3,7 +3,6 @@ import { ShoppingDelete } from "@/assets/icons";
 import useCartStore from "@/redux/store/cart";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
-import Image from "next/image";
 
 import { cn } from "@/lib/utils";
 
@@ -75,7 +74,7 @@ export const TableCart = ({ validateItem, errorValidate }: TableCartProps) => {
                     {cartItem.images &&
                       cartItem.images.length > 0 &&
                       cartItem.images[0].url && (
-                        <Image
+                        <img
                           height={100}
                           width={100}
                           src={cartItem.images[0].url}
