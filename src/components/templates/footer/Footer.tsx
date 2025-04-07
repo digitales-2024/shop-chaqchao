@@ -34,10 +34,10 @@ export function Footer() {
             <p>Calle Santa Catalina 204, Arequipa, Perú</p>
             <div>
               <a
-                href="mailto:chaqchao@gmail.com?subject=Hello!"
+                href="mailto:info@chaqchao-chocolates.com?subject=Hello!"
                 className="block font-semibold underline"
               >
-                chaqchao@gmail.com
+                info@chaqchao-chocolates.com
               </a>
               <a
                 href={`tel:+51 54234572`}
@@ -48,10 +48,7 @@ export function Footer() {
             </div>
             <ul className="font-semibold">
               <li>
-                {t("sunday")} - {t("thursday")} 10am - 11pm
-              </li>
-              <li>
-                {t("friday")} - {t("saturday")} 10am - 12pm
+                {t("monday")} - {t("sunday")} 10am - 10:30pm
               </li>
             </ul>
           </div>
