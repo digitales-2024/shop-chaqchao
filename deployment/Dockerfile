@@ -4,6 +4,12 @@ ENV NEXT_WEBSOCKET_PORT=5000
 ENV NEXT_PUBLIC_BACKEND_URL_GOOGLE_LOGIN="auth/client/google/login"
 ENV NEXT_PUBLIC_PAYPAL_CLIENT_ID="AROj0pavjSqzvCYlifTY0WwNaB2PAw-s4LSZqftWEEdnSX18OrdFye0w3Qy-fbf-C5oRrgJTLYD07M3k"
 
+ENV TZ=America/Lima
+RUN apk add --no-cache tzdata && \
+    ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
+    echo $TZ > /etc/timezone
+
+
 
 ARG NEXT_PUBLIC_BACKEND_URL="/"
 ENV NEXT_PUBLIC_BACKEND_URL=${NEXT_PUBLIC_BACKEND_URL}
